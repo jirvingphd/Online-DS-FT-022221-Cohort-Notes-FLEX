@@ -1,0 +1,1263 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Topic 03: Control Flow, Functions, and Statistics &#8212; Data Science Curriculum</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Phase_1/topic_03_control_flow_functions/topic_03_control_flow_and_functions';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Topic 04-Part 1: Python Libraries &amp; NumPy" href="../topic_04_python_libraries/topic_04_intro_to_libraries_numpy_SG.html" />
+    <link rel="prev" title="Topic 02: Bash and Git" href="../topic_02_bash_git/topic_02_bash_and_git.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/flatironschool_banner.jpg" class="logo__image only-light" alt="Data Science Curriculum - Home"/>
+    <script>document.write(`<img src="../../_static/flatironschool_banner.jpg" class="logo__image only-dark" alt="Data Science Curriculum - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Data Science Curriculum
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 1 - Python &amp; Data Fundamentals</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../topic_01_getting_started/topic_01_getting_started.html">Topic 1: Getting Started with Data Science</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_02_bash_git/topic_02_bash_and_git.html">Topic 02:  Bash and Git</a></li>
+
+
+
+
+
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Topic 03: Control Flow, Functions, and Statistics</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_04_python_libraries/topic_04_intro_to_libraries_numpy_SG.html">Topic 04-Part 1: Python Libraries &amp; NumPy</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_04_python_libraries/topic_04_pt-2_brief_intro_to_pandas-SG.html">Topic 04-Part 2: Brief Intro to Pandas with Doctor Who</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topic_05_data_cleaning_in_pandas/topic_05_Data_Cleaning_in_Pandas.html">Topic 05: Data Cleaning in Pandas</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_06_data_visualization/topic_06_visualizations_heroes_project_SG.html">Topic 06:  Data Visualizations</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_07_SQL_and_relational_databases/topic_07_SQL_and_relational_databases_SG.html">TOPIC 07: SQL DATABASES</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_08_noSQL_databases/topic_08_mongodb-SG.html">Topic 08: NoSQL Databases</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_09_json_and_apis/topic_09_json-api-SG.html">Topic 09: Using APIs and JSON Data</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_10_webscraping/topic_10_SG_HTML_CSS_web_scraping.html">Topic 10: HTML, CSS, &amp; Web Scraping</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 2 - Statistics &amp; Regression</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_11_probability_and_combinatorics/topic_11_playlist_probabilities-SG.html">Topic 11 - Intro to Combinatorics &amp; Probability</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_12_statistical_distributions/topic-12-distributions-with-movies-sg.html">Exploring Distributions with Movies Data</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_13_central_limit_theorem/topic_13_central_limit_theorem_SG.html">Topic 13: Central Limit Theorem</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_14_hypothesis_testing/topic_14_hypothesis_testing-SG.html">Topic 14: Hypothesis Testing -  T-Tests</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_15_ANOVA/topic_15_ANOVA_with_neuro_data-SG.html">Topic 15: ANOVAs &amp; Statistical Power with  Neuro Data</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_16_AB_testing/topic_16_AB_testing_with_movies-SG.html">Topic 16: Practicing AB Testing with Movies</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_17_bayesian_statistics/topic_17_bayesian_statistics-SG.html">Topic 17: Bayesian Statistics</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_18_linear_regression/topic_18_intro_to_linear_regression_SG.html">Topic 18: Intro to Linear Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_19_part1_multiple_regression/topic_19_Multiple_Regression_v2-SG.html">Topic 19: Multiple Linear Regression</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_19_part2_model_validation/topic_19_part_2_Multiple_Regression_v2-SG.html">Topic 19 Part 2: Feature Selection &amp; Model Validation</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_20_extensions_linear_models/topic_20_extensions_to_linear_models_SG.html">Topic 20: Extensions to Linear Models</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 3 - Machine Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_21_OOP/topic_21_OOP_playing_cards_SG.html">Topic 21: Object-Oriented Programming</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_22_linear_algebra/topic_22_linear_algebra_SG.html">Topic 22: Linear Algebra</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_23_calculus_gradient_descent/topic_23_gradient_descent_SG.html">Topic 23: Cost Functions and Gradient Descent</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_24_regularization/topic_24_Regularization_Ridge_Lasso_v2_SG.html">Topic 24: Feature Selection &amp; Regularization (Ridge and Lasso Regression)</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_25_logistic_regression/topic_25_pt1_LogisticRegression_titanic-v2-SG.html">Topic 25-Pt 1: Intro to Logistic Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_25_logistic_regression/topic_25_pt2_LogisticRegression_titanic-v2-SG.html">Topic 25-Part 2: Evaluating Classifiers, Dealing with Class Imbalance, and <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code></a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_27_KNN/Topic_27_KNN_with_pipelines_with_lab_v3_SG.html">Topic 27: K-Nearest Neighbors<br/> +Topic 32: Pipelines</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_29_decision_trees/topic_29_decision_trees_v2_titanic-SG.html">Topic 29: Decision Trees</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_30_ensemble_methods/topic_30_ensemble_methods-SG.html">Topic 30: Ensemble Methods</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_31_support_vector_machines/topic_31_SupportVectorMachines_SG.html">Topic 31: Support Vector Machines</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 4 - Advanced ML &amp; Time Series</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_33_pca/topic_33_PCA_SG.html">Topic 33: Principal Component Analysis</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_34_clustering/topic_34_Kmeans_clustering_v3_SG.html">Topic 34: Clustering</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_35-36_using_databricks_for_pyspark/using_databricks_for_pyspark.html">How to Use Databricks for PySpark Canvas Material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_36_recommendation_systems/topic_36_Recommendation_Systems_with_Surprise.html">Topic 36: Recommendation Systems</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_37_intro_to_time_series/topic_37_intro_to_time_series_crime_v3-SG.html">Topic 37: Intro to Time Series</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_38_time_series_models/topic_38-time_series_models_v3_SG.html">Topic 38: Time Series Models</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_39_NLP/topic_39_NLP_finding_trump_v3_SG.html">Topic 39: Natural Language Processing + Topic 28: Bayesian Classification</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_40-41_neural_networks/topic_40-41_Artificial_Neural_Networks_v1_SG.html">Topic 40-41: Artificial Neural Networks</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_42_tuning_neural_networks/topic_42_tuning_ANNs_with_deep_NLP_v1_SG.html">Topic 42 - Tuning Neural Networks + Deep NLP</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_43_AWS/topic_43_operationalizing_code_AWS_SG.html">Topic 43: Operationalizing Code &amp; AWS</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 5 - Capstone &amp; Bonus Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/Capstone_Kickoff.html">Capstone Kickoff!</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/APIs/working_with_apis.html">Working with APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/developing_app_functions/developing-streamlit-app-functions_SG.html">Developing Streamlit App Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/tableau/tableau_fundamentals_2021-SG.html">Tableau Fundamentals</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/Bonus%20Notebooks/plotly_visuals.html">Plotly Question</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/master?urlpath=tree/Phase_1/topic_03_control_flow_functions/topic_03_control_flow_and_functions.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/blob/master/Phase_1/topic_03_control_flow_functions/topic_03_control_flow_and_functions.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/issues/new?title=Issue%20on%20page%20%2FPhase_1/topic_03_control_flow_functions/topic_03_control_flow_and_functions.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/Phase_1/topic_03_control_flow_functions/topic_03_control_flow_and_functions.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Topic 03: Control Flow, Functions, and Statistics</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Topic 03: Control Flow, Functions, and Statistics</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#questions">Questions</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#python-fundamentals">Python Fundamentals</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bento-box-activity-solution">Bento Box Activity/Solution</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-statistics">Basic Statistics</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resources">Resources:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#measures-of-central-tendency">Measures of Central Tendency</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mean">Mean</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#median">Median</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mode">Mode</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#measures-of-dispersion">Measures of Dispersion</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#absolute-deviation">Absolute Deviation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variance">Variance</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-deviation">Standard Deviation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#measures-of-mututal-variation">Measures of Mututal Variation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculating-covariance">Calculating Covariance</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-covariance-values">Interpreting covariance values</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculating-correlation-coefficient">Calculating Correlation Coefficient</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="topic-03-control-flow-functions-and-statistics">
+<h1>Topic 03: Control Flow, Functions, and Statistics<a class="headerlink" href="#topic-03-control-flow-functions-and-statistics" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p>online-ds-ft-022221</p></li>
+<li><p>02/25/21</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="learning-objectives">
+<h1>Learning Objectives<a class="headerlink" href="#learning-objectives" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Walk through <code class="docutils literal notranslate"><span class="pre">Python</span> <span class="pre">Fundamentals.ipynb</span></code></p></li>
+<li><p>Walk through the <code class="docutils literal notranslate"><span class="pre">Bento</span> <span class="pre">Activity</span></code> as a group</p>
+<ul>
+<li><p>Dive deep into key concepts where you have questions.</p></li>
+</ul>
+</li>
+<li><p>Discuss some basic statistics:</p>
+<ul>
+<li><p>measures of centrality</p></li>
+<li><p>measures of dispersion</p></li>
+</ul>
+</li>
+</ul>
+<!---
+# What does it mean to be 'Object-Oriented'?
+
+> ### *"Everything is an object."
+- some Python sensei
+
+
+## Vocabulary 
+
+Object" is an instance of a template class that currently exists in memory
+"Calling" a function:
+
+When we use ( ) with a function we are calling it.
+
+- **Function:**  Codes that manipulates data in a useful way. 
+
+
+- Parameters: the defined data/varaibles that are passed accepted by a function
+- Argument: the actual variable/value passed in for a parameter
+- Positional Argument:
+    - The first arguments required
+    - their id is determined by their order
+- Keyword/default Arguments:
+    - arugments that have a defined default value
+    - must come after positional arguments
+    
+    
+- **Class:** Template/blue print.
+- Instance: Ab object built from the class blueprint
+- Attribute: A variable stored inside an object. 
+- Method: Functions are stored inside an object.
+---><section id="questions">
+<h2>Questions<a class="headerlink" href="#questions" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>What would happen to our repositories if we were to change the names or locations of folders/files manually from file explorer? How would we redefine the new locations in git?</p></li>
+<li><p><a class="reference external" href="https://learning.flatironschool.com/courses/2680/assignments/88550?module_item_id=174676">Link</a>: Can you please explain why the “and” statement returns the falsy value when it is evaluating two elements? I would have thought that it would return True if both values were truthy and False if one of the values were falsy.</p>
+<ul>
+<li><p>Similar to above can you please explain why the “or” statement returns the actual values depending on the elements instead of returning True or False?</p></li>
+</ul>
+</li>
+<li><p>Does join() method only work on strings? It seems that if a list contain other variable types (float, int, bool) the code throws an error. Any way we can concatenate variables of different types?</p></li>
+<li><p>What does .join do? - Nevermind, it combines an iterable into a string with the string before the .join separating them.</p></li>
+<li><p>On while loops - is there a best practice for the order in which you write conditionals (for example, should you always put  a “break” conditional statement first)?</p></li>
+<li><p>Curious to understand why you prefer nested dictionaries as opposed to lists of dictionaries.</p></li>
+<li><p>for loops with dictionaries</p></li>
+<li><p>Can you talk more about the difference between population and sample calculations? I know that we need to divide by n-1 when calculating things like stddev in a sample data set versus dividing by n for a population. But I find that formulas are sometimes written with n and other times with n-1 without addressing that it is for a sample or population explicitly… is there a convention we should be aware of, such as that formulas are usually written with n and people should ASSUME n-1 is used? Are there standards for how libraries like numpy make these calculations?</p></li>
+<li><p>Why would we use variance &gt; SD? Is a third drawback of variance that it grows as our sample set grows? The measurement of variance in a vacuum seems arbitrary</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="python-fundamentals">
+<h1>Python Fundamentals<a class="headerlink" href="#python-fundamentals" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Open <code class="docutils literal notranslate"><span class="pre">python_fundamentals.ipynb</span></code></p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="bento-box-activity-solution">
+<h1>Bento Box Activity/Solution<a class="headerlink" href="#bento-box-activity-solution" title="Permalink to this heading">#</a></h1>
+<blockquote>
+<div><p>Review Python Review Bento activity solution.</p>
+</div></blockquote>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="basic-statistics">
+<h1>Basic Statistics<a class="headerlink" href="#basic-statistics" title="Permalink to this heading">#</a></h1>
+<section id="resources">
+<h2>Resources:<a class="headerlink" href="#resources" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://drive.google.com/open?id=1Bt11N4EHO3A7cGvXQkf2itfEiB8uhb6B">Math Equation Resources Folder</a></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Let&#39;s get some data to work with</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;seaborn-talk&#39;</span><span class="p">)</span>
+<span class="n">prices</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;house-prices.csv&#39;</span><span class="p">)[</span><span class="s1">&#39;price&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="measures-of-central-tendency">
+<h2>Measures of Central Tendency<a class="headerlink" href="#measures-of-central-tendency" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prices</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+</pre></div>
+</div>
+<img alt="../../_images/a8cb6a235cd61f2d8ace40070b4370259516947f2b0d53cc2ff17f72501d7a87.png" src="../../_images/a8cb6a235cd61f2d8ace40070b4370259516947f2b0d53cc2ff17f72501d7a87.png" />
+</div>
+</div>
+<section id="mean">
+<h3>Mean<a class="headerlink" href="#mean" title="Permalink to this heading">#</a></h3>
+<p>The <strong>Mean</strong> or <strong>Arithmetic Average</strong> is the value obtained by dividing the sum of all the data by the total number of data points as shown in the formula below:</p>
+<div class="math notranslate nohighlight">
+\[ 
+\Large\bar X = \dfrac{\sum X}{N} \]</div>
+</section>
+<section id="median">
+<h3>Median<a class="headerlink" href="#median" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>The median is the middle value in a sorted list of values/observations</p></li>
+</ul>
+<!---
+```python
+def median(list_of_observations):
+    """Finds the median for input list of observations/values by sorting observations and choosing appropriate value depending on if len(list) is odd or even.
+    Args:
+        list_of_observations (list): The first parameter.
+
+    Returns:
+        median (single element of list): calculated median value.
+    """
+    
+    
+    # Calculate length of list / num of observations
+    length = len(list_of_observations)         
+    
+    # Sort reviews by values to to locate median
+    sorted_vals = sorted(list_of_observations) 
+    
+    
+    ## Calc median using methods for odd/even lengths
+    # If length is even calc mean of middle 2 nums:
+    if ((length % 2) == 0):
+        
+        print('There is an even number of values. Calculating mean of middle 2 elements.')
+        
+        ## Get the location of middle nums
+        ## REMINDER: Python list indices start at 0, not 1
+
+        # Index of 1st num is halfway into list
+        idx_0 = int(length/2)
+        
+        # Index of 2nd num is +1 in list
+        idx_1 = idx_0 +1
+        
+        
+        # Median is mean of mid nums
+        median = (sorted_vals[idx_0] + sorted_vals[idx_1])/2
+    
+        
+    # If length is odd, select middle num
+    else:
+        
+        print('There is an odd number of values. Selecting middle elemenmt.')
+        
+        # Get the location of mid num
+        idx_med = int(length//2)    
+        
+        # Median is mid num
+        median = sorted_vals[idx_med]             
+    
+    return median
+
+```---></section>
+<section id="mode">
+<h3>Mode<a class="headerlink" href="#mode" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>The mode is the value that occurs the most</p>
+<ul>
+<li><p>highest frequency</p></li>
+</ul>
+</li>
+</ul>
+<!---
+```python
+def get_mode(data):
+    """Solution from Implementing stats with functions lab.
+    Finds mode by making a dictionary of vals = {val:frequency} 
+    Loops through data and updates a dictionary with +=1.
+    
+    Args:
+        data (list)
+        
+    Returns:
+        mode (element from data list)
+    """
+
+    # Create and populate frequency distribution
+    frequency_dict = {}
+    
+    # If an element is not in the dictionary , add it with value 1
+    # If an element is already in the dictionary , +1 the value
+    for i in data:
+        
+        if i not in frequency_dict:
+            frequency_dict[i] = 1
+            
+        else:
+            frequency_dict[i] += 1
+    
+    # Create a list for mode values
+    modes = []
+    
+    #from the dictionary, add element(s) to the modes list with max frequency
+    highest_freq = max(frequency_dict.values())
+    
+    for key, val in frequency_dict.items():
+        if val == highest_freq:
+            modes.append(key)
+            
+    # Return the mode list 
+    return modes
+```
+---></section>
+</section>
+<section id="measures-of-dispersion">
+<h2>Measures of Dispersion<a class="headerlink" href="#measures-of-dispersion" title="Permalink to this heading">#</a></h2>
+<section id="absolute-deviation">
+<h3>Absolute Deviation<a class="headerlink" href="#absolute-deviation" title="Permalink to this heading">#</a></h3>
+<p><strong>Absolute Deviation</strong> is the simplest way of calculating the dispersion of a data set. It is calculated by taking a value from the dataset and subtracting the mean of the dataset. This helps to identify the “distance” between a given value and the mean. In other words, how much a value <em>deviates</em> from the mean.</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(\left|x_i - \bar{x}\right|\)</span></p>
+</div></blockquote>
+<p><strong>Average Absolute Deviation</strong> is calculated by taking the mean of all individual absolute deviations in a data set as shown in the formula below:</p>
+<div class="math notranslate nohighlight">
+\[\large \dfrac{1}{n}\sum^n_{i=1}\left|(x_i-\bar x)\right| \]</div>
+</section>
+<section id="variance">
+<h3>Variance<a class="headerlink" href="#variance" title="Permalink to this heading">#</a></h3>
+<p>Earlier in the course, you learned about <strong>variance</strong> (represented by <span class="math notranslate nohighlight">\(\sigma^2\)</span>) as a measure of dispersion for continuous random variables from its expected mean value. Let’s quickly revisit this, as variance formula plays a key role while calculating covariance and correlation measures.</p>
+<p>The formula for calculating variance as shown below:</p>
+<div class="math notranslate nohighlight">
+\[\Large \sigma^2 = \dfrac{1}{n}\displaystyle\sum_{i=1}^{n}(x_i-\mu)^2\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(x\)</span> represents an individual data points</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mu \)</span> is the mean of the data points</p></li>
+<li><p><span class="math notranslate nohighlight">\(n\)</span> is the total number of data points</p></li>
+</ul>
+</section>
+</section>
+<section id="standard-deviation">
+<h2>Standard Deviation<a class="headerlink" href="#standard-deviation" title="Permalink to this heading">#</a></h2>
+<p>The <strong>Standard Deviation</strong> is another measure of the spread of values within a dataset.
+It is simply the square root of the variance. In the above formula, <span class="math notranslate nohighlight">\(\sigma^2\)</span> is the variance so <span class="math notranslate nohighlight">\(\sigma\)</span> is the standard deviation.</p>
+<div class="math notranslate nohighlight">
+\[ \large \sigma = \sqrt{\dfrac{1}{n}\displaystyle\sum^n_{i=1}(x_i-\mu)^2} \]</div>
+</section>
+<section id="measures-of-mututal-variation">
+<h2>Measures of Mututal Variation<a class="headerlink" href="#measures-of-mututal-variation" title="Permalink to this heading">#</a></h2>
+<section id="calculating-covariance">
+<h3>Calculating Covariance<a class="headerlink" href="#calculating-covariance" title="Permalink to this heading">#</a></h3>
+<p>If you have <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span>, two random variables having <span class="math notranslate nohighlight">\(n\)</span> elements each. You can calculate covariance (<span class="math notranslate nohighlight">\(\sigma_{xy}\)</span>) between these two variables by using the formula:</p>
+<div class="math notranslate nohighlight">
+\[ \Large \sigma_{XY} = \dfrac{1}{n}\displaystyle\sum_{i=1}^{n}(x_i -\mu_x)(y_i - \mu_y)\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\sigma_{XY}\)</span> = Covariance between <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(x_i\)</span> = ith element of variable <span class="math notranslate nohighlight">\(X\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(y_i\)</span> = ith element of variable <span class="math notranslate nohighlight">\(Y\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(n\)</span> = number of data points (<strong><span class="math notranslate nohighlight">\(n\)</span> must be same for <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span></strong>)</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mu_x\)</span> = mean of the independent variable <span class="math notranslate nohighlight">\(X\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mu_y\)</span> = mean of the dependent variable <span class="math notranslate nohighlight">\(Y\)</span></p></li>
+</ul>
+<section id="interpreting-covariance-values">
+<h4>Interpreting covariance values<a class="headerlink" href="#interpreting-covariance-values" title="Permalink to this heading">#</a></h4>
+<p>Covariance values range from positive infinity to negative infinity.</p>
+<ul class="simple">
+<li><p>A <strong>positive covariance</strong> indicates that two variables are <strong>positively related</strong></p></li>
+<li><p>A <strong>negative covariance</strong> indicates that two variables are <strong>inversely related</strong></p></li>
+<li><p>A <strong>covariance equal or close to 0</strong> indicates that there is <strong>no linear relationship</strong> between two variables</p></li>
+</ul>
+</section>
+</section>
+<section id="calculating-correlation-coefficient">
+<h3>Calculating Correlation Coefficient<a class="headerlink" href="#calculating-correlation-coefficient" title="Permalink to this heading">#</a></h3>
+<p>Pearson Correlation (<span class="math notranslate nohighlight">\(r\)</span>) is calculated using following formula :</p>
+<div class="math notranslate nohighlight">
+\[ \Large r = \frac{\sum_{i=1}^{n}(x_i -\mu_x)(y_i - \mu_y)} {\sqrt{\sum_{i=1}^{n}(x_i - \mu_x)^2 \sum_{i=1}^{n}(y_i-\mu_y)^2}}\]</div>
+<p>So just like in the case of covariance,  <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> are two random variables having n elements each.</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(x_i\)</span> = ith element of variable <span class="math notranslate nohighlight">\(X\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(y_i\)</span> = ith element of variable <span class="math notranslate nohighlight">\(Y\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(n\)</span> = number of data points (<strong><span class="math notranslate nohighlight">\(n\)</span> must be same for <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span></strong>)</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mu_x\)</span> = mean of the independent variable <span class="math notranslate nohighlight">\(X\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mu_y\)</span> = mean of the dependent variable <span class="math notranslate nohighlight">\(Y\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(r\)</span> = Calculated Pearson Correlation</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tup</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">tup</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(3, 4, 6)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tup</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">3</span><span class="o">-</span><span class="n">bb6d2a2e4378</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">tup</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="ne">TypeError</span>: &#39;tuple&#39; object does not support item assignment
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lis</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
+<span class="n">lis</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[3, 4, 6]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lis</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lis</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[3, 4, 1]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "learn-env"
+        },
+        kernelOptions: {
+            name: "learn-env",
+            path: "./Phase_1/topic_03_control_flow_functions"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'learn-env'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../topic_02_bash_git/topic_02_bash_and_git.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Topic 02:  Bash and Git</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../topic_04_python_libraries/topic_04_intro_to_libraries_numpy_SG.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Topic 04-Part 1: Python Libraries &amp; NumPy</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Topic 03: Control Flow, Functions, and Statistics</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#questions">Questions</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#python-fundamentals">Python Fundamentals</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bento-box-activity-solution">Bento Box Activity/Solution</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-statistics">Basic Statistics</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resources">Resources:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#measures-of-central-tendency">Measures of Central Tendency</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mean">Mean</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#median">Median</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mode">Mode</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#measures-of-dispersion">Measures of Dispersion</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#absolute-deviation">Absolute Deviation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variance">Variance</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-deviation">Standard Deviation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#measures-of-mututal-variation">Measures of Mututal Variation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculating-covariance">Calculating Covariance</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-covariance-values">Interpreting covariance values</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculating-correlation-coefficient">Calculating Correlation Coefficient</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By James Irving, PhD
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

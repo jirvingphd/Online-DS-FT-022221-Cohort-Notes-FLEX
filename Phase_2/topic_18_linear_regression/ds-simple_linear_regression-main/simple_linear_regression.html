@@ -1,0 +1,2039 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Simple Linear Regression &#8212; Data Science Curriculum</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Phase_2/topic_18_linear_regression/ds-simple_linear_regression-main/simple_linear_regression';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/flatironschool_banner.jpg" class="logo__image only-light" alt="Data Science Curriculum - Home"/>
+    <script>document.write(`<img src="../../../_static/flatironschool_banner.jpg" class="logo__image only-dark" alt="Data Science Curriculum - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../intro.html">
+                    Data Science Curriculum
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 1 - Python &amp; Data Fundamentals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_01_getting_started/topic_01_getting_started.html">Topic 1: Getting Started with Data Science</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_02_bash_git/topic_02_bash_and_git.html">Topic 02:  Bash and Git</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_03_control_flow_functions/topic_03_control_flow_and_functions.html">Topic 03: Control Flow, Functions, and Statistics</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_04_python_libraries/topic_04_intro_to_libraries_numpy_SG.html">Topic 04-Part 1: Python Libraries &amp; NumPy</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_04_python_libraries/topic_04_pt-2_brief_intro_to_pandas-SG.html">Topic 04-Part 2: Brief Intro to Pandas with Doctor Who</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_05_data_cleaning_in_pandas/topic_05_Data_Cleaning_in_Pandas.html">Topic 05: Data Cleaning in Pandas</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_06_data_visualization/topic_06_visualizations_heroes_project_SG.html">Topic 06:  Data Visualizations</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_07_SQL_and_relational_databases/topic_07_SQL_and_relational_databases_SG.html">TOPIC 07: SQL DATABASES</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_08_noSQL_databases/topic_08_mongodb-SG.html">Topic 08: NoSQL Databases</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_09_json_and_apis/topic_09_json-api-SG.html">Topic 09: Using APIs and JSON Data</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_10_webscraping/topic_10_SG_HTML_CSS_web_scraping.html">Topic 10: HTML, CSS, &amp; Web Scraping</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 2 - Statistics &amp; Regression</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../topic_11_probability_and_combinatorics/topic_11_playlist_probabilities-SG.html">Topic 11 - Intro to Combinatorics &amp; Probability</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_12_statistical_distributions/topic-12-distributions-with-movies-sg.html">Exploring Distributions with Movies Data</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_13_central_limit_theorem/topic_13_central_limit_theorem_SG.html">Topic 13: Central Limit Theorem</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_14_hypothesis_testing/topic_14_hypothesis_testing-SG.html">Topic 14: Hypothesis Testing -  T-Tests</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_15_ANOVA/topic_15_ANOVA_with_neuro_data-SG.html">Topic 15: ANOVAs &amp; Statistical Power with  Neuro Data</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_16_AB_testing/topic_16_AB_testing_with_movies-SG.html">Topic 16: Practicing AB Testing with Movies</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_17_bayesian_statistics/topic_17_bayesian_statistics-SG.html">Topic 17: Bayesian Statistics</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_18_intro_to_linear_regression_SG.html">Topic 18: Intro to Linear Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_19_part1_multiple_regression/topic_19_Multiple_Regression_v2-SG.html">Topic 19: Multiple Linear Regression</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_19_part2_model_validation/topic_19_part_2_Multiple_Regression_v2-SG.html">Topic 19 Part 2: Feature Selection &amp; Model Validation</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_20_extensions_linear_models/topic_20_extensions_to_linear_models_SG.html">Topic 20: Extensions to Linear Models</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 3 - Machine Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_21_OOP/topic_21_OOP_playing_cards_SG.html">Topic 21: Object-Oriented Programming</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_22_linear_algebra/topic_22_linear_algebra_SG.html">Topic 22: Linear Algebra</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_23_calculus_gradient_descent/topic_23_gradient_descent_SG.html">Topic 23: Cost Functions and Gradient Descent</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_24_regularization/topic_24_Regularization_Ridge_Lasso_v2_SG.html">Topic 24: Feature Selection &amp; Regularization (Ridge and Lasso Regression)</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_25_logistic_regression/topic_25_pt1_LogisticRegression_titanic-v2-SG.html">Topic 25-Pt 1: Intro to Logistic Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_25_logistic_regression/topic_25_pt2_LogisticRegression_titanic-v2-SG.html">Topic 25-Part 2: Evaluating Classifiers, Dealing with Class Imbalance, and <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code></a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_27_KNN/Topic_27_KNN_with_pipelines_with_lab_v3_SG.html">Topic 27: K-Nearest Neighbors<br/> +Topic 32: Pipelines</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_29_decision_trees/topic_29_decision_trees_v2_titanic-SG.html">Topic 29: Decision Trees</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_30_ensemble_methods/topic_30_ensemble_methods-SG.html">Topic 30: Ensemble Methods</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_31_support_vector_machines/topic_31_SupportVectorMachines_SG.html">Topic 31: Support Vector Machines</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 4 - Advanced ML &amp; Time Series</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_33_pca/topic_33_PCA_SG.html">Topic 33: Principal Component Analysis</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_34_clustering/topic_34_Kmeans_clustering_v3_SG.html">Topic 34: Clustering</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_35-36_using_databricks_for_pyspark/using_databricks_for_pyspark.html">How to Use Databricks for PySpark Canvas Material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_36_recommendation_systems/topic_36_Recommendation_Systems_with_Surprise.html">Topic 36: Recommendation Systems</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_37_intro_to_time_series/topic_37_intro_to_time_series_crime_v3-SG.html">Topic 37: Intro to Time Series</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_38_time_series_models/topic_38-time_series_models_v3_SG.html">Topic 38: Time Series Models</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_39_NLP/topic_39_NLP_finding_trump_v3_SG.html">Topic 39: Natural Language Processing + Topic 28: Bayesian Classification</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_40-41_neural_networks/topic_40-41_Artificial_Neural_Networks_v1_SG.html">Topic 40-41: Artificial Neural Networks</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_42_tuning_neural_networks/topic_42_tuning_ANNs_with_deep_NLP_v1_SG.html">Topic 42 - Tuning Neural Networks + Deep NLP</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_43_AWS/topic_43_operationalizing_code_AWS_SG.html">Topic 43: Operationalizing Code &amp; AWS</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 5 - Capstone &amp; Bonus Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/Capstone_Kickoff.html">Capstone Kickoff!</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/APIs/working_with_apis.html">Working with APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/developing_app_functions/developing-streamlit-app-functions_SG.html">Developing Streamlit App Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/tableau/tableau_fundamentals_2021-SG.html">Tableau Fundamentals</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/Bonus%20Notebooks/plotly_visuals.html">Plotly Question</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/master?urlpath=tree/Phase_2/topic_18_linear_regression/ds-simple_linear_regression-main/simple_linear_regression.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/blob/master/Phase_2/topic_18_linear_regression/ds-simple_linear_regression-main/simple_linear_regression.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/issues/new?title=Issue%20on%20page%20%2FPhase_2/topic_18_linear_regression/ds-simple_linear_regression-main/simple_linear_regression.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/Phase_2/topic_18_linear_regression/ds-simple_linear_regression-main/simple_linear_regression.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Simple Linear Regression</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Simple Linear Regression</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#agenda">Agenda</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#covariance-and-correlation">Covariance and Correlation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#covariance">Covariance</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#correlation">Correlation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#causation">Causation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-learning-theory">Statistical Learning Theory</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-equation">Regression Equation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#proof">Proof</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation">Interpretation</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-linear-regression-with-statsmodels">Simple Linear Regression with <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sidebar-using-best-line">Sidebar: Using <code class="docutils literal notranslate"><span class="pre">best_line()</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-without-error-in-statsmodels">Regression Without Error in <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-with-error-in-statsmodels">Regression with Error in <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitted-model-attributes-and-methods">Fitted Model Attributes and Methods</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coefficient-of-determination">Coefficient of Determination</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-regression-statistics">Other Regression Statistics</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#assumptions-of-linear-regression">Assumptions of Linear Regression</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linearity">Linearity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#independence">Independence</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#normality">Normality</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#homoskedasticity">Homoskedasticity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#violations-of-assumptions">Violations of Assumptions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#log-scaling">Log Scaling</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#level-up-anscombe-s-quartet">Level Up:  Anscombe’s Quartet</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#level-up-add-constant">Level Up: <code class="docutils literal notranslate"><span class="pre">.add_constant()</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#level-up-visualization-of-error">Level Up: Visualization of Error</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adjusted-r-2">Adjusted <span class="math notranslate nohighlight">\(R^2\)</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="simple-linear-regression">
+<h1>Simple Linear Regression<a class="headerlink" href="#simple-linear-regression" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits.mplot3d</span><span class="w"> </span><span class="kn">import</span> <span class="n">Axes3D</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">random</span><span class="w"> </span><span class="kn">import</span> <span class="n">gauss</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">lin_reg</span><span class="w"> </span><span class="kn">import</span> <span class="n">best_line</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">stats</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits</span><span class="w"> </span><span class="kn">import</span> <span class="n">mplot3d</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">metrics</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sm</span>
+
+<span class="o">%</span><span class="k">matplotlib</span> inline
+</pre></div>
+</div>
+</div>
+</div>
+<section id="agenda">
+<h2>Agenda<a class="headerlink" href="#agenda" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Explain and use the concepts of covariance and correlation</p></li>
+<li><p>Explain how to interpret linear regressions</p></li>
+<li><p>Describe the assumptions of linear regression</p></li>
+</ul>
+</section>
+<section id="covariance-and-correlation">
+<h2>Covariance and Correlation<a class="headerlink" href="#covariance-and-correlation" title="Permalink to this heading">#</a></h2>
+<p>The idea of <em>correlation</em> is the simple idea that variables often change <em>together</em>. For a simple example, cities with more buses tend to have higher populations.</p>
+<p>We might observe that, as one variable X increases, so does another Y, OR that as X increases, Y decreases.</p>
+<p>The <em>covariance</em> describes how two variables co-vary. Note the similarity in the definition to the definition of ordinary variance:</p>
+<section id="covariance">
+<h3>Covariance<a class="headerlink" href="#covariance" title="Permalink to this heading">#</a></h3>
+<p>For two random variables <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span>, each with <span class="math notranslate nohighlight">\(n\)</span> values:</p>
+<p><span class="math notranslate nohighlight">\(\Large\sigma_{XY} = \frac{\Sigma^n_{i = 1}(x_i - \mu_x)(y_i - \mu_y)}{n}\)</span> <br/></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Covariance by hand:</span>
+<span class="p">((</span><span class="mi">1</span><span class="o">-</span><span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span><span class="o">-</span><span class="mi">7</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">3</span><span class="o">-</span><span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">9</span><span class="o">-</span><span class="mi">7</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">5</span><span class="o">-</span><span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">10</span><span class="o">-</span><span class="mi">7</span><span class="p">))</span> <span class="o">/</span> <span class="mi">3</span>
+
+<span class="c1"># Better yet: With NumPy:</span>
+<span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 2.66666667,  5.33333333],
+       [ 5.33333333, 12.66666667]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note that the value of the covariance is very much a function of the values of X and Y, which can make interpretation difficult. What is wanted is a <em>standardized</em> scale for covariance, hence: <em>correlation</em>.</p>
+</section>
+<section id="correlation">
+<h3>Correlation<a class="headerlink" href="#correlation" title="Permalink to this heading">#</a></h3>
+<p>Pearson Correlation:<br/><span class="math notranslate nohighlight">\(\Large r_P = \frac{\Sigma^n_{i = 1}(x_i - \mu_x)(y_i - \mu_y)}{\sqrt{\Sigma^n_{i = 1}(x_i - \mu_x)^2\Sigma^n_{i = 1}(y_i -\mu_y)^2}}\)</span></p>
+<p>Note that we are simply standardizing the covariance by the standard deviations of X and Y (the <span class="math notranslate nohighlight">\(n\)</span>’s cancel!).</p>
+<p><span class="math notranslate nohighlight">\(\bf{Check}\)</span>:</p>
+<details><summary>
+What happens if X = Y?
+</summary>
+Then numerator = denominator and the correlation = 1!
+</details>
+<br/>
+We'll always have $-1 \leq r \leq 1$. (This was the point of standardizing by the standard deviations of X and Y.)
+<p>A correlation of -1 means that X and Y are perfectly negatively correlated, and a correlation of 1 means that X and Y are perfectly positively correlated.</p>
+<p>NumPy also has a correlation method:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">corrcoef</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[1.        , 0.91766294],
+       [0.91766294, 1.        ]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">4</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">19</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.917662935482247
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">corrcoef</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">Y</span><span class="p">)))[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<p>And so does SciPy:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stats</span><span class="o">.</span><span class="n">pearsonr</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.917662935482247
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="causation">
+<h2>Causation<a class="headerlink" href="#causation" title="Permalink to this heading">#</a></h2>
+<p><em>Why</em> does it happen that variables correlate? It <em>may</em> be that one is the cause of the other. A city having a high population, for example, probably does have some causal effect on the number of buses that the city has. But this <em>need not</em> be the case, and that is why statisticians are fond of saying that ‘correlation is not causation’. An alternative possibility, for example, is that high values of X and Y are <em>both</em> caused by high values of some third factor Z. The size of children’s feet, for example, is correlated with their ability to spell, but this is of course NOT because either is a cause of the other. Rather, BOTH are caused by the natural maturing and development of children. As they get older, both their feet and their spelling abilities grow!</p>
+</section>
+<section id="statistical-learning-theory">
+<h2>Statistical Learning Theory<a class="headerlink" href="#statistical-learning-theory" title="Permalink to this heading">#</a></h2>
+<p>It’s important at this point to understand the distinction between dependent and independent variables.</p>
+<p>Roughly, the independent variable is what can be directly manipulated and the dependent variable is what cannot be (but is nevertheless of great interest). What matters structurally is simply that we understand the dependent variable to be a <em>function</em> of the independent variable(s).</p>
+<p>This is the proper interpretation of a statistical <em>model</em>.</p>
+<p>Simple idea: We can model correlation with a <em>line</em>. As one variable changes, so does the other.</p>
+<p>This model has two <em>parameters</em>: <em>slope</em> and <em>y-intercept</em>.</p>
+<p>Unless there’s a perfectly (and suspiciously) linear relationship between our predictor(s) and our target, there will  be some sort of <strong>error</strong> or <strong>loss</strong> or <strong>residual</strong>. The best-fit line is constructed by minimizing the sum of the squares of these losses.</p>
+</section>
+<section id="regression-equation">
+<h2>Regression Equation<a class="headerlink" href="#regression-equation" title="Permalink to this heading">#</a></h2>
+<p>The solution for a simple regression best-fit line is as follows:</p>
+<ul class="simple">
+<li><p>slope: <br/><span class="math notranslate nohighlight">\(\Large m = r_P\frac{\sigma_y}{\sigma_x} = \frac{cov(X, Y)}{var(X)}\)</span></p></li>
+<li><p>y-intercept:<br/> <span class="math notranslate nohighlight">\(\Large b = \mu_y - m\mu_x\)</span></p></li>
+</ul>
+<section id="proof">
+<h3>Proof<a class="headerlink" href="#proof" title="Permalink to this heading">#</a></h3>
+<p>We demonstrate this by setting the derivative of the loss function, <span class="math notranslate nohighlight">\(\Sigma^n_{i=1}(y_i - (mx_i + b))^2\)</span>, equal to 0. <strong>We shall see this calculus trick many times!</strong></p>
+<p>For this purpose we consider the loss a function of its optimizing parameters <span class="math notranslate nohighlight">\(m\)</span> and <span class="math notranslate nohighlight">\(b\)</span>. So there are therefore two partial derivatives to consider. (We’ll cover this in more depth later in the course.)</p>
+<p>(i) <span class="math notranslate nohighlight">\(\frac{\partial}{\partial b}[\sum^n_{i=1}(y_i - mx_i - b)^2] = -2\sum^n_{i=1}(y_i - mx_i - b)\)</span></p>
+<p>(ii) <span class="math notranslate nohighlight">\(\frac{\partial}{\partial m}[\sum^n_{i=1}(y_i - mx_i - b)^2] = -2\sum^n_{i=1}x_i\sum^n_{i=1}(y_i - mx_i - b)\)</span></p>
+<ul class="simple">
+<li><p>Let’s set the first to 0:</p></li>
+</ul>
+<p><span class="math notranslate nohighlight">\(-2\sum^n_{i=1}(y_i - mx_i - b) = 0\)</span> <br/>
+<span class="math notranslate nohighlight">\(\sum^n_{i=1}(y_i - mx_i) = \sum^n_{i=1}b = nb\)</span> <br/></p>
+<p><strong>So:</strong> <span class="math notranslate nohighlight">\(\large b = \frac{\sum^n_{i=1}(y_i - mx_i)}{n} = \mu_y - m\mu_x\)</span></p>
+<ul class="simple">
+<li><p>Let’s set the second to 0:</p></li>
+</ul>
+<p><span class="math notranslate nohighlight">\(-2\sum^n_{i=1}x_i\sum^n_{i=1}(y_i - mx_i - b) = 0\)</span> <br/>
+<span class="math notranslate nohighlight">\(\sum^n_{i=1}(x_iy_i - mx^2_i - bx_i) = 0\)</span> <br/></p>
+<ul class="simple">
+<li><p>Plugging in our previous result, we have:</p></li>
+</ul>
+<p><span class="math notranslate nohighlight">\(\sum^n_{i=1}x_iy_i - (\frac{1}{n}\sum^n_{i=1}y_i - \frac{m}{n}\sum^n_{i=1}x_i)\sum^n_{i=1}x_i - m\sum^n_{i=1}x^2_i = 0\)</span> <br/>
+<span class="math notranslate nohighlight">\(\sum^n_{i=1}x_iy_i - \frac{1}{n}\sum^n_{i=1}x_i\sum^n_{i=1}y_i + \frac{m}{n}(\sum^n_{i=1}x_i)^2 - m\sum^n_{i=1}x^2_i = 0\)</span> <br/></p>
+<p><strong>So:</strong> <span class="math notranslate nohighlight">\(\large m = \frac{\sum^n_{i=1}x_iy_i - \frac{1}{n}\sum^n_{i=1}x_i\sum^n_{i=1}y_i}{\sum^n_{i=1}x^2_i - \frac{1}{n}(\sum^n_{i=1}x_i)^2} = \frac{n\times(\frac{1}{n}\sum^n_{i=1}x_iy_i - \frac{1}{n^2}\sum^n_{i=1}x_i\sum^n_{i=1}y_i)}{n\times(\frac{1}{n}\sum^n_{i=1}x^2_i - \mu^2_x)} = \frac{cov(X, Y)}{var(X)}\)</span></p>
+<p>For more on the proof see <a class="reference external" href="https://math.stackexchange.com/questions/716826/derivation-of-simple-linear-regression-parameters">here</a>.</p>
+</section>
+</section>
+<section id="interpretation">
+<h2>Interpretation<a class="headerlink" href="#interpretation" title="Permalink to this heading">#</a></h2>
+<p>The output of the simple linear regression algorithm is a pair of parameters: the slope and the y-intercept of the best-fit line through the data.</p>
+<p><em><strong>I therefore have a (more or less crude) MODEL of the phenomenon in question:</strong></em></p>
+<p>Suppose I have a bunch of data about (i) how many cigarettes people smoked in their lifetimes and (ii) how many years those same people lived. If I set my independent variable (“x”) to be the number of cigarettes smoked and my dependent variable (“y”) to be the number of years lived, then <em><strong>for any deceased person at all I will have a way of estimating the number of years that person lived if I know the number of cigarettes that that person smoked</strong></em>. This estimate is exactly what the best-fit line gives me.</p>
+<p>Suppose the parameters of the regression come out to be <span class="math notranslate nohighlight">\(\beta_0 = 100\)</span> years and <span class="math notranslate nohighlight">\(\beta_1 = -1\times 10^{-4}\)</span> years / cigarette (<a class="reference external" href="https://www.medicalnewstoday.com/releases/9703#1">in reality</a> these are probably both a bit high).</p>
+<p>Then we would be modeling the lifespan of human beings according to the number of cigarettes smoked:</p>
+<p><span class="math notranslate nohighlight">\(Y = \beta_1\times n + \beta_0\)</span>,</p>
+<p>where <span class="math notranslate nohighlight">\(Y\)</span> = the number of years (estimated) and <span class="math notranslate nohighlight">\(n\)</span> is the number of cigarettes smoked.</p>
+<ul class="simple">
+<li><p>If someone smoked 0 cigarettes, then we would estimate that person’s lifespan as:</p></li>
+</ul>
+<p><span class="math notranslate nohighlight">\(-1\times 10^{-4}\times 0 + 100 = 100\)</span> years.</p>
+<ul class="simple">
+<li><p>If someone smoked a pack a day for 30 years, that’s 20 * 365 * 30 = 219000 cigarettes (never mind about leap years!), so we would estimate that person’s lifespan as:</p></li>
+</ul>
+<p><span class="math notranslate nohighlight">\(-1\times 10^{-4}\times 219000 + 100 = 78.1\)</span> years.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="simple-linear-regression-with-statsmodels">
+<h1>Simple Linear Regression with <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code><a class="headerlink" href="#simple-linear-regression-with-statsmodels" title="Permalink to this heading">#</a></h1>
+<p>Let’s take a look at how to build a simple linear regression model with <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>. The <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> package offers a highly descriptive report of the fit of a regression model. Let’s generate a simple regression and then analyze the report!</p>
+<p>First let’s try data that fit a straight line perfectly:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">3</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mi">5</span>
+
+<span class="n">test_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span><span class="n">y</span><span class="p">})</span>
+<span class="n">test_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>x</th>
+      <th>y</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>5</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>6</td>
+      <td>23</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>7</td>
+      <td>26</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>8</td>
+      <td>29</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>9</td>
+      <td>32</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PathCollection at 0x7fec536b8370&gt;
+</pre></div>
+</div>
+<img alt="../../../_images/734cb1ad5721398c46469a62fa2de7f1a208ac720f6ea8fccfbab4d490fe79f9.png" src="../../../_images/734cb1ad5721398c46469a62fa2de7f1a208ac720f6ea8fccfbab4d490fe79f9.png" />
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="sidebar-using-best-line">
+<h1>Sidebar: Using <code class="docutils literal notranslate"><span class="pre">best_line()</span></code><a class="headerlink" href="#sidebar-using-best-line" title="Permalink to this heading">#</a></h1>
+<p>Let’s take a look at the code.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_line</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/dccf6f7a707a557212af8155a0f3be19752549ac7210b2af6b9a84b38108fb26.png" src="../../../_images/dccf6f7a707a557212af8155a0f3be19752549ac7210b2af6b9a84b38108fb26.png" />
+</div>
+</div>
+<p>The best-fit line exists no matter what my data look like!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_rand</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">uniform</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">Y_rand</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">uniform</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="n">best_line</span><span class="p">(</span><span class="n">X_rand</span><span class="p">,</span> <span class="n">Y_rand</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/a7f9df8a090058a38acb21d47c5a21d84f988c659ac53a1a7dfe97e81a39f32c.png" src="../../../_images/a7f9df8a090058a38acb21d47c5a21d84f988c659ac53a1a7dfe97e81a39f32c.png" />
+</div>
+</div>
+<p>Experiment: <a class="reference external" href="https://www.desmos.com/calculator/jwquvmikhr">Playing with regression line</a></p>
+<section id="regression-without-error-in-statsmodels">
+<h2>Regression Without Error in <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code><a class="headerlink" href="#regression-without-error-in-statsmodels" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sm</span><span class="o">.</span><span class="n">formula</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula</span> <span class="o">=</span> <span class="s2">&quot;y ~ x&quot;</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">test_df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>OLS Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>            <td>y</td>        <th>  R-squared:         </th> <td>   1.000</td> 
+</tr>
+<tr>
+  <th>Model:</th>                   <td>OLS</td>       <th>  Adj. R-squared:    </th> <td>   1.000</td> 
+</tr>
+<tr>
+  <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th> <td>1.039e+32</td>
+</tr>
+<tr>
+  <th>Date:</th>             <td>Mon, 05 Apr 2021</td> <th>  Prob (F-statistic):</th> <td>2.60e-278</td>
+</tr>
+<tr>
+  <th>Time:</th>                 <td>16:17:54</td>     <th>  Log-Likelihood:    </th> <td>  622.92</td> 
+</tr>
+<tr>
+  <th>No. Observations:</th>      <td>    20</td>      <th>  AIC:               </th> <td>  -1242.</td> 
+</tr>
+<tr>
+  <th>Df Residuals:</th>          <td>    18</td>      <th>  BIC:               </th> <td>  -1240.</td> 
+</tr>
+<tr>
+  <th>Df Model:</th>              <td>     1</td>      <th>                     </th>     <td> </td>    
+</tr>
+<tr>
+  <th>Covariance Type:</th>      <td>nonrobust</td>    <th>                     </th>     <td> </td>    
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+      <td></td>         <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th> <td>    5.0000</td> <td> 3.27e-15</td> <td> 1.53e+15</td> <td> 0.000</td> <td>    5.000</td> <td>    5.000</td>
+</tr>
+<tr>
+  <th>x</th>         <td>    3.0000</td> <td> 2.94e-16</td> <td> 1.02e+16</td> <td> 0.000</td> <td>    3.000</td> <td>    3.000</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+  <th>Omnibus:</th>       <td>29.063</td> <th>  Durbin-Watson:     </th> <td>   0.001</td>
+</tr>
+<tr>
+  <th>Prob(Omnibus):</th> <td> 0.000</td> <th>  Jarque-Bera (JB):  </th> <td>  45.473</td>
+</tr>
+<tr>
+  <th>Skew:</th>          <td> 2.667</td> <th>  Prob(JB):          </th> <td>1.34e-10</td>
+</tr>
+<tr>
+  <th>Kurtosis:</th>      <td> 8.111</td> <th>  Cond. No.          </th> <td>    21.5</td>
+</tr>
+</table><br/><br/>Notes:<br/>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.</div></div>
+</div>
+</section>
+<section id="regression-with-error-in-statsmodels">
+<h2>Regression with Error in <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code><a class="headerlink" href="#regression-with-error-in-statsmodels" title="Permalink to this heading">#</a></h2>
+<p>Now let’s add a little noise:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="o">*</span><span class="n">pt</span> <span class="o">+</span> <span class="mi">5</span> <span class="o">+</span> <span class="n">gauss</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span> <span class="k">for</span> <span class="n">pt</span> <span class="ow">in</span> <span class="n">x</span><span class="p">])</span>
+
+<span class="n">df2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">])</span>
+
+<span class="n">df2</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span>
+<span class="n">df2</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">y</span>
+
+<span class="n">df2</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>x</th>
+      <th>y</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>12.838130</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>8.488414</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>10.644153</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>10.274530</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>21.133385</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>5</td>
+      <td>32.851464</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>6</td>
+      <td>26.728950</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>7</td>
+      <td>16.722699</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>8</td>
+      <td>34.787427</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>9</td>
+      <td>45.974409</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">formula</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s1">&#39;y~x&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df2</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>OLS Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>            <td>y</td>        <th>  R-squared:         </th> <td>   0.892</td>
+</tr>
+<tr>
+  <th>Model:</th>                   <td>OLS</td>       <th>  Adj. R-squared:    </th> <td>   0.886</td>
+</tr>
+<tr>
+  <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th> <td>   148.8</td>
+</tr>
+<tr>
+  <th>Date:</th>             <td>Mon, 05 Apr 2021</td> <th>  Prob (F-statistic):</th> <td>3.87e-10</td>
+</tr>
+<tr>
+  <th>Time:</th>                 <td>16:17:54</td>     <th>  Log-Likelihood:    </th> <td> -63.273</td>
+</tr>
+<tr>
+  <th>No. Observations:</th>      <td>    20</td>      <th>  AIC:               </th> <td>   130.5</td>
+</tr>
+<tr>
+  <th>Df Residuals:</th>          <td>    18</td>      <th>  BIC:               </th> <td>   132.5</td>
+</tr>
+<tr>
+  <th>Df Model:</th>              <td>     1</td>      <th>                     </th>     <td> </td>   
+</tr>
+<tr>
+  <th>Covariance Type:</th>      <td>nonrobust</td>    <th>                     </th>     <td> </td>   
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+      <td></td>         <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th> <td>    8.4280</td> <td>    2.600</td> <td>    3.241</td> <td> 0.005</td> <td>    2.965</td> <td>   13.891</td>
+</tr>
+<tr>
+  <th>x</th>         <td>    2.8544</td> <td>    0.234</td> <td>   12.199</td> <td> 0.000</td> <td>    2.363</td> <td>    3.346</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+  <th>Omnibus:</th>       <td> 0.072</td> <th>  Durbin-Watson:     </th> <td>   2.169</td>
+</tr>
+<tr>
+  <th>Prob(Omnibus):</th> <td> 0.965</td> <th>  Jarque-Bera (JB):  </th> <td>   0.088</td>
+</tr>
+<tr>
+  <th>Skew:</th>          <td> 0.069</td> <th>  Prob(JB):          </th> <td>   0.957</td>
+</tr>
+<tr>
+  <th>Kurtosis:</th>      <td> 2.705</td> <th>  Cond. No.          </th> <td>    21.5</td>
+</tr>
+</table><br/><br/>Notes:<br/>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.</div></div>
+</div>
+<p>Please note the difference between <code class="docutils literal notranslate"><span class="pre">sm.OLS()</span></code> and <code class="docutils literal notranslate"><span class="pre">sm.formula.ols()</span></code>!</p>
+<section id="fitted-model-attributes-and-methods">
+<h3>Fitted Model Attributes and Methods<a class="headerlink" href="#fitted-model-attributes-and-methods" title="Permalink to this heading">#</a></h3>
+<p>The fitted model has <a class="reference external" href="https://www.statsmodels.org/stable/generated/statsmodels.regression.linear_model.RegressionResults.html">many</a> attributes and methods. I’ll look at a couple here.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">tvalues</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept     3.241187
+x            12.199040
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">pvalues</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    4.532547e-03
+x            3.870588e-10
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">mse_total</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>319.6535746192225
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">.summary()</span></code> method contains lots of helpful information about the model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>OLS Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>            <td>y</td>        <th>  R-squared:         </th> <td>   0.892</td>
+</tr>
+<tr>
+  <th>Model:</th>                   <td>OLS</td>       <th>  Adj. R-squared:    </th> <td>   0.886</td>
+</tr>
+<tr>
+  <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th> <td>   148.8</td>
+</tr>
+<tr>
+  <th>Date:</th>             <td>Mon, 05 Apr 2021</td> <th>  Prob (F-statistic):</th> <td>3.87e-10</td>
+</tr>
+<tr>
+  <th>Time:</th>                 <td>16:17:54</td>     <th>  Log-Likelihood:    </th> <td> -63.273</td>
+</tr>
+<tr>
+  <th>No. Observations:</th>      <td>    20</td>      <th>  AIC:               </th> <td>   130.5</td>
+</tr>
+<tr>
+  <th>Df Residuals:</th>          <td>    18</td>      <th>  BIC:               </th> <td>   132.5</td>
+</tr>
+<tr>
+  <th>Df Model:</th>              <td>     1</td>      <th>                     </th>     <td> </td>   
+</tr>
+<tr>
+  <th>Covariance Type:</th>      <td>nonrobust</td>    <th>                     </th>     <td> </td>   
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+      <td></td>         <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th> <td>    8.4280</td> <td>    2.600</td> <td>    3.241</td> <td> 0.005</td> <td>    2.965</td> <td>   13.891</td>
+</tr>
+<tr>
+  <th>x</th>         <td>    2.8544</td> <td>    0.234</td> <td>   12.199</td> <td> 0.000</td> <td>    2.363</td> <td>    3.346</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+  <th>Omnibus:</th>       <td> 0.072</td> <th>  Durbin-Watson:     </th> <td>   2.169</td>
+</tr>
+<tr>
+  <th>Prob(Omnibus):</th> <td> 0.965</td> <th>  Jarque-Bera (JB):  </th> <td>   0.088</td>
+</tr>
+<tr>
+  <th>Skew:</th>          <td> 0.069</td> <th>  Prob(JB):          </th> <td>   0.957</td>
+</tr>
+<tr>
+  <th>Kurtosis:</th>      <td> 2.705</td> <th>  Cond. No.          </th> <td>    21.5</td>
+</tr>
+</table><br/><br/>Notes:<br/>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.</div></div>
+</div>
+<p>What are all these statistics!? Let’s say a word about them.</p>
+</section>
+</section>
+<section id="coefficient-of-determination">
+<h2>Coefficient of Determination<a class="headerlink" href="#coefficient-of-determination" title="Permalink to this heading">#</a></h2>
+<p>Very often a data scientist will calculate <span class="math notranslate nohighlight">\(R^2\)</span>, the <em>coefficient of determination</em>, as a measure of how well the model fits the data.</p>
+<p><span class="math notranslate nohighlight">\(R^2\)</span> for a model is ultimately a <em>relational</em> notion. It’s a measure of goodness of fit <em>relative</em> to a (bad) baseline model. This bad baseline model is simply the horizontal line <span class="math notranslate nohighlight">\(y = \mu_Y\)</span>, for dependent variable <span class="math notranslate nohighlight">\(Y\)</span>.</p>
+<p>The actual calculation of <span class="math notranslate nohighlight">\(R^2\)</span> is: <br/> <span class="math notranslate nohighlight">\(\Large R^2\equiv 1-\frac{\Sigma_i(y_i - \hat{y}_i)^2}{\Sigma_i(y_i - \bar{y})^2}\)</span>.</p>
+<p><span class="math notranslate nohighlight">\(R^2\)</span> is a measure of how much variation in the dependent variable your model explains.</p>
+</section>
+<section id="other-regression-statistics">
+<h2>Other Regression Statistics<a class="headerlink" href="#other-regression-statistics" title="Permalink to this heading">#</a></h2>
+<p>What else do we have in this report?</p>
+<ul class="simple">
+<li><p><strong>F-statistic</strong>: The F-test measures the significance of your model relative to a model in which all coefficients are 0, i.e. relative to a model that says there is no correlation whatever between the predictors and the target. <br/><br/></p></li>
+<li><p><strong>Log-Likelihood</strong>: The probability in question is the probability of seeing these data points, <em>given</em> the model parameter values. The higher this is, the more our data conform to our model and so the better our fit. AIC and BIC are related to the log-likelihood; we’ll talk about those later. <br/><br/></p></li>
+<li><p><strong>coef</strong>: These are the betas as calculated by the least-squares regression. We also have p-values and 95%-confidence intervals. <br/><br/></p></li>
+<li><p><strong>Omnibus</strong>: This is a test for error normality. The probability is the chance that the errors are normally distributed. <br/><br/></p></li>
+<li><p><strong>Durbin-Watson</strong>: This is a test for autocorrelation. We’ll return to this topic in Phase 4. <br/><br/></p></li>
+<li><p><strong>Jarque-Bera</strong>: This is another test for error normality. <br/><br/></p></li>
+<li><p><strong>Cond. No.</strong>: The condition number tests for independence of the predictors. Lower scores are better. When the predictors are <em>not</em> independent, we can run into problems of multicollinearity. For more on the condition number, see <a class="reference external" href="https://stats.stackexchange.com/questions/168259/how-do-you-interpret-the-condition-number-of-a-correlation-matrix">here</a>.</p></li>
+</ul>
+<p><strong>Many good regression diagnostics are available in</strong> <a class="reference external" href="https://www.statsmodels.org/dev/examples/notebooks/generated/regression_diagnostics.html"><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code></a>. For more on statsmodels regression statistics, see <a class="reference external" href="https://www.accelebrate.com/blog/interpreting-results-from-linear-regression-is-the-data-appropriate">here</a>.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="assumptions-of-linear-regression">
+<h1>Assumptions of Linear Regression<a class="headerlink" href="#assumptions-of-linear-regression" title="Permalink to this heading">#</a></h1>
+<p>Linear regression models make the following assumptions about the data and the process that generated them.</p>
+<p><a class="reference external" href="https://www.statisticssolutions.com/assumptions-of-linear-regression/">Here</a> is a helpful resource on the assumptions of linear regression.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sm</span><span class="o">.</span><span class="n">graphics</span><span class="o">.</span><span class="n">plot_regress_exog</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/b434a0a48c936effb3f898d360236962e7aabc153036b5bfac796e57a056a5de.png" src="../../../_images/b434a0a48c936effb3f898d360236962e7aabc153036b5bfac796e57a056a5de.png" />
+<img alt="../../../_images/b434a0a48c936effb3f898d360236962e7aabc153036b5bfac796e57a056a5de.png" src="../../../_images/b434a0a48c936effb3f898d360236962e7aabc153036b5bfac796e57a056a5de.png" />
+</div>
+</div>
+<section id="linearity">
+<h2>Linearity<a class="headerlink" href="#linearity" title="Permalink to this heading">#</a></h2>
+<p><strong>The relationship between the target and predictor is linear.</strong> Check this by drawing a scatter plot of your predictor and your target, and see if there is evidence that the relationship might not folow a straight line.</p>
+</section>
+<section id="independence">
+<h2>Independence<a class="headerlink" href="#independence" title="Permalink to this heading">#</a></h2>
+<p><strong>The errors are independent</strong>. In other words: Knowing the error for one point doesn’t tell you anything about the error for another.</p>
+<p><strong>How can I check for this?</strong></p>
+<ul class="simple">
+<li><p>Make a scatter plot of the residuals and target values and look for patterns</p></li>
+<li><p>Check the Durbin-Watson score</p></li>
+</ul>
+</section>
+<section id="normality">
+<h2>Normality<a class="headerlink" href="#normality" title="Permalink to this heading">#</a></h2>
+<p><strong>The errors are normally distributed.</strong> That is, smaller errors are more probable than larger errors, according to the familiar bell curve.</p>
+<p><strong>How can I check for this?</strong></p>
+<ul class="simple">
+<li><p>Make a histogram of the residuals</p></li>
+<li><p>Build a QQ-Plot</p></li>
+<li><p>Check the Jarque-Bera or Omnibus p-value (from <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> output)</p></li>
+</ul>
+</section>
+<section id="homoskedasticity">
+<h2>Homoskedasticity<a class="headerlink" href="#homoskedasticity" title="Permalink to this heading">#</a></h2>
+<p><strong>The errors are homoskedastic.</strong> That is, the errors have the same variance.</p>
+<p>(The Greek word <span class="math notranslate nohighlight">\(\sigma\kappa\epsilon\delta\acute{\alpha}\nu\nu\upsilon\mu\iota\)</span> means “to scatter”.)</p>
+<p><strong>How can I check for this?</strong></p>
+<ul class="simple">
+<li><p>Make a scatter plot of the residuals and target values and look to see if they are more or less spread out at different places</p></li>
+<li><p>Conduct a formal test (e.g. Goldfeld-Quandt)</p></li>
+</ul>
+</section>
+<section id="violations-of-assumptions">
+<h2>Violations of Assumptions<a class="headerlink" href="#violations-of-assumptions" title="Permalink to this heading">#</a></h2>
+<p>No model is perfect, and your asumptions will never hold perfectly. If the violations of assumptions are severe, you can try adjusting the data so the assumptions will hold, such as by…</p>
+<ul class="simple">
+<li><p>Transforming your data with a non-linear function (e.g. log)</p></li>
+<li><p>Only modeling a subset of your data</p></li>
+<li><p>Dropping outliers</p></li>
+</ul>
+<p>These can make it harder to explain or interpret your model, but the tradeoff may be worth it. Alternatively, you may be better of just using a different type of model (you will learn many).</p>
+<section id="log-scaling">
+<h3>Log Scaling<a class="headerlink" href="#log-scaling" title="Permalink to this heading">#</a></h3>
+<p>There is no assumption that the predictor and the target <em>themselves</em> be normally distributed. However, linear regression can work better if the predictor and target are normally distributed.</p>
+<p>Log-scaling can be a good tool to make right-skewed data more normal.</p>
+<p>Suppose e.g. a kde plot of my predictor <span class="math notranslate nohighlight">\(X\)</span> looks like this:</p>
+<p><img alt="original" src="../../../_images/skewplot.png" /></p>
+<p>In that case, the kde plot of a log-transformed version of <span class="math notranslate nohighlight">\(X\)</span> could look like this:</p>
+<p><img alt="log" src="../../../_images/logplot.png" /></p>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="level-up-anscombe-s-quartet">
+<h1>Level Up:  <a class="reference external" href="https://www.desmos.com/calculator/paknt6oneh">Anscombe’s Quartet</a><a class="headerlink" href="#level-up-anscombe-s-quartet" title="Permalink to this heading">#</a></h1>
+<p>Why do we care about all these assumption checks? They let’s us know if we’ve run a linear regression when we shouldn’t have. Anscombe’s Quartet demonstates this by showing four sets of data that are wildly different and problematic, but produce the same regression line.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ans</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;anscombe&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">ans</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;dataset&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;x&#39;, ylabel=&#39;y&#39;&gt;
+</pre></div>
+</div>
+<img alt="../../../_images/b7bb46231e7defcf5517577f4a65b69a6cefbafe91a4e31970764dcd956f97e0.png" src="../../../_images/b7bb46231e7defcf5517577f4a65b69a6cefbafe91a4e31970764dcd956f97e0.png" />
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="level-up-add-constant">
+<h1>Level Up: <code class="docutils literal notranslate"><span class="pre">.add_constant()</span></code><a class="headerlink" href="#level-up-add-constant" title="Permalink to this heading">#</a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">.add_constant()</span></code> function adds a column of ones:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">3</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mi">5</span>
+
+<span class="n">sm</span><span class="o">.</span><span class="n">OLS</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>OLS Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>            <td>y</td>        <th>  R-squared (uncentered):</th>      <td>   0.995</td>
+</tr>
+<tr>
+  <th>Model:</th>                   <td>OLS</td>       <th>  Adj. R-squared (uncentered):</th> <td>   0.995</td>
+</tr>
+<tr>
+  <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th>          <td>   3994.</td>
+</tr>
+<tr>
+  <th>Date:</th>             <td>Mon, 05 Apr 2021</td> <th>  Prob (F-statistic):</th>          <td>1.49e-23</td>
+</tr>
+<tr>
+  <th>Time:</th>                 <td>16:17:56</td>     <th>  Log-Likelihood:    </th>          <td> -47.446</td>
+</tr>
+<tr>
+  <th>No. Observations:</th>      <td>    20</td>      <th>  AIC:               </th>          <td>   96.89</td>
+</tr>
+<tr>
+  <th>Df Residuals:</th>          <td>    19</td>      <th>  BIC:               </th>          <td>   97.89</td>
+</tr>
+<tr>
+  <th>Df Model:</th>              <td>     1</td>      <th>                     </th>              <td> </td>   
+</tr>
+<tr>
+  <th>Covariance Type:</th>      <td>nonrobust</td>    <th>                     </th>              <td> </td>   
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+   <td></td>     <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>x1</th> <td>    3.3846</td> <td>    0.054</td> <td>   63.196</td> <td> 0.000</td> <td>    3.273</td> <td>    3.497</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+  <th>Omnibus:</th>       <td> 2.910</td> <th>  Durbin-Watson:     </th> <td>   0.021</td>
+</tr>
+<tr>
+  <th>Prob(Omnibus):</th> <td> 0.233</td> <th>  Jarque-Bera (JB):  </th> <td>   1.212</td>
+</tr>
+<tr>
+  <th>Skew:</th>          <td> 0.000</td> <th>  Prob(JB):          </th> <td>   0.546</td>
+</tr>
+<tr>
+  <th>Kurtosis:</th>      <td> 1.794</td> <th>  Cond. No.          </th> <td>    1.00</td>
+</tr>
+</table><br/><br/>Notes:<br/>[1] R² is computed without centering (uncentered) since the model does not contain a constant.<br/>[2] Standard Errors assume that the covariance matrix of the errors is correctly specified.</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sm</span><span class="o">.</span><span class="n">add_constant</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 1.,  0.],
+       [ 1.,  1.],
+       [ 1.,  2.],
+       [ 1.,  3.],
+       [ 1.,  4.],
+       [ 1.,  5.],
+       [ 1.,  6.],
+       [ 1.,  7.],
+       [ 1.,  8.],
+       [ 1.,  9.],
+       [ 1., 10.],
+       [ 1., 11.],
+       [ 1., 12.],
+       [ 1., 13.],
+       [ 1., 14.],
+       [ 1., 15.],
+       [ 1., 16.],
+       [ 1., 17.],
+       [ 1., 18.],
+       [ 1., 19.]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Does this make sense?</p>
+<p>Instead of setting up the regression y ~ x, we’re setting up y ~ x_1 + x_2, where x_2 = 1 for all observations.</p>
+<ul class="simple">
+<li><p><strong>Without</strong> the constant, we’re looking for a parameter <span class="math notranslate nohighlight">\(\beta_1\)</span> that minimizes the error around <span class="math notranslate nohighlight">\(y = \beta_1x\)</span>;</p></li>
+<li><p><strong>With</strong> the constant, we’re looking for two parameters <span class="math notranslate nohighlight">\(\beta_0\)</span> and <span class="math notranslate nohighlight">\(\beta_1\)</span> that minimize the error around <span class="math notranslate nohighlight">\(y = \beta_1x_1 + \beta_0x_2 = \beta_1x_1 + \beta_0\)</span>.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sm</span><span class="o">.</span><span class="n">OLS</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sm</span><span class="o">.</span><span class="n">add_constant</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>OLS Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>            <td>y</td>        <th>  R-squared:         </th> <td>   1.000</td> 
+</tr>
+<tr>
+  <th>Model:</th>                   <td>OLS</td>       <th>  Adj. R-squared:    </th> <td>   1.000</td> 
+</tr>
+<tr>
+  <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th> <td>1.039e+32</td>
+</tr>
+<tr>
+  <th>Date:</th>             <td>Mon, 05 Apr 2021</td> <th>  Prob (F-statistic):</th> <td>2.60e-278</td>
+</tr>
+<tr>
+  <th>Time:</th>                 <td>16:17:56</td>     <th>  Log-Likelihood:    </th> <td>  622.92</td> 
+</tr>
+<tr>
+  <th>No. Observations:</th>      <td>    20</td>      <th>  AIC:               </th> <td>  -1242.</td> 
+</tr>
+<tr>
+  <th>Df Residuals:</th>          <td>    18</td>      <th>  BIC:               </th> <td>  -1240.</td> 
+</tr>
+<tr>
+  <th>Df Model:</th>              <td>     1</td>      <th>                     </th>     <td> </td>    
+</tr>
+<tr>
+  <th>Covariance Type:</th>      <td>nonrobust</td>    <th>                     </th>     <td> </td>    
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+    <td></td>       <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>const</th> <td>    5.0000</td> <td> 3.27e-15</td> <td> 1.53e+15</td> <td> 0.000</td> <td>    5.000</td> <td>    5.000</td>
+</tr>
+<tr>
+  <th>x1</th>    <td>    3.0000</td> <td> 2.94e-16</td> <td> 1.02e+16</td> <td> 0.000</td> <td>    3.000</td> <td>    3.000</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+  <th>Omnibus:</th>       <td>29.063</td> <th>  Durbin-Watson:     </th> <td>   0.001</td>
+</tr>
+<tr>
+  <th>Prob(Omnibus):</th> <td> 0.000</td> <th>  Jarque-Bera (JB):  </th> <td>  45.473</td>
+</tr>
+<tr>
+  <th>Skew:</th>          <td> 2.667</td> <th>  Prob(JB):          </th> <td>1.34e-10</td>
+</tr>
+<tr>
+  <th>Kurtosis:</th>      <td> 8.111</td> <th>  Cond. No.          </th> <td>    21.5</td>
+</tr>
+</table><br/><br/>Notes:<br/>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.</div></div>
+</div>
+<section id="level-up-visualization-of-error">
+<h2>Level Up: Visualization of Error<a class="headerlink" href="#level-up-visualization-of-error" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Adjusting X so that the intercept term of the best-fit line will be 0</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">])</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">Y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">coef_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([2.])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">intercept_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.7763568394002505e-15
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">sse</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+    <span class="c1"># sum of squared errors</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="n">m</span><span class="o">*</span><span class="n">X</span>
+    <span class="n">err</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="n">line</span> <span class="o">-</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))])</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+
+<span class="n">ms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">ys</span> <span class="o">=</span> <span class="p">[</span><span class="n">sse</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">ms</span><span class="p">]</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Slope Estimates&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Sum of Squared Errors&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ms</span><span class="p">,</span> <span class="n">ys</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/7d281abd40c3ca54c61466e854e2df83c374c485674094085144210117d76491.png" src="../../../_images/7d281abd40c3ca54c61466e854e2df83c374c485674094085144210117d76491.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Going 3d to plot error as a function of both m and b</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">new_sse</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function returns the sum of squared errors for</span>
+<span class="sd">    a target y and a linear estimate mx + b.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">metrics</span><span class="o">.</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">m</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Going back to our original example</span>
+<span class="n">X_sample</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="n">Y_sample</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
+
+<span class="c1"># This should be our minimum error</span>
+<span class="n">new_sse</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">X_sample</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Y_sample</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">bs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="n">X_grid</span><span class="p">,</span> <span class="n">Y_grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">ms</span><span class="p">,</span> <span class="n">bs</span><span class="p">)</span>
+
+<span class="n">Z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">new_sse</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">X_sample</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">Y_sample</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">ms</span><span class="p">]</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">bs</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">m_errs</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">ms</span><span class="p">:</span>
+    <span class="n">m_errs</span><span class="p">[</span><span class="n">m</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_sse</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">X_sample</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Y_sample</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">m_errs</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">m_errs</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">m_errs</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">==</span> <span class="nb">min</span><span class="p">(</span><span class="n">m_errs</span><span class="o">.</span><span class="n">values</span><span class="p">()):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6.089276604428118
+1.9494949494949498
+2.05050505050505
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b_errs</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">bs</span><span class="p">:</span>
+    <span class="n">b_errs</span><span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_sse</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">X_sample</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">Y_sample</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">b_errs</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">b_errs</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">b_errs</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">==</span> <span class="nb">min</span><span class="p">(</span><span class="n">b_errs</span><span class="o">.</span><span class="n">values</span><span class="p">()):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6.004897459442912
+0.9595959595959593
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">X_grid</span><span class="p">,</span> <span class="n">Y_grid</span><span class="p">,</span> <span class="n">Z</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;slope&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y-intercept&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s1">&#39;sum of squared errors&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Error as a function of slope and y-intercept&#39;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;images/surfacePlotSSE&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/af434c9d93f2ac9c8def8de74a22d69a065ae3aec0575627d17eca565f3d9a99.png" src="../../../_images/af434c9d93f2ac9c8def8de74a22d69a065ae3aec0575627d17eca565f3d9a99.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">contour3D</span><span class="p">(</span><span class="n">X_grid</span><span class="p">,</span> <span class="n">Y_grid</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;slope&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y-intercept&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s1">&#39;sum of squared errors&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Error as a function of slope and y-intercept&#39;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;images/contourPlotSSE&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/95206f86b4424a17eab77b45fe3a111ce101551971e4478a797f71154abfda43.png" src="../../../_images/95206f86b4424a17eab77b45fe3a111ce101551971e4478a797f71154abfda43.png" />
+</div>
+</div>
+<section id="adjusted-r-2">
+<h3>Adjusted <span class="math notranslate nohighlight">\(R^2\)</span><a class="headerlink" href="#adjusted-r-2" title="Permalink to this heading">#</a></h3>
+<p>There are some theoretical <a class="reference external" href="https://data.library.virginia.edu/is-r-squared-useless/">objections</a> to using <span class="math notranslate nohighlight">\(R^2\)</span> as an evaluator of a regression model.</p>
+<p>One objection is that, if we add another predictor to our model, <span class="math notranslate nohighlight">\(R^2\)</span> can only <em>increase</em>! (It could hardly be that with more features I’d be able to account for <em>less</em> of the variation in the dependent variable than I could with the smaller set of features.)</p>
+<p>One improvement is <strong>adjusted <span class="math notranslate nohighlight">\(R^2\)</span></strong>: <br/> <span class="math notranslate nohighlight">\(\Large R^2_{adj.}\equiv 1 - \frac{(1 - R^2)(n - 1)}{n - m - 1}\)</span>, where:</p>
+<ul class="simple">
+<li><p>n is the number of data points; and</p></li>
+<li><p>m is the number of predictors.</p></li>
+</ul>
+<p>This can be a better indicator of the quality of a regression model. For more, see <a class="reference external" href="https://www.statisticshowto.datasciencecentral.com/adjusted-r2/">here</a>.</p>
+<p>Note that Adjusted <span class="math notranslate nohighlight">\(R^2\)</span> <em>can</em> be negative!</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Phase_2/topic_18_linear_regression/ds-simple_linear_regression-main"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Simple Linear Regression</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#agenda">Agenda</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#covariance-and-correlation">Covariance and Correlation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#covariance">Covariance</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#correlation">Correlation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#causation">Causation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-learning-theory">Statistical Learning Theory</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-equation">Regression Equation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#proof">Proof</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation">Interpretation</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-linear-regression-with-statsmodels">Simple Linear Regression with <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sidebar-using-best-line">Sidebar: Using <code class="docutils literal notranslate"><span class="pre">best_line()</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-without-error-in-statsmodels">Regression Without Error in <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-with-error-in-statsmodels">Regression with Error in <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitted-model-attributes-and-methods">Fitted Model Attributes and Methods</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coefficient-of-determination">Coefficient of Determination</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-regression-statistics">Other Regression Statistics</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#assumptions-of-linear-regression">Assumptions of Linear Regression</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linearity">Linearity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#independence">Independence</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#normality">Normality</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#homoskedasticity">Homoskedasticity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#violations-of-assumptions">Violations of Assumptions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#log-scaling">Log Scaling</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#level-up-anscombe-s-quartet">Level Up:  Anscombe’s Quartet</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#level-up-add-constant">Level Up: <code class="docutils literal notranslate"><span class="pre">.add_constant()</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#level-up-visualization-of-error">Level Up: Visualization of Error</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adjusted-r-2">Adjusted <span class="math notranslate nohighlight">\(R^2\)</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By James Irving, PhD
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

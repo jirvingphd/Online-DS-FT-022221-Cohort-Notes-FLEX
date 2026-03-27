@@ -1,0 +1,1200 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Confidence Intervals &#8212; Data Science Curriculum</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Phase_2/topic_13_central_limit_theorem/central-lecturer-repo/confidence_intervals-solution';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/flatironschool_banner.jpg" class="logo__image only-light" alt="Data Science Curriculum - Home"/>
+    <script>document.write(`<img src="../../../_static/flatironschool_banner.jpg" class="logo__image only-dark" alt="Data Science Curriculum - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../intro.html">
+                    Data Science Curriculum
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 1 - Python &amp; Data Fundamentals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_01_getting_started/topic_01_getting_started.html">Topic 1: Getting Started with Data Science</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_02_bash_git/topic_02_bash_and_git.html">Topic 02:  Bash and Git</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_03_control_flow_functions/topic_03_control_flow_and_functions.html">Topic 03: Control Flow, Functions, and Statistics</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_04_python_libraries/topic_04_intro_to_libraries_numpy_SG.html">Topic 04-Part 1: Python Libraries &amp; NumPy</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_04_python_libraries/topic_04_pt-2_brief_intro_to_pandas-SG.html">Topic 04-Part 2: Brief Intro to Pandas with Doctor Who</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_05_data_cleaning_in_pandas/topic_05_Data_Cleaning_in_Pandas.html">Topic 05: Data Cleaning in Pandas</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_06_data_visualization/topic_06_visualizations_heroes_project_SG.html">Topic 06:  Data Visualizations</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_07_SQL_and_relational_databases/topic_07_SQL_and_relational_databases_SG.html">TOPIC 07: SQL DATABASES</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_08_noSQL_databases/topic_08_mongodb-SG.html">Topic 08: NoSQL Databases</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_09_json_and_apis/topic_09_json-api-SG.html">Topic 09: Using APIs and JSON Data</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_10_webscraping/topic_10_SG_HTML_CSS_web_scraping.html">Topic 10: HTML, CSS, &amp; Web Scraping</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 2 - Statistics &amp; Regression</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../topic_11_probability_and_combinatorics/topic_11_playlist_probabilities-SG.html">Topic 11 - Intro to Combinatorics &amp; Probability</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_12_statistical_distributions/topic-12-distributions-with-movies-sg.html">Exploring Distributions with Movies Data</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_13_central_limit_theorem_SG.html">Topic 13: Central Limit Theorem</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_14_hypothesis_testing/topic_14_hypothesis_testing-SG.html">Topic 14: Hypothesis Testing -  T-Tests</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_15_ANOVA/topic_15_ANOVA_with_neuro_data-SG.html">Topic 15: ANOVAs &amp; Statistical Power with  Neuro Data</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_16_AB_testing/topic_16_AB_testing_with_movies-SG.html">Topic 16: Practicing AB Testing with Movies</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_17_bayesian_statistics/topic_17_bayesian_statistics-SG.html">Topic 17: Bayesian Statistics</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_18_linear_regression/topic_18_intro_to_linear_regression_SG.html">Topic 18: Intro to Linear Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_19_part1_multiple_regression/topic_19_Multiple_Regression_v2-SG.html">Topic 19: Multiple Linear Regression</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_19_part2_model_validation/topic_19_part_2_Multiple_Regression_v2-SG.html">Topic 19 Part 2: Feature Selection &amp; Model Validation</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_20_extensions_linear_models/topic_20_extensions_to_linear_models_SG.html">Topic 20: Extensions to Linear Models</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 3 - Machine Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_21_OOP/topic_21_OOP_playing_cards_SG.html">Topic 21: Object-Oriented Programming</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_22_linear_algebra/topic_22_linear_algebra_SG.html">Topic 22: Linear Algebra</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_23_calculus_gradient_descent/topic_23_gradient_descent_SG.html">Topic 23: Cost Functions and Gradient Descent</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_24_regularization/topic_24_Regularization_Ridge_Lasso_v2_SG.html">Topic 24: Feature Selection &amp; Regularization (Ridge and Lasso Regression)</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_25_logistic_regression/topic_25_pt1_LogisticRegression_titanic-v2-SG.html">Topic 25-Pt 1: Intro to Logistic Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_25_logistic_regression/topic_25_pt2_LogisticRegression_titanic-v2-SG.html">Topic 25-Part 2: Evaluating Classifiers, Dealing with Class Imbalance, and <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code></a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_27_KNN/Topic_27_KNN_with_pipelines_with_lab_v3_SG.html">Topic 27: K-Nearest Neighbors<br/> +Topic 32: Pipelines</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_29_decision_trees/topic_29_decision_trees_v2_titanic-SG.html">Topic 29: Decision Trees</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_30_ensemble_methods/topic_30_ensemble_methods-SG.html">Topic 30: Ensemble Methods</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_31_support_vector_machines/topic_31_SupportVectorMachines_SG.html">Topic 31: Support Vector Machines</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 4 - Advanced ML &amp; Time Series</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_33_pca/topic_33_PCA_SG.html">Topic 33: Principal Component Analysis</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_34_clustering/topic_34_Kmeans_clustering_v3_SG.html">Topic 34: Clustering</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_35-36_using_databricks_for_pyspark/using_databricks_for_pyspark.html">How to Use Databricks for PySpark Canvas Material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_36_recommendation_systems/topic_36_Recommendation_Systems_with_Surprise.html">Topic 36: Recommendation Systems</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_37_intro_to_time_series/topic_37_intro_to_time_series_crime_v3-SG.html">Topic 37: Intro to Time Series</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_38_time_series_models/topic_38-time_series_models_v3_SG.html">Topic 38: Time Series Models</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_39_NLP/topic_39_NLP_finding_trump_v3_SG.html">Topic 39: Natural Language Processing + Topic 28: Bayesian Classification</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_40-41_neural_networks/topic_40-41_Artificial_Neural_Networks_v1_SG.html">Topic 40-41: Artificial Neural Networks</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_42_tuning_neural_networks/topic_42_tuning_ANNs_with_deep_NLP_v1_SG.html">Topic 42 - Tuning Neural Networks + Deep NLP</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_43_AWS/topic_43_operationalizing_code_AWS_SG.html">Topic 43: Operationalizing Code &amp; AWS</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 5 - Capstone &amp; Bonus Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/Capstone_Kickoff.html">Capstone Kickoff!</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/APIs/working_with_apis.html">Working with APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/developing_app_functions/developing-streamlit-app-functions_SG.html">Developing Streamlit App Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/tableau/tableau_fundamentals_2021-SG.html">Tableau Fundamentals</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/Bonus%20Notebooks/plotly_visuals.html">Plotly Question</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/master?urlpath=tree/Phase_2/topic_13_central_limit_theorem/central-lecturer-repo/confidence_intervals-solution.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/blob/master/Phase_2/topic_13_central_limit_theorem/central-lecturer-repo/confidence_intervals-solution.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/issues/new?title=Issue%20on%20page%20%2FPhase_2/topic_13_central_limit_theorem/central-lecturer-repo/confidence_intervals-solution.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/Phase_2/topic_13_central_limit_theorem/central-lecturer-repo/confidence_intervals-solution.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Confidence Intervals</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#agenda">Agenda</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#z-tables"><span class="math notranslate nohighlight">\(z\)</span>-Tables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intuition">Intuition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation">Interpretation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#construction">Construction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cis-for-normally-distributed-data">CIs for Normally Distributed Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cis-for-non-normally-distributed-data">CIs for Non-Normally Distributed Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#t-distribution"><span class="math notranslate nohighlight">\(t\)</span>-Distribution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cis-for-t-distribution">CIs for <span class="math notranslate nohighlight">\(t\)</span>-Distribution</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#t-distribution-example"><span class="math notranslate nohighlight">\(t\)</span>-Distribution Example</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#binomial-distribution">Binomial Distribution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cis-for-other-parameters">CIs for Other Parameters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-visual-interpretation-of-confidence-intervals">A Visual Interpretation of Confidence Intervals</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="confidence-intervals">
+<h1>Confidence Intervals<a class="headerlink" href="#confidence-intervals" title="Permalink to this heading">#</a></h1>
+<section id="agenda">
+<h2>Agenda<a class="headerlink" href="#agenda" title="Permalink to this heading">#</a></h2>
+<p>SWBAT:</p>
+<ul class="simple">
+<li><p>Describe the use of confidence intervals;</p></li>
+<li><p>Construct confidence intervals for different types of distributions:</p>
+<ul>
+<li><p>normal</p></li>
+<li><p><span class="math notranslate nohighlight">\(t\)</span></p></li>
+<li><p>binomial</p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">stats</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="o">%</span><span class="k">matplotlib</span> inline
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="z-tables">
+<h2><span class="math notranslate nohighlight">\(z\)</span>-Tables<a class="headerlink" href="#z-tables" title="Permalink to this heading">#</a></h2>
+<p>Let’s start with the notion of a <a class="reference external" href="http://z-table.com"><span class="math notranslate nohighlight">\(z\)</span>-table</a>.</p>
+</section>
+<section id="intuition">
+<h2>Intuition<a class="headerlink" href="#intuition" title="Permalink to this heading">#</a></h2>
+<p>Because sample statistics are imperfect representations of the true population values, it is often appropriate to state these estimates with <strong>confidence intervals</strong>.</p>
+<p>Suppose I weigh a sample of 50 jellybeans from a population of 10000 and find the average weight to be 1.25 grams. Can I take this figure to be a good estimate of the average weight over the whole <em>population</em> of jelly beans?</p>
+<p>In a word, yes. (What else do I have to go on!?) But what I want now is a more or less precise way of indicating that this figure, though likely close to the real population mean, is inexact.</p>
+<p>Natural idea: I’ll say I’m confident that the real population value lies in some neighborhood or <em>interval</em> around the figure I obtained for my sample.</p>
+<p>Notice that:</p>
+<ul class="simple">
+<li><p>The larger my sample, the more confident I may be about the sample’s representativeness for the whole population;</p></li>
+<li><p>The larger I make the interval, the more confident I may be about the true population value falling within it.</p></li>
+</ul>
+</section>
+<section id="interpretation">
+<h2>Interpretation<a class="headerlink" href="#interpretation" title="Permalink to this heading">#</a></h2>
+<p>Here’s another example: Suppose our Indian correspondent (or David Attenborough) takes several hundred measurements of parrot beak lengths in the Ganges river basin and calculates (correctly!) an average beak length of 9cm. He reports this measure by saying that the 90%-confidence interval is (8.6, 9.4).</p>
+<p>This does NOT mean that the true population mean beak length has a 90% chance of being somewhere between 8.6cm and 9.4cm. After all, the true mean either falls in that range or it doesn’t. The notion of probability <em>here</em> doesn’t seem to make much sense. Rather, what our correspondent means is that, if we were to conduct the same measuring experiment many times, constructing intervals in the same way, we should expect 90% of those intervals to contain the true population mean.</p>
+</section>
+<section id="construction">
+<h2>Construction<a class="headerlink" href="#construction" title="Permalink to this heading">#</a></h2>
+<p>OK: So how do we construct these intervals?</p>
+<p>The confidence interval we construct will depend on the statistics of our sample. It will depend in particular on (i) our sample mean and (ii) our sample size.</p>
+<p>It will also depend on the underlying distribution of our data. If our data are <strong>normally</strong> distributed, then we can proceed as follows:</p>
+<p>Naturally, the confidence interval will be centered on our sample mean. To construct the endpoints we step out from the center with a step size equal to the standard error, <span class="math notranslate nohighlight">\(\large\frac{\sigma}{\sqrt{n}}\)</span>. The number of steps we take is determined by which level of confidence we want attached to our interval: In particular, we take <span class="math notranslate nohighlight">\(z\)</span>-many steps, where <span class="math notranslate nohighlight">\(z\)</span> is the (two-tailed) z-score that corresponds to our chosen level of confidence.</p>
+<p>If our data are <strong>not</strong> normally distributed, then there are several strategies we might try, some of which ultimately depend on some connection to the normal distribution, like a strategy that appeals to the Central Limit Theorem.</p>
+</section>
+<section id="cis-for-normally-distributed-data">
+<h2>CIs for Normally Distributed Data<a class="headerlink" href="#cis-for-normally-distributed-data" title="Permalink to this heading">#</a></h2>
+<p>Let’s look at an example with data we assume to be normally distributed:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A normally distributed variable with a</span>
+<span class="c1"># population size of 1000</span>
+
+<span class="n">pop</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+                          <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Let&#39;s calculate the population mean.</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">pop</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.01933205582232549
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># And the population standard deviation.</span>
+
+<span class="n">pop_std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">pop</span><span class="p">)</span>
+<span class="n">pop_std</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9787262077473543
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s say we take a sample of fifty from our population, and that we want an 80%-confidence interval for our estimate of the population mean. The z-score that corresponds to an 80%-confidence interval is:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">z</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.9</span><span class="p">)</span>
+<span class="c1">#Why do we want 0.9 here?</span>
+<span class="n">z</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.2815515655446004
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">sample</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">pop</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.17715311316172172
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pop_std</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="o">*</span> <span class="n">z</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.17738312474862944
+</pre></div>
+</div>
+</div>
+</div>
+<p>Thus we’d report our estimate of the population mean as 0.177 <span class="math notranslate nohighlight">\(\pm\)</span> 0.177, or, equivalently, as (0, 0.354). Note that the true population mean of 0.0193 is in fact in this range.</p>
+</section>
+<section id="cis-for-non-normally-distributed-data">
+<h2>CIs for Non-Normally Distributed Data<a class="headerlink" href="#cis-for-non-normally-distributed-data" title="Permalink to this heading">#</a></h2>
+<p>One of the most commonly used strategies for dealing with non-normally distributed data is to find a way to reduce the problem to one that involves normally distributed data!</p>
+<p><a class="reference external" href="https://file.scirp.org/Html/3-1240887_76758.htm">Here</a> is a review article that compares several different strategies. (Note that it ultimately recommends a sort of Bayesian method. We’ll get to Bayesian reasoning in a later lesson.)</p>
+</section>
+<section id="t-distribution">
+<h2><span class="math notranslate nohighlight">\(t\)</span>-Distribution<a class="headerlink" href="#t-distribution" title="Permalink to this heading">#</a></h2>
+<p><img alt="imgguiness" src="../../../_images/guiness.png" /></p>
+<p>We can use the normal distribution when either:</p>
+<ul class="simple">
+<li><p>the population standard deviation is known</p></li>
+<li><p>the sample size is greater than 30.</p></li>
+</ul>
+<p>If <strong>neither</strong> of these holds true, we need to use the <strong>T-distribution</strong>. The t-distribution is wider and has different critical values for different sample sizes.</p>
+<p>PDF of T-distribution: <span class="math notranslate nohighlight">\({\frac {\Gamma \left({\frac {\nu +1}{2}}\right)}{{\sqrt {\nu \pi }}\,\Gamma \left({\frac {\nu }{2}}\right)}}\left(1+{\frac {x^{2}}{\nu }}\right)^{-{\frac {\nu +1}{2}}}\!\)</span>, where <span class="math notranslate nohighlight">\(\Gamma\)</span> denotes the <a class="reference external" href="https://en.wikipedia.org/wiki/Gamma_function">Gamma Function</a>.</p>
+<p>parameter: <span class="math notranslate nohighlight">\(\nu &gt; 0\)</span> where <span class="math notranslate nohighlight">\(\nu\)</span> is degrees of freedom (n-1)</p>
+<p><strong>T distribution becomes closer to Z distribution as n increases</strong>
+<img alt="zvt" src="../../../_images/z_vs_t.png" /></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">gamma</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">201</span><span class="p">)</span>
+<span class="n">nus</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+<span class="n">y_norm</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">X</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">):</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">gamma</span><span class="p">((</span><span class="n">nus</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">nus</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="o">*</span> <span class="n">gamma</span><span class="p">(</span><span class="n">nus</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span><span class="p">))</span> <span class="o">*</span>\
+<span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">X</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="n">nus</span><span class="p">[</span><span class="n">j</span><span class="p">])</span><span class="o">**</span><span class="p">((</span><span class="o">-</span><span class="n">nus</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">fr</span><span class="s1">&#39;t-Distribution, $\nu$ = </span><span class="si">{</span><span class="n">nus</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y_norm</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Normal Distribution&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/c0a5ec94dbb26a22d5c9d11da4f8734b5e94e9961081710d5e460ac7f6b750e9.png" src="../../../_images/c0a5ec94dbb26a22d5c9d11da4f8734b5e94e9961081710d5e460ac7f6b750e9.png" />
+</div>
+</div>
+</section>
+<section id="cis-for-t-distribution">
+<h2>CIs for <span class="math notranslate nohighlight">\(t\)</span>-Distribution<a class="headerlink" href="#cis-for-t-distribution" title="Permalink to this heading">#</a></h2>
+<p>The construction of confidence intervals for the t-Distribution is similar to how they are made for the normal distribution. But instead of z-scores, we’ll have t-scores. And since we don’t have access to the population standard deviation, we’ll make use of the sample standard deviation instead.</p>
+<p>left endpt.: <span class="math notranslate nohighlight">\(\bar{x} - t\times\frac{s}{\sqrt{n}}\)</span> <br/>
+right endpt.: <span class="math notranslate nohighlight">\(\bar{x} + t\times\frac{s}{\sqrt{n}}\)</span></p>
+<section id="t-distribution-example">
+<h3><span class="math notranslate nohighlight">\(t\)</span>-Distribution Example<a class="headerlink" href="#t-distribution-example" title="Permalink to this heading">#</a></h3>
+<p>You are inspecting a hardware factory and want to construct a 90% confidence interval of acceptable screw lengths. You draw a sample of 30 screws and calculate their mean length as 4.8 centimeters and the standard deviation as 0.4 centimeters. What are the bounds of your confidence interval?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">30</span>
+<span class="n">mean</span> <span class="o">=</span> <span class="mf">4.8</span>
+<span class="n">t_value</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.95</span><span class="p">,</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">margin_error</span> <span class="o">=</span> <span class="n">t_value</span> <span class="o">*</span> <span class="mf">0.4</span><span class="o">/</span><span class="p">(</span><span class="n">n</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">confidence_interval</span> <span class="o">=</span> <span class="p">(</span><span class="n">mean</span> <span class="o">-</span> <span class="n">margin_error</span><span class="p">,</span> <span class="n">mean</span> <span class="o">+</span> <span class="n">margin_error</span><span class="p">)</span>
+
+<span class="n">confidence_interval</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(4.6759133066001235, 4.924086693399876)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your turn!</span>
+
+<span class="c1"># You&#39;re weighing walruses in the Arctic in the attempt to estimate</span>
+<span class="c1"># the mean weight of the Canadian walrus population. You have a sample</span>
+<span class="c1"># of 30 walrus weights. The mean of the sample is 2000 lbs. and the</span>
+<span class="c1"># standard deviation is 200 lbs. Calculate the 80%-confidence interval.</span>
+<span class="c1"># Calculate the 70%-confidence interval. How do they compare to the</span>
+<span class="c1"># normal-distribution CIs? (To calculate the latter, just use the </span>
+<span class="c1"># sample standard deviation.)</span>
+
+
+<span class="n">n</span> <span class="o">=</span> <span class="mi">30</span>
+<span class="n">x_bar</span> <span class="o">=</span> <span class="mi">2000</span>
+<span class="n">s</span> <span class="o">=</span> <span class="mi">200</span>
+
+<span class="n">t_value80</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">t_value70</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.85</span><span class="p">,</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">margin_error80</span> <span class="o">=</span> <span class="n">t_value80</span> <span class="o">*</span> <span class="mi">200</span><span class="o">/</span><span class="p">(</span><span class="n">n</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">margin_error70</span> <span class="o">=</span> <span class="n">t_value70</span> <span class="o">*</span> <span class="mi">200</span><span class="o">/</span><span class="p">(</span><span class="n">n</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="n">conf_int80</span> <span class="o">=</span> <span class="p">(</span><span class="n">x_bar</span> <span class="o">-</span> <span class="n">margin_error80</span><span class="p">,</span> <span class="n">x_bar</span> <span class="o">+</span> <span class="n">margin_error80</span><span class="p">)</span>
+<span class="n">conf_int70</span> <span class="o">=</span> <span class="p">(</span><span class="n">x_bar</span> <span class="o">-</span> <span class="n">margin_error70</span><span class="p">,</span> <span class="n">x_bar</span> <span class="o">+</span> <span class="n">margin_error70</span><span class="p">)</span>
+
+<span class="n">z_score80</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.9</span><span class="p">)</span>
+<span class="n">z_score70</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.85</span><span class="p">)</span>
+
+<span class="n">error_norm80</span> <span class="o">=</span> <span class="n">z_score80</span> <span class="o">*</span> <span class="mi">200</span><span class="o">/</span><span class="p">(</span><span class="n">n</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">error_norm70</span> <span class="o">=</span> <span class="n">z_score70</span> <span class="o">*</span> <span class="mi">200</span><span class="o">/</span><span class="p">(</span><span class="n">n</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="n">conf_norm80</span> <span class="o">=</span> <span class="p">(</span><span class="n">x_bar</span> <span class="o">-</span> <span class="n">error_norm80</span><span class="p">,</span> <span class="n">x_bar</span> <span class="o">+</span> <span class="n">error_norm80</span><span class="p">)</span>
+<span class="n">conf_norm70</span> <span class="o">=</span> <span class="p">(</span><span class="n">x_bar</span> <span class="o">-</span> <span class="n">error_norm70</span><span class="p">,</span> <span class="n">x_bar</span> <span class="o">+</span> <span class="n">error_norm70</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">conf_int80</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">conf_int70</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">conf_norm80</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">conf_norm70</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1952.1132140358065, 2047.8867859641935)
+(1961.4658103151796, 2038.5341896848204)
+(1953.2043532630107, 2046.7956467369893)
+(1962.154803548181, 2037.845196451819)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="binomial-distribution">
+<h2>Binomial Distribution<a class="headerlink" href="#binomial-distribution" title="Permalink to this heading">#</a></h2>
+<p>What if we have a binomial distribution? Suppose we have the following sample statistic:</p>
+<p>A survey of 3000 voters found that 1245 approved of the job the governor was doing. How can we express our 95%-confidence level about voter approval of the governor among <em>all</em> voters?</p>
+<p>To solve this, we’ll once again start with our sample proportion as the center of our CI and step out from it by an amount proportional to the relevant z-score.</p>
+<p>But by how much exactly? Forgoing the <a class="reference external" href="https://newonlinecourses.science.psu.edu/stat414/node/208/">proof</a>, the answer <em>for suitably large samples</em> (we’re relying here on the Central Limit Theorem) is as follows:</p>
+<p>left endpt.: <span class="math notranslate nohighlight">\(\hat{p} - z\times\sqrt{\frac{\hat{p}(1 - \hat{p})}{n}}\)</span> <br/>
+right endpt.: <span class="math notranslate nohighlight">\(\hat{p} + z\times\sqrt{\frac{\hat{p}(1 - \hat{p})}{n}}\)</span></p>
+<p>Let’s answer our original question about the voters:</p>
+<p>We have:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\hat{p} = \frac{1245}{3000} = 0.415\)</span>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(n = 3000\)</span>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(z = 1.96\)</span>.</p></li>
+</ul>
+<p>Therefore:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">p_hat</span> <span class="o">=</span> <span class="mf">0.415</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">3000</span>
+<span class="n">z_voters</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.975</span><span class="p">)</span>
+<span class="n">step</span> <span class="o">=</span> <span class="n">z_voters</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">p_hat</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">p_hat</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span>
+
+<span class="n">interval</span> <span class="o">=</span> <span class="p">(</span><span class="n">p_hat</span> <span class="o">-</span> <span class="n">step</span><span class="p">,</span> <span class="n">p_hat</span> <span class="o">+</span> <span class="n">step</span><span class="p">)</span>
+<span class="n">interval</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.3973684925470148, 0.4326315074529852)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="cis-for-other-parameters">
+<h2>CIs for Other Parameters<a class="headerlink" href="#cis-for-other-parameters" title="Permalink to this heading">#</a></h2>
+<p>We might be interested in constructing confidence intervals for other parameters, such as the variance. <a class="reference external" href="https://newonlinecourses.science.psu.edu/stat414/">This online course</a> has several good examples.</p>
+</section>
+<section id="a-visual-interpretation-of-confidence-intervals">
+<h2>A Visual Interpretation of Confidence Intervals<a class="headerlink" href="#a-visual-interpretation-of-confidence-intervals" title="Permalink to this heading">#</a></h2>
+<p>Let’s see if we can get an idea of how confidence intervals work by constructing a plot:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plotting CIs</span>
+
+<span class="n">intervals</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">30</span><span class="p">):</span> <span class="c1"># number of intervals</span>
+    <span class="n">sample</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="c1"># sample size = 10</span>
+    <span class="n">step</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">pop</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="c1"># standard error</span>
+    <span class="n">x_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span> <span class="o">-</span> <span class="n">step</span> <span class="o">*</span> <span class="n">z</span> <span class="c1"># left endpt. of interval</span>
+    <span class="n">x_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span> <span class="o">+</span> <span class="n">step</span> <span class="o">*</span> <span class="n">z</span> <span class="c1"># right endpt. of interval</span>
+    <span class="n">intervals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">,</span> <span class="mi">30</span><span class="p">))</span> <span class="c1"># add interval</span>
+                                                    <span class="c1"># to intervals</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">intervals</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">30</span><span class="p">),</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span> <span class="c1"># plot intervals evenly and</span>
+                                    <span class="c1"># vertically</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">pop</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/5168bd6cb4e21a9c7673bd8226dc752de49a154c099f7d38f79ba2607f44d9c5.png" src="../../../_images/5168bd6cb4e21a9c7673bd8226dc752de49a154c099f7d38f79ba2607f44d9c5.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Exercise: turn this into a function that takes as parameters:</span>
+<span class="c1"># - the population</span>
+<span class="c1"># - sample size</span>
+<span class="c1"># - no. of samples / confidence intervals to plot</span>
+<span class="c1"># - confidence level</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">ci_plotter</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span> <span class="n">sample_size</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">,</span> <span class="n">conf</span><span class="p">):</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">stats</span>
+    <span class="n">intervals</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_samples</span><span class="p">):</span> <span class="c1"># number of intervals</span>
+        <span class="n">sample</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span> <span class="n">sample_size</span><span class="p">)</span>
+        <span class="n">step</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">pop</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sample_size</span><span class="p">)</span> <span class="c1"># standard error</span>
+        <span class="n">semi_int_size</span> <span class="o">=</span> <span class="n">step</span> <span class="o">*</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">conf</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+        
+        <span class="n">x_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span> <span class="o">-</span> <span class="n">semi_int_size</span> <span class="c1"># left endpt. of interval</span>
+        <span class="n">x_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span> <span class="o">+</span> <span class="n">semi_int_size</span> <span class="c1"># right endpt. of interval</span>
+        <span class="n">intervals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">,</span> <span class="mi">30</span><span class="p">))</span> <span class="c1"># add interval</span>
+                                                        <span class="c1"># to intervals</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">intervals</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_samples</span><span class="p">),</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span> <span class="c1"># plot intervals evenly and</span>
+                                        <span class="c1"># vertically</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">pop</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ci_plotter</span><span class="p">(</span><span class="n">pop</span><span class="o">=</span><span class="n">pop</span><span class="p">,</span> <span class="n">sample_size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">num_samples</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">conf</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/dbe6e6115f6d433704cc255ba3a96daa6f0364299e0ace75d75956fcc423e3e0.png" src="../../../_images/dbe6e6115f6d433704cc255ba3a96daa6f0364299e0ace75d75956fcc423e3e0.png" />
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Phase_2/topic_13_central_limit_theorem/central-lecturer-repo"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#agenda">Agenda</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#z-tables"><span class="math notranslate nohighlight">\(z\)</span>-Tables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intuition">Intuition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation">Interpretation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#construction">Construction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cis-for-normally-distributed-data">CIs for Normally Distributed Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cis-for-non-normally-distributed-data">CIs for Non-Normally Distributed Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#t-distribution"><span class="math notranslate nohighlight">\(t\)</span>-Distribution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cis-for-t-distribution">CIs for <span class="math notranslate nohighlight">\(t\)</span>-Distribution</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#t-distribution-example"><span class="math notranslate nohighlight">\(t\)</span>-Distribution Example</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#binomial-distribution">Binomial Distribution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cis-for-other-parameters">CIs for Other Parameters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-visual-interpretation-of-confidence-intervals">A Visual Interpretation of Confidence Intervals</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By James Irving, PhD
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

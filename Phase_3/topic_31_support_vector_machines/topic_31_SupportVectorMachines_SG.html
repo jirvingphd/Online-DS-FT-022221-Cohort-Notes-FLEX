@@ -1,0 +1,1642 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Topic 31: Support Vector Machines &#8212; Data Science Curriculum</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script type="application/vnd.jupyter.widget-state+json">{"state": {"3176a925b1da4812b6b9a08eaa9a47e5": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "ProgressStyleModel", "state": {"description_width": "initial"}}, "6cdfcbcf7d9e46788a093ca3e89884cf": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "7f45943170bc4076966bdad19d1993bb": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "907fbf82d8fd4b0aa4bd1e20f61cd86c": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "DescriptionStyleModel", "state": {"description_width": ""}}, "b1e379b187b447b6a38deec60ef877de": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "b2c21f049d1c447ab6bdb2eb160fc01c": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HTMLModel", "state": {"layout": "IPY_MODEL_b1e379b187b447b6a38deec60ef877de", "style": "IPY_MODEL_907fbf82d8fd4b0aa4bd1e20f61cd86c", "value": " 0/6497 [00:00&lt;?, ?it/s]"}}, "b83511e5360247068a26da1552bce1b5": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HBoxModel", "state": {"children": ["IPY_MODEL_fca5f875a10349d59c154faa80e49698", "IPY_MODEL_b2c21f049d1c447ab6bdb2eb160fc01c"], "layout": "IPY_MODEL_7f45943170bc4076966bdad19d1993bb"}}, "fca5f875a10349d59c154faa80e49698": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "IntProgressModel", "state": {"description": "  0%", "layout": "IPY_MODEL_6cdfcbcf7d9e46788a093ca3e89884cf", "max": 6497, "style": "IPY_MODEL_3176a925b1da4812b6b9a08eaa9a47e5"}}}, "version_major": 2, "version_minor": 0}</script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script crossorigin="anonymous" data-jupyter-widgets-cdn="https://cdn.jsdelivr.net/npm/" src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@1.0.6/dist/embed-amd.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Phase_3/topic_31_support_vector_machines/topic_31_SupportVectorMachines_SG';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Topic 33: Principal Component Analysis" href="../../Phase_4/topic_33_pca/topic_33_PCA_SG.html" />
+    <link rel="prev" title="Topic 30: Ensemble Methods" href="../topic_30_ensemble_methods/topic_30_ensemble_methods-SG.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/flatironschool_banner.jpg" class="logo__image only-light" alt="Data Science Curriculum - Home"/>
+    <script>document.write(`<img src="../../_static/flatironschool_banner.jpg" class="logo__image only-dark" alt="Data Science Curriculum - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Data Science Curriculum
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 1 - Python &amp; Data Fundamentals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_01_getting_started/topic_01_getting_started.html">Topic 1: Getting Started with Data Science</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_02_bash_git/topic_02_bash_and_git.html">Topic 02:  Bash and Git</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_03_control_flow_functions/topic_03_control_flow_and_functions.html">Topic 03: Control Flow, Functions, and Statistics</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_04_python_libraries/topic_04_intro_to_libraries_numpy_SG.html">Topic 04-Part 1: Python Libraries &amp; NumPy</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_04_python_libraries/topic_04_pt-2_brief_intro_to_pandas-SG.html">Topic 04-Part 2: Brief Intro to Pandas with Doctor Who</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_05_data_cleaning_in_pandas/topic_05_Data_Cleaning_in_Pandas.html">Topic 05: Data Cleaning in Pandas</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_06_data_visualization/topic_06_visualizations_heroes_project_SG.html">Topic 06:  Data Visualizations</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_07_SQL_and_relational_databases/topic_07_SQL_and_relational_databases_SG.html">TOPIC 07: SQL DATABASES</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_08_noSQL_databases/topic_08_mongodb-SG.html">Topic 08: NoSQL Databases</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_09_json_and_apis/topic_09_json-api-SG.html">Topic 09: Using APIs and JSON Data</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_10_webscraping/topic_10_SG_HTML_CSS_web_scraping.html">Topic 10: HTML, CSS, &amp; Web Scraping</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 2 - Statistics &amp; Regression</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_11_probability_and_combinatorics/topic_11_playlist_probabilities-SG.html">Topic 11 - Intro to Combinatorics &amp; Probability</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_12_statistical_distributions/topic-12-distributions-with-movies-sg.html">Exploring Distributions with Movies Data</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_13_central_limit_theorem/topic_13_central_limit_theorem_SG.html">Topic 13: Central Limit Theorem</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_14_hypothesis_testing/topic_14_hypothesis_testing-SG.html">Topic 14: Hypothesis Testing -  T-Tests</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_15_ANOVA/topic_15_ANOVA_with_neuro_data-SG.html">Topic 15: ANOVAs &amp; Statistical Power with  Neuro Data</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_16_AB_testing/topic_16_AB_testing_with_movies-SG.html">Topic 16: Practicing AB Testing with Movies</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_17_bayesian_statistics/topic_17_bayesian_statistics-SG.html">Topic 17: Bayesian Statistics</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_18_linear_regression/topic_18_intro_to_linear_regression_SG.html">Topic 18: Intro to Linear Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_19_part1_multiple_regression/topic_19_Multiple_Regression_v2-SG.html">Topic 19: Multiple Linear Regression</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_19_part2_model_validation/topic_19_part_2_Multiple_Regression_v2-SG.html">Topic 19 Part 2: Feature Selection &amp; Model Validation</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_20_extensions_linear_models/topic_20_extensions_to_linear_models_SG.html">Topic 20: Extensions to Linear Models</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 3 - Machine Learning</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../topic_21_OOP/topic_21_OOP_playing_cards_SG.html">Topic 21: Object-Oriented Programming</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_22_linear_algebra/topic_22_linear_algebra_SG.html">Topic 22: Linear Algebra</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_23_calculus_gradient_descent/topic_23_gradient_descent_SG.html">Topic 23: Cost Functions and Gradient Descent</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_24_regularization/topic_24_Regularization_Ridge_Lasso_v2_SG.html">Topic 24: Feature Selection &amp; Regularization (Ridge and Lasso Regression)</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_25_logistic_regression/topic_25_pt1_LogisticRegression_titanic-v2-SG.html">Topic 25-Pt 1: Intro to Logistic Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_25_logistic_regression/topic_25_pt2_LogisticRegression_titanic-v2-SG.html">Topic 25-Part 2: Evaluating Classifiers, Dealing with Class Imbalance, and <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code></a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_27_KNN/Topic_27_KNN_with_pipelines_with_lab_v3_SG.html">Topic 27: K-Nearest Neighbors<br/> +Topic 32: Pipelines</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_29_decision_trees/topic_29_decision_trees_v2_titanic-SG.html">Topic 29: Decision Trees</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_30_ensemble_methods/topic_30_ensemble_methods-SG.html">Topic 30: Ensemble Methods</a></li>
+
+
+
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Topic 31: Support Vector Machines</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 4 - Advanced ML &amp; Time Series</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_33_pca/topic_33_PCA_SG.html">Topic 33: Principal Component Analysis</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_34_clustering/topic_34_Kmeans_clustering_v3_SG.html">Topic 34: Clustering</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_35-36_using_databricks_for_pyspark/using_databricks_for_pyspark.html">How to Use Databricks for PySpark Canvas Material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_36_recommendation_systems/topic_36_Recommendation_Systems_with_Surprise.html">Topic 36: Recommendation Systems</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_37_intro_to_time_series/topic_37_intro_to_time_series_crime_v3-SG.html">Topic 37: Intro to Time Series</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_38_time_series_models/topic_38-time_series_models_v3_SG.html">Topic 38: Time Series Models</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_39_NLP/topic_39_NLP_finding_trump_v3_SG.html">Topic 39: Natural Language Processing + Topic 28: Bayesian Classification</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_40-41_neural_networks/topic_40-41_Artificial_Neural_Networks_v1_SG.html">Topic 40-41: Artificial Neural Networks</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_42_tuning_neural_networks/topic_42_tuning_ANNs_with_deep_NLP_v1_SG.html">Topic 42 - Tuning Neural Networks + Deep NLP</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_43_AWS/topic_43_operationalizing_code_AWS_SG.html">Topic 43: Operationalizing Code &amp; AWS</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 5 - Capstone &amp; Bonus Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/Capstone_Kickoff.html">Capstone Kickoff!</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/APIs/working_with_apis.html">Working with APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/developing_app_functions/developing-streamlit-app-functions_SG.html">Developing Streamlit App Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/tableau/tableau_fundamentals_2021-SG.html">Tableau Fundamentals</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/Bonus%20Notebooks/plotly_visuals.html">Plotly Question</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/master?urlpath=tree/Phase_3/topic_31_support_vector_machines/topic_31_SupportVectorMachines_SG.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/blob/master/Phase_3/topic_31_support_vector_machines/topic_31_SupportVectorMachines_SG.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/issues/new?title=Issue%20on%20page%20%2FPhase_3/topic_31_support_vector_machines/topic_31_SupportVectorMachines_SG.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/Phase_3/topic_31_support_vector_machines/topic_31_SupportVectorMachines_SG.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Topic 31: Support Vector Machines</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Topic 31: Support Vector Machines</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#questions">Questions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resources">Resources</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#blog-posts-articles">BLOG POSTS/ARTICLES</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#study-group-recordings">STUDY GROUP RECORDINGS:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation">Motivation</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-can-we-separate-the-data">How can we separate the data?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#q1-look-at-these-lines-which-is-a-better-model">Q1: Look at these lines, which is a better model?</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a1">A1:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#q2-why-is-it-better">Q2: Why is it better?</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a2">A2:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accuracy-isn-t-everything">Accuracy isn’t everything</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#line-definitions-legend">Line Definitions/Legend</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#q3-which-margin-is-better-why">Q3: Which margin is better? Why?</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a3">A3:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#support-vector-machines">Support Vector Machines</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#support-vector-machine-max-margin-classifier">Support Vector Machine - Max-Margin  Classifier</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#terminology">Terminology</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hyperplane">Hyperplane:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#reminder-linear-equation-notation-vs-linear-regression">Reminder: Linear Equation Notation vs Linear Regression</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#decision-boundary">Decision boundary:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#margin">Margin</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#support-vector">Support Vector:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#positive-negative-hyperplanes">Positive/Negative Hyperplanes</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#max-margin-optimization-calculation">Max Margin Optimization/Calculation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#but-what-if-my-data-isn-t-easily-separable">But what if my data isn’t easily separable?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#two-types-of-svm-max-margin-classifier">Two Types of SVM Max-Margin Classifier</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-soft-margin-classifier">The Soft-Margin Classifier</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-hyperparameter-c">The Hyperparameter <span class="math notranslate nohighlight">\(C\)</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-kernel-trick">The Kernel Trick</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kernel-function-resources">Kernel Function Resources</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#q-but-what-do-we-do-when-don-t-have-linearly-separable-data">Q: But what do we do when don’t have linearly separable data??</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-when-a-simple-model-isn-t-good-enough-extend-to-higher-dimensions">A: When a simple model isn’t good enough, extend to higher dimensions.</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scikit-learn-kernels-hyperparameters-for-svc">scikit-learn kernels + hyperparameters for <code class="docutils literal notranslate"><span class="pre">SVC</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#radial-basis-functions-rbf-kernel">1. Radial Basis Functions (RBF) Kernel</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#polynomial-kernel">2. Polynomial Kernel</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sigmoid-kernel">3. Sigmoid Kernel</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#other-types-of-svc-models-in-sklearn">Other Types of SVC Models in sklearn</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nusvc">NuSVC</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#linearsvc">LinearSVC</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#but-there-s-sooo-many-options-how-do-i-pick-a-kernel">But there’s sooo many options. How do I pick a kernel?!?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#activity-classification-with-support-vector-machines">📙ACTIVITY: Classification with Support Vector Machines</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#appendix">APPENDIX</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#note-re-predictions-probability">Note re: predictions/probability</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="topic-31-support-vector-machines">
+<h1>Topic 31: Support Vector Machines<a class="headerlink" href="#topic-31-support-vector-machines" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p>onl01-dtsc-ft-022221</p></li>
+<li><p>05/13/21</p></li>
+</ul>
+<section id="learning-objectives">
+<h2>Learning Objectives<a class="headerlink" href="#learning-objectives" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>To revisit Linear (Algebra) Equations and revisit the relationship between <span class="math notranslate nohighlight">\(y=mx+b\)</span> and <span class="math notranslate nohighlight">\(y= w^TX+B\)</span>.</p></li>
+<li><p>To understand how support vector machine attempts to separate groups.</p></li>
+<li><p>Discuss the advantages / disadvantages of SVMs</p></li>
+<li><p>To gain an intuitive understanding the math notation of SVMs</p></li>
+<li><p>Learn about using kernels with SVMs</p></li>
+<li><p>“Activity”: Apply muiltiple types of SVCs with a small data set vs Iowa Prisoners.</p></li>
+</ul>
+</section>
+<section id="questions">
+<h2>Questions<a class="headerlink" href="#questions" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>How would we decide to use a particular kernel method?</p>
+<ul>
+<li><p>I understand the scatter plot visualization with colors by class in theory, and it seems like that could be one way to identify the shape of the best boundary. But what are we actually plotting in those scatter plots, since y is not the target class? Are those scatter plots assuming two continuous predictor variables and plotting one on x and one on y?</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="resources">
+<h2>Resources<a class="headerlink" href="#resources" title="Permalink to this heading">#</a></h2>
+<section id="blog-posts-articles">
+<h3>BLOG POSTS/ARTICLES<a class="headerlink" href="#blog-posts-articles" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://towardsdatascience.com/support-vector-machine-simply-explained-fee28eba5496">Towards Data Science - SVM Simply Explained</a></p></li>
+<li><p><a class="reference external" href="https://towardsdatascience.com/svm-feature-selection-and-kernels-840781cc1a6c">Towards Data Science Article - SVM Feature Selection and Kernels</a></p></li>
+<li><p><a class="reference external" href="https://medium.com/all-things-ai/in-depth-parameter-tuning-for-svc-758215394769">Blog Post on SVC Hyperparameter Tuning</a></p></li>
+<li><p><a class="reference external" href="https://qr.ae/pGvISe">Quora Q&amp;A About Choosing Kernels</a></p></li>
+</ul>
+</section>
+<section id="study-group-recordings">
+<h3>STUDY GROUP RECORDINGS:<a class="headerlink" href="#study-group-recordings" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.youtube.com/watch?v=_QmnoubpU3Q&amp;list=PLVoXE6pv5LIg4WOllQ4rNPi9BtvtVMb78&amp;index=5">Support Vector Machines - Victor</a></p></li>
+<li><p><a class="reference external" href="https://www.youtube.com/watch?v=mnN74NI4Gqk&amp;list=PLVoXE6pv5LIg4WOllQ4rNPi9BtvtVMb78&amp;index=6">The Kernel Trick - Victor</a></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">]</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">datasets</span>
+
+<span class="c1"># Loading in an example dataset</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;seaborn-notebook&#39;</span><span class="p">)</span>
+<span class="n">iris</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_iris</span><span class="p">()</span>
+<span class="n">iris_data</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">data</span>
+
+<span class="c1"># Only use two targets/classifications</span>
+<span class="n">iris_targets</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">iris</span><span class="o">.</span><span class="n">target</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">7</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="motivation">
+<h1>Motivation<a class="headerlink" href="#motivation" title="Permalink to this heading">#</a></h1>
+<section id="how-can-we-separate-the-data">
+<h2>How can we separate the data?<a class="headerlink" href="#how-can-we-separate-the-data" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">]</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">datasets</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">7</span><span class="p">)</span>
+<span class="c1"># Loading in an example dataset</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;seaborn-notebook&#39;</span><span class="p">)</span>
+<span class="n">iris</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_iris</span><span class="p">()</span>
+<span class="n">iris_data</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">data</span>
+
+<span class="c1"># Only use two targets/classifications</span>
+<span class="n">iris_targets</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">iris</span><span class="o">.</span><span class="n">target</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">iris</span><span class="p">[</span><span class="s1">&#39;feature_names&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;sepal length (cm)&#39;,
+ &#39;sepal width (cm)&#39;,
+ &#39;petal length (cm)&#39;,
+ &#39;petal width (cm)&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plotting different points</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_iris</span><span class="p">():</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">iris_data</span><span class="p">[:,</span><span class="mi">2</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">iris_data</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">iris_targets</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fig</span><span class="p">,</span><span class="n">ax</span>
+
+<span class="n">fig</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span> <span class="n">plot_iris</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/8324e3eea303516f3d544f0ec89404539993d9cc5bea986f8cd928575728000a.png" src="../../_images/8324e3eea303516f3d544f0ec89404539993d9cc5bea986f8cd928575728000a.png" />
+</div>
+</div>
+<section id="q1-look-at-these-lines-which-is-a-better-model">
+<h3>Q1: Look at these lines, which is a better model?<a class="headerlink" href="#q1-look-at-these-lines-which-is-a-better-model" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plotting lines to separate points</span>
+<span class="n">fig</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">plot_iris</span><span class="p">()</span>
+<span class="n">l1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mf">6.5</span><span class="p">,</span><span class="mf">4.5</span><span class="p">]])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">l1</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">l1</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;line 1&#39;</span><span class="p">)</span>
+<span class="n">l2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mf">3.5</span><span class="p">,</span><span class="mf">4.5</span><span class="p">]])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">l2</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">l2</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;line 2&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fe7476eea30&gt;
+</pre></div>
+</div>
+<img alt="../../_images/5c47b4344fc95daca1beb3110791e164b5704a2a24eb376ed6ec5f8f34eb4ba1.png" src="../../_images/5c47b4344fc95daca1beb3110791e164b5704a2a24eb376ed6ec5f8f34eb4ba1.png" />
+</div>
+</div>
+<section id="a1">
+<h4>A1:<a class="headerlink" href="#a1" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Line 2.</p></li>
+</ul>
+</section>
+</section>
+<section id="q2-why-is-it-better">
+<h3>Q2: Why is it better?<a class="headerlink" href="#q2-why-is-it-better" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li></li>
+</ul>
+<section id="a2">
+<h4>A2:<a class="headerlink" href="#a2" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Maximizes the distance between the data points and the line (the margin).</p></li>
+</ul>
+</section>
+</section>
+<section id="accuracy-isn-t-everything">
+<h3>Accuracy isn’t everything<a class="headerlink" href="#accuracy-isn-t-everything" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>Could say each line classifies the same (accuracy), so which of the following would be better?</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Small margin</span>
+<span class="n">margin_small</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.2</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">l2_margin_pos_small</span> <span class="o">=</span> <span class="n">l2</span> <span class="o">+</span> <span class="n">margin_small</span>
+<span class="n">l2_margin_neg_small</span> <span class="o">=</span> <span class="n">l2</span> <span class="o">-</span> <span class="n">margin_small</span>
+
+<span class="c1">## Large margin</span>
+<span class="n">margin_larger</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">l2_margin_pos_big</span> <span class="o">=</span> <span class="n">l2</span> <span class="o">+</span> <span class="n">margin_larger</span>
+<span class="n">l2_margin_neg_big</span> <span class="o">=</span> <span class="n">l2</span> <span class="o">-</span> <span class="n">margin_larger</span>
+
+<span class="c1"># Plotting different points</span>
+<span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plot_iris</span><span class="p">()</span>
+<span class="c1"># Plotting lines to separate points</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">l2</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">l2</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Decision Boundary&#39;</span><span class="p">)</span>
+
+<span class="c1"># Plot with margins</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">l2_margin_pos_small</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">l2_margin_pos_small</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> 
+        <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Small Margin&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">l2_margin_neg_small</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">l2_margin_neg_small</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">l2_margin_pos_big</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">l2_margin_pos_big</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> 
+        <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Large Margin&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">l2_margin_neg_big</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">l2_margin_neg_big</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1.0, 5.0)
+</pre></div>
+</div>
+<img alt="../../_images/0e08b393bf6bab621ffe4af76a2754a201019a501ca371f87db88aaa1cd7007f.png" src="../../_images/0e08b393bf6bab621ffe4af76a2754a201019a501ca371f87db88aaa1cd7007f.png" />
+</div>
+</div>
+<section id="line-definitions-legend">
+<h4>Line Definitions/Legend<a class="headerlink" href="#line-definitions-legend" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Blue = Model</p></li>
+<li><p>Possible Margins:</p>
+<ul>
+<li><p>orange</p></li>
+<li><p>red</p></li>
+</ul>
+</li>
+<li><p>Left and Right margins are called negative and positive hyperplanes</p></li>
+</ul>
+</section>
+</section>
+<section id="q3-which-margin-is-better-why">
+<h3>Q3: Which margin is better? Why?<a class="headerlink" href="#q3-which-margin-is-better-why" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li></li>
+</ul>
+<section id="a3">
+<h4>A3:<a class="headerlink" href="#a3" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p>The larger margin (red).</p></li>
+<li><p>The smaller the margin the more you’re assuming your model is correct and the more likely it will be over-fit and not generalize well.</p></li>
+</ul>
+<!--- > <img src="https://raw.githubusercontent.com/jirvingphd/dsc-introduction-to-support-vector-machines-online-ds-pt-100719/master/images/new_SVM_test2.png"> ---></section>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="support-vector-machines">
+<h1>Support Vector Machines<a class="headerlink" href="#support-vector-machines" title="Permalink to this heading">#</a></h1>
+<img src="https://raw.githubusercontent.com/jirvingphd/fsds_100719_cohort_notes/master/images/i_support_vector_machines.jpg" width=60%>
+<blockquote>
+<div><p>Available on Amazon. Ask me how I know. 😅</p>
+</div></blockquote>
+<section id="support-vector-machine-max-margin-classifier">
+<h2>Support Vector Machine - Max-Margin  Classifier<a class="headerlink" href="#support-vector-machine-max-margin-classifier" title="Permalink to this heading">#</a></h2>
+<blockquote>
+<div><p>Our goal is to <strong>maximize the separation between the two hyperplanes.</strong></p>
+</div></blockquote>
+<img src="https://raw.githubusercontent.com/jirvingphd/dsc-introduction-to-support-vector-machines-online-ds-pt-100719/master/images/new_SVM_4.png" width=70%>
+<section id="terminology">
+<h3>Terminology<a class="headerlink" href="#terminology" title="Permalink to this heading">#</a></h3>
+<section id="hyperplane">
+<h4>Hyperplane:<a class="headerlink" href="#hyperplane" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p>a <span class="math notranslate nohighlight">\(n\)</span>-dimensional line.</p></li>
+<li><p>These hyperplanes are defined by two terms: <span class="math notranslate nohighlight">\(w_T\)</span> and <span class="math notranslate nohighlight">\(b\)</span>.</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(w_T\)</span> term is called the <strong>weight vector</strong> and contains the weights that are used in the classification.</p></li>
+<li><p><span class="math notranslate nohighlight">\(b\)</span> term is called the <strong>bias</strong> and functions as an offset term.</p>
+<ul>
+<li><p>If there were no bias term, the hyperplane would always go through the origin which would not be very generalizable!</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="reminder-linear-equation-notation-vs-linear-regression">
+<h4>Reminder: Linear Equation Notation vs Linear Regression<a class="headerlink" href="#reminder-linear-equation-notation-vs-linear-regression" title="Permalink to this heading">#</a></h4>
+<blockquote>
+<div><p><strong>in Linear Regression, we predict <span class="math notranslate nohighlight">\(y\)</span> using 2 parameters, m (slope) + b(intercept/constant):</strong>
+$<span class="math notranslate nohighlight">\( \large y = mx+b \)</span>$
+where:</p>
+</div></blockquote>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(x\)</span> = input data for modeling</p></li>
+<li><p><span class="math notranslate nohighlight">\(y\)</span> = model] predictions</p></li>
+<li><p><span class="math notranslate nohighlight">\(m\)</span> = slope</p></li>
+<li><p><span class="math notranslate nohighlight">\(b\)</span> = intercept</p></li>
+</ul>
+<blockquote>
+<div><p><strong>In Linear Model Formulas, terminology/notation changes:</strong></p>
+</div></blockquote>
+<ul class="simple">
+<li><p>slopes <span class="math notranslate nohighlight">\((m)\)</span> becomes <strong>weights (<span class="math notranslate nohighlight">\(w\)</span>)</strong></p></li>
+<li><p>constants <span class="math notranslate nohighlight">\(b\)</span> becomes <strong>biases (<span class="math notranslate nohighlight">\(b\)</span>)</strong>
+$<span class="math notranslate nohighlight">\( \large y =  XW^T+B \)</span>$</p></li>
+<li><p><span class="math notranslate nohighlight">\(x\)</span> = input data for modeling</p></li>
+<li><p><span class="math notranslate nohighlight">\(y\)</span> = model] predictions</p></li>
+<li><p><span class="math notranslate nohighlight">\(w\)</span> is the weight (slope)</p></li>
+<li><p><span class="math notranslate nohighlight">\(b\)</span> is the bias (constant)</p></li>
+</ul>
+<!---<img src="https://raw.githubusercontent.com/jirvingphd/fsds_100719_cohort_notes/master/images/linear _model_multi_inputs_and_outputs.png" width=40%>
+
+<img src="https://raw.githubusercontent.com/jirvingphd/fsds_100719_cohort_notes/master/images/linear_model_multi_inputs.png" width=40%>
+
+<!---<img src="https://raw.githubusercontent.com/jirvingphd/fsds_100719_cohort_notes/master/images/linear_model_multi_inputs_arrows.png" width=40%>
+---></section>
+<section id="decision-boundary">
+<h4>Decision boundary:<a class="headerlink" href="#decision-boundary" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p>The hyperplane that divides/separates the classes
+<img src="https://raw.githubusercontent.com/jirvingphd/dsc-introduction-to-support-vector-machines-online-ds-pt-100719/master/images/new_SVM_2.png" width=30%></p></li>
+</ul>
+</section>
+<section id="margin">
+<h4>Margin<a class="headerlink" href="#margin" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p>The distance between the decision boundary and the closes datapoints
+<img src="https://raw.githubusercontent.com/jirvingphd/dsc-introduction-to-support-vector-machines-online-ds-pt-100719/master/images/new_SVM_4.png" width=30%></p></li>
+</ul>
+</section>
+<section id="support-vector">
+<h4>Support Vector:<a class="headerlink" href="#support-vector" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p>“Support vectors are the data points nearest to the hyperplane, the points of a data set that, if removed, would alter the position of the dividing hyperplane. Because of this, they can be considered the critical elements of a data set.” - <a class="reference external" href="https://www.kdnuggets.com/2016/07/support-vector-machines-simple-explanation.html">KDnuggets - SVM simple explanation</a></p></li>
+</ul>
+<img src="https://raw.githubusercontent.com/jirvingphd/dsc-introduction-to-support-vector-machines-online-ds-pt-100719/master/images/new_SVM_fin.png" width=60%></section>
+<section id="positive-negative-hyperplanes">
+<h4>Positive/Negative Hyperplanes<a class="headerlink" href="#positive-negative-hyperplanes" title="Permalink to this heading">#</a></h4>
+<blockquote>
+<div><p>Note: For SVMs, we do not represent our classes as 0 and 1, instead we use -1 and +1</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>Positive Hyperplane:</p>
+<ul>
+<li><p>The line defined by the support vectors to the right (+) of the decision boundary
+$<span class="math notranslate nohighlight">\( b + w_Tx_{pos} =1\)</span>$</p></li>
+</ul>
+</li>
+<li><p>Negative Hyperplane:</p>
+<ul>
+<li><p>The line defined support vector to the left (-) of the decision boundary
+$<span class="math notranslate nohighlight">\( b + w_Tx_{neg} =-1\)</span>$</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="max-margin-optimization-calculation">
+<h3>Max Margin Optimization/Calculation<a class="headerlink" href="#max-margin-optimization-calculation" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>To maximize the margins between hyperplanes, first subtract the negative hyperplane’s equation from the positive hyperplane’s equation:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ \large w_T(x_{pos}-x_{neg}) = 2\]</div>
+<ul class="simple">
+<li><p>Normalize <span class="math notranslate nohighlight">\(w_T\)</span> by dividing both sides of the equation by its norm, <span class="math notranslate nohighlight">\(||w||\)</span></p>
+<ul>
+<li><p>Note: <span class="math notranslate nohighlight">\( || w ||= \sqrt{\sum^m_{j-1}w_j^2} \)</span></p></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<div><p><strong>The equation becomes:</strong>
+$<span class="math notranslate nohighlight">\( \large \dfrac{w_T(x_{pos}-x_{neg})}{\lVert w \rVert} = \dfrac{2}{\lVert w \rVert}\)</span>$</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>The left side of the equation = the distance between the positive and negative hyperplanes. (This is the <strong>margin</strong>)</p></li>
+<li><p>The objective of the SVM is then maximizing <span class="math notranslate nohighlight">\(\dfrac{2}{\lVert w \rVert}\)</span> under the constraint/requirement that the samples are classified correctly.</p></li>
+</ul>
+<!---This can also be written in one line as follows:
+- Note that maximizing $\dfrac{2}{\lVert w \rVert}$ means we're minimizing $\lVert w \rVert$, or
+    - as is done in practice because it seems to be easier to be minimized, $\dfrac{1}{2}\lVert w \rVert^2$.
+
+> Contraints expressed mathematically:
+- $ b + w_Tx^{(i)} \geq 1$  if $y ^{(i)} = 1$
+- $ b + w_Tx^{(i)} \leq -1$  if $y ^{(i)} = -1$<br>
+For $i= 1,\ldots ,N$
+> These equations say that:
+- all negative samples should fall on the left side of the negative hyperplane
+- whereas all the positive samples should fall on the right of the positive hyperplane. 
+
+
+
+$y ^{(i)} (b + w_Tx^{(i)} )\geq 1$  for each $i$
+---></section>
+</section>
+<section id="but-what-if-my-data-isn-t-easily-separable">
+<h2>But what if my data isn’t easily separable?<a class="headerlink" href="#but-what-if-my-data-isn-t-easily-separable" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>When does maximizing the margin cause problems?</p></li>
+</ul>
+<img src="https://raw.githubusercontent.com/learn-co-students/dsc-introduction-to-support-vector-machines-online-ds-pt-100719/master/images/new_SVM_C.png">
+<blockquote>
+<div><ul class="simple">
+<li><p>So Where do we go from here?/ What can we do about this?</p></li>
+</ul>
+</div></blockquote>
+<section id="two-types-of-svm-max-margin-classifier">
+<h3>Two Types of SVM Max-Margin Classifier<a class="headerlink" href="#two-types-of-svm-max-margin-classifier" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Two kinds of max-margin classifiers:</p>
+<ul>
+<li><p>hard margin = no errors whatsoever</p></li>
+<li><p>soft margin = allows for errors</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="the-soft-margin-classifier">
+<h2>The Soft-Margin Classifier<a class="headerlink" href="#the-soft-margin-classifier" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>The linear constraints need to be relaxed for data that are not linearly separable.</p></li>
+<li><p>We do this by adding slack variables <span class="math notranslate nohighlight">\(\xi\)</span> to our margins.</p>
+<ul>
+<li><p>By adding some slack ( allowance for misclassification), we improve model generalizability while sacrificing accuracy</p></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<div><p>Soft Margine Constraints:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( b + w_Tx^{(i)} \geq 1-\xi^{(i)}\)</span>  if <span class="math notranslate nohighlight">\(y ^{(i)} = 1\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\( b + w_Tx^{(i)} \leq -1+\xi^{(i)}\)</span>  if <span class="math notranslate nohighlight">\(y ^{(i)} = -1\)</span><br>For <span class="math notranslate nohighlight">\(i= 1,\ldots ,N\)</span></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>The objective function (AKA the function you want to minimize) is</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\dfrac{1}{2}\lVert w \rVert^2+ C(\sum_i \xi^{(i)})\]</div>
+<ul class="simple">
+<li><p>The hyperparameter <span class="math notranslate nohighlight">\(C\)</span> is used to define how much slack is allowed.</p></li>
+</ul>
+<section id="the-hyperparameter-c">
+<h3>The Hyperparameter <span class="math notranslate nohighlight">\(C\)</span><a class="headerlink" href="#the-hyperparameter-c" title="Permalink to this heading">#</a></h3>
+<p>Q: What happens if <span class="math notranslate nohighlight">\(C\)</span> is very large? (What errors do we care about more?)</p>
+<ul class="simple">
+<li><p>C determines the amount of allowed misclassified data point.</p>
+<ul>
+<li><p>When C is large, misclassifications are heavily punished, so we get left figure.</p></li>
+<li><p>When C is small, misclassifications are accepted to maximize overall margin, and we get right figure.</p></li>
+</ul>
+</li>
+<li><p><strong>Important note: scikit-learn’s <code class="docutils literal notranslate"><span class="pre">c</span></code> is really the inverse of C (<code class="docutils literal notranslate"><span class="pre">1/C</span></code>)</strong>:</p>
+<ul>
+<li><p>So using a higher value of <code class="docutils literal notranslate"><span class="pre">c</span></code> is a smaller regularization or smaller penalty, allowing more misclassified data points.</p></li>
+<li><p>whereas a lower value of <code class="docutils literal notranslate"><span class="pre">c</span></code> is a higher penalty and allowed fewer misclassified datapoints.</p></li>
+</ul>
+</li>
+</ul>
+<img src="https://raw.githubusercontent.com/learn-co-students/dsc-introduction-to-support-vector-machines-online-ds-pt-100719/master/images/new_SVM_C.png">
+<!---=
+## Classification error
+
+We minimize the two kinds of error:
+ - how many are "misclassified" 
+ - how many are in bad boundary (within margin)
+ 
+
+This gives us something like this:
+
+$Error_{total} = Error_{classification} + Error_{margin}$
+ 
+
+- We start from our margin to count the error (instead of the center)
+
+## Margin error
+
+- $E = |W|^2 = ||W_1||+||W_2|| + …$ 
+    + big vs small margin (we want very large)
+- $M = \frac{2}{||W||}$ 
+    + inverse proportion, large margin → small error
+
+Turns out to the same as the L2 Regularization!
+
+## Gradient Descent to minimize---></section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="the-kernel-trick">
+<h1>The Kernel Trick<a class="headerlink" href="#the-kernel-trick" title="Permalink to this heading">#</a></h1>
+<section id="kernel-function-resources">
+<h2>Kernel Function Resources<a class="headerlink" href="#kernel-function-resources" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Blog Posts/Articles</strong></p>
+<ul>
+<li><p><a class="reference external" href="https://medium.com/all-things-ai/in-depth-parameter-tuning-for-svc-758215394769">Blog Post on Hyperparameter Tuning</a></p></li>
+<li></li>
+</ul>
+</li>
+<li><p><strong>Scikit-Learn Documentation:</strong></p>
+<ul>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/svm.html#classification">SVMs for Classification</a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/svm.html#svm-kernels">Scikit-Learn Docs: Kernel Functions</a></p>
+<ul>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/svm.html#mathematical-formulation">Scikit-Learn SVM Math Equations</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<section id="q-but-what-do-we-do-when-don-t-have-linearly-separable-data">
+<h3>Q: But what do we do when don’t have linearly separable data??<a class="headerlink" href="#q-but-what-do-we-do-when-don-t-have-linearly-separable-data" title="Permalink to this heading">#</a></h3>
+</section>
+<img src="https://raw.githubusercontent.com/learn-co-students/dsc-the-kernel-trick-online-ds-pt-100719/master/images/new_SVM_nonlin.png" width=60%><section id="a-when-a-simple-model-isn-t-good-enough-extend-to-higher-dimensions">
+<h3>A: When a simple model isn’t good enough, extend to higher dimensions.<a class="headerlink" href="#a-when-a-simple-model-isn-t-good-enough-extend-to-higher-dimensions" title="Permalink to this heading">#</a></h3>
+</section>
+<blockquote>
+<div><p>Use a kernel function to transform the data into a higher dimension and then separate the data in the higher dimension.</p>
+</div></blockquote>
+<img src="https://raw.githubusercontent.com/learn-co-students/dsc-the-kernel-trick-online-ds-pt-100719/master/images/new_SVM_kernel.png" width=60%>
+</section>
+<section id="scikit-learn-kernels-hyperparameters-for-svc">
+<h2>scikit-learn kernels + hyperparameters for <code class="docutils literal notranslate"><span class="pre">SVC</span></code><a class="headerlink" href="#scikit-learn-kernels-hyperparameters-for-svc" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Summarizing the available functions and their hyperparameters.</p></li>
+<li><p>Recall that in general, <code class="docutils literal notranslate"><span class="pre">C</span></code> is the parameter for balancing standard accuracy metrics for tuning classifiers versus the decision boundary distance.</p></li>
+</ul>
+<section id="radial-basis-functions-rbf-kernel">
+<h3>1. Radial Basis Functions (RBF) Kernel<a class="headerlink" href="#radial-basis-functions-rbf-kernel" title="Permalink to this heading">#</a></h3>
+<div class="math notranslate nohighlight">
+\[\exp{(-\gamma \lVert  x -  x' \rVert^2)} \]</div>
+<ul class="simple">
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/auto_examples/svm/plot_rbf_parameters.html">Hyperparameters</a>:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">C</span></code></p></li>
+<li><p><span class="math notranslate nohighlight">\(\gamma\)</span>, which can be specified using <code class="docutils literal notranslate"><span class="pre">gamma</span></code> in scikit-learn (default=’auto’)</p>
+<ul>
+<li><p>Large gamma = overfitting</p></li>
+<li><p>Small gamma = underfitting</p></li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</section>
+<section id="polynomial-kernel">
+<h3>2. Polynomial Kernel<a class="headerlink" href="#polynomial-kernel" title="Permalink to this heading">#</a></h3>
+<div class="math notranslate nohighlight">
+\[(\gamma \langle  x -  x' \rangle+r)^d \]</div>
+<ul class="simple">
+<li><p>Hyperparameters:</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(\gamma\)</span>, which can be specified using <code class="docutils literal notranslate"><span class="pre">gamma</span></code> in scikit-learn</p></li>
+<li><p><span class="math notranslate nohighlight">\(r\)</span>, which can be specified using <code class="docutils literal notranslate"><span class="pre">coef0</span></code> in scikit-learn</p></li>
+<li><p><span class="math notranslate nohighlight">\(d\)</span>, which can be specified using <code class="docutils literal notranslate"><span class="pre">degree</span></code> in scikit-learn</p></li>
+</ol>
+</li>
+</ul>
+</section>
+<section id="sigmoid-kernel">
+<h3>3. Sigmoid Kernel<a class="headerlink" href="#sigmoid-kernel" title="Permalink to this heading">#</a></h3>
+<div class="math notranslate nohighlight">
+\[\tanh ( \gamma\langle  x -  x' \rangle+r) \]</div>
+<ul class="simple">
+<li><p>Hyperparameters:</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(\gamma\)</span>, which can be specified using <code class="docutils literal notranslate"><span class="pre">gamma</span></code> in scikit-learn</p></li>
+<li><p><span class="math notranslate nohighlight">\(r\)</span>, which can be specified using <code class="docutils literal notranslate"><span class="pre">coef0</span></code> in scikit-learn</p></li>
+</ol>
+</li>
+</ul>
+</section>
+<section id="other-types-of-svc-models-in-sklearn">
+<h3>Other Types of SVC Models in sklearn<a class="headerlink" href="#other-types-of-svc-models-in-sklearn" title="Permalink to this heading">#</a></h3>
+<section id="nusvc">
+<h4>NuSVC<a class="headerlink" href="#nusvc" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Like SVC, NuSVC but adds a parameter <span class="math notranslate nohighlight">\(v\)</span> (see hyperparameters below).</p></li>
+<li><p>NuSVC implements “one-against-one” approach when number of classes &gt;2</p>
+<ul>
+<li><p>when there are n classes, <span class="math notranslate nohighlight">\(\dfrac{n*(n-1)}{2}\)</span> classifiers are created, and each one classifies samples in 2 classes.</p></li>
+</ul>
+</li>
+<li><p>Hyperparameters:</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(v\)</span>: controls the number of support vectors and training errors</p>
+<ul>
+<li><p>creates upper bound on training errors</p></li>
+<li><p>creates lower bound on support vectors</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<section id="linearsvc">
+<h5>LinearSVC<a class="headerlink" href="#linearsvc" title="Permalink to this heading">#</a></h5>
+<ul class="simple">
+<li><p>Like SVC but LinearSVC implements “one-vs-rest” so when there are <span class="math notranslate nohighlight">\(n\)</span> classes, just <span class="math notranslate nohighlight">\(n\)</span> classifiers are created and each one classifies samples in 2 classes (class of interest and all others)</p></li>
+<li><p>LinearSVC generates more classifiers, so LinearSVC tends to scale better.</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="but-there-s-sooo-many-options-how-do-i-pick-a-kernel">
+<h3>But there’s sooo many options. How do I pick a kernel?!?<a class="headerlink" href="#but-there-s-sooo-many-options-how-do-i-pick-a-kernel" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><p>To keep it simple:
+- If your data looks linearly separable, use linear SVC, otherwise use RBF
+- But I am sure you can find some technical papers discussing the tradeoffs of all of the options.
+- (I wasn’t able to find a good high-level comparison or use-case type of article.)</p></li>
+</ul>
+</div></blockquote>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="activity-classification-with-support-vector-machines">
+<h1>📙ACTIVITY: Classification with Support Vector Machines<a class="headerlink" href="#activity-classification-with-support-vector-machines" title="Permalink to this heading">#</a></h1>
+<blockquote>
+<div><ul class="simple">
+<li><p>Jump over to the <code class="docutils literal notranslate"><span class="pre">Support-Vector-Machines-Iowa_prisoners.ipynb</span></code> notebook in the same folder as this notebook.</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Run the <code class="docutils literal notranslate"><span class="pre">MODEL</span></code> section 2-3 times, changing the dataset used each time.</p></li>
+<li><p>Modify the <code class="docutils literal notranslate"><span class="pre">PRISONERS</span></code> and <code class="docutils literal notranslate"><span class="pre">RESAMPLED_PRISONERS</span></code> to control the dataset used:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">PRISONERS</span></code> = False,<code class="docutils literal notranslate"><span class="pre">RESAMPLED_PRISONERS</span></code> = False</p>
+<ul>
+<li><p>Small dataset ~50/50 split.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PRISONERS</span></code> = True, <code class="docutils literal notranslate"><span class="pre">RESAMPLED_PRISONERS</span></code> = False</p>
+<ul>
+<li><p>Large imbalanced dataset.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PRISONERS</span></code> = True, <code class="docutils literal notranslate"><span class="pre">RESAMPLED_PRISONERS</span></code> = True</p>
+<ul>
+<li><p>Large balanced dataset.</p></li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="appendix">
+<h1>APPENDIX<a class="headerlink" href="#appendix" title="Permalink to this heading">#</a></h1>
+<section id="note-re-predictions-probability">
+<h2>Note re: predictions/probability<a class="headerlink" href="#note-re-predictions-probability" title="Permalink to this heading">#</a></h2>
+<blockquote>
+<div><p>You can make predictions using support vector machines. The SVC decision function gives a probability score per class. However, this is not done by default. You’ll need to set the <code class="docutils literal notranslate"><span class="pre">probability</span></code> argument equal to <code class="docutils literal notranslate"><span class="pre">True</span></code>. Scikit-learn internally performs cross-validation to compute the probabilities, so you can expect that setting <code class="docutils literal notranslate"><span class="pre">probability</span></code> to <code class="docutils literal notranslate"><span class="pre">True</span></code> makes the calculations longer. For large datasets, computation can take considerable time to execute.</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>In other words:</p>
+<ul>
+<li><p>If you want to get the probabiltiies (<code class="docutils literal notranslate"><span class="pre">.predict_proba</span></code>) for ROC AUC, you would have to instantiate your SVC with the parameter <code class="docutils literal notranslate"><span class="pre">SVC(probability=True)</span></code></p></li>
+<li><p><a class="reference external" href="https://www.kaggle.com/c/home-credit-default-risk/discussion/63499">https://www.kaggle.com/c/home-credit-default-risk/discussion/63499</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "learn-env-new"
+        },
+        kernelOptions: {
+            name: "learn-env-new",
+            path: "./Phase_3/topic_31_support_vector_machines"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'learn-env-new'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../topic_30_ensemble_methods/topic_30_ensemble_methods-SG.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Topic 30: Ensemble Methods</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../../Phase_4/topic_33_pca/topic_33_PCA_SG.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Topic 33: Principal Component Analysis</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Topic 31: Support Vector Machines</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#questions">Questions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resources">Resources</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#blog-posts-articles">BLOG POSTS/ARTICLES</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#study-group-recordings">STUDY GROUP RECORDINGS:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation">Motivation</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-can-we-separate-the-data">How can we separate the data?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#q1-look-at-these-lines-which-is-a-better-model">Q1: Look at these lines, which is a better model?</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a1">A1:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#q2-why-is-it-better">Q2: Why is it better?</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a2">A2:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accuracy-isn-t-everything">Accuracy isn’t everything</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#line-definitions-legend">Line Definitions/Legend</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#q3-which-margin-is-better-why">Q3: Which margin is better? Why?</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a3">A3:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#support-vector-machines">Support Vector Machines</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#support-vector-machine-max-margin-classifier">Support Vector Machine - Max-Margin  Classifier</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#terminology">Terminology</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hyperplane">Hyperplane:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#reminder-linear-equation-notation-vs-linear-regression">Reminder: Linear Equation Notation vs Linear Regression</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#decision-boundary">Decision boundary:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#margin">Margin</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#support-vector">Support Vector:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#positive-negative-hyperplanes">Positive/Negative Hyperplanes</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#max-margin-optimization-calculation">Max Margin Optimization/Calculation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#but-what-if-my-data-isn-t-easily-separable">But what if my data isn’t easily separable?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#two-types-of-svm-max-margin-classifier">Two Types of SVM Max-Margin Classifier</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-soft-margin-classifier">The Soft-Margin Classifier</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-hyperparameter-c">The Hyperparameter <span class="math notranslate nohighlight">\(C\)</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-kernel-trick">The Kernel Trick</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kernel-function-resources">Kernel Function Resources</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#q-but-what-do-we-do-when-don-t-have-linearly-separable-data">Q: But what do we do when don’t have linearly separable data??</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-when-a-simple-model-isn-t-good-enough-extend-to-higher-dimensions">A: When a simple model isn’t good enough, extend to higher dimensions.</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scikit-learn-kernels-hyperparameters-for-svc">scikit-learn kernels + hyperparameters for <code class="docutils literal notranslate"><span class="pre">SVC</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#radial-basis-functions-rbf-kernel">1. Radial Basis Functions (RBF) Kernel</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#polynomial-kernel">2. Polynomial Kernel</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sigmoid-kernel">3. Sigmoid Kernel</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#other-types-of-svc-models-in-sklearn">Other Types of SVC Models in sklearn</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nusvc">NuSVC</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#linearsvc">LinearSVC</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#but-there-s-sooo-many-options-how-do-i-pick-a-kernel">But there’s sooo many options. How do I pick a kernel?!?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#activity-classification-with-support-vector-machines">📙ACTIVITY: Classification with Support Vector Machines</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#appendix">APPENDIX</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#note-re-predictions-probability">Note re: predictions/probability</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By James Irving, PhD
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

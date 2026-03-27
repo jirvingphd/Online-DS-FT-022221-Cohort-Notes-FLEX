@@ -1,0 +1,1274 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Topic 05: Data Cleaning in Pandas &#8212; Data Science Curriculum</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Phase_1/topic_05_data_cleaning_in_pandas/topic_05_Data_Cleaning_in_Pandas';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Topic 06: Data Visualizations" href="../topic_06_data_visualization/topic_06_visualizations_heroes_project_SG.html" />
+    <link rel="prev" title="Topic 04-Part 2: Brief Intro to Pandas with Doctor Who" href="../topic_04_python_libraries/topic_04_pt-2_brief_intro_to_pandas-SG.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/flatironschool_banner.jpg" class="logo__image only-light" alt="Data Science Curriculum - Home"/>
+    <script>document.write(`<img src="../../_static/flatironschool_banner.jpg" class="logo__image only-dark" alt="Data Science Curriculum - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Data Science Curriculum
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 1 - Python &amp; Data Fundamentals</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../topic_01_getting_started/topic_01_getting_started.html">Topic 1: Getting Started with Data Science</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_02_bash_git/topic_02_bash_and_git.html">Topic 02:  Bash and Git</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_03_control_flow_functions/topic_03_control_flow_and_functions.html">Topic 03: Control Flow, Functions, and Statistics</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_04_python_libraries/topic_04_intro_to_libraries_numpy_SG.html">Topic 04-Part 1: Python Libraries &amp; NumPy</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_04_python_libraries/topic_04_pt-2_brief_intro_to_pandas-SG.html">Topic 04-Part 2: Brief Intro to Pandas with Doctor Who</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Topic 05: Data Cleaning in Pandas</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_06_data_visualization/topic_06_visualizations_heroes_project_SG.html">Topic 06:  Data Visualizations</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_07_SQL_and_relational_databases/topic_07_SQL_and_relational_databases_SG.html">TOPIC 07: SQL DATABASES</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_08_noSQL_databases/topic_08_mongodb-SG.html">Topic 08: NoSQL Databases</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_09_json_and_apis/topic_09_json-api-SG.html">Topic 09: Using APIs and JSON Data</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_10_webscraping/topic_10_SG_HTML_CSS_web_scraping.html">Topic 10: HTML, CSS, &amp; Web Scraping</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 2 - Statistics &amp; Regression</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_11_probability_and_combinatorics/topic_11_playlist_probabilities-SG.html">Topic 11 - Intro to Combinatorics &amp; Probability</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_12_statistical_distributions/topic-12-distributions-with-movies-sg.html">Exploring Distributions with Movies Data</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_13_central_limit_theorem/topic_13_central_limit_theorem_SG.html">Topic 13: Central Limit Theorem</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_14_hypothesis_testing/topic_14_hypothesis_testing-SG.html">Topic 14: Hypothesis Testing -  T-Tests</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_15_ANOVA/topic_15_ANOVA_with_neuro_data-SG.html">Topic 15: ANOVAs &amp; Statistical Power with  Neuro Data</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_16_AB_testing/topic_16_AB_testing_with_movies-SG.html">Topic 16: Practicing AB Testing with Movies</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_17_bayesian_statistics/topic_17_bayesian_statistics-SG.html">Topic 17: Bayesian Statistics</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_18_linear_regression/topic_18_intro_to_linear_regression_SG.html">Topic 18: Intro to Linear Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_19_part1_multiple_regression/topic_19_Multiple_Regression_v2-SG.html">Topic 19: Multiple Linear Regression</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_19_part2_model_validation/topic_19_part_2_Multiple_Regression_v2-SG.html">Topic 19 Part 2: Feature Selection &amp; Model Validation</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_20_extensions_linear_models/topic_20_extensions_to_linear_models_SG.html">Topic 20: Extensions to Linear Models</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 3 - Machine Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_21_OOP/topic_21_OOP_playing_cards_SG.html">Topic 21: Object-Oriented Programming</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_22_linear_algebra/topic_22_linear_algebra_SG.html">Topic 22: Linear Algebra</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_23_calculus_gradient_descent/topic_23_gradient_descent_SG.html">Topic 23: Cost Functions and Gradient Descent</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_24_regularization/topic_24_Regularization_Ridge_Lasso_v2_SG.html">Topic 24: Feature Selection &amp; Regularization (Ridge and Lasso Regression)</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_25_logistic_regression/topic_25_pt1_LogisticRegression_titanic-v2-SG.html">Topic 25-Pt 1: Intro to Logistic Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_25_logistic_regression/topic_25_pt2_LogisticRegression_titanic-v2-SG.html">Topic 25-Part 2: Evaluating Classifiers, Dealing with Class Imbalance, and <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code></a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_27_KNN/Topic_27_KNN_with_pipelines_with_lab_v3_SG.html">Topic 27: K-Nearest Neighbors<br/> +Topic 32: Pipelines</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_29_decision_trees/topic_29_decision_trees_v2_titanic-SG.html">Topic 29: Decision Trees</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_30_ensemble_methods/topic_30_ensemble_methods-SG.html">Topic 30: Ensemble Methods</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_31_support_vector_machines/topic_31_SupportVectorMachines_SG.html">Topic 31: Support Vector Machines</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 4 - Advanced ML &amp; Time Series</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_33_pca/topic_33_PCA_SG.html">Topic 33: Principal Component Analysis</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_34_clustering/topic_34_Kmeans_clustering_v3_SG.html">Topic 34: Clustering</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_35-36_using_databricks_for_pyspark/using_databricks_for_pyspark.html">How to Use Databricks for PySpark Canvas Material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_36_recommendation_systems/topic_36_Recommendation_Systems_with_Surprise.html">Topic 36: Recommendation Systems</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_37_intro_to_time_series/topic_37_intro_to_time_series_crime_v3-SG.html">Topic 37: Intro to Time Series</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_38_time_series_models/topic_38-time_series_models_v3_SG.html">Topic 38: Time Series Models</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_39_NLP/topic_39_NLP_finding_trump_v3_SG.html">Topic 39: Natural Language Processing + Topic 28: Bayesian Classification</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_40-41_neural_networks/topic_40-41_Artificial_Neural_Networks_v1_SG.html">Topic 40-41: Artificial Neural Networks</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_42_tuning_neural_networks/topic_42_tuning_ANNs_with_deep_NLP_v1_SG.html">Topic 42 - Tuning Neural Networks + Deep NLP</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_43_AWS/topic_43_operationalizing_code_AWS_SG.html">Topic 43: Operationalizing Code &amp; AWS</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 5 - Capstone &amp; Bonus Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/Capstone_Kickoff.html">Capstone Kickoff!</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/APIs/working_with_apis.html">Working with APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/developing_app_functions/developing-streamlit-app-functions_SG.html">Developing Streamlit App Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/tableau/tableau_fundamentals_2021-SG.html">Tableau Fundamentals</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/Bonus%20Notebooks/plotly_visuals.html">Plotly Question</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/master?urlpath=tree/Phase_1/topic_05_data_cleaning_in_pandas/topic_05_Data_Cleaning_in_Pandas.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/blob/master/Phase_1/topic_05_data_cleaning_in_pandas/topic_05_Data_Cleaning_in_Pandas.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/issues/new?title=Issue%20on%20page%20%2FPhase_1/topic_05_data_cleaning_in_pandas/topic_05_Data_Cleaning_in_Pandas.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/Phase_1/topic_05_data_cleaning_in_pandas/topic_05_Data_Cleaning_in_Pandas.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Topic 05: Data Cleaning in Pandas</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Topic 05: Data Cleaning in Pandas</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tasks">Tasks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#questions-comments">Questions/Comments?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#from-the-gdoc">From the Gdoc</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lab-1-mini-project-eda-with-pandas-using-the-ames-housing-data">Lab 1: Mini-Project - EDA with Pandas Using the Ames Housing Data</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-science-workflows">Data Science Workflows</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#osemn-rhymes-with-possum">OSEMN (Rhymes with Possum)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#osemn-details">OSEMN DETAILS</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#process-checklist">PROCESS CHECKLIST</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#obtain"><strong>OBTAIN</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scrub"><strong>SCRUB</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#explore"><strong>EXPLORE</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#dealing-with-missing-data">Dealing with Missing Data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-is-missing-data-a-problem">Why is missing data a problem?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#detecting-missing-data">Detecting missing data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nans"><code class="docutils literal notranslate"><span class="pre">NaN</span></code>s</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#detecting-nans">Detecting <code class="docutils literal notranslate"><span class="pre">NaN</span></code>s</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-null-values">Creating Null Values</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#placeholder-values">Placeholder values</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numerical-data">Numerical data</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#categorical-data">Categorical data</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#strategies-for-dealing-with-missing-data">Strategies for dealing with missing data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#remove">Remove</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#replace">Replace</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#keep">Keep</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-steps">Additional Steps</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#check-for-duplicates">Check for duplicates</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#check-for-extraneous-values">Check for extraneous values</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lab-2-mini-project-data-cleaning">Lab 2: Mini-Project - Data Cleaning</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="topic-05-data-cleaning-in-pandas">
+<h1>Topic 05: Data Cleaning in Pandas<a class="headerlink" href="#topic-05-data-cleaning-in-pandas" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p>onl01-dtsc-ft-022221FT</p></li>
+<li><p>03/02/21</p></li>
+</ul>
+<section id="learning-objectives">
+<h2>Learning Objectives<a class="headerlink" href="#learning-objectives" title="Permalink to this heading">#</a></h2>
+<!---
+#### Our goals today are to be able to use the pandas library to:
+
+- Get summary info about a dataset and its variables
+  - Apply and use info, describe and dtypes
+  - Use mean, min, max, and value_counts 
+- Use apply and applymap to transform columns and create new values
+
+- Explain lambda functions and use them to use an apply on a DataFrame
+- Explain what a groupby object is and split a DataFrame using a groupby
+- Reshape a DataFrame using joins, merges, pivoting, stacking, and melting
+--->
+<ul class="simple">
+<li><p>Identify missing values in a dataframe using built-in methods</p></li>
+<li><p>Explain why missing values are a problem in data science</p></li>
+<li><p>Evaluate and execute the best strategy for dealing with missing, duplicate, and erroneous values for a given dataset</p></li>
+<li><p>Activity: Data Cleaning in Pandas Project</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Walk through OSEMN process &amp; scrubbing steps</p></li>
+<li><p>Walk through Topic 04’s Ames Housing mini project</p></li>
+<li><p>Walk through Topic 05’s Mini-Project with Superheroes</p></li>
+</ul>
+</section>
+<section id="questions-comments">
+<h2>Questions/Comments?<a class="headerlink" href="#questions-comments" title="Permalink to this heading">#</a></h2>
+<section id="from-the-gdoc">
+<h3>From the Gdoc<a class="headerlink" href="#from-the-gdoc" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>When should we use map(), apply(), mapapply()? I’m having a hard time telling how they’re different.</p></li>
+<li><p>One of the solutions in the more data mapping lab included the following code to print the mean, median, and stddev of the age column.</p>
+<ul>
+<li><p>How was it possible to run functions from a list of strings representing the function names and apply()?</p></li>
+</ul>
+</li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">age_na_mean</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">age_na_mean</span><span class="o">.</span><span class="n">apply</span><span class="p">([</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="s1">&#39;median&#39;</span><span class="p">,</span> <span class="s1">&#39;std&#39;</span><span class="p">]))</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Can you explain more about how we can use the “temporary” changes on dataframes to our advantage?</p>
+<ul>
+<li><p>If we don’t re-assign to a variable, or use inplace=True, what is the scope of the temporary changes, such as how long do they last?</p></li>
+</ul>
+</li>
+<li><p>The data cleaning mini project’s data set (superheroes) had a decent amount of negative values for heights and weights that it appears were not taken out in the solution. I replaced these with medians, and got really weird displots for the gender-height-weight charts, although the regular hist() plots were less crazy looking.</p>
+<ul>
+<li><p>Can you go over displots a little more, and why we might use them instead of the other ways to do plots?</p></li>
+</ul>
+</li>
+<li><p>Can you explain stack() and unstack a bit more? I ran through the lab examples but didn’t really get what was happening</p></li>
+<li><p>On this lab: <a class="github reference external" href="https://github.com/learn-co-curriculum/dsc-combining-dataframes-pandas-lab/tree/solution">learn-co-curriculum/dsc-combining-dataframes-pandas-lab</a> When setting the index, how does join know to join ‘on’ the index (Primary Key as the lesson describes it)</p></li>
+<li><p>I understand the value of inspecting dataframes with pandas - isolating data with .head(), .tail(), inspecting individual columns, etc, but are there any visual inspection tools that we will be able to use in conjunction with python similar to viewing the dataframe in excel? - Johnny</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/quantopian/qgrid">quantopian/qgrid</a></p></li>
+<li><p><a class="github reference external" href="https://github.com/pandas-profiling/pandas-profiling">pandas-profiling/pandas-profiling</a></p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># odds = np.random.rand()</span>
+<span class="c1"># odds&lt;0.5</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="lab-1-mini-project-eda-with-pandas-using-the-ames-housing-data">
+<h1>Lab 1: Mini-Project - EDA with Pandas Using the Ames Housing Data<a class="headerlink" href="#lab-1-mini-project-eda-with-pandas-using-the-ames-housing-data" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Folder <code class="docutils literal notranslate"><span class="pre">Online-DS-FT-022221-Cohort-Notes</span></code>&gt;<code class="docutils literal notranslate"><span class="pre">Phase_1</span></code>&gt;<code class="docutils literal notranslate"><span class="pre">topic_05_data_cleaning_in_pandas</span></code>&gt;<code class="docutils literal notranslate"><span class="pre">labs_from_class</span></code>&gt;<code class="docutils literal notranslate"><span class="pre">dsc-project-eda-with-pandas-master</span></code></p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="data-science-workflows">
+<h1>Data Science Workflows<a class="headerlink" href="#data-science-workflows" title="Permalink to this heading">#</a></h1>
+<section id="osemn-rhymes-with-possum">
+<h2>OSEMN (Rhymes with Possum)<a class="headerlink" href="#osemn-rhymes-with-possum" title="Permalink to this heading">#</a></h2>
+<img src='https://raw.githubusercontent.com/jirvingphd/fsds_100719_cohort_notes/master/images/OSEMN.png' width=800>
+<center><a href="https://www.kdnuggets.com/2018/02/data-science-command-line-book-exploring-data.html"> 
+    </a></center>
+<blockquote>
+<div><p>The Data Science Process we’ll be using during this section–OSEMiN (pronounced “OH-sum”, rhymes with “possum”).  This is the most straightforward of the Data Science Processes discussed so far.  <strong>Note that during this process, just like the others, the stages often blur together.</strong>*  It is completely acceptable (and *<strong>often a best practice!) to float back and forth</strong> between stages as you learn new things about your problem, dataset, requirements, etc.<br />
+It’s quite common to get to the modeling step and realize that you need to scrub your data a bit more or engineer a different feature and jump back to the “Scrub” stage, or go all the way back to the “Obtain” stage when you realize your current data isn’t sufficient to solve this problem.
+As with any of these frameworks, *OSEMiN is meant to be treated as guidelines, not law.
+</font></p>
+</div></blockquote>
+<section id="osemn-details">
+<h3>OSEMN DETAILS<a class="headerlink" href="#osemn-details" title="Permalink to this heading">#</a></h3>
+<p><strong>OBTAIN</strong></p>
+<ul class="simple">
+<li><p>This step involves understanding stakeholder requirements, gathering information on the problem, and finally sourcing data that we think will be necessary for solving this problem.</p></li>
+</ul>
+<blockquote>
+<div><p><strong>SCRUB</strong></p>
+</div></blockquote>
+<ul class="simple">
+<li><p>During this stage, we’ll focus on preprocessing our data.  <strong>Important steps such as identifying and removing null values, dealing with outliers, normalizing data, and feature engineering/feature selection are handled around this stage.</strong> The line with this stage really blurs with the <em>Explore</em> stage, as it is common to only realize that certain columns require cleaning or preprocessing as a result of the visualzations and explorations done during Step 3.</p></li>
+<li><p>Note that although technically, categorical data should be one-hot encoded during this step, in practice, it’s usually done after data exploration.  This is because it is much less time-consuming to visualize and explore a few columns containing categorical data than it is to explore many different dummy columns that have been one-hot encoded.</p></li>
+</ul>
+<p><strong>EXPLORE</strong></p>
+<ul class="simple">
+<li><p>This step focuses on getting to know the dataset you’re working with. As mentioned above, this step tends to blend with the <em>Scrub</em> step mentioned above.  During this step, you’ll create visualizations to really get a feel for your dataset.  You’ll focus on things such as understanding the distribution of different columns, checking for multicollinearity, and other tasks liek that.  If your project is a classification task, you may check the balance of the different classes in your dataset.  If your problem is a regression task, you may check that the dataset meets the assumptions necessary for a regression task.</p></li>
+<li><p>At the end of this step, you should have a dataset ready for modeling that you’ve thoroughly explored and are extremely familiar with.</p></li>
+</ul>
+<p><strong>MODEL</strong>
+… Modeling with begin in Phase 2.</p>
+<!---
+- This step, as with the last two frameworks, is also pretty self-explanatory. It consists of building and tuning models using all the tools you have in your data science toolbox.  In practice, this often means defining a threshold for success, selecting machine learning algorithms to test on the project, and tuning the ones that show promise to try and increase your results.  As with the other stages, it is both common and accepted to realize something, jump back to a previous stage like _Scrub_ or _Explore_, and make some changes to see how it affects the model.  
+
+**iNTERPRET**
+
+- During this step, you'll interpret the results of your model(s), and communicate results to stakeholders.  As with the other frameworks, communication is incredibily important! During this stage, you may come to realize that further investigation is needed, or more data.  That's totally fine--figure out what's needed, go get it, and start the process over! If your results are satisfactory to all stakeholders involved, you may also go from this stage right into productionizing your model and automating processes necessary to support it.  
+
+
+
+---></section>
+</section>
+<section id="process-checklist">
+<h2>PROCESS CHECKLIST<a class="headerlink" href="#process-checklist" title="Permalink to this heading">#</a></h2>
+<section id="obtain">
+<h3><strong>OBTAIN</strong><a class="headerlink" href="#obtain" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Import data, inspect, check for datatypes to convert and null values</p></li>
+<li><p>Display header and info.</p></li>
+<li><p>Drop any unneeded columns, if known (<code class="docutils literal notranslate"><span class="pre">df.drop(['col1','col2'],axis=1,inplace=True</span></code>)</p></li>
+</ul>
+</section>
+<section id="scrub">
+<h3><strong>SCRUB</strong><a class="headerlink" href="#scrub" title="Permalink to this heading">#</a></h3>
+<ul class="contains-task-list simple">
+<li><p>Recast data types, identify outliers, ~~check for multicollinearity, normalize data~~(don’t worry about these, for now)</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Check for #’s that are store as objects (<code class="docutils literal notranslate"><span class="pre">df.info()</span></code>,<code class="docutils literal notranslate"><span class="pre">df.describe()</span></code>)</p>
+<ul>
+<li><p>when converting to #’s, look for odd values (like many 0’s), or strings that can’t be converted.</p></li>
+<li><p>Decide how to deal weird/null values (<code class="docutils literal notranslate"><span class="pre">df.unique()</span></code>, <code class="docutils literal notranslate"><span class="pre">df.isna().sum()</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">df.fillna(subset=['col_with_nulls'],'fill_value')</span></code>, <code class="docutils literal notranslate"><span class="pre">df.replace()</span></code></p></li>
+</ul>
+</li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Check for categorical variables stored as integers.</p>
+<ul>
+<li><p>May be easier to tell when you make a scatter plotm or <code class="docutils literal notranslate"><span class="pre">pd.plotting.scatter_matrix()</span></code></p></li>
+</ul>
+</li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Check for missing values  (df.isna().sum())</p>
+<ul>
+<li><p>Can drop rows or colums</p></li>
+<li><p>For missing numeric data with median or bin/convert to categorical</p></li>
+<li><p>For missing categorical data: make NaN own category OR replace with most common category</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="explore">
+<h3><strong>EXPLORE</strong><a class="headerlink" href="#explore" title="Permalink to this heading">#</a></h3>
+<ul class="contains-task-list simple">
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Check distributions, outliers, etc**</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Check scales, ranges (df.describe())</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Check histograms to get an idea of distributions (df.hist()) and data transformations to perform.</p>
+<ul>
+<li><p>Can also do kernel density estimates</p></li>
+</ul>
+</li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Use scatter plots to check for linearity and possible categorical variables (<code class="docutils literal notranslate"><span class="pre">df.plot(&quot;x&quot;,&quot;y&quot;)</span></code>)</p>
+<ul>
+<li><p>categoricals will look like vertical lines</p></li>
+</ul>
+</li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Use <code class="docutils literal notranslate"><span class="pre">pd.plotting.scatter_matrix(df)</span></code> to visualize possible relationships</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Check for linearity.</p></li>
+</ul>
+<!---   
+4. **[MODEL](#MODEL)**
+
+    - **Fit an initial model:** 
+        - Run an initial model and get results
+
+    - **Holdout validation / Train/test split**
+        - use sklearn `train_test_split`
+    
+    
+5. **[iNTERPRET](#iNTERPRET)**
+    - **Assessing the model:**
+        - Assess parameters (slope,intercept)
+        - Check if the model explains the variation in the data (RMSE, F, R_square)
+        - *Are the coeffs, slopes, intercepts in appropriate units?*
+        - *Whats the impact of collinearity? Can we ignore?*
+        <br><br>
+    - **Revise the fitted model**
+        - Multicollinearity is big issue for lin regression and cannot fully remove it
+        - Use the predictive ability of model to test it (like R2 and RMSE)
+        - Check for missed non-linearity
+        
+       
+6. **Interpret final model and draw >=3 conclusions and recommendations from dataset**
+---></section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="dealing-with-missing-data">
+<h1>Dealing with Missing Data<a class="headerlink" href="#dealing-with-missing-data" title="Permalink to this heading">#</a></h1>
+<section id="why-is-missing-data-a-problem">
+<h2>Why is missing data a problem?<a class="headerlink" href="#why-is-missing-data-a-problem" title="Permalink to this heading">#</a></h2>
+<blockquote>
+<div><p>Missing data can be problematic during the Data Science process because <code class="docutils literal notranslate"><span class="pre">NaN</span></code> values in the dataset limit our ability to do important things like:</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>Convert data types</p></li>
+<li><p>Calculate summary statistics</p></li>
+<li><p>Visualize data</p></li>
+<li><p>Build models</p></li>
+</ul>
+<blockquote>
+<div><p>Later on in the boot camp, we will be building machine learning models, which generally do NOT accept null values.</p>
+</div></blockquote>
+</section>
+<section id="detecting-missing-data">
+<h2>Detecting missing data<a class="headerlink" href="#detecting-missing-data" title="Permalink to this heading">#</a></h2>
+<section id="nans">
+<h3><code class="docutils literal notranslate"><span class="pre">NaN</span></code>s<a class="headerlink" href="#nans" title="Permalink to this heading">#</a></h3>
+<p>By default, pandas represents null values with <code class="docutils literal notranslate"><span class="pre">NaN</span></code>, which is short for <strong><em>Not a Number</em></strong>.  Pandas provides many great ways for checking for null values, built right into DataFrames and Series objects.</p>
+<section id="detecting-nans">
+<h4>Detecting <code class="docutils literal notranslate"><span class="pre">NaN</span></code>s<a class="headerlink" href="#detecting-nans" title="Permalink to this heading">#</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="creating-null-values">
+<h4>Creating Null Values<a class="headerlink" href="#creating-null-values" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p>The proper way to create a null value is to use numpy’s nan (<code class="docutils literal notranslate"><span class="pre">np.nan</span></code>)</p></li>
+</ul>
+</section>
+</section>
+<section id="placeholder-values">
+<h3>Placeholder values<a class="headerlink" href="#placeholder-values" title="Permalink to this heading">#</a></h3>
+<section id="numerical-data">
+<h4>Numerical data<a class="headerlink" href="#numerical-data" title="Permalink to this heading">#</a></h4>
+<p>Numerical columns will often represent missing values with a value that is nonsensical to the column in question.  For instance, in healthcare data, missing values in a <code class="docutils literal notranslate"><span class="pre">Weight</span></code> column may be using impossible values such as <code class="docutils literal notranslate"><span class="pre">0</span></code> or <code class="docutils literal notranslate"><span class="pre">9999</span></code>.  These are valid to the computer, since they are real-numbered, but are obvious to anyone analyzing the data as placeholder values.</p>
+<!---
+- **Standard deviation**: If the data is normally distributed (or nearly normal), you can use three standard deviations as a cutoff point. In a normal distribution, three standard devations from the mean in both the directions cover 99.7% of the data, so any values outside this range are highly improbable, and can be safely discarded as outliers. 
+
+
+<img src="https://raw.githubusercontent.com/learn-co-students/dsc-dealing-missing-data-onl01-dtsc-pt-041320/master/images/normal_sd_new.png" width="600">
+
+
+> You will learn more about normal distribution in a later lesson. 
+
+
+- **Interquartile range (IQR)**: If the data is not normally distribued, you can use the same method boxplots use to determine the outliers -- all observations that lie 1.5 times the IQR (difference between the 75th and the 25th percentiles of the data) away from the median in either direction are treated as outliers. 
+
+
+<img src="https://raw.githubusercontent.com/learn-co-students/dsc-dealing-missing-data-onl01-dtsc-pt-041320/master/images/new_boxplot.png" width="600">
+
+
+> If you need a refresher on IQR, refer to the lesson on _Measures of Dispersion_ in the _Importing and Statistical Analysis of Data_ section of Module 1.
+
+Another way to confirm these values is to check the `.value_counts()` of a column.  In a continuously-valued column, it is probably rare for one specific value to overwhelm all the others.  If, for instance, you see the same numerical value showing up a statistically improbable number of times, double-check that this value is real -- placeholder values have the potential to show up many times, but it's much less likely for real-valued numbers.  
+
+---></section>
+<section id="categorical-data">
+<h4>Categorical data<a class="headerlink" href="#categorical-data" title="Permalink to this heading">#</a></h4>
+<p>To detect placeholder values in categorical data, get the unique values in the column and see if there are any values that don’t match up with your expectations.  Pandas provides a built-in method for this.</p>
+</section>
+</section>
+</section>
+<section id="strategies-for-dealing-with-missing-data">
+<h2>Strategies for dealing with missing data<a class="headerlink" href="#strategies-for-dealing-with-missing-data" title="Permalink to this heading">#</a></h2>
+<section id="remove">
+<h3>Remove<a class="headerlink" href="#remove" title="Permalink to this heading">#</a></h3>
+<p>The easiest way to deal with missing values is to drop the offending rows and/or columns.  The downside to this is that we lose data in the process.</p>
+<ul class="simple">
+<li><p>Drop columns</p></li>
+<li><p>Dropping rows</p></li>
+</ul>
+</section>
+<section id="replace">
+<h3>Replace<a class="headerlink" href="#replace" title="Permalink to this heading">#</a></h3>
+<p>We can also deal with missing values by replacing them with a common value. The downside of this method is that this can introduce noise into our dataset.</p>
+<ul class="simple">
+<li><p>Continuous data</p>
+<ul>
+<li><p>For continuous data, the best solution is to replace the missing values with the median value for that column.</p></li>
+</ul>
+</li>
+<li><p>Categorical data</p>
+<ul>
+<li><p>If one categorical value is much more common than others, it is a valid strategy to replace missing values with this common value.</p></li>
+<li><p>However, make sure to examine your data first!</p></li>
+<li><p>If all the categorical values are equally common, picking one to replace all the missing values may do more harm than good by skewing the distribution and introducing some false signal into your dataset.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="keep">
+<h3>Keep<a class="headerlink" href="#keep" title="Permalink to this heading">#</a></h3>
+<p>Sometimes, the knowledge that a value is missing can itself be informative for us.  If knowing that a value is missing tells you something, then it is often worth keeping the missing values using the following strategies.</p>
+<ul class="simple">
+<li><p>Categorical data</p>
+<ul>
+<li><p>Just treat missing values as its own category!</p></li>
+<li><p>In that case, just replace the <code class="docutils literal notranslate"><span class="pre">NaN</span></code> values with the string <code class="docutils literal notranslate"><span class="pre">'NaN'</span></code>, or another string that makes it obvious that this value is <code class="docutils literal notranslate"><span class="pre">'missing'</span></code>.</p></li>
+</ul>
+</li>
+<li><p>Numerical data</p>
+<ul>
+<li><p>Leaving the <code class="docutils literal notranslate"><span class="pre">NaN</span></code>s alone isn’t usually an option here.</p></li>
+<li><p>Instead, consider using <strong><em>Coarse Classification</em></strong>, also referred to as <strong><em>Binning</em></strong>.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="additional-steps">
+<h2>Additional Steps<a class="headerlink" href="#additional-steps" title="Permalink to this heading">#</a></h2>
+<section id="check-for-duplicates">
+<h3>Check for duplicates<a class="headerlink" href="#check-for-duplicates" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Check for repeated entries of the same row.</p></li>
+</ul>
+</section>
+<section id="check-for-extraneous-values">
+<h3>Check for extraneous values<a class="headerlink" href="#check-for-extraneous-values" title="Permalink to this heading">#</a></h3>
+<p>In general, doing a quick eyeball and previewing the top occurring values for each feature can help further tease out peculiarities in the dataset.</p>
+</section>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="lab-2-mini-project-data-cleaning">
+<h1>Lab 2: Mini-Project - Data Cleaning<a class="headerlink" href="#lab-2-mini-project-data-cleaning" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Folder <code class="docutils literal notranslate"><span class="pre">Online-DS-FT-022221-Cohort-Notes</span></code>&gt;<code class="docutils literal notranslate"><span class="pre">Phase_1</span></code>&gt;<code class="docutils literal notranslate"><span class="pre">topic_05_data_cleaning_in_pandas</span></code>&gt;<code class="docutils literal notranslate"><span class="pre">labs_from_class</span></code>&gt;<code class="docutils literal notranslate"><span class="pre">dsc-data-cleaning-project-master</span></code></p></li>
+</ul>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "learn-env"
+        },
+        kernelOptions: {
+            name: "learn-env",
+            path: "./Phase_1/topic_05_data_cleaning_in_pandas"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'learn-env'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../topic_04_python_libraries/topic_04_pt-2_brief_intro_to_pandas-SG.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Topic 04-Part 2: Brief Intro to Pandas with Doctor Who</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../topic_06_data_visualization/topic_06_visualizations_heroes_project_SG.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Topic 06:  Data Visualizations</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Topic 05: Data Cleaning in Pandas</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tasks">Tasks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#questions-comments">Questions/Comments?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#from-the-gdoc">From the Gdoc</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lab-1-mini-project-eda-with-pandas-using-the-ames-housing-data">Lab 1: Mini-Project - EDA with Pandas Using the Ames Housing Data</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-science-workflows">Data Science Workflows</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#osemn-rhymes-with-possum">OSEMN (Rhymes with Possum)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#osemn-details">OSEMN DETAILS</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#process-checklist">PROCESS CHECKLIST</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#obtain"><strong>OBTAIN</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scrub"><strong>SCRUB</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#explore"><strong>EXPLORE</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#dealing-with-missing-data">Dealing with Missing Data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-is-missing-data-a-problem">Why is missing data a problem?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#detecting-missing-data">Detecting missing data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nans"><code class="docutils literal notranslate"><span class="pre">NaN</span></code>s</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#detecting-nans">Detecting <code class="docutils literal notranslate"><span class="pre">NaN</span></code>s</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-null-values">Creating Null Values</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#placeholder-values">Placeholder values</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numerical-data">Numerical data</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#categorical-data">Categorical data</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#strategies-for-dealing-with-missing-data">Strategies for dealing with missing data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#remove">Remove</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#replace">Replace</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#keep">Keep</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-steps">Additional Steps</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#check-for-duplicates">Check for duplicates</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#check-for-extraneous-values">Check for extraneous values</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lab-2-mini-project-data-cleaning">Lab 2: Mini-Project - Data Cleaning</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By James Irving, PhD
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,1066 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Gradient Descent &#8212; Data Science Curriculum</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Phase_3/topic_23_calculus_gradient_descent/ds-gradient_descent-main/gradient_descent';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/flatironschool_banner.jpg" class="logo__image only-light" alt="Data Science Curriculum - Home"/>
+    <script>document.write(`<img src="../../../_static/flatironschool_banner.jpg" class="logo__image only-dark" alt="Data Science Curriculum - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../intro.html">
+                    Data Science Curriculum
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 1 - Python &amp; Data Fundamentals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_01_getting_started/topic_01_getting_started.html">Topic 1: Getting Started with Data Science</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_02_bash_git/topic_02_bash_and_git.html">Topic 02:  Bash and Git</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_03_control_flow_functions/topic_03_control_flow_and_functions.html">Topic 03: Control Flow, Functions, and Statistics</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_04_python_libraries/topic_04_intro_to_libraries_numpy_SG.html">Topic 04-Part 1: Python Libraries &amp; NumPy</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_04_python_libraries/topic_04_pt-2_brief_intro_to_pandas-SG.html">Topic 04-Part 2: Brief Intro to Pandas with Doctor Who</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_05_data_cleaning_in_pandas/topic_05_Data_Cleaning_in_Pandas.html">Topic 05: Data Cleaning in Pandas</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_06_data_visualization/topic_06_visualizations_heroes_project_SG.html">Topic 06:  Data Visualizations</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_07_SQL_and_relational_databases/topic_07_SQL_and_relational_databases_SG.html">TOPIC 07: SQL DATABASES</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_08_noSQL_databases/topic_08_mongodb-SG.html">Topic 08: NoSQL Databases</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_09_json_and_apis/topic_09_json-api-SG.html">Topic 09: Using APIs and JSON Data</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_10_webscraping/topic_10_SG_HTML_CSS_web_scraping.html">Topic 10: HTML, CSS, &amp; Web Scraping</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 2 - Statistics &amp; Regression</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_11_probability_and_combinatorics/topic_11_playlist_probabilities-SG.html">Topic 11 - Intro to Combinatorics &amp; Probability</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_12_statistical_distributions/topic-12-distributions-with-movies-sg.html">Exploring Distributions with Movies Data</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_13_central_limit_theorem/topic_13_central_limit_theorem_SG.html">Topic 13: Central Limit Theorem</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_14_hypothesis_testing/topic_14_hypothesis_testing-SG.html">Topic 14: Hypothesis Testing -  T-Tests</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_15_ANOVA/topic_15_ANOVA_with_neuro_data-SG.html">Topic 15: ANOVAs &amp; Statistical Power with  Neuro Data</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_16_AB_testing/topic_16_AB_testing_with_movies-SG.html">Topic 16: Practicing AB Testing with Movies</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_17_bayesian_statistics/topic_17_bayesian_statistics-SG.html">Topic 17: Bayesian Statistics</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_18_linear_regression/topic_18_intro_to_linear_regression_SG.html">Topic 18: Intro to Linear Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_19_part1_multiple_regression/topic_19_Multiple_Regression_v2-SG.html">Topic 19: Multiple Linear Regression</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_19_part2_model_validation/topic_19_part_2_Multiple_Regression_v2-SG.html">Topic 19 Part 2: Feature Selection &amp; Model Validation</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_20_extensions_linear_models/topic_20_extensions_to_linear_models_SG.html">Topic 20: Extensions to Linear Models</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 3 - Machine Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../topic_21_OOP/topic_21_OOP_playing_cards_SG.html">Topic 21: Object-Oriented Programming</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_22_linear_algebra/topic_22_linear_algebra_SG.html">Topic 22: Linear Algebra</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_23_gradient_descent_SG.html">Topic 23: Cost Functions and Gradient Descent</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_24_regularization/topic_24_Regularization_Ridge_Lasso_v2_SG.html">Topic 24: Feature Selection &amp; Regularization (Ridge and Lasso Regression)</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_25_logistic_regression/topic_25_pt1_LogisticRegression_titanic-v2-SG.html">Topic 25-Pt 1: Intro to Logistic Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_25_logistic_regression/topic_25_pt2_LogisticRegression_titanic-v2-SG.html">Topic 25-Part 2: Evaluating Classifiers, Dealing with Class Imbalance, and <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code></a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_27_KNN/Topic_27_KNN_with_pipelines_with_lab_v3_SG.html">Topic 27: K-Nearest Neighbors<br/> +Topic 32: Pipelines</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_29_decision_trees/topic_29_decision_trees_v2_titanic-SG.html">Topic 29: Decision Trees</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_30_ensemble_methods/topic_30_ensemble_methods-SG.html">Topic 30: Ensemble Methods</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_31_support_vector_machines/topic_31_SupportVectorMachines_SG.html">Topic 31: Support Vector Machines</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 4 - Advanced ML &amp; Time Series</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_33_pca/topic_33_PCA_SG.html">Topic 33: Principal Component Analysis</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_34_clustering/topic_34_Kmeans_clustering_v3_SG.html">Topic 34: Clustering</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_35-36_using_databricks_for_pyspark/using_databricks_for_pyspark.html">How to Use Databricks for PySpark Canvas Material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_36_recommendation_systems/topic_36_Recommendation_Systems_with_Surprise.html">Topic 36: Recommendation Systems</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_37_intro_to_time_series/topic_37_intro_to_time_series_crime_v3-SG.html">Topic 37: Intro to Time Series</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_38_time_series_models/topic_38-time_series_models_v3_SG.html">Topic 38: Time Series Models</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_39_NLP/topic_39_NLP_finding_trump_v3_SG.html">Topic 39: Natural Language Processing + Topic 28: Bayesian Classification</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_40-41_neural_networks/topic_40-41_Artificial_Neural_Networks_v1_SG.html">Topic 40-41: Artificial Neural Networks</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_42_tuning_neural_networks/topic_42_tuning_ANNs_with_deep_NLP_v1_SG.html">Topic 42 - Tuning Neural Networks + Deep NLP</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_43_AWS/topic_43_operationalizing_code_AWS_SG.html">Topic 43: Operationalizing Code &amp; AWS</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 5 - Capstone &amp; Bonus Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/Capstone_Kickoff.html">Capstone Kickoff!</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/APIs/working_with_apis.html">Working with APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/developing_app_functions/developing-streamlit-app-functions_SG.html">Developing Streamlit App Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/tableau/tableau_fundamentals_2021-SG.html">Tableau Fundamentals</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/Bonus%20Notebooks/plotly_visuals.html">Plotly Question</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/master?urlpath=tree/Phase_3/topic_23_calculus_gradient_descent/ds-gradient_descent-main/gradient_descent.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/blob/master/Phase_3/topic_23_calculus_gradient_descent/ds-gradient_descent-main/gradient_descent.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/issues/new?title=Issue%20on%20page%20%2FPhase_3/topic_23_calculus_gradient_descent/ds-gradient_descent-main/gradient_descent.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/Phase_3/topic_23_calculus_gradient_descent/ds-gradient_descent-main/gradient_descent.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Gradient Descent</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#agenda">Agenda</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-gradient">The Gradient</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loss-functions">Loss Functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-descent-the-algorithm">Gradient Descent: The Algorithm</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-descent-in-words">Gradient Descent in Words</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-size">Step Size</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#formula">Formula</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise">Exercise</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#test-it">Test It!</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="gradient-descent">
+<h1>Gradient Descent<a class="headerlink" href="#gradient-descent" title="Permalink to this heading">#</a></h1>
+<section id="agenda">
+<h2>Agenda<a class="headerlink" href="#agenda" title="Permalink to this heading">#</a></h2>
+<p>SWBAT:</p>
+<ul class="simple">
+<li><p>explain and use the concept of a gradient;</p></li>
+<li><p>explain the algorithm of gradient descent;</p></li>
+<li><p>describe the effect of the “learning rate” in the algorithm.</p></li>
+</ul>
+</section>
+<section id="the-gradient">
+<h2>The Gradient<a class="headerlink" href="#the-gradient" title="Permalink to this heading">#</a></h2>
+<p><strong>Gradient Descent</strong> is an optimization procedure that, in one form or another, underlies many model-fitting algorithms. The gradient, in concept, is a generalized notion of a derivative and so belongs to <strong>calculus</strong> (or <strong>analysis</strong>).</p>
+<p>The gradient is defined as follows:</p>
+<p>If <span class="math notranslate nohighlight">\(f(x_1, ... , x_n)\)</span> is a function of <span class="math notranslate nohighlight">\(n\)</span> variables, then its gradient is equal to:</p>
+<p><span class="math notranslate nohighlight">\(\large\nabla f(x_1, ... , x_n) = \frac{\partial f}{\partial x_1}\hat{x_1} + ... + \frac{\partial f}{\partial x_n}\hat{x_n}\)</span>,</p>
+<p>where <span class="math notranslate nohighlight">\(\hat{x_k}\)</span> is the unit vector in the <span class="math notranslate nohighlight">\(\vec{x_k}\)</span>-direction.</p>
+<p>Recall that, in the single-variable case, a positive derivative indicates an increasing function and a negative derivative indicates a decreasing function.</p>
+<p>In the multivariate case, the gradient tells us how the function is changing <strong>in each dimension</strong>. A large value of the derivative with respect to a particular variable means that the gradient will have a large component in the corresponding direction. Therefore, <strong>the gradient will point in the direction of steepest increase</strong>.</p>
+</section>
+<section id="loss-functions">
+<h2>Loss Functions<a class="headerlink" href="#loss-functions" title="Permalink to this heading">#</a></h2>
+<p>We have already encountered the notion of a loss function. For an ordinary least-squares regression, the typical loss function is simply the sum of squared differences between the true <span class="math notranslate nohighlight">\(y\)</span>-values and the corresponding values on the best-fit line. And the goal, of course, is to <strong>minimize</strong> our loss function. (This is not of course to say that we can make it negligibly small or zero; the nature of the data and the nature of the model will impose restrictions on how much progress we can make.)</p>
+<p>The fundamental idea we take from calculus here is that <strong>the minimum of the loss function must occur where its slope is zero</strong>. To calculate, analytically, the parameters of the best-fit line, we construct the derivative of the least-squares function with respect to the parameters of the line (slope and y-intercept) and then set the resulting expressions to zero, solving for the parameters.</p>
+</section>
+<section id="gradient-descent-the-algorithm">
+<h2>Gradient Descent: The Algorithm<a class="headerlink" href="#gradient-descent-the-algorithm" title="Permalink to this heading">#</a></h2>
+<p>Suppose that we have these data points:</p>
+<p>(1, 2), (3, 9), (5, 10),</p>
+<p>and that we’re interested in constructing a best-fit line through them.</p>
+<p>Now this optimization problem has a well-known solution and we could simply plug in our values here into that formula.</p>
+<p>The solution to a linear regression problem is a matter of minimizing the sum of squared distances between actual y-values and the line’s predictions.</p>
+<p>More generally, model optimization involves setting the derivative of the function you want to minimize (for a linear regression, this would be the sum of the squared distances between <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(\hat{y}\)</span>) to zero, and then solving for the parameters that define the model (for a linear regression, this would be the slope and y-intercept).</p>
+<p>But this is not always easily or efficiently done. Sometimes the loss function is quite complicated and it is not a straightforward matter to set the derivative equal to zero and to solve the resulting equation(s) for the missing parameters.</p>
+<p>Sometimes it’s easier or more efficient to use gradient descent.</p>
+<section id="gradient-descent-in-words">
+<h3>Gradient Descent in Words<a class="headerlink" href="#gradient-descent-in-words" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>make a guess at where the function attains its minimum value; and then</p></li>
+<li><p>calculate the derivative at that point; and then</p></li>
+<li><p>use that value to decide how to make your next guess!</p></li>
+</ul>
+<p>Repeat until we get the derivative as close as we like to 0.</p>
+<p>If we want to improve our guess at the minimum of our loss function, we’ll move in the <strong>opposite direction</strong> of the gradient away from our last guess. Hence we are using the <em>gradient</em> of our loss function to <em>descend</em> to the minimum value of the relevant loss function.</p>
+</section>
+<section id="example">
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this heading">#</a></h3>
+<p>Let’s try this with our three data points above.</p>
+<p>You may recall that the parameters that produce the best-fit line for the three points above are:</p>
+<p><span class="math notranslate nohighlight">\(\beta_0 = 1\)</span>; <br/>
+<span class="math notranslate nohighlight">\(\beta_1 = 2\)</span>.</p>
+<p>But suppose we try to arrive at these values by guessing and checking, i.e. by (a crude version of) the method of gradient descent.</p>
+<p>Let’s start with a guess of:</p>
+<p><span class="math notranslate nohighlight">\(\beta_0 = 3\)</span>; <br/>
+<span class="math notranslate nohighlight">\(\beta_1 = 3\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">beta_0</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">beta_1</span> <span class="o">=</span> <span class="mi">3</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now the function we’re trying to minimize is:</p>
+<p><span class="math notranslate nohighlight">\(\large f(\beta_0, \beta_1) = \Sigma(y - \beta_1x - \beta_0)^2\)</span>.</p>
+<p>So we have:</p>
+<p><span class="math notranslate nohighlight">\(\large\frac{\partial f}{\partial\beta_0} = -2\Sigma(y - \beta_1x - \beta_0)\)</span>; and</p>
+<p><span class="math notranslate nohighlight">\(\large\frac{\partial f}{\partial\beta_1} = -2\Sigma x(y - \beta_1x - \beta_0)\)</span>.</p>
+<p>The answer to the optimization problem is <span class="math notranslate nohighlight">\(\beta_0=1\)</span>, <span class="math notranslate nohighlight">\(\beta_1=2\)</span>.</p>
+<p>Note that if we plug in <span class="math notranslate nohighlight">\(\beta_0 = 1\)</span>, <span class="math notranslate nohighlight">\(\beta_1 = 2\)</span>, we get 0 for these derivatives:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">dfdbeta0</span><span class="p">(</span><span class="n">beta_0</span><span class="p">,</span> <span class="n">beta_1</span><span class="p">):</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="p">((</span><span class="mi">2</span> <span class="o">-</span> <span class="n">beta_1</span><span class="o">*</span><span class="mi">1</span> <span class="o">-</span> <span class="n">beta_0</span><span class="p">)</span>\
+                 <span class="o">+</span> <span class="p">(</span><span class="mi">9</span> <span class="o">-</span> <span class="n">beta_1</span><span class="o">*</span><span class="mi">3</span> <span class="o">-</span> <span class="n">beta_0</span><span class="p">)</span>\
+                 <span class="o">+</span> <span class="p">(</span><span class="mi">10</span> <span class="o">-</span> <span class="n">beta_1</span><span class="o">*</span><span class="mi">5</span> <span class="o">-</span> <span class="n">beta_0</span><span class="p">))</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">dfdbeta1</span><span class="p">(</span><span class="n">beta_0</span><span class="p">,</span> <span class="n">beta_1</span><span class="p">):</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="p">((</span><span class="mi">1</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">-</span> <span class="n">beta_1</span><span class="o">*</span><span class="mi">1</span> <span class="o">-</span> <span class="n">beta_0</span><span class="p">))</span>\
+                 <span class="o">+</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="p">(</span><span class="mi">9</span> <span class="o">-</span> <span class="n">beta_1</span><span class="o">*</span><span class="mi">3</span> <span class="o">-</span> <span class="n">beta_0</span><span class="p">))</span>\
+                 <span class="o">+</span> <span class="p">(</span><span class="mi">5</span> <span class="o">*</span> <span class="p">(</span><span class="mi">10</span> <span class="o">-</span> <span class="n">beta_1</span><span class="o">*</span><span class="mi">5</span> <span class="o">-</span> <span class="n">beta_0</span><span class="p">)))</span>
+
+<span class="n">partial_0</span> <span class="o">=</span> <span class="n">dfdbeta0</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">partial_1</span> <span class="o">=</span> <span class="n">dfdbeta1</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="n">partial_0</span><span class="p">,</span> <span class="n">partial_1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>But let’s plug in our guesses and see what happens:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">partial_0</span> <span class="o">=</span> <span class="n">dfdbeta0</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">partial_1</span> <span class="o">=</span> <span class="n">dfdbeta1</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="n">partial_0</span><span class="p">,</span> <span class="n">partial_1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Since <span class="math notranslate nohighlight">\(\frac{\partial f}{\partial\beta_0}\)</span> and <span class="math notranslate nohighlight">\(\frac{\partial f}{\partial\beta_1}\)</span> are positive, this tells us that we need to make our guesses <strong>smaller</strong> for each. So we might try <span class="math notranslate nohighlight">\(\beta_0 = \beta_1 = 1\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">partial_0</span> <span class="o">=</span> <span class="n">dfdbeta0</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">partial_1</span> <span class="o">=</span> <span class="n">dfdbeta1</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">partial_0</span><span class="p">,</span> <span class="n">partial_1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we need to make our guesses <strong>larger</strong>! Note that, even though <span class="math notranslate nohighlight">\(\beta_0 = 1\)</span> is part of the optimal solution, there is no guarantee that the associated partial derivative will be 0 for all the points in parameter space where <span class="math notranslate nohighlight">\(\beta_0 = 1\)</span>, since the derivative is a function both of <span class="math notranslate nohighlight">\(\beta_0\)</span> and of <span class="math notranslate nohighlight">\(\beta_1\)</span>.</p>
+</section>
+<section id="step-size">
+<h3>Step Size<a class="headerlink" href="#step-size" title="Permalink to this heading">#</a></h3>
+<p>How can we guarantee that we don’t step <strong>too far</strong> when making a new estimate of the optimal parameter values? If we step too far we may never reach the minimum. And for that matter, there is reason also not to have our step size be <strong>too small</strong>. If we’re far from the minimum, then a small learning rate would make our route to the minimum very costly (in terms of computation time, if nothing else).</p>
+<p>Here’s an elegant solution: Make the size of your step <strong>proportional to the value of the derivative at the point where you currently are in parameter space</strong>! If we’re very far from the minimum, then our values will be large, and so we therefore can safely take a large step; if we’re close to the minimum, then our values will be small, and so we should therefore take a smaller step.</p>
+<p>I said the size of the step is proportional to the value of the derivative. The constant of proportionality is often called the <strong>“learning rate”</strong>.</p>
+<p>This page helps to explain the dangers of learning rates that are too large and too small: <a class="reference external" href="https://www.jeremyjordan.me/nn-learning-rate/">https://www.jeremyjordan.me/nn-learning-rate/</a>.</p>
+<p><img alt="learning_rate" src="https://www.jeremyjordan.me/content/images/2018/02/Screen-Shot-2018-02-24-at-11.47.09-AM.png" /></p>
+</section>
+<section id="formula">
+<h3>Formula<a class="headerlink" href="#formula" title="Permalink to this heading">#</a></h3>
+<p>The general algorithm looks like this:</p>
+<p>We’ll make a guess, <span class="math notranslate nohighlight">\(\vec{s}\)</span>, at where our loss function attains a minimum. If we’re not happy with how close the value of the gradient there is to 0, then we’ll make a new guess, and the new guess will be constructed as follows:</p>
+<p><span class="math notranslate nohighlight">\(\large\vec{s}_{new} = \vec{s}_{old} - \alpha\nabla f(\vec{s}_{old})\)</span>,</p>
+<p>where <span class="math notranslate nohighlight">\(\alpha\)</span> is the learning rate.</p>
+<p>In the one-dimensional case, we’ll have:</p>
+<p><span class="math notranslate nohighlight">\(\large x_{new} = x_{old} - \alpha\frac{df}{dx}|_{x_{old}}\)</span>.</p>
+</section>
+</section>
+<section id="exercise">
+<h2>Exercise<a class="headerlink" href="#exercise" title="Permalink to this heading">#</a></h2>
+<p>Let’s write a function that will utilize gradient descent for a simple one-parameter loss function.</p>
+<p>The inputs will be:</p>
+<ul class="simple">
+<li><p>a function representing the derivative of our loss function;</p></li>
+<li><p>an initial guess;</p></li>
+<li><p>a learning rate;</p></li>
+<li><p>a level of desired precision</p></li>
+<li><p>a maximum number of iterations to run through before quitting</p></li>
+</ul>
+<p>I’ve started the code for you below:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">one_d_grad_desc</span><span class="p">(</span><span class="n">deriv</span><span class="p">,</span> <span class="n">guess</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">prec</span><span class="o">=</span><span class="mf">0.000001</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">10</span><span class="o">**</span><span class="mi">5</span><span class="p">):</span>
+    
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_iter</span><span class="p">):</span>
+        
+        <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+</div>
+<details>
+    <summary>
+        Answer here
+    </summary>
+    <code>def one_d_grad_desc(deriv, guess, alpha=0.001, prec=0.000001, max_iter=10**5):
+    for _ in range(max_iter):
+        old_x = guess
+        guess = old_x - alpha * deriv(old_x)
+        step = guess - old_x
+        if abs(step) <= prec:
+            break       
+    return guess</code>
+        </details><section id="test-it">
+<h3>Test It!<a class="headerlink" href="#test-it" title="Permalink to this heading">#</a></h3>
+<p>Once you’ve got the function coded, try it out on some simple one-dimensional functions!</p>
+<p>Try it on:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">deriv</span></code> = <span class="math notranslate nohighlight">\(2x\)</span>. What answer should you get here?</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">deriv</span></code> = <span class="math notranslate nohighlight">\(10^x - 100\)</span>. What answer should you get here?</p></li>
+<li><p><strong>loss function</strong> = <span class="math notranslate nohighlight">\(3x^3 - 3x^2 + x - 2\)</span></p></li>
+<li><p><strong>loss function</strong> = <span class="math notranslate nohighlight">\((4x + 5)^2\)</span></p></li>
+</ul>
+</section>
+</section>
+<section id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
+<p>For each of the following loss functions, (a) compute the gradient, (b) find where this gradient = 0, and (c) determine whether this corresponds to a global minimum of the function or not:</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(L(\phi) = \phi\)</span></p></li>
+</ol>
+<details>
+    <summary>
+        Answer
+    </summary>
+    (a) Gradient = 1 <br/>
+    (b) Nowhere! <br/>
+    (c) N/A <br/>
+    </details><ol class="arabic simple" start="2">
+<li><p><span class="math notranslate nohighlight">\(L(a, b, c) = a^2+b^2+c^2\)</span></p></li>
+</ol>
+<details>
+    <summary>
+        Answer
+    </summary>
+    (a) Gradient = $2a\hat{a} + 2b\hat{b} + 2c\hat{c}$ <br/>
+    (b) $a=b=c=0$ <br/>
+    (c) Yes, global. $L > 0$ everywhere else. <br/>
+    </details><ol class="arabic simple" start="3">
+<li><p><span class="math notranslate nohighlight">\(L(\alpha, \beta, \gamma) = -(\alpha^2+\beta^2+\gamma^2)\)</span></p></li>
+</ol>
+<details>
+    <summary>
+        Answer
+    </summary>
+    (a) Gradient = $-2\alpha\hat{\alpha} - 2\beta\hat{\beta} - 2\gamma\hat{\gamma}$ <br/>
+    (b) $\alpha=\beta=\gamma=0$ <br/>
+    (c) No. This is a maximum! $L < 0$ everywhere else. <br/>
+    </details><ol class="arabic simple" start="4">
+<li><p><span class="math notranslate nohighlight">\(L(x) = 2(x-4)\)</span></p></li>
+</ol>
+<details>
+    <summary>
+        Answer
+    </summary>
+    (a) Gradient = 2 <br/>
+    (b) Nowhere! <br/>
+    (c) N/A <br/>
+    </details><ol class="arabic simple" start="5">
+<li><p><span class="math notranslate nohighlight">\(L(x_1, x_2, x_3, x_4) = x_1x_2x_3x_4\)</span></p></li>
+</ol>
+<details>
+    <summary>
+        Answer
+    </summary>
+    (a) Gradient = $x_2x_3x_4\hat{x_1} + x_1x_3x_4\hat{x_2} + x_1x_2x_4\hat{x_3} + x_1x_2x_3\hat{x_4}$ <br/>
+    (b) $x_1, x_2 = 0$ OR $x_1, x_3 = 0$ OR $x_1, x_4 = 0$ OR $x_2, x_3 = 0$ OR $x_2, x_4 = 0$ OR $x_3, x_4 = 0$ <br/>
+    (c) No, not global minima. These are "saddle points". $L$ has neither global minima nor global maxima. <br/>
+    </details></section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Phase_3/topic_23_calculus_gradient_descent/ds-gradient_descent-main"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#agenda">Agenda</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-gradient">The Gradient</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loss-functions">Loss Functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-descent-the-algorithm">Gradient Descent: The Algorithm</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-descent-in-words">Gradient Descent in Words</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-size">Step Size</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#formula">Formula</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise">Exercise</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#test-it">Test It!</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By James Irving, PhD
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

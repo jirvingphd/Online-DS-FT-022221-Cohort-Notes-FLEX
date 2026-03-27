@@ -1,0 +1,2282 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>\(k\)-means Clustering &#8212; Data Science Curriculum</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/clipboard.min.js"></script>
+    <script src="../../../../_static/copybutton.js"></script>
+    <script src="../../../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Phase_4/topic_34_clustering/ds-clustering-main/notebooks/1_kmeans_clustering';</script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../_static/flatironschool_banner.jpg" class="logo__image only-light" alt="Data Science Curriculum - Home"/>
+    <script>document.write(`<img src="../../../../_static/flatironschool_banner.jpg" class="logo__image only-dark" alt="Data Science Curriculum - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../intro.html">
+                    Data Science Curriculum
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 1 - Python &amp; Data Fundamentals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_1/topic_01_getting_started/topic_01_getting_started.html">Topic 1: Getting Started with Data Science</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_1/topic_02_bash_git/topic_02_bash_and_git.html">Topic 02:  Bash and Git</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_1/topic_03_control_flow_functions/topic_03_control_flow_and_functions.html">Topic 03: Control Flow, Functions, and Statistics</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_1/topic_04_python_libraries/topic_04_intro_to_libraries_numpy_SG.html">Topic 04-Part 1: Python Libraries &amp; NumPy</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_1/topic_04_python_libraries/topic_04_pt-2_brief_intro_to_pandas-SG.html">Topic 04-Part 2: Brief Intro to Pandas with Doctor Who</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_1/topic_05_data_cleaning_in_pandas/topic_05_Data_Cleaning_in_Pandas.html">Topic 05: Data Cleaning in Pandas</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_1/topic_06_data_visualization/topic_06_visualizations_heroes_project_SG.html">Topic 06:  Data Visualizations</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_1/topic_07_SQL_and_relational_databases/topic_07_SQL_and_relational_databases_SG.html">TOPIC 07: SQL DATABASES</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_1/topic_08_noSQL_databases/topic_08_mongodb-SG.html">Topic 08: NoSQL Databases</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_1/topic_09_json_and_apis/topic_09_json-api-SG.html">Topic 09: Using APIs and JSON Data</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_1/topic_10_webscraping/topic_10_SG_HTML_CSS_web_scraping.html">Topic 10: HTML, CSS, &amp; Web Scraping</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 2 - Statistics &amp; Regression</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_11_probability_and_combinatorics/topic_11_playlist_probabilities-SG.html">Topic 11 - Intro to Combinatorics &amp; Probability</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_12_statistical_distributions/topic-12-distributions-with-movies-sg.html">Exploring Distributions with Movies Data</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_13_central_limit_theorem/topic_13_central_limit_theorem_SG.html">Topic 13: Central Limit Theorem</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_14_hypothesis_testing/topic_14_hypothesis_testing-SG.html">Topic 14: Hypothesis Testing -  T-Tests</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_15_ANOVA/topic_15_ANOVA_with_neuro_data-SG.html">Topic 15: ANOVAs &amp; Statistical Power with  Neuro Data</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_16_AB_testing/topic_16_AB_testing_with_movies-SG.html">Topic 16: Practicing AB Testing with Movies</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_17_bayesian_statistics/topic_17_bayesian_statistics-SG.html">Topic 17: Bayesian Statistics</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_18_linear_regression/topic_18_intro_to_linear_regression_SG.html">Topic 18: Intro to Linear Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_19_part1_multiple_regression/topic_19_Multiple_Regression_v2-SG.html">Topic 19: Multiple Linear Regression</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_19_part2_model_validation/topic_19_part_2_Multiple_Regression_v2-SG.html">Topic 19 Part 2: Feature Selection &amp; Model Validation</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_20_extensions_linear_models/topic_20_extensions_to_linear_models_SG.html">Topic 20: Extensions to Linear Models</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 3 - Machine Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_21_OOP/topic_21_OOP_playing_cards_SG.html">Topic 21: Object-Oriented Programming</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_22_linear_algebra/topic_22_linear_algebra_SG.html">Topic 22: Linear Algebra</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_23_calculus_gradient_descent/topic_23_gradient_descent_SG.html">Topic 23: Cost Functions and Gradient Descent</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_24_regularization/topic_24_Regularization_Ridge_Lasso_v2_SG.html">Topic 24: Feature Selection &amp; Regularization (Ridge and Lasso Regression)</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_25_logistic_regression/topic_25_pt1_LogisticRegression_titanic-v2-SG.html">Topic 25-Pt 1: Intro to Logistic Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_25_logistic_regression/topic_25_pt2_LogisticRegression_titanic-v2-SG.html">Topic 25-Part 2: Evaluating Classifiers, Dealing with Class Imbalance, and <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code></a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_27_KNN/Topic_27_KNN_with_pipelines_with_lab_v3_SG.html">Topic 27: K-Nearest Neighbors<br/> +Topic 32: Pipelines</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_29_decision_trees/topic_29_decision_trees_v2_titanic-SG.html">Topic 29: Decision Trees</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_30_ensemble_methods/topic_30_ensemble_methods-SG.html">Topic 30: Ensemble Methods</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_31_support_vector_machines/topic_31_SupportVectorMachines_SG.html">Topic 31: Support Vector Machines</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 4 - Advanced ML &amp; Time Series</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_33_pca/topic_33_PCA_SG.html">Topic 33: Principal Component Analysis</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_34_Kmeans_clustering_v3_SG.html">Topic 34: Clustering</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_35-36_using_databricks_for_pyspark/using_databricks_for_pyspark.html">How to Use Databricks for PySpark Canvas Material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_36_recommendation_systems/topic_36_Recommendation_Systems_with_Surprise.html">Topic 36: Recommendation Systems</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_37_intro_to_time_series/topic_37_intro_to_time_series_crime_v3-SG.html">Topic 37: Intro to Time Series</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_38_time_series_models/topic_38-time_series_models_v3_SG.html">Topic 38: Time Series Models</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_39_NLP/topic_39_NLP_finding_trump_v3_SG.html">Topic 39: Natural Language Processing + Topic 28: Bayesian Classification</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_40-41_neural_networks/topic_40-41_Artificial_Neural_Networks_v1_SG.html">Topic 40-41: Artificial Neural Networks</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_42_tuning_neural_networks/topic_42_tuning_ANNs_with_deep_NLP_v1_SG.html">Topic 42 - Tuning Neural Networks + Deep NLP</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_43_AWS/topic_43_operationalizing_code_AWS_SG.html">Topic 43: Operationalizing Code &amp; AWS</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 5 - Capstone &amp; Bonus Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_5/Capstone_Kickoff.html">Capstone Kickoff!</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_5/APIs/working_with_apis.html">Working with APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_5/developing_app_functions/developing-streamlit-app-functions_SG.html">Developing Streamlit App Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_5/tableau/tableau_fundamentals_2021-SG.html">Tableau Fundamentals</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_5/Bonus%20Notebooks/plotly_visuals.html">Plotly Question</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/master?urlpath=tree/Phase_4/topic_34_clustering/ds-clustering-main/notebooks/1_kmeans_clustering.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/blob/master/Phase_4/topic_34_clustering/ds-clustering-main/notebooks/1_kmeans_clustering.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/issues/new?title=Issue%20on%20page%20%2FPhase_4/topic_34_clustering/ds-clustering-main/notebooks/1_kmeans_clustering.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../_sources/Phase_4/topic_34_clustering/ds-clustering-main/notebooks/1_kmeans_clustering.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>k-means Clustering</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-goals">Learning Goals</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scenario">Scenario</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-concept-introduction"><strong>Part 1</strong>: Concept introduction</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#import-libraries-and-download-dataset">Import libraries and download dataset</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clustering-finding-groups">Clustering!   Finding <strong>GROUPS</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wait-how-is-clustering-different-from-classification">Wait - How is clustering different from classification?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#so-what-do-you-do-with-clustering-results">So what do you do with clustering results?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#explore-the-algorithm-with-an-intuitive-k-means-approach">Explore the algorithm with an intuitive K means approach</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#observe-the-following-four-methods-with-a-sample-dataset">Observe the following four methods with a sample dataset:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#method-questions">Method Questions:</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#method-1">Method 1</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#method-2">Method 2</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#method-3">Method 3</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#method-4">Method 4</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#review-method-questions">Review Method Questions:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#k-means-algorithm-at-its-core-in-an-optimization-function">K-means algorithm, at its core, in an optimization function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reassigns-groups-and-adjusts-centroids-to">Reassigns groups and adjusts centroids to…</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#and-to">And to…</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#k-means-plotter"><span class="math notranslate nohighlight">\(k\)</span>-Means Plotter</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-for-the-exercise">Data for the exercise</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eda-of-variables">EDA of variables</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-of-kmeans">Introduction of <code class="docutils literal notranslate"><span class="pre">Kmeans</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#note">Note</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#you-may-have-different-cluster-centers">You <em>may</em> have different cluster centers.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise"><strong>Exercise</strong>:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-choosing-the-appropriate-number-of-k"><strong>Part 2</strong>: Choosing the appropriate number of <span class="math notranslate nohighlight">\(k\)</span></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#two-metrics-we-can-use-elbow-method-and-the-silhouette-coefficient">Two metrics we can use: <strong>elbow method</strong> and the <strong>silhouette coefficient</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2a-elbow-method"><strong>Part 2A</strong>: Elbow Method</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2b-silhouette-coefficient"><strong>Part 2B</strong>: Silhouette Coefficient</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-3-assumptions-and-challenges-of-k-means"><strong>Part 3</strong>: <strong>Assumptions</strong> and <strong>challenges</strong> of <span class="math notranslate nohighlight">\(k\)</span>-means</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ideal-k-means-scenario">Ideal <span class="math notranslate nohighlight">\(k\)</span>-means scenario</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#meets-all-assumptions">Meets all assumptions:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-scenario-1-classes-not-all-round">Problem Scenario 1 - classes not all round</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-scenario-2-imbalanced-class-size">Problem Scenario 2 - imbalanced class size</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-scenario-3-class-size-and-density">Problem Scenario 3 - class size and density</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solution-to-challenges">Solution to challenges:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Exercise:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#k-means-on-larger-dataset-wine-subscription"><span class="math notranslate nohighlight">\(k\)</span>-means on larger dataset - Wine subscription</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#questions">Questions:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#review-k-means-steps">Review <span class="math notranslate nohighlight">\(k\)</span>-means steps</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-many-clusters-fit-the-data">How many clusters fit the data?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#one-last-example">One last example</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="k-means-clustering">
+<h1><span class="math notranslate nohighlight">\(k\)</span>-means Clustering<a class="headerlink" href="#k-means-clustering" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="n">module_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">pardir</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">module_path</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">module_path</span><span class="p">)</span>
+
+<span class="c1"># Required packages for today</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.cluster</span><span class="w"> </span><span class="kn">import</span> <span class="n">KMeans</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn</span><span class="w"> </span><span class="kn">import</span> <span class="n">metrics</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn</span><span class="w"> </span><span class="kn">import</span> <span class="n">datasets</span>
+
+<span class="c1"># Familiar packages for plotting, data manipulation, and numeric functions</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># import Alison&#39;s code for the demo clusters</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.demo_images</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+<span class="c1"># Have plots appear in notebook</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+
+<span class="c1"># Default plot params</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;seaborn&#39;</span><span class="p">)</span>
+<span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;tab10&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="learning-goals">
+<h2>Learning Goals<a class="headerlink" href="#learning-goals" title="Permalink to this heading">#</a></h2>
+<p>SWBAT:</p>
+<ul class="simple">
+<li><p>Assess what scenarios could use <span class="math notranslate nohighlight">\(k\)</span>-means</p></li>
+<li><p>Articulate the methodology used by <span class="math notranslate nohighlight">\(k\)</span>-means</p></li>
+<li><p>Apply KMeans from sklearn.cluster to a relevant dataset</p></li>
+<li><p>Select the appropriate number of clusters using the elbow method and Silhouette Scores</p></li>
+<li><p>Evaluate the weaknesses and remedies to <span class="math notranslate nohighlight">\(k\)</span>-means</p></li>
+</ul>
+</section>
+<section id="scenario">
+<h2>Scenario<a class="headerlink" href="#scenario" title="Permalink to this heading">#</a></h2>
+<blockquote>
+<div><p>You work for the marketing department within a large company that manages a customer base.
+For each customer you have a record of average purchase cost and time since last purchase.<br>
+You know that if you want to retain your customers you cannot treat them the same. You can use targeted marketing ads towards groups that demonstrate different behavior, but how will you divide the customers into groups?</p>
+</div></blockquote>
+</section>
+<section id="part-1-concept-introduction">
+<h2><strong>Part 1</strong>: Concept introduction<a class="headerlink" href="#part-1-concept-introduction" title="Permalink to this heading">#</a></h2>
+<section id="import-libraries-and-download-dataset">
+<h3>Import libraries and download dataset<a class="headerlink" href="#import-libraries-and-download-dataset" title="Permalink to this heading">#</a></h3>
+<p>We are continuing to use Scikit Learn as our main library.
+The specific documentation for k-means can be found <a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html">here</a>.</p>
+</section>
+</section>
+<section id="clustering-finding-groups">
+<h2>Clustering!   Finding <strong>GROUPS</strong><a class="headerlink" href="#clustering-finding-groups" title="Permalink to this heading">#</a></h2>
+<p>How many groups do you see?</p>
+<p><img alt="img" src="../../../../_images/initialscenario.png" /></p>
+</section>
+<section id="wait-how-is-clustering-different-from-classification">
+<h2>Wait - How is clustering different from classification?<a class="headerlink" href="#wait-how-is-clustering-different-from-classification" title="Permalink to this heading">#</a></h2>
+<blockquote>
+<div><p>In <em>classification</em> you <strong>know</strong> what groups are in the dataset and the goal is to <em><strong>predict</strong></em> class membership accurately.</p>
+</div></blockquote>
+<blockquote>
+<div><p>In <em>clustering</em> you <strong>do not</strong> know which groups are in the dataset and you are trying to <em><strong>identify</strong></em> the groups.</p>
+</div></blockquote>
+<section id="so-what-do-you-do-with-clustering-results">
+<h3>So what do you do with clustering results?<a class="headerlink" href="#so-what-do-you-do-with-clustering-results" title="Permalink to this heading">#</a></h3>
+<p>Clustering is often an <em>informing</em> step in your analysis. Once clusters are identified, one can:</p>
+<ul class="simple">
+<li><p>Create strategies on how to approach each group differently</p></li>
+<li><p>Use cluster membership as an independent variable in a predictive model</p></li>
+<li><p>Use the clusters as the <em><strong>target label</strong></em> in future classification models. How would you assign new data to the existing clusters?</p></li>
+</ul>
+</section>
+</section>
+<section id="explore-the-algorithm-with-an-intuitive-k-means-approach">
+<h2>Explore the algorithm with an intuitive K means approach<a class="headerlink" href="#explore-the-algorithm-with-an-intuitive-k-means-approach" title="Permalink to this heading">#</a></h2>
+<section id="observe-the-following-four-methods-with-a-sample-dataset">
+<h3>Observe the following four methods with a sample dataset:<a class="headerlink" href="#observe-the-following-four-methods-with-a-sample-dataset" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="method-questions">
+<h3>Method Questions:<a class="headerlink" href="#method-questions" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>What do they have in common?</p></li>
+<li><p>What are the differences between them?</p></li>
+<li><p>How many groups are there in the end?</p></li>
+<li><p>Do you see any problems with this method?</p></li>
+</ul>
+<section id="method-1">
+<h4>Method 1<a class="headerlink" href="#method-1" title="Permalink to this heading">#</a></h4>
+<p><img alt="left" src="../../../../_images/from-left.gif" /></p>
+</section>
+<section id="method-2">
+<h4>Method 2<a class="headerlink" href="#method-2" title="Permalink to this heading">#</a></h4>
+<p><img alt="right" src="../../../../_images/from-right.gif" /></p>
+</section>
+<section id="method-3">
+<h4>Method 3<a class="headerlink" href="#method-3" title="Permalink to this heading">#</a></h4>
+<p><img alt="top" src="../../../../_images/from-top.gif" /></p>
+</section>
+<section id="method-4">
+<h4>Method 4<a class="headerlink" href="#method-4" title="Permalink to this heading">#</a></h4>
+<p><img alt="bottom" src="../../../../_images/from-bottom.gif" /></p>
+</section>
+</section>
+<section id="review-method-questions">
+<h3>Review Method Questions:<a class="headerlink" href="#review-method-questions" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>What do they have in common?</p></li>
+<li><p>What are the differences between them?</p></li>
+<li><p>How many groups are there in the end?</p></li>
+<li><p>Do you see any problems with this method?</p></li>
+</ul>
+<p>In common:</p>
+<ul class="simple">
+<li><p>Green dots starts at points</p></li>
+<li><p>Calculates distance</p></li>
+<li><p>Moves dots</p></li>
+<li><p>Re-measures distance</p></li>
+<li><p>Moves dots as needed</p></li>
+</ul>
+<p>Differences:</p>
+<ul class="simple">
+<li><p>Dots start in different places and groups settle in different places</p></li>
+</ul>
+<p>Groups:</p>
+<ul class="simple">
+<li><p>There are four groups</p></li>
+</ul>
+<p>Problem with this method?</p>
+<ul class="simple">
+<li><p>Too variable!</p></li>
+</ul>
+</section>
+<section id="k-means-algorithm-at-its-core-in-an-optimization-function">
+<h3>K-means algorithm, at its core, in an optimization function<a class="headerlink" href="#k-means-algorithm-at-its-core-in-an-optimization-function" title="Permalink to this heading">#</a></h3>
+<p><img alt="minmax" src="../../../../_images/minmaxdata.png" /></p>
+</section>
+<section id="reassigns-groups-and-adjusts-centroids-to">
+<h3>Reassigns groups and adjusts centroids to…<a class="headerlink" href="#reassigns-groups-and-adjusts-centroids-to" title="Permalink to this heading">#</a></h3>
+<p><img alt="min" src="../../../../_images/min.png" /></p>
+</section>
+<section id="and-to">
+<h3>And to…<a class="headerlink" href="#and-to" title="Permalink to this heading">#</a></h3>
+<p><img alt="max" src="../../../../_images/max.png" /></p>
+<p><strong>Sci-kit Learn</strong> documentation actually has some pretty good <a class="reference external" href="https://scikit-learn.org/stable/modules/clustering.html#k-mean">documentation describing the algorithm</a> if you wish for more detail.</p>
+</section>
+</section>
+<section id="k-means-plotter">
+<h2><span class="math notranslate nohighlight">\(k\)</span>-Means Plotter<a class="headerlink" href="#k-means-plotter" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">src.k_means_plotter</span><span class="w"> </span><span class="kn">import</span> <span class="n">k_means</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_blobs</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span><span class="n">centers</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="p">[:</span><span class="mi">5</span><span class="p">,</span> <span class="p">:]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 4.10544352, -4.3372255 ],
+       [ 0.50345597, -2.68326289],
+       [-6.34452989, -5.77890806],
+       [ 4.03358594, -3.22043207],
+       [-5.04793731, -5.50624372]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../../_images/c44bcf5de3f1310fb5714b065789518db57d9b77b5fd9310d5350d46644ccd8d.png" src="../../../../_images/c44bcf5de3f1310fb5714b065789518db57d9b77b5fd9310d5350d46644ccd8d.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">k_means</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../../_images/a4959da091842d6461f1d86092175e8d85db3d5e4bb42142d0646a6173e9b242.png" src="../../../../_images/a4959da091842d6461f1d86092175e8d85db3d5e4bb42142d0646a6173e9b242.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">k_means</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../../_images/511c29e40f2c6b1a464929e2f02dd93edd4faeb3cfeb9453221120265f5b7d62.png" src="../../../../_images/511c29e40f2c6b1a464929e2f02dd93edd4faeb3cfeb9453221120265f5b7d62.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">k_means</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../../_images/e67639e64f35a7649cc63ea374f4817566eeae4a033e49b2275121caed7eb0e8.png" src="../../../../_images/e67639e64f35a7649cc63ea374f4817566eeae4a033e49b2275121caed7eb0e8.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">k_means</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../../_images/7ae370fe448b6ff9d1b153e2a5a902706c4ed3a915a445f1e477a9babed33e20.png" src="../../../../_images/7ae370fe448b6ff9d1b153e2a5a902706c4ed3a915a445f1e477a9babed33e20.png" />
+</div>
+</div>
+<section id="data-for-the-exercise">
+<h3>Data for the exercise<a class="headerlink" href="#data-for-the-exercise" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>This is a sample dataset.</p></li>
+<li><p>Let us assume the data is already scaled.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dummy_dat</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../data/xclara.txt&quot;</span><span class="p">,</span>
+                        <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                        <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">dummy_dat</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">dummy_dat</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dummy_dat</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>V1</th>
+      <th>V2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2.072345</td>
+      <td>-3.241693</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>17.936710</td>
+      <td>15.784810</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1.083576</td>
+      <td>7.319176</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>11.120670</td>
+      <td>14.406780</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>23.711550</td>
+      <td>2.557729</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dummy_dat</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>V1</th>
+      <th>V2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2995</th>
+      <td>85.65280</td>
+      <td>-6.461061</td>
+    </tr>
+    <tr>
+      <th>2996</th>
+      <td>82.77088</td>
+      <td>-2.373299</td>
+    </tr>
+    <tr>
+      <th>2997</th>
+      <td>64.46532</td>
+      <td>-10.501360</td>
+    </tr>
+    <tr>
+      <th>2998</th>
+      <td>90.72282</td>
+      <td>-12.255840</td>
+    </tr>
+    <tr>
+      <th>2999</th>
+      <td>64.87976</td>
+      <td>-24.877310</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="eda-of-variables">
+<h3>EDA of variables<a class="headerlink" href="#eda-of-variables" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dummy_dat</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>V1</th>
+      <th>V2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>3000.000000</td>
+      <td>3000.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>40.611358</td>
+      <td>22.862141</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>25.859054</td>
+      <td>31.759714</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>-22.495990</td>
+      <td>-38.795500</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>18.462790</td>
+      <td>-4.003494</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>41.552210</td>
+      <td>13.827390</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>62.249480</td>
+      <td>55.729100</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>104.376600</td>
+      <td>87.313700</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">dummy_dat</span><span class="p">[</span><span class="s1">&#39;V1&#39;</span><span class="p">],</span> <span class="n">dummy_dat</span><span class="p">[</span><span class="s1">&#39;V2&#39;</span><span class="p">]);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../../_images/ee97967d4d1cac1f2102d8cffb823db0ee832559ae144567c04baf21e4cc957d.png" src="../../../../_images/ee97967d4d1cac1f2102d8cffb823db0ee832559ae144567c04baf21e4cc957d.png" />
+</div>
+</div>
+</section>
+<section id="introduction-of-kmeans">
+<h3>Introduction of <code class="docutils literal notranslate"><span class="pre">Kmeans</span></code><a class="headerlink" href="#introduction-of-kmeans" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">dummy_dat</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Notice the <code class="docutils literal notranslate"><span class="pre">init</span></code> and <code class="docutils literal notranslate"><span class="pre">n_init</span></code> parameters!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">cluster_centers_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 40.68362784,  59.71589274],
+       [  9.4780459 ,  10.686052  ],
+       [ 69.92418447, -10.11964119]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">dummy_dat</span><span class="p">[</span><span class="s1">&#39;V1&#39;</span><span class="p">],</span> <span class="n">dummy_dat</span><span class="p">[</span><span class="s1">&#39;V2&#39;</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">cluster_centers_</span><span class="p">)):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">cluster_centers_</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+                <span class="n">model</span><span class="o">.</span><span class="n">cluster_centers_</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../../_images/1bbdb0a2494ba2c3dd5f8afee6d095eeb90e8a1200bdfc89d63d5f998b8c5d72.png" src="../../../../_images/1bbdb0a2494ba2c3dd5f8afee6d095eeb90e8a1200bdfc89d63d5f998b8c5d72.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">([[</span><span class="mi">60</span><span class="p">,</span> <span class="o">-</span><span class="mi">20</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([2], dtype=int32)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">dummy_dat</span><span class="p">[</span><span class="s1">&#39;V1&#39;</span><span class="p">],</span> <span class="n">dummy_dat</span><span class="p">[</span><span class="s1">&#39;V2&#39;</span><span class="p">],</span>
+           <span class="n">c</span><span class="o">=</span><span class="s1">&#39;#f30303&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../../_images/6060f7cba99a44c2f06630cea476b3c8750983464a10d1652da8f1581d77b69d.png" src="../../../../_images/6060f7cba99a44c2f06630cea476b3c8750983464a10d1652da8f1581d77b69d.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">dummy_dat</span><span class="p">[</span><span class="s1">&#39;V1&#39;</span><span class="p">],</span> <span class="n">dummy_dat</span><span class="p">[</span><span class="s1">&#39;V2&#39;</span><span class="p">],</span>
+           <span class="n">c</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">labels_</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../../_images/a88c87f3e1d7ec7f792ad41d94ab6479fdd2b08d791ad0cb8f48b4709c22d0e4.png" src="../../../../_images/a88c87f3e1d7ec7f792ad41d94ab6479fdd2b08d791ad0cb8f48b4709c22d0e4.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">labeled_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">dummy_dat</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">labels_</span><span class="p">,</span>
+                        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;cluster&#39;</span><span class="p">])],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">labeled_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>V1</th>
+      <th>V2</th>
+      <th>cluster</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2.072345</td>
+      <td>-3.241693</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>17.936710</td>
+      <td>15.784810</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1.083576</td>
+      <td>7.319176</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>11.120670</td>
+      <td>14.406780</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>23.711550</td>
+      <td>2.557729</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cluster0</span> <span class="o">=</span> <span class="n">labeled_df</span><span class="p">[</span><span class="n">labeled_df</span><span class="p">[</span><span class="s1">&#39;cluster&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">cluster1</span> <span class="o">=</span> <span class="n">labeled_df</span><span class="p">[</span><span class="n">labeled_df</span><span class="p">[</span><span class="s1">&#39;cluster&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">cluster2</span> <span class="o">=</span> <span class="n">labeled_df</span><span class="p">[</span><span class="n">labeled_df</span><span class="p">[</span><span class="s1">&#39;cluster&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cluster0</span><span class="p">[</span><span class="s1">&#39;V1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>29     24.29990
+326    37.48364
+900    48.19050
+901    48.32863
+902    31.44145
+Name: V1, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">cluster0</span><span class="p">[</span><span class="s1">&#39;V1&#39;</span><span class="p">],</span> <span class="n">cluster0</span><span class="p">[</span><span class="s1">&#39;V2&#39;</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">cluster1</span><span class="p">[</span><span class="s1">&#39;V1&#39;</span><span class="p">],</span> <span class="n">cluster1</span><span class="p">[</span><span class="s1">&#39;V2&#39;</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">cluster2</span><span class="p">[</span><span class="s1">&#39;V1&#39;</span><span class="p">],</span> <span class="n">cluster2</span><span class="p">[</span><span class="s1">&#39;V2&#39;</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../../_images/0744499e3a7ad57e0bee3d8da9886d52fa1d4fc146397c50ecae7bd3ad433971.png" src="../../../../_images/0744499e3a7ad57e0bee3d8da9886d52fa1d4fc146397c50ecae7bd3ad433971.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="note">
+<h2>Note<a class="headerlink" href="#note" title="Permalink to this heading">#</a></h2>
+<section id="you-may-have-different-cluster-centers">
+<h3>You <em>may</em> have different cluster centers.<a class="headerlink" href="#you-may-have-different-cluster-centers" title="Permalink to this heading">#</a></h3>
+<p>We saw in the demo that the algorithm is sensitive to starting points.</p>
+<p>Even if we set <code class="docutils literal notranslate"><span class="pre">n_init</span></code> to a significant value, it’s still a good idea to use <code class="docutils literal notranslate"><span class="pre">random_state</span></code> to ensure repeatable results.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_setseed</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">dummy_dat</span><span class="p">)</span>
+<span class="n">model_setseed</span><span class="o">.</span><span class="n">cluster_centers_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 40.68362784,  59.71589274],
+       [ 69.92418447, -10.11964119],
+       [  9.4780459 ,  10.686052  ]])
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise">
+<h3><strong>Exercise</strong>:<a class="headerlink" href="#exercise" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Try running <code class="docutils literal notranslate"><span class="pre">Kmeans</span></code> with different numbers of <code class="docutils literal notranslate"><span class="pre">n_clusters</span></code>, <span class="math notranslate nohighlight">\(k=2\)</span> through <span class="math notranslate nohighlight">\(k=4\)</span></p></li>
+<li><p>Check the <code class="docutils literal notranslate"><span class="pre">cluster_centers_</span></code>.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Practice code goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="part-2-choosing-the-appropriate-number-of-k">
+<h2><strong>Part 2</strong>: Choosing the appropriate number of <span class="math notranslate nohighlight">\(k\)</span><a class="headerlink" href="#part-2-choosing-the-appropriate-number-of-k" title="Permalink to this heading">#</a></h2>
+<section id="two-metrics-we-can-use-elbow-method-and-the-silhouette-coefficient">
+<h3>Two metrics we can use: <strong>elbow method</strong> and the <strong>silhouette coefficient</strong><a class="headerlink" href="#two-metrics-we-can-use-elbow-method-and-the-silhouette-coefficient" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="part-2a-elbow-method">
+<h3><strong>Part 2A</strong>: Elbow Method<a class="headerlink" href="#part-2a-elbow-method" title="Permalink to this heading">#</a></h3>
+<p>Elbow method uses the sum of squared error calculated from each instance of <span class="math notranslate nohighlight">\(k\)</span> to find the best value of <span class="math notranslate nohighlight">\(k\)</span>.</p>
+<p>This is sometimes called the “inertia” of the model, and fitted sklearn <span class="math notranslate nohighlight">\(k\)</span>-means models have an <code class="docutils literal notranslate"><span class="pre">inertia_</span></code> attribute.</p>
+<p>Sometimes you will see the SSE divided by the total sum of squares in the dataset (how far is each point from the center of the entire dataset)</p>
+<p>Fewer clusters seems better, but inertia will always decrease with <em>more</em> clusters. Hence the idea of looking for an elbow in the plot of inertia vs. <span class="math notranslate nohighlight">\(k\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">inertia_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>611605.8806933895
+</pre></div>
+</div>
+</div>
+</div>
+<p>Inertia is the sum of squared distances between points and their cluster center.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Specifying the dataset and initializing variables</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">dummy_dat</span>
+<span class="n">distortions</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># Calculate SSE for different K</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+    <span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">301</span><span class="p">)</span>
+    <span class="n">kmeans</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">distortions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">kmeans</span><span class="o">.</span><span class="n">inertia_</span><span class="p">)</span>
+
+<span class="c1"># Plot values of SSE</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Elbow curve&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">distortions</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../../_images/0c8aca9593944347e27cc00bcd0156e39aa3db884517772bd266a03d05326358.png" src="../../../../_images/0c8aca9593944347e27cc00bcd0156e39aa3db884517772bd266a03d05326358.png" />
+</div>
+</div>
+</section>
+<section id="part-2b-silhouette-coefficient">
+<h3><strong>Part 2B</strong>: Silhouette Coefficient<a class="headerlink" href="#part-2b-silhouette-coefficient" title="Permalink to this heading">#</a></h3>
+<p><img alt="silo" src="../../../../_images/silo2.png" /></p>
+<blockquote>
+<div><p><strong>a</strong> refers to the average distance between a point and all other points in that cluster.</p>
+</div></blockquote>
+<blockquote>
+<div><p><strong>b</strong> refers to the average distance between that same point and all other points in clusters to which it does not belong</p>
+</div></blockquote>
+<p>It is calculated for each point in the dataset, then averaged across all points for one cumulative score.</p>
+<p>The Silhouette Coefficient ranges between -1 and 1. The closer to 1, the more clearly defined are the clusters. The closer to -1, the more incorrect assignment.</p>
+<p>Suppose:</p>
+<ul class="simple">
+<li><p>I have four points in a one-dimensional space: 0, 1, 9, and 10; and</p></li>
+<li><p>I put them into two clusters: {0, 1} and {9, 10}.</p></li>
+</ul>
+<p>Then we would calculate the Silhouette Score as follows:</p>
+<p>For Point 0:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(a=1\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(b=9.5\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(s(0) = \frac{9.5 - 1}{9.5} = \frac{17}{19}\)</span></p></li>
+</ul>
+<p>For Point 1:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(a=1\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(b=8.5\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(s(1) = \frac{8.5 - 1}{8.5} = \frac{15}{17}\)</span></p></li>
+</ul>
+<p>For Point 9:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(a=1\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(b=8.5\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(s(9) = \frac{8.5 - 1}{8.5} = \frac{15}{17}\)</span></p></li>
+</ul>
+<p>For Point 10:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(a=1\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(b=9.5\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(s(10) = \frac{9.5 - 1}{9.5} = \frac{17}{19}\)</span></p></li>
+</ul>
+<p>The full Silhouette Score would be the average of all of these individual scores:</p>
+<p><span class="math notranslate nohighlight">\(\large s = \frac{2\left(\frac{17}{19}\right) + 2\left(\frac{15}{17}\right)}{4}\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="mi">17</span><span class="o">/</span><span class="mi">19</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="mi">15</span><span class="o">/</span><span class="mi">17</span><span class="p">)</span> <span class="o">/</span> <span class="mi">4</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8885448916408669
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">metrics</span><span class="o">.</span><span class="n">silhouette_score</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">[</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8885448916408669
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate silhouette coefficient for each k</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">dummy_dat</span>
+<span class="n">silhouette_plot</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+    <span class="n">clusters</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">cluster_labels</span> <span class="o">=</span> <span class="n">clusters</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">silhouette_avg</span> <span class="o">=</span> <span class="n">metrics</span><span class="o">.</span><span class="n">silhouette_score</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">cluster_labels</span><span class="p">)</span>
+    <span class="n">silhouette_plot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">silhouette_avg</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot Silhouette coefficient</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Silhouette coefficients over k&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;silhouette coefficient&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">silhouette_plot</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">silhouette_plot</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../../_images/68fd57b69921512ff2cb1bbf2fdc57f5bac0cfe0021061784e4a3359900c10a2.png" src="../../../../_images/68fd57b69921512ff2cb1bbf2fdc57f5bac0cfe0021061784e4a3359900c10a2.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="part-3-assumptions-and-challenges-of-k-means">
+<h2><strong>Part 3</strong>: <strong>Assumptions</strong> and <strong>challenges</strong> of <span class="math notranslate nohighlight">\(k\)</span>-means<a class="headerlink" href="#part-3-assumptions-and-challenges-of-k-means" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Demonstrate the ideal <span class="math notranslate nohighlight">\(k\)</span>-means dataset</p></li>
+<li><p>Show three scenarios where <span class="math notranslate nohighlight">\(k\)</span>-means struggles</p></li>
+</ul>
+<section id="ideal-k-means-scenario">
+<h3>Ideal <span class="math notranslate nohighlight">\(k\)</span>-means scenario<a class="headerlink" href="#ideal-k-means-scenario" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ideal</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../../_images/541e7af88c89ce7568742f0dccbd38c27ab4a816c7c59c07996c9618d6f528c3.png" src="../../../../_images/541e7af88c89ce7568742f0dccbd38c27ab4a816c7c59c07996c9618d6f528c3.png" />
+</div>
+</div>
+</section>
+<section id="meets-all-assumptions">
+<h3>Meets all assumptions:<a class="headerlink" href="#meets-all-assumptions" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Independent variables</p></li>
+<li><p>Balanced cluster sizes</p></li>
+<li><p>Clusters have similar density</p></li>
+<li><p>Spherical clusters/equal variance of variables</p></li>
+</ul>
+</section>
+<section id="problem-scenario-1-classes-not-all-round">
+<h3>Problem Scenario 1 - classes not all round<a class="headerlink" href="#problem-scenario-1-classes-not-all-round" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">messyOne</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../../_images/9938e7e7ffb93881227065842b69f26aefee6423704e5527470d39cdc9a3fb21.png" src="../../../../_images/9938e7e7ffb93881227065842b69f26aefee6423704e5527470d39cdc9a3fb21.png" />
+</div>
+</div>
+</section>
+<section id="problem-scenario-2-imbalanced-class-size">
+<h3>Problem Scenario 2 - imbalanced class size<a class="headerlink" href="#problem-scenario-2-imbalanced-class-size" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">messyTwo</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../../_images/b9de3ee6a1e809403da27b4a46b9b50aeb0388f02acd891f3d02fe4182ffe6c6.png" src="../../../../_images/b9de3ee6a1e809403da27b4a46b9b50aeb0388f02acd891f3d02fe4182ffe6c6.png" />
+</div>
+</div>
+</section>
+<section id="problem-scenario-3-class-size-and-density">
+<h3>Problem Scenario 3 - class size and density<a class="headerlink" href="#problem-scenario-3-class-size-and-density" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">messyThree</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../../_images/5f954c5502c2a0be1384d78e725445d5adf6a729517953a2933e15158f1b0066.png" src="../../../../_images/5f954c5502c2a0be1384d78e725445d5adf6a729517953a2933e15158f1b0066.png" />
+</div>
+</div>
+</section>
+<section id="solution-to-challenges">
+<h3>Solution to challenges:<a class="headerlink" href="#solution-to-challenges" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Preprocessing: PCA or scaling</p></li>
+<li><p>Try a different clustering methods</p></li>
+</ul>
+</section>
+</section>
+<section id="id1">
+<h2>Exercise:<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<section id="k-means-on-larger-dataset-wine-subscription">
+<h3><span class="math notranslate nohighlight">\(k\)</span>-means on larger dataset - Wine subscription<a class="headerlink" href="#k-means-on-larger-dataset-wine-subscription" title="Permalink to this heading">#</a></h3>
+<p>You want to run a wine subscription service, but you have no idea about wine tasting notes. You are a person of science.
+You have a wine dataset of scientific measurements.
+If you know a customer likes a certain wine in the dataset, can you recommend other wines to the customer in the same cluster?</p>
+<section id="questions">
+<h4>Questions:<a class="headerlink" href="#questions" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p>How many clusters are in the wine dataset?</p></li>
+<li><p>What are the characteristics of each clusters?</p></li>
+<li><p>What problems do you see potentially in the data?</p></li>
+</ul>
+<p>the dataset is <code class="docutils literal notranslate"><span class="pre">Wine.csv</span></code></p>
+<p>Instructions:</p>
+<ul class="simple">
+<li><p>First, remove customer_segment from the dataset</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Work on problem here: Would scaling make a difference?</span>
+<span class="n">wine</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/Wine.csv&#39;</span><span class="p">)</span>
+<span class="n">wine</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Customer_Segment&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">wine</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Alcohol</th>
+      <th>Malic_Acid</th>
+      <th>Ash</th>
+      <th>Ash_Alcanity</th>
+      <th>Magnesium</th>
+      <th>Total_Phenols</th>
+      <th>Flavanoids</th>
+      <th>Nonflavanoid_Phenols</th>
+      <th>Proanthocyanins</th>
+      <th>Color_Intensity</th>
+      <th>Hue</th>
+      <th>OD280</th>
+      <th>Proline</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>14.23</td>
+      <td>1.71</td>
+      <td>2.43</td>
+      <td>15.6</td>
+      <td>127</td>
+      <td>2.80</td>
+      <td>3.06</td>
+      <td>0.28</td>
+      <td>2.29</td>
+      <td>5.64</td>
+      <td>1.04</td>
+      <td>3.92</td>
+      <td>1065</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>13.20</td>
+      <td>1.78</td>
+      <td>2.14</td>
+      <td>11.2</td>
+      <td>100</td>
+      <td>2.65</td>
+      <td>2.76</td>
+      <td>0.26</td>
+      <td>1.28</td>
+      <td>4.38</td>
+      <td>1.05</td>
+      <td>3.40</td>
+      <td>1050</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>13.16</td>
+      <td>2.36</td>
+      <td>2.67</td>
+      <td>18.6</td>
+      <td>101</td>
+      <td>2.80</td>
+      <td>3.24</td>
+      <td>0.30</td>
+      <td>2.81</td>
+      <td>5.68</td>
+      <td>1.03</td>
+      <td>3.17</td>
+      <td>1185</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>14.37</td>
+      <td>1.95</td>
+      <td>2.50</td>
+      <td>16.8</td>
+      <td>113</td>
+      <td>3.85</td>
+      <td>3.49</td>
+      <td>0.24</td>
+      <td>2.18</td>
+      <td>7.80</td>
+      <td>0.86</td>
+      <td>3.45</td>
+      <td>1480</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>13.24</td>
+      <td>2.59</td>
+      <td>2.87</td>
+      <td>21.0</td>
+      <td>118</td>
+      <td>2.80</td>
+      <td>2.69</td>
+      <td>0.39</td>
+      <td>1.82</td>
+      <td>4.32</td>
+      <td>1.04</td>
+      <td>2.93</td>
+      <td>735</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="review-k-means-steps">
+<h3>Review <span class="math notranslate nohighlight">\(k\)</span>-means steps<a class="headerlink" href="#review-k-means-steps" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Look at and clean data (if needed)</p></li>
+<li><p>Scale data</p></li>
+<li><p>Try various values of <span class="math notranslate nohighlight">\(k\)</span></p></li>
+<li><p>Plot SSE and Silhouette coefficient to find best <span class="math notranslate nohighlight">\(k\)</span></p></li>
+<li><p>Describe the characteristics of each cluster using their centroids</p></li>
+</ol>
+</section>
+<section id="how-many-clusters-fit-the-data">
+<h3>How many clusters fit the data?<a class="headerlink" href="#how-many-clusters-fit-the-data" title="Permalink to this heading">#</a></h3>
+<p>What can you tell me about them?</p>
+<p>According to the Elbow Method, our best choice here is <strong>3 clusters</strong>.</p>
+</section>
+</section>
+<section id="one-last-example">
+<h2>One last example<a class="headerlink" href="#one-last-example" title="Permalink to this heading">#</a></h2>
+<p>Using online retail data data from <a class="reference external" href="https://archive.ics.uci.edu/ml/datasets/online+retail">UCI database</a>.</p>
+<p>You are looking for patterns so you can get people to buy more, more frequently.
+You might have to create some new variables.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">shopping</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s1">&#39;../data/Online Retail.xlsx&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">shopping</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>InvoiceNo</th>
+      <th>StockCode</th>
+      <th>Description</th>
+      <th>Quantity</th>
+      <th>InvoiceDate</th>
+      <th>UnitPrice</th>
+      <th>CustomerID</th>
+      <th>Country</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>541889</th>
+      <td>581585</td>
+      <td>22466</td>
+      <td>FAIRY TALE COTTAGE NIGHT LIGHT</td>
+      <td>12</td>
+      <td>2011-12-09 12:31:00</td>
+      <td>1.95</td>
+      <td>15804.0</td>
+      <td>United Kingdom</td>
+    </tr>
+    <tr>
+      <th>541890</th>
+      <td>581586</td>
+      <td>22061</td>
+      <td>LARGE CAKE STAND  HANGING STRAWBERY</td>
+      <td>8</td>
+      <td>2011-12-09 12:49:00</td>
+      <td>2.95</td>
+      <td>13113.0</td>
+      <td>United Kingdom</td>
+    </tr>
+    <tr>
+      <th>541891</th>
+      <td>581586</td>
+      <td>23275</td>
+      <td>SET OF 3 HANGING OWLS OLLIE BEAK</td>
+      <td>24</td>
+      <td>2011-12-09 12:49:00</td>
+      <td>1.25</td>
+      <td>13113.0</td>
+      <td>United Kingdom</td>
+    </tr>
+    <tr>
+      <th>541892</th>
+      <td>581586</td>
+      <td>21217</td>
+      <td>RED RETROSPOT ROUND CAKE TINS</td>
+      <td>24</td>
+      <td>2011-12-09 12:49:00</td>
+      <td>8.95</td>
+      <td>13113.0</td>
+      <td>United Kingdom</td>
+    </tr>
+    <tr>
+      <th>541893</th>
+      <td>581586</td>
+      <td>20685</td>
+      <td>DOORMAT RED RETROSPOT</td>
+      <td>10</td>
+      <td>2011-12-09 12:49:00</td>
+      <td>7.08</td>
+      <td>13113.0</td>
+      <td>United Kingdom</td>
+    </tr>
+    <tr>
+      <th>541894</th>
+      <td>581587</td>
+      <td>22631</td>
+      <td>CIRCUS PARADE LUNCH BOX</td>
+      <td>12</td>
+      <td>2011-12-09 12:50:00</td>
+      <td>1.95</td>
+      <td>12680.0</td>
+      <td>France</td>
+    </tr>
+    <tr>
+      <th>541895</th>
+      <td>581587</td>
+      <td>22556</td>
+      <td>PLASTERS IN TIN CIRCUS PARADE</td>
+      <td>12</td>
+      <td>2011-12-09 12:50:00</td>
+      <td>1.65</td>
+      <td>12680.0</td>
+      <td>France</td>
+    </tr>
+    <tr>
+      <th>541896</th>
+      <td>581587</td>
+      <td>22555</td>
+      <td>PLASTERS IN TIN STRONGMAN</td>
+      <td>12</td>
+      <td>2011-12-09 12:50:00</td>
+      <td>1.65</td>
+      <td>12680.0</td>
+      <td>France</td>
+    </tr>
+    <tr>
+      <th>541897</th>
+      <td>581587</td>
+      <td>22728</td>
+      <td>ALARM CLOCK BAKELIKE PINK</td>
+      <td>4</td>
+      <td>2011-12-09 12:50:00</td>
+      <td>3.75</td>
+      <td>12680.0</td>
+      <td>France</td>
+    </tr>
+    <tr>
+      <th>541898</th>
+      <td>581587</td>
+      <td>22727</td>
+      <td>ALARM CLOCK BAKELIKE RED</td>
+      <td>4</td>
+      <td>2011-12-09 12:50:00</td>
+      <td>3.75</td>
+      <td>12680.0</td>
+      <td>France</td>
+    </tr>
+    <tr>
+      <th>541899</th>
+      <td>581587</td>
+      <td>22726</td>
+      <td>ALARM CLOCK BAKELIKE GREEN</td>
+      <td>4</td>
+      <td>2011-12-09 12:50:00</td>
+      <td>3.75</td>
+      <td>12680.0</td>
+      <td>France</td>
+    </tr>
+    <tr>
+      <th>541900</th>
+      <td>581587</td>
+      <td>22730</td>
+      <td>ALARM CLOCK BAKELIKE IVORY</td>
+      <td>4</td>
+      <td>2011-12-09 12:50:00</td>
+      <td>3.75</td>
+      <td>12680.0</td>
+      <td>France</td>
+    </tr>
+    <tr>
+      <th>541901</th>
+      <td>581587</td>
+      <td>22367</td>
+      <td>CHILDRENS APRON SPACEBOY DESIGN</td>
+      <td>8</td>
+      <td>2011-12-09 12:50:00</td>
+      <td>1.95</td>
+      <td>12680.0</td>
+      <td>France</td>
+    </tr>
+    <tr>
+      <th>541902</th>
+      <td>581587</td>
+      <td>22629</td>
+      <td>SPACEBOY LUNCH BOX</td>
+      <td>12</td>
+      <td>2011-12-09 12:50:00</td>
+      <td>1.95</td>
+      <td>12680.0</td>
+      <td>France</td>
+    </tr>
+    <tr>
+      <th>541903</th>
+      <td>581587</td>
+      <td>23256</td>
+      <td>CHILDRENS CUTLERY SPACEBOY</td>
+      <td>4</td>
+      <td>2011-12-09 12:50:00</td>
+      <td>4.15</td>
+      <td>12680.0</td>
+      <td>France</td>
+    </tr>
+    <tr>
+      <th>541904</th>
+      <td>581587</td>
+      <td>22613</td>
+      <td>PACK OF 20 SPACEBOY NAPKINS</td>
+      <td>12</td>
+      <td>2011-12-09 12:50:00</td>
+      <td>0.85</td>
+      <td>12680.0</td>
+      <td>France</td>
+    </tr>
+    <tr>
+      <th>541905</th>
+      <td>581587</td>
+      <td>22899</td>
+      <td>CHILDREN'S APRON DOLLY GIRL</td>
+      <td>6</td>
+      <td>2011-12-09 12:50:00</td>
+      <td>2.10</td>
+      <td>12680.0</td>
+      <td>France</td>
+    </tr>
+    <tr>
+      <th>541906</th>
+      <td>581587</td>
+      <td>23254</td>
+      <td>CHILDRENS CUTLERY DOLLY GIRL</td>
+      <td>4</td>
+      <td>2011-12-09 12:50:00</td>
+      <td>4.15</td>
+      <td>12680.0</td>
+      <td>France</td>
+    </tr>
+    <tr>
+      <th>541907</th>
+      <td>581587</td>
+      <td>23255</td>
+      <td>CHILDRENS CUTLERY CIRCUS PARADE</td>
+      <td>4</td>
+      <td>2011-12-09 12:50:00</td>
+      <td>4.15</td>
+      <td>12680.0</td>
+      <td>France</td>
+    </tr>
+    <tr>
+      <th>541908</th>
+      <td>581587</td>
+      <td>22138</td>
+      <td>BAKING SET 9 PIECE RETROSPOT</td>
+      <td>3</td>
+      <td>2011-12-09 12:50:00</td>
+      <td>4.95</td>
+      <td>12680.0</td>
+      <td>France</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Phase_4/topic_34_clustering/ds-clustering-main/notebooks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-goals">Learning Goals</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scenario">Scenario</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-concept-introduction"><strong>Part 1</strong>: Concept introduction</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#import-libraries-and-download-dataset">Import libraries and download dataset</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clustering-finding-groups">Clustering!   Finding <strong>GROUPS</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wait-how-is-clustering-different-from-classification">Wait - How is clustering different from classification?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#so-what-do-you-do-with-clustering-results">So what do you do with clustering results?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#explore-the-algorithm-with-an-intuitive-k-means-approach">Explore the algorithm with an intuitive K means approach</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#observe-the-following-four-methods-with-a-sample-dataset">Observe the following four methods with a sample dataset:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#method-questions">Method Questions:</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#method-1">Method 1</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#method-2">Method 2</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#method-3">Method 3</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#method-4">Method 4</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#review-method-questions">Review Method Questions:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#k-means-algorithm-at-its-core-in-an-optimization-function">K-means algorithm, at its core, in an optimization function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reassigns-groups-and-adjusts-centroids-to">Reassigns groups and adjusts centroids to…</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#and-to">And to…</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#k-means-plotter"><span class="math notranslate nohighlight">\(k\)</span>-Means Plotter</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-for-the-exercise">Data for the exercise</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eda-of-variables">EDA of variables</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-of-kmeans">Introduction of <code class="docutils literal notranslate"><span class="pre">Kmeans</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#note">Note</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#you-may-have-different-cluster-centers">You <em>may</em> have different cluster centers.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise"><strong>Exercise</strong>:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-choosing-the-appropriate-number-of-k"><strong>Part 2</strong>: Choosing the appropriate number of <span class="math notranslate nohighlight">\(k\)</span></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#two-metrics-we-can-use-elbow-method-and-the-silhouette-coefficient">Two metrics we can use: <strong>elbow method</strong> and the <strong>silhouette coefficient</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2a-elbow-method"><strong>Part 2A</strong>: Elbow Method</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2b-silhouette-coefficient"><strong>Part 2B</strong>: Silhouette Coefficient</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-3-assumptions-and-challenges-of-k-means"><strong>Part 3</strong>: <strong>Assumptions</strong> and <strong>challenges</strong> of <span class="math notranslate nohighlight">\(k\)</span>-means</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ideal-k-means-scenario">Ideal <span class="math notranslate nohighlight">\(k\)</span>-means scenario</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#meets-all-assumptions">Meets all assumptions:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-scenario-1-classes-not-all-round">Problem Scenario 1 - classes not all round</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-scenario-2-imbalanced-class-size">Problem Scenario 2 - imbalanced class size</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-scenario-3-class-size-and-density">Problem Scenario 3 - class size and density</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solution-to-challenges">Solution to challenges:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Exercise:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#k-means-on-larger-dataset-wine-subscription"><span class="math notranslate nohighlight">\(k\)</span>-means on larger dataset - Wine subscription</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#questions">Questions:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#review-k-means-steps">Review <span class="math notranslate nohighlight">\(k\)</span>-means steps</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-many-clusters-fit-the-data">How many clusters fit the data?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#one-last-example">One last example</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By James Irving, PhD
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

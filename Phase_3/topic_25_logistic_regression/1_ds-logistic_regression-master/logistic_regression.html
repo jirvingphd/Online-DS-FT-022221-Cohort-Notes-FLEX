@@ -1,0 +1,2113 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Logistic Regression: Beyond Linear Regression &#8212; Data Science Curriculum</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Phase_3/topic_25_logistic_regression/1_ds-logistic_regression-master/logistic_regression';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/flatironschool_banner.jpg" class="logo__image only-light" alt="Data Science Curriculum - Home"/>
+    <script>document.write(`<img src="../../../_static/flatironschool_banner.jpg" class="logo__image only-dark" alt="Data Science Curriculum - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../intro.html">
+                    Data Science Curriculum
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 1 - Python &amp; Data Fundamentals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_01_getting_started/topic_01_getting_started.html">Topic 1: Getting Started with Data Science</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_02_bash_git/topic_02_bash_and_git.html">Topic 02:  Bash and Git</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_03_control_flow_functions/topic_03_control_flow_and_functions.html">Topic 03: Control Flow, Functions, and Statistics</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_04_python_libraries/topic_04_intro_to_libraries_numpy_SG.html">Topic 04-Part 1: Python Libraries &amp; NumPy</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_04_python_libraries/topic_04_pt-2_brief_intro_to_pandas-SG.html">Topic 04-Part 2: Brief Intro to Pandas with Doctor Who</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_05_data_cleaning_in_pandas/topic_05_Data_Cleaning_in_Pandas.html">Topic 05: Data Cleaning in Pandas</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_06_data_visualization/topic_06_visualizations_heroes_project_SG.html">Topic 06:  Data Visualizations</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_07_SQL_and_relational_databases/topic_07_SQL_and_relational_databases_SG.html">TOPIC 07: SQL DATABASES</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_08_noSQL_databases/topic_08_mongodb-SG.html">Topic 08: NoSQL Databases</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_09_json_and_apis/topic_09_json-api-SG.html">Topic 09: Using APIs and JSON Data</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_10_webscraping/topic_10_SG_HTML_CSS_web_scraping.html">Topic 10: HTML, CSS, &amp; Web Scraping</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 2 - Statistics &amp; Regression</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_11_probability_and_combinatorics/topic_11_playlist_probabilities-SG.html">Topic 11 - Intro to Combinatorics &amp; Probability</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_12_statistical_distributions/topic-12-distributions-with-movies-sg.html">Exploring Distributions with Movies Data</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_13_central_limit_theorem/topic_13_central_limit_theorem_SG.html">Topic 13: Central Limit Theorem</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_14_hypothesis_testing/topic_14_hypothesis_testing-SG.html">Topic 14: Hypothesis Testing -  T-Tests</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_15_ANOVA/topic_15_ANOVA_with_neuro_data-SG.html">Topic 15: ANOVAs &amp; Statistical Power with  Neuro Data</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_16_AB_testing/topic_16_AB_testing_with_movies-SG.html">Topic 16: Practicing AB Testing with Movies</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_17_bayesian_statistics/topic_17_bayesian_statistics-SG.html">Topic 17: Bayesian Statistics</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_18_linear_regression/topic_18_intro_to_linear_regression_SG.html">Topic 18: Intro to Linear Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_19_part1_multiple_regression/topic_19_Multiple_Regression_v2-SG.html">Topic 19: Multiple Linear Regression</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_19_part2_model_validation/topic_19_part_2_Multiple_Regression_v2-SG.html">Topic 19 Part 2: Feature Selection &amp; Model Validation</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_20_extensions_linear_models/topic_20_extensions_to_linear_models_SG.html">Topic 20: Extensions to Linear Models</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 3 - Machine Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../topic_21_OOP/topic_21_OOP_playing_cards_SG.html">Topic 21: Object-Oriented Programming</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_22_linear_algebra/topic_22_linear_algebra_SG.html">Topic 22: Linear Algebra</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_23_calculus_gradient_descent/topic_23_gradient_descent_SG.html">Topic 23: Cost Functions and Gradient Descent</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_24_regularization/topic_24_Regularization_Ridge_Lasso_v2_SG.html">Topic 24: Feature Selection &amp; Regularization (Ridge and Lasso Regression)</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_25_pt1_LogisticRegression_titanic-v2-SG.html">Topic 25-Pt 1: Intro to Logistic Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_25_pt2_LogisticRegression_titanic-v2-SG.html">Topic 25-Part 2: Evaluating Classifiers, Dealing with Class Imbalance, and <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code></a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_27_KNN/Topic_27_KNN_with_pipelines_with_lab_v3_SG.html">Topic 27: K-Nearest Neighbors<br/> +Topic 32: Pipelines</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_29_decision_trees/topic_29_decision_trees_v2_titanic-SG.html">Topic 29: Decision Trees</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_30_ensemble_methods/topic_30_ensemble_methods-SG.html">Topic 30: Ensemble Methods</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_31_support_vector_machines/topic_31_SupportVectorMachines_SG.html">Topic 31: Support Vector Machines</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 4 - Advanced ML &amp; Time Series</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_33_pca/topic_33_PCA_SG.html">Topic 33: Principal Component Analysis</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_34_clustering/topic_34_Kmeans_clustering_v3_SG.html">Topic 34: Clustering</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_35-36_using_databricks_for_pyspark/using_databricks_for_pyspark.html">How to Use Databricks for PySpark Canvas Material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_36_recommendation_systems/topic_36_Recommendation_Systems_with_Surprise.html">Topic 36: Recommendation Systems</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_37_intro_to_time_series/topic_37_intro_to_time_series_crime_v3-SG.html">Topic 37: Intro to Time Series</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_38_time_series_models/topic_38-time_series_models_v3_SG.html">Topic 38: Time Series Models</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_39_NLP/topic_39_NLP_finding_trump_v3_SG.html">Topic 39: Natural Language Processing + Topic 28: Bayesian Classification</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_40-41_neural_networks/topic_40-41_Artificial_Neural_Networks_v1_SG.html">Topic 40-41: Artificial Neural Networks</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_42_tuning_neural_networks/topic_42_tuning_ANNs_with_deep_NLP_v1_SG.html">Topic 42 - Tuning Neural Networks + Deep NLP</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_43_AWS/topic_43_operationalizing_code_AWS_SG.html">Topic 43: Operationalizing Code &amp; AWS</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 5 - Capstone &amp; Bonus Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/Capstone_Kickoff.html">Capstone Kickoff!</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/APIs/working_with_apis.html">Working with APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/developing_app_functions/developing-streamlit-app-functions_SG.html">Developing Streamlit App Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/tableau/tableau_fundamentals_2021-SG.html">Tableau Fundamentals</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/Bonus%20Notebooks/plotly_visuals.html">Plotly Question</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/master?urlpath=tree/Phase_3/topic_25_logistic_regression/1_ds-logistic_regression-master/logistic_regression.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/blob/master/Phase_3/topic_25_logistic_regression/1_ds-logistic_regression-master/logistic_regression.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/issues/new?title=Issue%20on%20page%20%2FPhase_3/topic_25_logistic_regression/1_ds-logistic_regression-master/logistic_regression.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/Phase_3/topic_25_logistic_regression/1_ds-logistic_regression-master/logistic_regression.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Logistic Regression: Beyond Linear Regression</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#agenda">Agenda</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#beyond-linear-regression">Beyond Linear Regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#predicting-a-categorical-response">Predicting a Categorical Response</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-are-some-issues-with-the-graph-above">What are some issues with the graph above?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logistic-regression">Logistic Regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation">Interpretation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#odds">Odds</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-a-line-to-logit-target">Fitting a Line to <span class="math notranslate nohighlight">\(Logit(target)\)</span></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sklearn-linear-model-logisticregression"><code class="docutils literal notranslate"><span class="pre">sklearn.linear_model.LogisticRegression()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#predict-vs-predict-proba"><code class="docutils literal notranslate"><span class="pre">.predict()</span></code> vs. <code class="docutils literal notranslate"><span class="pre">.predict_proba()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cost-functions-and-solutions-to-the-optimization-problem">Cost Functions and Solutions to the Optimization Problem</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-bad-news">The bad news:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-good-news">The good news:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-logistic-regression-coefficients">Interpreting Logistic Regression Coefficients</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#use-coefficients-to-generate-prediction">Use Coefficients to Generate Prediction</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise">Exercise</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#more-generalizations-other-link-functions-other-models">More Generalizations: Other Link Functions, Other Models</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="logistic-regression-beyond-linear-regression">
+<h1>Logistic Regression: Beyond Linear Regression<a class="headerlink" href="#logistic-regression-beyond-linear-regression" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearRegression</span><span class="p">,</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.special</span><span class="w"> </span><span class="kn">import</span> <span class="n">logit</span><span class="p">,</span> <span class="n">expit</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">log_loss</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># expit()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Classification techniques</strong> are an essential part of machine learning and data mining applications. Approximately 70% of problems in Data Science are classification problems. There are lots of classification algorithms that are available, but logistic regression is exceedingly common and useful. We shall focus on binary classification problems, to which logistic regression most immediately applies. Other classification problems handle the cases where multiple classes are present in the target variable, though logistic regression can be extended to cover this sort of case as well. The iris dataset is a very famous example of multi-class classification.</p>
+<p><strong>Logistic Regression</strong> is one of the most simple and commonly used Machine Learning algorithms for two-class classification. It is easy to implement and can be used as the baseline for any binary classification problem. Its basic fundamental concepts are also constructive in deep learning. Logistic regression describes and estimates the relationship between one dependent binary variable and independent variables.</p>
+<section id="agenda">
+<h2>Agenda<a class="headerlink" href="#agenda" title="Permalink to this heading">#</a></h2>
+<p>SWBAT:</p>
+<ul class="simple">
+<li><p>describe conceptually the need to move beyond linear regression;</p></li>
+<li><p>explain the relationship between probability and odds;</p></li>
+<li><p>explain the form of logistic regression;</p></li>
+<li><p>explain how to interpret logistic regression coefficients;</p></li>
+<li><p>describe different generalizations of linear regression for different scenarios.</p></li>
+</ul>
+</section>
+<section id="beyond-linear-regression">
+<h2>Beyond Linear Regression<a class="headerlink" href="#beyond-linear-regression" title="Permalink to this heading">#</a></h2>
+<p>Linear regressions have <a class="reference external" href="https://en.wikipedia.org/wiki/Generalized_linear_model">limitations</a>.</p>
+<p>As it stands, the algorithm could generate a prediction <em>anywhere on the real number line</em>. This <em>may</em> be realistic, like if I’m predicting national surpluses/debts.</p>
+<p>But what if I’m predicting values of a variable that doesn’t take, say, negative values, like temperature in Kelvin?</p>
+<p>What if I’m predicting values of a variable that takes only integer values, like the number of mouseclicks on my killer ds blog per minute?</p>
+<p>What if I’m predicting probabilities? Or something Boolean / Bernoullian?</p>
+<p>What if the shape of my errors changes as a function of the dependent variable?</p>
+<p>Am I stuck using linear regression? There’s got to be a better way!</p>
+</section>
+<section id="predicting-a-categorical-response">
+<h2>Predicting a Categorical Response<a class="headerlink" href="#predicting-a-categorical-response" title="Permalink to this heading">#</a></h2>
+<p>Here we have a dataset about glass. Information <a class="reference external" href="https://archive.ics.uci.edu/ml/datasets/glass+identification">here</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># glass identification dataset</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;http://archive.ics.uci.edu/ml/machine-learning-databases/glass/glass.data&#39;</span>
+<span class="n">col_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span><span class="s1">&#39;ri&#39;</span><span class="p">,</span><span class="s1">&#39;na&#39;</span><span class="p">,</span><span class="s1">&#39;mg&#39;</span><span class="p">,</span><span class="s1">&#39;al&#39;</span><span class="p">,</span><span class="s1">&#39;si&#39;</span><span class="p">,</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="s1">&#39;ca&#39;</span><span class="p">,</span><span class="s1">&#39;ba&#39;</span><span class="p">,</span><span class="s1">&#39;fe&#39;</span><span class="p">,</span><span class="s1">&#39;glass_type&#39;</span><span class="p">]</span>
+<span class="n">glass</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="n">col_names</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;id&#39;</span><span class="p">)</span>
+<span class="n">glass</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;al&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">glass</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ri</th>
+      <th>na</th>
+      <th>mg</th>
+      <th>al</th>
+      <th>si</th>
+      <th>k</th>
+      <th>ca</th>
+      <th>ba</th>
+      <th>fe</th>
+      <th>glass_type</th>
+    </tr>
+    <tr>
+      <th>id</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>22</th>
+      <td>1.51966</td>
+      <td>14.77</td>
+      <td>3.75</td>
+      <td>0.29</td>
+      <td>72.02</td>
+      <td>0.03</td>
+      <td>9.00</td>
+      <td>0.0</td>
+      <td>0.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>185</th>
+      <td>1.51115</td>
+      <td>17.38</td>
+      <td>0.00</td>
+      <td>0.34</td>
+      <td>75.41</td>
+      <td>0.00</td>
+      <td>6.65</td>
+      <td>0.0</td>
+      <td>0.00</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>1.52213</td>
+      <td>14.21</td>
+      <td>3.82</td>
+      <td>0.47</td>
+      <td>71.77</td>
+      <td>0.11</td>
+      <td>9.57</td>
+      <td>0.0</td>
+      <td>0.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>1.52213</td>
+      <td>14.21</td>
+      <td>3.82</td>
+      <td>0.47</td>
+      <td>71.77</td>
+      <td>0.11</td>
+      <td>9.57</td>
+      <td>0.0</td>
+      <td>0.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>51</th>
+      <td>1.52320</td>
+      <td>13.72</td>
+      <td>3.72</td>
+      <td>0.51</td>
+      <td>71.75</td>
+      <td>0.09</td>
+      <td>10.06</td>
+      <td>0.0</td>
+      <td>0.16</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># examine glass_type</span>
+
+<span class="n">glass</span><span class="o">.</span><span class="n">glass_type</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1    70
+2    76
+3    17
+5    13
+6     9
+7    29
+Name: glass_type, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># types 1, 2, 3 are window glass</span>
+<span class="c1"># types 5, 6, 7 are household glass</span>
+
+<span class="n">glass</span><span class="p">[</span><span class="s1">&#39;household&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">glass</span><span class="o">.</span><span class="n">glass_type</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="mi">1</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">:</span><span class="mi">1</span><span class="p">})</span>
+<span class="n">glass</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ri</th>
+      <th>na</th>
+      <th>mg</th>
+      <th>al</th>
+      <th>si</th>
+      <th>k</th>
+      <th>ca</th>
+      <th>ba</th>
+      <th>fe</th>
+      <th>glass_type</th>
+      <th>household</th>
+    </tr>
+    <tr>
+      <th>id</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>22</th>
+      <td>1.51966</td>
+      <td>14.77</td>
+      <td>3.75</td>
+      <td>0.29</td>
+      <td>72.02</td>
+      <td>0.03</td>
+      <td>9.00</td>
+      <td>0.0</td>
+      <td>0.00</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>185</th>
+      <td>1.51115</td>
+      <td>17.38</td>
+      <td>0.00</td>
+      <td>0.34</td>
+      <td>75.41</td>
+      <td>0.00</td>
+      <td>6.65</td>
+      <td>0.0</td>
+      <td>0.00</td>
+      <td>6</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>1.52213</td>
+      <td>14.21</td>
+      <td>3.82</td>
+      <td>0.47</td>
+      <td>71.77</td>
+      <td>0.11</td>
+      <td>9.57</td>
+      <td>0.0</td>
+      <td>0.00</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>1.52213</td>
+      <td>14.21</td>
+      <td>3.82</td>
+      <td>0.47</td>
+      <td>71.77</td>
+      <td>0.11</td>
+      <td>9.57</td>
+      <td>0.0</td>
+      <td>0.00</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>51</th>
+      <td>1.52320</td>
+      <td>13.72</td>
+      <td>3.72</td>
+      <td>0.51</td>
+      <td>71.75</td>
+      <td>0.09</td>
+      <td>10.06</td>
+      <td>0.0</td>
+      <td>0.16</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Let’s change our task, so that we’re predicting <strong>household</strong> using <strong>al</strong>. Let’s visualize the relationship to figure out how to do this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">glass</span><span class="o">.</span><span class="n">al</span><span class="p">,</span> <span class="n">glass</span><span class="o">.</span><span class="n">household</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;al&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;household&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Type of Glass as a Function of Aluminum Content&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/c86bb6d95b28b3676dc7561cab9ca8ae1219fc96c1b8d9e11b5f978b8b625087.png" src="../../../_images/c86bb6d95b28b3676dc7561cab9ca8ae1219fc96c1b8d9e11b5f978b8b625087.png" />
+</div>
+</div>
+<p>Let’s draw a <strong>regression line</strong>, like we did before:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># fit a linear regression model and store the predictions</span>
+
+<span class="n">linreg</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">feature_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;al&#39;</span><span class="p">]</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">glass</span><span class="p">[</span><span class="n">feature_cols</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">glass</span><span class="o">.</span><span class="n">household</span>
+<span class="n">linreg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">glass</span><span class="p">[</span><span class="s1">&#39;household_pred&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">linreg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># scatter plot that includes the regression line</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">glass</span><span class="o">.</span><span class="n">al</span><span class="p">,</span> <span class="n">glass</span><span class="o">.</span><span class="n">household</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">glass</span><span class="o">.</span><span class="n">al</span><span class="p">,</span> <span class="n">glass</span><span class="o">.</span><span class="n">household_pred</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;al&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;household&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/fd1730d2ecd5c405c4e3ed174d61b61021f921007b18ccdb88d1b4f9cc8220e5.png" src="../../../_images/fd1730d2ecd5c405c4e3ed174d61b61021f921007b18ccdb88d1b4f9cc8220e5.png" />
+</div>
+</div>
+<section id="what-are-some-issues-with-the-graph-above">
+<h3>What are some issues with the graph above?<a class="headerlink" href="#what-are-some-issues-with-the-graph-above" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Lots of Error</span>
+<span class="c1">## Many predcictions are far from truth</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p>If <strong>al=3</strong>, what class do we predict for household?</p>
+<p>If <strong>al=1.5</strong>, what class do we predict for household?</p>
+<p>We predict the 0 class for <strong>lower</strong> values of al, and the 1 class for <strong>higher</strong> values of al. What’s our cutoff value? Around <strong>al=2</strong>, because that’s where the linear regression line crosses the midpoint between predicting class 0 and class 1.</p>
+<p>Therefore, we’ll say that if <strong>household_pred &gt;= 0.5</strong>, we predict a class of <strong>1</strong>, else we predict a class of <strong>0</strong>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># transform household_pred to 1 or 0</span>
+
+<span class="n">glass</span><span class="p">[</span><span class="s1">&#39;household_pred_class&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">glass</span><span class="o">.</span><span class="n">household_pred</span> <span class="o">&gt;=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">glass</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ri</th>
+      <th>na</th>
+      <th>mg</th>
+      <th>al</th>
+      <th>si</th>
+      <th>k</th>
+      <th>ca</th>
+      <th>ba</th>
+      <th>fe</th>
+      <th>glass_type</th>
+      <th>household</th>
+      <th>household_pred</th>
+      <th>household_pred_class</th>
+    </tr>
+    <tr>
+      <th>id</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>22</th>
+      <td>1.51966</td>
+      <td>14.77</td>
+      <td>3.75</td>
+      <td>0.29</td>
+      <td>72.02</td>
+      <td>0.03</td>
+      <td>9.00</td>
+      <td>0.0</td>
+      <td>0.00</td>
+      <td>1</td>
+      <td>0</td>
+      <td>-0.340495</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>185</th>
+      <td>1.51115</td>
+      <td>17.38</td>
+      <td>0.00</td>
+      <td>0.34</td>
+      <td>75.41</td>
+      <td>0.00</td>
+      <td>6.65</td>
+      <td>0.0</td>
+      <td>0.00</td>
+      <td>6</td>
+      <td>1</td>
+      <td>-0.315436</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>1.52213</td>
+      <td>14.21</td>
+      <td>3.82</td>
+      <td>0.47</td>
+      <td>71.77</td>
+      <td>0.11</td>
+      <td>9.57</td>
+      <td>0.0</td>
+      <td>0.00</td>
+      <td>1</td>
+      <td>0</td>
+      <td>-0.250283</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>1.52213</td>
+      <td>14.21</td>
+      <td>3.82</td>
+      <td>0.47</td>
+      <td>71.77</td>
+      <td>0.11</td>
+      <td>9.57</td>
+      <td>0.0</td>
+      <td>0.00</td>
+      <td>1</td>
+      <td>0</td>
+      <td>-0.250283</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>51</th>
+      <td>1.52320</td>
+      <td>13.72</td>
+      <td>3.72</td>
+      <td>0.51</td>
+      <td>71.75</td>
+      <td>0.09</td>
+      <td>10.06</td>
+      <td>0.0</td>
+      <td>0.16</td>
+      <td>1</td>
+      <td>0</td>
+      <td>-0.230236</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">glass</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ri</th>
+      <th>na</th>
+      <th>mg</th>
+      <th>al</th>
+      <th>si</th>
+      <th>k</th>
+      <th>ca</th>
+      <th>ba</th>
+      <th>fe</th>
+      <th>glass_type</th>
+      <th>household</th>
+      <th>household_pred</th>
+      <th>household_pred_class</th>
+    </tr>
+    <tr>
+      <th>id</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>193</th>
+      <td>1.51623</td>
+      <td>14.20</td>
+      <td>0.00</td>
+      <td>2.79</td>
+      <td>73.46</td>
+      <td>0.04</td>
+      <td>9.04</td>
+      <td>0.40</td>
+      <td>0.09</td>
+      <td>7</td>
+      <td>1</td>
+      <td>0.912448</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>210</th>
+      <td>1.51623</td>
+      <td>14.14</td>
+      <td>0.00</td>
+      <td>2.88</td>
+      <td>72.61</td>
+      <td>0.08</td>
+      <td>9.18</td>
+      <td>1.06</td>
+      <td>0.00</td>
+      <td>7</td>
+      <td>1</td>
+      <td>0.957554</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>173</th>
+      <td>1.51321</td>
+      <td>13.00</td>
+      <td>0.00</td>
+      <td>3.02</td>
+      <td>70.70</td>
+      <td>6.21</td>
+      <td>6.93</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>5</td>
+      <td>1</td>
+      <td>1.027718</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>172</th>
+      <td>1.51316</td>
+      <td>13.02</td>
+      <td>0.00</td>
+      <td>3.04</td>
+      <td>70.48</td>
+      <td>6.21</td>
+      <td>6.96</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>5</td>
+      <td>1</td>
+      <td>1.037742</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>164</th>
+      <td>1.51514</td>
+      <td>14.01</td>
+      <td>2.68</td>
+      <td>3.50</td>
+      <td>69.89</td>
+      <td>1.68</td>
+      <td>5.87</td>
+      <td>2.20</td>
+      <td>0.00</td>
+      <td>5</td>
+      <td>1</td>
+      <td>1.268283</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot the class predictions</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">glass</span><span class="o">.</span><span class="n">al</span><span class="p">,</span> <span class="n">glass</span><span class="o">.</span><span class="n">household</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">glass</span><span class="o">.</span><span class="n">al</span><span class="p">,</span> <span class="n">glass</span><span class="o">.</span><span class="n">household_pred_class</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;al&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;household&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/31711cf05f0d602ba06a18b376cf242482a6ff33aca66db3359f278324ce7755.png" src="../../../_images/31711cf05f0d602ba06a18b376cf242482a6ff33aca66db3359f278324ce7755.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="logistic-regression">
+<h2>Logistic Regression<a class="headerlink" href="#logistic-regression" title="Permalink to this heading">#</a></h2>
+<p>Logistic regression can do what we just did.</p>
+<p>The strategy now is to <em>generalize</em> the notion of linear regression; linear regression as we’ve known it will become a special case. In particular, we’ll keep the idea of the regression best-fit line, but now <strong>we’ll allow the model to make predictions through some (non-trivial) transformation of the linear predictor</strong>.</p>
+<p>Let’s say we’ve constructed our best-fit line, i.e. our linear predictor, <span class="math notranslate nohighlight">\(\hat{L} = \beta_0 + \beta_1x_1 + ... + \beta_nx_n\)</span>.</p>
+<p>Consider the following transformation: <br/>
+<span class="math notranslate nohighlight">\(\large\hat{y} = \Large\frac{1}{1 + e^{-\hat{L}}} \large= \Large\frac{1}{1 + e^{-(\beta_0 + ... + \beta_nx_n)}}\)</span>. This is called the <strong>sigmoid function</strong>.</p>
+<p>We’re imagining that <span class="math notranslate nohighlight">\(\hat{L}\)</span> can take any values between <span class="math notranslate nohighlight">\(-\infty\)</span> and <span class="math notranslate nohighlight">\(\infty\)</span>.</p>
+<p><span class="math notranslate nohighlight">\(\large\rightarrow\)</span> But what values can <span class="math notranslate nohighlight">\(\hat{y}\)</span> take? What does this function even look like?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Let&#39;s plot this function here:</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">X</span><span class="p">))</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/ac1beb1927144545646f49995440f7f73e1f71ce04c14ecc6c8ca30d6bd3008f.png" src="../../../_images/ac1beb1927144545646f49995440f7f73e1f71ce04c14ecc6c8ca30d6bd3008f.png" />
+</div>
+</div>
+</section>
+<section id="interpretation">
+<h2>Interpretation<a class="headerlink" href="#interpretation" title="Permalink to this heading">#</a></h2>
+<p>This function squeezes our predictions between 0 and 1. And that’s why it’s so useful for <strong>binary classification problems</strong>.</p>
+<p>Suppose I’m building a model to predict whether a plant is poisonous or not, based perhaps on certain biological features of its leaves. I’ll let ‘1’ indicate a poisonous plant and ‘0’ indicate a non-poisonous plant.</p>
+<p>Now I’m forcing my predictions to be between 0 and 1, so suppose for test plant <span class="math notranslate nohighlight">\(P\)</span> I get some value like 0.19.</p>
+<p>I can naturally understand this as <strong>the probability that <span class="math notranslate nohighlight">\(P\)</span> is poisonous</strong>.</p>
+<p>If I truly want a binary prediction, I can simply round my score appropriately.</p>
+<p>How do we fit a line to our dependent variable if its values are already stored as probabilities? We can use the inverse of the sigmoid function, and just set our regression equation equal to that. The inverse of the sigmoid function is called the <strong>logit function</strong>, and it looks like this:</p>
+<p><span class="math notranslate nohighlight">\(\large f(y) = \ln\left(\frac{y}{1 - y}\right)\)</span>. Notice that the domain of this function is <span class="math notranslate nohighlight">\((0, 1)\)</span>.</p>
+<p><span class="math notranslate nohighlight">\(\hspace{110mm}\)</span>(Quick proof that logit and sigmoid are inverse functions:</p>
+<p><span class="math notranslate nohighlight">\(\hspace{170mm}x = \frac{1}{1 + e^{-y}}\)</span>; <br/>
+<span class="math notranslate nohighlight">\(\hspace{170mm}\)</span>so <span class="math notranslate nohighlight">\(1 + e^{-y} = \frac{1}{x}\)</span>; <br/>
+<span class="math notranslate nohighlight">\(\hspace{170mm}\)</span>so <span class="math notranslate nohighlight">\(e^{-y} = \frac{1 - x}{x}\)</span>; <br/>
+<span class="math notranslate nohighlight">\(\hspace{170mm}\)</span>so <span class="math notranslate nohighlight">\(-y = \ln\left(\frac{1 - x}{x}\right)\)</span>; <br/>
+<span class="math notranslate nohighlight">\(\hspace{170mm}\)</span>so <span class="math notranslate nohighlight">\(y = \ln\left(\frac{x}{1 - x}\right)\)</span>.)</p>
+<p>Our regression equation will now look like this:</p>
+<p><span class="math notranslate nohighlight">\(\large\ln\left(\frac{y}{1 - y}\right) = \beta_0 + \beta_1x_1 + ... + \beta_nx_n\)</span>.</p>
+<p>This equation is used for a <strong>logistic regression</strong>. Note that it is now not the target variable itself that is modeled as varying linearly with the predictor(s) but rather the values of this logit function of the target that are so represented. This is the sense in which we have a more generalized notion of a linear model.</p>
+<p>So: Instead of fitting a best-fit line (or plane or hyperplane) to the target itself, we’ll fit it to <em><strong>the log-odds of the target</strong></em>.</p>
+<p>This function whose values are modeled as varying linearly is in general called the <strong>link function</strong>.</p>
+</section>
+<section id="odds">
+<h2>Odds<a class="headerlink" href="#odds" title="Permalink to this heading">#</a></h2>
+<p>There are other ways to squeeze the results of a linear regression into the set (0, 1).</p>
+<p>But the ratio <span class="math notranslate nohighlight">\(\frac{p}{1-p}\)</span> represents the <em>odds</em> of some event, where <span class="math notranslate nohighlight">\(p\)</span> is the probability of the event.</p>
+<div class="math notranslate nohighlight">
+\[probability = \frac {one\ outcome} {all\ outcomes}\]</div>
+<div class="math notranslate nohighlight">
+\[odds = \frac {one\ outcome} {all\ other\ outcomes}\]</div>
+<p>Examples:</p>
+<ul class="simple">
+<li><p>Dice roll of 1: probability = 1/6, odds = 1/5</p></li>
+<li><p>Even dice roll: probability = 3/6, odds = 3/3 = 1</p></li>
+<li><p>Dice roll less than 5: probability = 4/6, odds = 4/2 = 2</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[odds = \frac {probability} {1 - probability}\]</div>
+<div class="math notranslate nohighlight">
+\[probability = \frac {odds} {1 + odds}\]</div>
+<p>And so the logit function represents the <strong>log-odds</strong> of success (y=1).</p>
+</section>
+<section id="fitting-a-line-to-logit-target">
+<h2>Fitting a Line to <span class="math notranslate nohighlight">\(Logit(target)\)</span><a class="headerlink" href="#fitting-a-line-to-logit-target" title="Permalink to this heading">#</a></h2>
+<p>Let’s try applying the logit function to our target and then fitting a linear regression to that. Since the model will be trained not on whether the glass is household but rather on <em>the logit of this label</em>, it will also make predictions of the logit of that label. But we can simply apply the sigmoid function to the model’s output to get its predictions of whether the glass is household.</p>
+<p>We can’t use the target as is, because the logit of 1 is <span class="math notranslate nohighlight">\(\infty\)</span> and the logit of 0 is <span class="math notranslate nohighlight">\(-\infty\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">glass</span><span class="p">[</span><span class="s1">&#39;household&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0, 1])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">logit</span><span class="p">(</span><span class="n">glass</span><span class="p">[</span><span class="s1">&#39;household&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-inf,  inf])
+</pre></div>
+</div>
+</div>
+</div>
+<p>So we’ll make a small adjustment:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_approx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">glass</span><span class="p">[</span><span class="s1">&#39;household&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1e-9</span><span class="p">,</span> <span class="mi">1</span><span class="o">-</span><span class="mf">1e-9</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">line_to_logit</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">glass</span><span class="p">[[</span><span class="s1">&#39;al&#39;</span><span class="p">]]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">logit</span><span class="p">(</span><span class="n">target_approx</span><span class="p">)</span>
+
+<span class="n">line_to_logit</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LinearRegression()
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+
+<span class="n">final_preds</span> <span class="o">=</span> <span class="n">expit</span><span class="p">(</span><span class="n">line_to_logit</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">glass</span><span class="p">[</span><span class="s1">&#39;household&#39;</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">final_preds</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/534736b7e840dce2854f0c6dfaa8066e731a3ea251b6621ed8e4cd2e3679d400.png" src="../../../_images/534736b7e840dce2854f0c6dfaa8066e731a3ea251b6621ed8e4cd2e3679d400.png" />
+</div>
+</div>
+</section>
+<section id="sklearn-linear-model-logisticregression">
+<h2><code class="docutils literal notranslate"><span class="pre">sklearn.linear_model.LogisticRegression()</span></code><a class="headerlink" href="#sklearn-linear-model-logisticregression" title="Permalink to this heading">#</a></h2>
+<p>In general, we should always scale our data when using this class. Scaling is always important for models that include regularization, and scikit-learn’s <code class="docutils literal notranslate"><span class="pre">LogisticRegression()</span></code> objects have regularization by default.</p>
+<p>Here we’ve forgone the scaling since we only have a single predictor.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># fit a logistic regression model and store the class predictions</span>
+
+<span class="n">logreg</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">feature_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;al&#39;</span><span class="p">]</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">glass</span><span class="p">[</span><span class="n">feature_cols</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">glass</span><span class="o">.</span><span class="n">household</span>
+<span class="n">logreg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">glass</span><span class="p">[</span><span class="s1">&#39;household_pred_class&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">logreg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot the class predictions</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">glass</span><span class="o">.</span><span class="n">al</span><span class="p">,</span> <span class="n">glass</span><span class="o">.</span><span class="n">household</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">glass</span><span class="o">.</span><span class="n">al</span><span class="p">,</span> <span class="n">glass</span><span class="o">.</span><span class="n">household_pred_class</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;al&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;household&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/ca384c63863a8323852487316632e87efc5d97b6efad80bcdae32ff394b6c7f7.png" src="../../../_images/ca384c63863a8323852487316632e87efc5d97b6efad80bcdae32ff394b6c7f7.png" />
+</div>
+</div>
+</section>
+<section id="predict-vs-predict-proba">
+<h2><code class="docutils literal notranslate"><span class="pre">.predict()</span></code> vs. <code class="docutils literal notranslate"><span class="pre">.predict_proba()</span></code><a class="headerlink" href="#predict-vs-predict-proba" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">glass</span><span class="o">.</span><span class="n">al</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>id
+22     0.29
+185    0.34
+40     0.47
+39     0.47
+51     0.51
+       ... 
+193    2.79
+210    2.88
+173    3.02
+172    3.04
+164    3.50
+Name: al, Length: 214, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># examine some example predictions</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">logreg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">glass</span><span class="p">[</span><span class="s1">&#39;al&#39;</span><span class="p">][</span><span class="mi">22</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">logreg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">glass</span><span class="p">[</span><span class="s1">&#39;al&#39;</span><span class="p">][</span><span class="mi">185</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">logreg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">glass</span><span class="p">[</span><span class="s1">&#39;al&#39;</span><span class="p">][</span><span class="mi">164</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">logreg</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">glass</span><span class="p">[</span><span class="s1">&#39;al&#39;</span><span class="p">][</span><span class="mi">22</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">logreg</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">glass</span><span class="p">[</span><span class="s1">&#39;al&#39;</span><span class="p">][</span><span class="mi">185</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">logreg</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">glass</span><span class="p">[</span><span class="s1">&#39;al&#39;</span><span class="p">][</span><span class="mi">164</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">first_row</span> <span class="o">=</span> <span class="n">glass</span><span class="p">[</span><span class="s1">&#39;al&#39;</span><span class="p">][</span><span class="mi">22</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0]
+[0]
+[1]
+
+
+[0.9939759 0.0060241]
+[0.99296771 0.00703229]
+[0.00743731 0.99256269]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="cost-functions-and-solutions-to-the-optimization-problem">
+<h2>Cost Functions and Solutions to the Optimization Problem<a class="headerlink" href="#cost-functions-and-solutions-to-the-optimization-problem" title="Permalink to this heading">#</a></h2>
+<p>Unlike the least-squares problem for linear regression, no one has yet found a closed-form solution to the optimization problem presented by logistic regression. But even if one exists, the computation would no doubt be so complex that we’d be better off using some sort of approximation method instead.</p>
+<p>But there’s still a problem.</p>
+<p>Recall the cost function for linear regression: <br/><br/>
+<span class="math notranslate nohighlight">\(SSE = \Sigma_i(y_i - \hat{y}_i)^2 = \Sigma_i(y_i - (\beta_0 + \beta_1x_{i1} + ... + \beta_nx_{in}))^2\)</span>.</p>
+<p>This function, <span class="math notranslate nohighlight">\(SSE(\vec{\beta})\)</span>, is convex.</p>
+<p>If we plug in our new logistic equation for <span class="math notranslate nohighlight">\(\hat{y}\)</span>, we get: <br/><br/>
+<span class="math notranslate nohighlight">\(SSE_{log} = \Sigma_i(y_i - \hat{y}_i)^2 = \Sigma_i\left(y_i - \left(\frac{1}{1+e^{-(\beta_0 + \beta_1x_{i1} + ... + \beta_nx_{in})}}\right)\right)^2\)</span>.</p>
+<section id="the-bad-news">
+<h3>The bad news:<a class="headerlink" href="#the-bad-news" title="Permalink to this heading">#</a></h3>
+<p><em>This</em> function, <span class="math notranslate nohighlight">\(SSE_{log}(\vec{\beta})\)</span>, is <a class="reference external" href="https://towardsdatascience.com/why-not-mse-as-a-loss-function-for-logistic-regression-589816b5e03c"><strong>not</strong> convex</a>.</p>
+<p>That means that, if we tried to use gradient descent or some other approximation method that looks for the minimum of this function, we could easily find a local rather than a global minimum.</p>
+<p>Note that the scikit-learn class <em>expects the user to specify the solver</em> to be used in calculating the coefficients. The default solver, <a class="reference external" href="https://en.wikipedia.org/wiki/Limited-memory_BFGS">lbfgs</a>, works well for many applications.</p>
+</section>
+<section id="the-good-news">
+<h3>The good news:<a class="headerlink" href="#the-good-news" title="Permalink to this heading">#</a></h3>
+<p>We can use <strong>log-loss</strong> instead:</p>
+<p><span class="math notranslate nohighlight">\(\mathcal{L}(\vec{y}, \hat{\vec{y}}) = -\frac{1}{N}\Sigma^N_{i=1}\left(y_iln(\hat{y}_i)+(1-y_i)ln(1-\hat{y}_i)\right)\)</span>,</p>
+<p>where <span class="math notranslate nohighlight">\(\hat{y}_i\)</span> is the probability that <span class="math notranslate nohighlight">\((x_{i1}, ... , x_{in})\)</span> belongs to <strong>class 1</strong>.</p>
+<p><strong>More resources on the log-loss function</strong>:</p>
+<p><a class="reference external" href="https://towardsdatascience.com/optimization-loss-function-under-the-hood-part-ii-d20a239cde11">https://towardsdatascience.com/optimization-loss-function-under-the-hood-part-ii-d20a239cde11</a></p>
+<p><a class="reference external" href="https://towardsdatascience.com/understanding-binary-cross-entropy-log-loss-a-visual-explanation-a3ac6025181a">https://towardsdatascience.com/understanding-binary-cross-entropy-log-loss-a-visual-explanation-a3ac6025181a</a></p>
+<p><a class="reference external" href="http://wiki.fast.ai/index.php/Log_Loss">http://wiki.fast.ai/index.php/Log_Loss</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># store the predicted probabilites of class 1</span>
+
+<span class="n">glass</span><span class="p">[</span><span class="s1">&#39;household_pred_prob&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">logreg</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot the predicted probabilities</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">glass</span><span class="o">.</span><span class="n">al</span><span class="p">,</span> <span class="n">glass</span><span class="o">.</span><span class="n">household</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">glass</span><span class="o">.</span><span class="n">al</span><span class="p">,</span> <span class="n">glass</span><span class="o">.</span><span class="n">household_pred_prob</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;al&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;household&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/e525848a16118d0ea8e0d8db95d2f6a88a643cb0d2681c77834785aa50c083cd.png" src="../../../_images/e525848a16118d0ea8e0d8db95d2f6a88a643cb0d2681c77834785aa50c083cd.png" />
+</div>
+</div>
+<p>The first column indicates the predicted probability of <strong>class 0</strong>, and the second column indicates the predicted probability of <strong>class 1</strong>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">log_loss</span><span class="p">(</span><span class="n">glass</span><span class="o">.</span><span class="n">household</span><span class="p">,</span> <span class="n">logreg</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.36150680872607704
+</pre></div>
+</div>
+</div>
+</div>
+<p>The above is a pretty good score. A baseline classifier that is fit on data with equal numbers of data points in the two target classes should be right about 50% of the time, and the log loss for such a classifier would be <span class="math notranslate nohighlight">\(-ln(0.5) = 0.693\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.6931471805599453
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="interpreting-logistic-regression-coefficients">
+<h2>Interpreting Logistic Regression Coefficients<a class="headerlink" href="#interpreting-logistic-regression-coefficients" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">logreg</span><span class="o">.</span><span class="n">coef_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[3.11517927]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>How do we interpret the coefficients of a logistic regression? For a linear regression, the situaton was like this:</p>
+<ul class="simple">
+<li><p>Linear Regression: We construct the best-fit line and get a set of coefficients. Suppose <span class="math notranslate nohighlight">\(\beta_1 = k\)</span>. In that case we would expect a 1-unit change in <span class="math notranslate nohighlight">\(x_1\)</span> to produce a <span class="math notranslate nohighlight">\(k\)</span>-unit change in <span class="math notranslate nohighlight">\(y\)</span>.</p></li>
+<li><p>Logistic Regression: We find the coefficients of the best-fit line by some approximation method. Suppose <span class="math notranslate nohighlight">\(\beta_1 = k\)</span>. In that case we would expect a 1-unit change in <span class="math notranslate nohighlight">\(x_1\)</span> to produce a <span class="math notranslate nohighlight">\(k\)</span>-unit change (not in <span class="math notranslate nohighlight">\(y\)</span> but) in <span class="math notranslate nohighlight">\(ln\left(\frac{y}{1-y}\right)\)</span>.</p></li>
+</ul>
+<p>We have:</p>
+<p><span class="math notranslate nohighlight">\(\ln\left(\frac{y(x_1+1, ... , x_n)}{1-y(x_1+1, ... , x_n)}\right) = \ln\left(\frac{y(x_1, ... , x_n)}{1-y(x_1, ... , x_n)}\right) + k\)</span>.</p>
+<p>Exponentiating both sides:</p>
+<p><span class="math notranslate nohighlight">\(\frac{y(x_1+1, ... , x_n)}{1-y(x_1+1, ... , x_n)} = e^{\ln\left(\frac{y(x_1, ... , x_n)}{1-y(x_1, ... , x_n)}\right) + k}\)</span> <br/><br/> <span class="math notranslate nohighlight">\(\frac{y(x_1+1, ... , x_n)}{1-y(x_1+1, ... , x_n)}= e^{\ln\left(\frac{y(x_1, ... , x_n)}{1-y(x_1, ... , x_n)}\right)}\cdot e^k\)</span> <br/><br/> <span class="math notranslate nohighlight">\(\frac{y(x_1+1, ... , x_n)}{1-y(x_1+1, ... , x_n)}= e^k\cdot\frac{y(x_1, ... , x_n)}{1-y(x_1, ... , x_n)}\)</span></p>
+<p>That is, the odds ratio at <span class="math notranslate nohighlight">\(x_1+1\)</span> has increased by a factor of <span class="math notranslate nohighlight">\(e^k\)</span> relative to the odds ratio at <span class="math notranslate nohighlight">\(x_1\)</span>.</p>
+<p>For more on interpretation, see <a class="reference external" href="https://support.minitab.com/en-us/minitab-express/1/help-and-how-to/modeling-statistics/regression/how-to/binary-logistic-regression/interpret-the-results/all-statistics-and-graphs/coefficients/">this page</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># examine the intercept</span>
+
+<span class="n">logreg</span><span class="o">.</span><span class="n">intercept_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-6.00934605])
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Interpretation:</strong> For an ‘al’ value of 0, the log-odds of ‘household’ is -6.01.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># convert log-odds to probability</span>
+
+<span class="n">logodds</span> <span class="o">=</span> <span class="n">logreg</span><span class="o">.</span><span class="n">intercept_</span>
+<span class="n">odds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">logodds</span><span class="p">)</span>
+<span class="n">prob</span> <span class="o">=</span> <span class="n">odds</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">odds</span><span class="p">)</span>
+<span class="n">prob</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.00244968])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># examine the coefficient for al</span>
+
+<span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">feature_cols</span><span class="p">,</span> <span class="n">logreg</span><span class="o">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(&#39;al&#39;, 3.1151792681570165)]
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Interpretation:</strong> A 1 unit increase in ‘al’ is associated with a 3.12 unit increase in the log-odds of ‘household’.</p>
+<p>Let’s verify this as we change the aluminum content from 1 to 2.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Prediction for al=1</span>
+
+<span class="n">pred_al1</span> <span class="o">=</span> <span class="n">logreg</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">([[</span><span class="mi">1</span><span class="p">]])</span>
+<span class="n">pred_al1</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.94755733, 0.05244267]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Odds ratio for al=1</span>
+
+<span class="n">odds_al1</span> <span class="o">=</span> <span class="n">pred_al1</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">pred_al1</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Prediction for al=2</span>
+
+<span class="n">pred_al2</span> <span class="o">=</span> <span class="n">logreg</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">([[</span><span class="mi">2</span><span class="p">]])</span>
+<span class="n">pred_al2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.4449707, 0.5550293]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Odds ratio for al=2</span>
+
+<span class="n">odds_al2</span> <span class="o">=</span> <span class="n">pred_al2</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">pred_al2</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">logreg</span><span class="o">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="n">odds_al1</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">odds_al2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.2473390003597826
+1.2473390003597828
+</pre></div>
+</div>
+</div>
+</div>
+<section id="use-coefficients-to-generate-prediction">
+<h3>Use Coefficients to Generate Prediction<a class="headerlink" href="#use-coefficients-to-generate-prediction" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># compute predicted log-odds for al=2 using the equation</span>
+
+<span class="n">logodds</span> <span class="o">=</span> <span class="n">logreg</span><span class="o">.</span><span class="n">intercept_</span> <span class="o">+</span> <span class="n">logreg</span><span class="o">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span>
+<span class="n">logodds</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.22101248])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># convert log-odds to odds</span>
+
+<span class="n">odds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">logodds</span><span class="p">)</span>
+<span class="n">odds</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1.247339])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># convert odds to probability</span>
+
+<span class="n">prob</span> <span class="o">=</span> <span class="n">odds</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">odds</span><span class="p">)</span>
+<span class="n">prob</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.5550293])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># compute predicted probability for al=2 using the predict_proba method</span>
+
+<span class="n">logreg</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))[:,</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.5550293])
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="exercise">
+<h2>Exercise<a class="headerlink" href="#exercise" title="Permalink to this heading">#</a></h2>
+<p>Split the data below into train and test, and then convert the y-values (<code class="docutils literal notranslate"><span class="pre">geysers.kind</span></code>) into 1’s and 0’s. Then use <code class="docutils literal notranslate"><span class="pre">sklearn</span></code> to build a logistic regression model of whether Old Faithful’s eruption wait time is long or short, based on the duration of the eruption. Finally, find the points in the test set where the model’s prediction differs from the true y-value. How many are there?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">geysers</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;geyser&#39;</span><span class="p">,</span> <span class="o">**</span><span class="p">{</span><span class="s1">&#39;usecols&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;duration&#39;</span><span class="p">,</span> <span class="s1">&#39;kind&#39;</span><span class="p">]})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">geysers</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>duration</th>
+      <th>kind</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3.600</td>
+      <td>long</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.800</td>
+      <td>short</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3.333</td>
+      <td>long</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2.283</td>
+      <td>short</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4.533</td>
+      <td>long</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="more-generalizations-other-link-functions-other-models">
+<h2>More Generalizations: Other Link Functions, Other Models<a class="headerlink" href="#more-generalizations-other-link-functions-other-models" title="Permalink to this heading">#</a></h2>
+<p>Logistic regression’s link function is the logit function, but different sorts of models use different link functions.</p>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Generalized_linear_model#Link_function">Wikipedia</a> has a nice table of generalized linear model types and their associated link functions.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "learn-env-new"
+        },
+        kernelOptions: {
+            name: "learn-env-new",
+            path: "./Phase_3/topic_25_logistic_regression/1_ds-logistic_regression-master"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'learn-env-new'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#agenda">Agenda</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#beyond-linear-regression">Beyond Linear Regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#predicting-a-categorical-response">Predicting a Categorical Response</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-are-some-issues-with-the-graph-above">What are some issues with the graph above?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logistic-regression">Logistic Regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation">Interpretation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#odds">Odds</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-a-line-to-logit-target">Fitting a Line to <span class="math notranslate nohighlight">\(Logit(target)\)</span></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sklearn-linear-model-logisticregression"><code class="docutils literal notranslate"><span class="pre">sklearn.linear_model.LogisticRegression()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#predict-vs-predict-proba"><code class="docutils literal notranslate"><span class="pre">.predict()</span></code> vs. <code class="docutils literal notranslate"><span class="pre">.predict_proba()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cost-functions-and-solutions-to-the-optimization-problem">Cost Functions and Solutions to the Optimization Problem</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-bad-news">The bad news:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-good-news">The good news:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-logistic-regression-coefficients">Interpreting Logistic Regression Coefficients</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#use-coefficients-to-generate-prediction">Use Coefficients to Generate Prediction</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise">Exercise</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#more-generalizations-other-link-functions-other-models">More Generalizations: Other Link Functions, Other Models</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By James Irving, PhD
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

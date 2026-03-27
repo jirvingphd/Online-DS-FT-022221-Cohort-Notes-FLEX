@@ -1,0 +1,1462 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>\(\chi^2\) Testing in Python &#8212; Data Science Curriculum</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/clipboard.min.js"></script>
+    <script src="../../../../_static/copybutton.js"></script>
+    <script src="../../../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Phase_2/topic_15_ANOVA/central-lecturer-repo/ds-anova-main/chi_squared_testing';</script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../_static/flatironschool_banner.jpg" class="logo__image only-light" alt="Data Science Curriculum - Home"/>
+    <script>document.write(`<img src="../../../../_static/flatironschool_banner.jpg" class="logo__image only-dark" alt="Data Science Curriculum - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../intro.html">
+                    Data Science Curriculum
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 1 - Python &amp; Data Fundamentals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_1/topic_01_getting_started/topic_01_getting_started.html">Topic 1: Getting Started with Data Science</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_1/topic_02_bash_git/topic_02_bash_and_git.html">Topic 02:  Bash and Git</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_1/topic_03_control_flow_functions/topic_03_control_flow_and_functions.html">Topic 03: Control Flow, Functions, and Statistics</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_1/topic_04_python_libraries/topic_04_intro_to_libraries_numpy_SG.html">Topic 04-Part 1: Python Libraries &amp; NumPy</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_1/topic_04_python_libraries/topic_04_pt-2_brief_intro_to_pandas-SG.html">Topic 04-Part 2: Brief Intro to Pandas with Doctor Who</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_1/topic_05_data_cleaning_in_pandas/topic_05_Data_Cleaning_in_Pandas.html">Topic 05: Data Cleaning in Pandas</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_1/topic_06_data_visualization/topic_06_visualizations_heroes_project_SG.html">Topic 06:  Data Visualizations</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_1/topic_07_SQL_and_relational_databases/topic_07_SQL_and_relational_databases_SG.html">TOPIC 07: SQL DATABASES</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_1/topic_08_noSQL_databases/topic_08_mongodb-SG.html">Topic 08: NoSQL Databases</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_1/topic_09_json_and_apis/topic_09_json-api-SG.html">Topic 09: Using APIs and JSON Data</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_1/topic_10_webscraping/topic_10_SG_HTML_CSS_web_scraping.html">Topic 10: HTML, CSS, &amp; Web Scraping</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 2 - Statistics &amp; Regression</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_11_probability_and_combinatorics/topic_11_playlist_probabilities-SG.html">Topic 11 - Intro to Combinatorics &amp; Probability</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_12_statistical_distributions/topic-12-distributions-with-movies-sg.html">Exploring Distributions with Movies Data</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_13_central_limit_theorem/topic_13_central_limit_theorem_SG.html">Topic 13: Central Limit Theorem</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_14_hypothesis_testing/topic_14_hypothesis_testing-SG.html">Topic 14: Hypothesis Testing -  T-Tests</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_15_ANOVA_with_neuro_data-SG.html">Topic 15: ANOVAs &amp; Statistical Power with  Neuro Data</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_16_AB_testing/topic_16_AB_testing_with_movies-SG.html">Topic 16: Practicing AB Testing with Movies</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_17_bayesian_statistics/topic_17_bayesian_statistics-SG.html">Topic 17: Bayesian Statistics</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_18_linear_regression/topic_18_intro_to_linear_regression_SG.html">Topic 18: Intro to Linear Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_19_part1_multiple_regression/topic_19_Multiple_Regression_v2-SG.html">Topic 19: Multiple Linear Regression</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_19_part2_model_validation/topic_19_part_2_Multiple_Regression_v2-SG.html">Topic 19 Part 2: Feature Selection &amp; Model Validation</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_20_extensions_linear_models/topic_20_extensions_to_linear_models_SG.html">Topic 20: Extensions to Linear Models</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 3 - Machine Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_21_OOP/topic_21_OOP_playing_cards_SG.html">Topic 21: Object-Oriented Programming</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_22_linear_algebra/topic_22_linear_algebra_SG.html">Topic 22: Linear Algebra</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_23_calculus_gradient_descent/topic_23_gradient_descent_SG.html">Topic 23: Cost Functions and Gradient Descent</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_24_regularization/topic_24_Regularization_Ridge_Lasso_v2_SG.html">Topic 24: Feature Selection &amp; Regularization (Ridge and Lasso Regression)</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_25_logistic_regression/topic_25_pt1_LogisticRegression_titanic-v2-SG.html">Topic 25-Pt 1: Intro to Logistic Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_25_logistic_regression/topic_25_pt2_LogisticRegression_titanic-v2-SG.html">Topic 25-Part 2: Evaluating Classifiers, Dealing with Class Imbalance, and <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code></a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_27_KNN/Topic_27_KNN_with_pipelines_with_lab_v3_SG.html">Topic 27: K-Nearest Neighbors<br/> +Topic 32: Pipelines</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_29_decision_trees/topic_29_decision_trees_v2_titanic-SG.html">Topic 29: Decision Trees</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_30_ensemble_methods/topic_30_ensemble_methods-SG.html">Topic 30: Ensemble Methods</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_31_support_vector_machines/topic_31_SupportVectorMachines_SG.html">Topic 31: Support Vector Machines</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 4 - Advanced ML &amp; Time Series</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_4/topic_33_pca/topic_33_PCA_SG.html">Topic 33: Principal Component Analysis</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_4/topic_34_clustering/topic_34_Kmeans_clustering_v3_SG.html">Topic 34: Clustering</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_4/topic_35-36_using_databricks_for_pyspark/using_databricks_for_pyspark.html">How to Use Databricks for PySpark Canvas Material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_4/topic_36_recommendation_systems/topic_36_Recommendation_Systems_with_Surprise.html">Topic 36: Recommendation Systems</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_4/topic_37_intro_to_time_series/topic_37_intro_to_time_series_crime_v3-SG.html">Topic 37: Intro to Time Series</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_4/topic_38_time_series_models/topic_38-time_series_models_v3_SG.html">Topic 38: Time Series Models</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_4/topic_39_NLP/topic_39_NLP_finding_trump_v3_SG.html">Topic 39: Natural Language Processing + Topic 28: Bayesian Classification</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_4/topic_40-41_neural_networks/topic_40-41_Artificial_Neural_Networks_v1_SG.html">Topic 40-41: Artificial Neural Networks</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_4/topic_42_tuning_neural_networks/topic_42_tuning_ANNs_with_deep_NLP_v1_SG.html">Topic 42 - Tuning Neural Networks + Deep NLP</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_4/topic_43_AWS/topic_43_operationalizing_code_AWS_SG.html">Topic 43: Operationalizing Code &amp; AWS</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 5 - Capstone &amp; Bonus Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_5/Capstone_Kickoff.html">Capstone Kickoff!</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_5/APIs/working_with_apis.html">Working with APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_5/developing_app_functions/developing-streamlit-app-functions_SG.html">Developing Streamlit App Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_5/tableau/tableau_fundamentals_2021-SG.html">Tableau Fundamentals</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_5/Bonus%20Notebooks/plotly_visuals.html">Plotly Question</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/master?urlpath=tree/Phase_2/topic_15_ANOVA/central-lecturer-repo/ds-anova-main/chi_squared_testing.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/blob/master/Phase_2/topic_15_ANOVA/central-lecturer-repo/ds-anova-main/chi_squared_testing.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/issues/new?title=Issue%20on%20page%20%2FPhase_2/topic_15_ANOVA/central-lecturer-repo/ds-anova-main/chi_squared_testing.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../_sources/Phase_2/topic_15_ANOVA/central-lecturer-repo/ds-anova-main/chi_squared_testing.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>\chi^2 Testing in Python</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-in-the-data">Reading in the Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exploration">Exploration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#an-initial-question">An Initial Question</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-scipy-stats-contingency-chi2-contingency">Using <code class="docutils literal notranslate"><span class="pre">scipy.stats.contingency.chi2_contingency()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-exploration">Further Exploration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#searching-systematically">Searching Systematically</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="chi-2-testing-in-python">
+<h1><span class="math notranslate nohighlight">\(\chi^2\)</span> Testing in Python<a class="headerlink" href="#chi-2-testing-in-python" title="Permalink to this heading">#</a></h1>
+<p>What is <span class="math notranslate nohighlight">\(\chi^2\)</span> testing and how can we do it in Python?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">stats</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>A <span class="math notranslate nohighlight">\(\chi^2\)</span> test is a kind of hypothesis test that is appropriate for categorical data. Generally speaking, the null hypothesis will be that there is no difference between groups with respect to some variable of interest. For example, below we’ll be looking at responses to a survey about comma use and other fine points of English grammar. Besides the answers to the questions on the survey themselves, we also have access to other information about the respondents, such as their sexes and levels of education.</p>
+<p>So questions like:</p>
+<ul class="simple">
+<li><p>Do men and women have different beliefs about the grammatical correctness of the Oxford comma? or</p></li>
+<li><p>Is advanced collegiate education associated with wondering whether ‘data’ is singular or plural?</p></li>
+</ul>
+<p>are the sort of question for which a <span class="math notranslate nohighlight">\(\chi^2\)</span> test might be useful.</p>
+<section id="reading-in-the-data">
+<h2>Reading in the Data<a class="headerlink" href="#reading-in-the-data" title="Permalink to this heading">#</a></h2>
+<p>The dataset below comes from <a class="reference external" href="http://fivethirtyeight.com">fivethirtyeight.com</a>. It records the results of a survey about English grammar.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">commas</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;comma-survey.csv&#39;</span><span class="p">)</span>
+<span class="n">commas</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>RespondentID</th>
+      <th>In your opinion, which sentence is more gramatically correct?</th>
+      <th>Prior to reading about it above, had you heard of the serial (or Oxford) comma?</th>
+      <th>How much, if at all, do you care about the use (or lack thereof) of the serial (or Oxford) comma in grammar?</th>
+      <th>How would you write the following sentence?</th>
+      <th>When faced with using the word "data", have you ever spent time considering if the word was a singular or plural noun?</th>
+      <th>How much, if at all, do you care about the debate over the use of the word "data" as a singluar or plural noun?</th>
+      <th>In your opinion, how important or unimportant is proper use of grammar?</th>
+      <th>Gender</th>
+      <th>Age</th>
+      <th>Household Income</th>
+      <th>Education</th>
+      <th>Location (Census Region)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3292953864</td>
+      <td>It's important for a person to be honest, kind...</td>
+      <td>Yes</td>
+      <td>Some</td>
+      <td>Some experts say it's important to drink milk,...</td>
+      <td>No</td>
+      <td>Not much</td>
+      <td>Somewhat important</td>
+      <td>Male</td>
+      <td>30-44</td>
+      <td>$50,000 - $99,999</td>
+      <td>Bachelor degree</td>
+      <td>South Atlantic</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>3292950324</td>
+      <td>It's important for a person to be honest, kind...</td>
+      <td>No</td>
+      <td>Not much</td>
+      <td>Some experts say it's important to drink milk,...</td>
+      <td>No</td>
+      <td>Not much</td>
+      <td>Somewhat unimportant</td>
+      <td>Male</td>
+      <td>30-44</td>
+      <td>$50,000 - $99,999</td>
+      <td>Graduate degree</td>
+      <td>Mountain</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3292942669</td>
+      <td>It's important for a person to be honest, kind...</td>
+      <td>Yes</td>
+      <td>Some</td>
+      <td>Some experts say it's important to drink milk,...</td>
+      <td>Yes</td>
+      <td>Not at all</td>
+      <td>Very important</td>
+      <td>Male</td>
+      <td>30-44</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>East North Central</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3292932796</td>
+      <td>It's important for a person to be honest, kind...</td>
+      <td>Yes</td>
+      <td>Some</td>
+      <td>Some experts say it's important to drink milk,...</td>
+      <td>No</td>
+      <td>Some</td>
+      <td>Somewhat important</td>
+      <td>Male</td>
+      <td>18-29</td>
+      <td>NaN</td>
+      <td>Less than high school degree</td>
+      <td>Middle Atlantic</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>3292932522</td>
+      <td>It's important for a person to be honest, kind...</td>
+      <td>No</td>
+      <td>Not much</td>
+      <td>Some experts say it's important to drink milk,...</td>
+      <td>No</td>
+      <td>Not much</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="exploration">
+<h2>Exploration<a class="headerlink" href="#exploration" title="Permalink to this heading">#</a></h2>
+<p>The first question on the survey is about whether a sentence is more grammatically correct with or without the Oxford comma (roughly, the optional comma before the ‘and’ in a list of several things).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">commas</span><span class="p">[</span><span class="s1">&#39;In your opinion, which sentence is more gramatically correct?&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>It&#39;s important for a person to be honest, kind, and loyal.    641
+It&#39;s important for a person to be honest, kind and loyal.     488
+Name: In your opinion, which sentence is more gramatically correct?, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="an-initial-question">
+<h2>An Initial Question<a class="headerlink" href="#an-initial-question" title="Permalink to this heading">#</a></h2>
+<p>Suppose we were interested in whether there were some correlation between one’s level of education and one’s response to the above question.</p>
+<p>What we need to do first is to collect numbers: How did folks from each of the different education levels respond to the question about the Oxford comma?</p>
+<p>Let’s look at the different education levels:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">commas</span><span class="p">[</span><span class="s1">&#39;Education&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Bachelor degree                     344
+Some college or Associate degree    295
+Graduate degree                     276
+High school degree                  100
+Less than high school degree         11
+Name: Education, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>What we want is a table for how people, as divided into these education levels, responded to the Oxford comma question.</p>
+<p>There are various ways we might go about assembling the table. One natural way would be to make use of the <code class="docutils literal notranslate"><span class="pre">.groupby()</span></code> method of <code class="docutils literal notranslate"><span class="pre">pandas</span></code> DataFrame objects. Here’s another:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Here we&#39;ll just filter the data frame according to the</span>
+<span class="c1"># values we&#39;re interested in, and then just measure the</span>
+<span class="c1"># length of the resulting filtered data frame.</span>
+
+<span class="n">table</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">commas</span><span class="p">[</span><span class="s1">&#39;Education&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">):</span>
+    <span class="n">table</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">commas</span><span class="p">[(</span><span class="n">commas</span><span class="p">[</span><span class="s1">&#39;In your opinion, which sentence is &#39;</span>\
+                                       <span class="s1">&#39;more gramatically correct?&#39;</span><span class="p">]</span> <span class="o">==</span>\
+                                        <span class="s1">&#39;It</span><span class="se">\&#39;</span><span class="s1">s important for a person to be &#39;</span>\
+                                <span class="s1">&#39;honest, kind, and loyal.&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">commas</span><span class="p">[</span><span class="s1">&#39;Education&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">value</span><span class="p">)])</span>
+    <span class="n">table</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">commas</span><span class="p">[(</span><span class="n">commas</span><span class="p">[</span><span class="s1">&#39;In your opinion, which sentence is &#39;</span>\
+                                       <span class="s1">&#39;more gramatically correct?&#39;</span><span class="p">]</span> <span class="o">==</span>\
+                                        <span class="s1">&#39;It</span><span class="se">\&#39;</span><span class="s1">s important for a person to be &#39;</span>\
+                                <span class="s1">&#39;honest, kind and loyal.&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">commas</span><span class="p">[</span><span class="s1">&#39;Education&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">value</span><span class="p">)])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[199., 157., 172.,  52.,   8.],
+       [145., 138., 104.,  48.,   3.]])
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="using-scipy-stats-contingency-chi2-contingency">
+<h2>Using <code class="docutils literal notranslate"><span class="pre">scipy.stats.contingency.chi2_contingency()</span></code><a class="headerlink" href="#using-scipy-stats-contingency-chi2-contingency" title="Permalink to this heading">#</a></h2>
+<p>We can use Scipy to conduct a <span class="math notranslate nohighlight">\(\chi^2\)</span> test. But before we rely on the software, let’s think about what we’re measuring here.</p>
+<p>Our null hypothesis is that there will be no difference in response to the Oxford comma question among people in the various levels of education. We don’t have equal numbers of people in the different educational levels, notice, but the null hypothesis will say that there will be equal <em>proportions</em> of Oxford comma favorers and Oxford comma disfavorers among the various levels.</p>
+<p>There are five educational levels, so that means four degrees of freedom.</p>
+<p>The Scipy function we’re using returns a quadruple: The <span class="math notranslate nohighlight">\(\chi^2\)</span> statistic itself, the <span class="math notranslate nohighlight">\(p\)</span>-value, the number of degrees of freedom, and a table of expected numbers given the null hypothesis. (Yes, I like the Oxford comma.)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">chisq_test</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">contingency</span><span class="o">.</span><span class="n">chi2_contingency</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+<span class="n">chisq_test</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(7.108946212449898,
+ 0.13024170886530348,
+ 4,
+ array([[197.14619883, 169.06432749, 158.1754386 ,  57.30994152,
+           6.30409357],
+        [146.85380117, 125.93567251, 117.8245614 ,  42.69005848,
+           4.69590643]]))
+</pre></div>
+</div>
+</div>
+</div>
+<p>The calculation of the <span class="math notranslate nohighlight">\(\chi^2\)</span> statistic uses the familiar idea of a sum of squared differences between expected and actual values, but we scale each addend (i.e. each squared difference) by the expected value.</p>
+<p>According to Scipy, the value of the <span class="math notranslate nohighlight">\(\chi^2\)</span> statistic given these numbers is 7.109. Let’s see if we can recreate this figure manually:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We&#39;ll compute the weighted sum of squared differences.</span>
+
+<span class="n">manual_chisq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">divide</span><span class="p">((</span><span class="n">table</span> <span class="o">-</span> <span class="n">chisq_test</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">chisq_test</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">manual_chisq</span> <span class="o">==</span> <span class="n">chisq_test</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="further-exploration">
+<h2>Further Exploration<a class="headerlink" href="#further-exploration" title="Permalink to this heading">#</a></h2>
+<p>Great! That checks out. But our <span class="math notranslate nohighlight">\(p\)</span>-value is 13%, so the division by educational level that we see on the Oxford comma question is not particularly surprising.</p>
+<p>Let’s see if we can find something more interesting.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Maybe there&#39;s an interesting difference in answers</span>
+<span class="c1"># to this question according to sex?</span>
+
+<span class="n">table2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">commas</span><span class="p">[</span><span class="s1">&#39;Gender&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">):</span>
+    <span class="n">table2</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">commas</span><span class="p">[(</span><span class="n">commas</span><span class="p">[</span><span class="s1">&#39;In your opinion, which sentence is &#39;</span>\
+                                       <span class="s1">&#39;more gramatically correct?&#39;</span><span class="p">]</span> <span class="o">==</span>\
+                                        <span class="s1">&#39;It</span><span class="se">\&#39;</span><span class="s1">s important for a person to be &#39;</span>\
+                                <span class="s1">&#39;honest, kind, and loyal.&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">commas</span><span class="p">[</span><span class="s1">&#39;Gender&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">value</span><span class="p">)])</span>
+    <span class="n">table2</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">commas</span><span class="p">[(</span><span class="n">commas</span><span class="p">[</span><span class="s1">&#39;In your opinion, which sentence is &#39;</span>\
+                                       <span class="s1">&#39;more gramatically correct?&#39;</span><span class="p">]</span> <span class="o">==</span>\
+                                        <span class="s1">&#39;It</span><span class="se">\&#39;</span><span class="s1">s important for a person to be &#39;</span>\
+                                <span class="s1">&#39;honest, kind and loyal.&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">commas</span><span class="p">[</span><span class="s1">&#39;Gender&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">value</span><span class="p">)])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[314., 280.],
+       [234., 209.]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stats</span><span class="o">.</span><span class="n">contingency</span><span class="o">.</span><span class="n">chi2_contingency</span><span class="p">(</span><span class="n">table2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.002502344351150657,
+ 0.9601037108628604,
+ 1,
+ array([[313.89778206, 280.10221794],
+        [234.10221794, 208.89778206]]))
+</pre></div>
+</div>
+</div>
+</div>
+<p>This test yielded a <span class="math notranslate nohighlight">\(p\)</span>-value of 96%! No interesting difference there.</p>
+<p>Let’s try one more before we move to a more systematic search. Instead of looking across educational levels or the sexes for interesting differences in response to the Oxford comma question, we’ll try looking across <em>ages</em>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">commas</span><span class="o">.</span><span class="n">Age</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>45-60    290
+&gt; 60     272
+30-44    254
+18-29    221
+Name: Age, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">commas</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">):</span>
+    <span class="n">table3</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">commas</span><span class="p">[(</span><span class="n">commas</span><span class="p">[</span><span class="s1">&#39;In your opinion, which sentence is &#39;</span>\
+                                       <span class="s1">&#39;more gramatically correct?&#39;</span><span class="p">]</span> <span class="o">==</span>\
+                                        <span class="s1">&#39;It</span><span class="se">\&#39;</span><span class="s1">s important for a person to be &#39;</span>\
+                                <span class="s1">&#39;honest, kind, and loyal.&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">commas</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">value</span><span class="p">)])</span>
+    <span class="n">table3</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">commas</span><span class="p">[(</span><span class="n">commas</span><span class="p">[</span><span class="s1">&#39;In your opinion, which sentence is &#39;</span>\
+                                       <span class="s1">&#39;more gramatically correct?&#39;</span><span class="p">]</span> <span class="o">==</span>\
+                                        <span class="s1">&#39;It</span><span class="se">\&#39;</span><span class="s1">s important for a person to be &#39;</span>\
+                                <span class="s1">&#39;honest, kind and loyal.&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">commas</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">value</span><span class="p">)])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table3</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[142., 123., 155., 174.],
+       [148., 149.,  99.,  47.]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stats</span><span class="o">.</span><span class="n">contingency</span><span class="o">.</span><span class="n">chi2_contingency</span><span class="p">(</span><span class="n">table3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(67.37895834554394,
+ 1.553656961877948e-14,
+ 3,
+ array([[166.11378978, 155.80327869, 145.4927676 , 126.59016393],
+        [123.88621022, 116.19672131, 108.5072324 ,  94.40983607]]))
+</pre></div>
+</div>
+</div>
+</div>
+<p>Wow! Here we’ve found a <span class="math notranslate nohighlight">\(p\)</span>-value of 1.554e-14! That is strong evidence of a genuine correlation between age and Oxford comma preference. Comparing the columns of <code class="docutils literal notranslate"><span class="pre">table3</span></code> with the value counts of the Age column in <code class="docutils literal notranslate"><span class="pre">commas</span></code>, we can see that younger folks tend to think that the sentence with the Oxford comma is more grammatically correct. By contrast, older folks are more evenly split, and in fact there is a small majority in the other direction, voting for the sentence without the Oxford comma.</p>
+<p>If ours is to reason why, we might speculate that it was once common for English teachers and grammarians to advocate writing without the Oxford comma, but that it has since become common to use the comma.</p>
+</section>
+<section id="searching-systematically">
+<h2>Searching Systematically<a class="headerlink" href="#searching-systematically" title="Permalink to this heading">#</a></h2>
+<p>Instead of trying things blindly, we might think about checking <em>all</em> possible correlations. Now we need to be careful about this, because by doing this sort of work we’re opening ourselves up to charges of <span class="math notranslate nohighlight">\(p\)</span>-hacking or data dredging, i.e. conducting a large number of tests or otherwise manipulating our data so that we find some low <span class="math notranslate nohighlight">\(p\)</span>-value when in fact the associated correlation is spurious.</p>
+<p>The difficulty, to put it simply, is that, the more tests we perform, the more likely it will be to find an unlikely result. One way of dealing with this is by using the Bonferroni Correction, which scales critical testing thresholds by the number of tests run.</p>
+<p>Of course, if we get <span class="math notranslate nohighlight">\(p\)</span>-values as small as we got last time, this correction won’t make much difference (as long as we’re not running billions or trillions of tests), but this is something we should keep in mind. And it would be a good idea to count how many tests we’ll be performing with our current dataset.</p>
+<p>For now, let’s consider the following function, which will construct a table for <span class="math notranslate nohighlight">\(\chi^2\)</span> analysis given any two (categorical) columns from a <code class="docutils literal notranslate"><span class="pre">pandas</span></code> DataFrame:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">chisq_table</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">col1</span><span class="p">,</span> <span class="n">col2</span><span class="p">):</span>
+    
+    <span class="c1"># Build a table with the right dimensions and initialize</span>
+    <span class="c1"># counts to 0</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col2</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()),</span>
+                      <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col1</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())))</span>
+    
+    <span class="c1"># Filter the DataFrame down to the relevant rows and then</span>
+    <span class="c1"># fill the table with the length of each filtered DataFrame</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col2</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">idx2</span><span class="p">,</span> <span class="n">value2</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col1</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">):</span>
+            <span class="n">table</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="n">idx2</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="n">col2</span><span class="p">]</span> <span class="o">==</span> <span class="n">value</span><span class="p">)</span>\
+                                      <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col1</span><span class="p">]</span> <span class="o">==</span> <span class="n">value2</span><span class="p">)])</span>
+            
+    <span class="k">return</span> <span class="n">table</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s see if our function reproduces the first table we generated above:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">chisq_table</span><span class="p">(</span><span class="n">commas</span><span class="p">,</span> <span class="s1">&#39;Education&#39;</span><span class="p">,</span>\
+           <span class="s1">&#39;In your opinion, which sentence is more gramatically correct?&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[199., 157., 172.,  52.,   8.],
+       [145., 138., 104.,  48.,   3.]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Great! Looks like it works. Now we can try applying this function to <em>all</em> possible pairs of columns from our <code class="docutils literal notranslate"><span class="pre">commas</span></code> DataFrame. Again, we’ll be sure to count the number of tests here so we remember to take <span class="math notranslate nohighlight">\(p\)</span>-values with a grain of salt (especially the ones that are low but not very low).</p>
+<p>We’ll go ahead and assume that the RespondentID column is not relevant here. (And besides, it would force the creation of some very large tables!)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">commas</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;RespondentID&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;In your opinion, which sentence is more gramatically correct?&#39;,
+       &#39;Prior to reading about it above, had you heard of the serial (or Oxford) comma?&#39;,
+       &#39;How much, if at all, do you care about the use (or lack thereof) of the serial (or Oxford) comma in grammar?&#39;,
+       &#39;How would you write the following sentence?&#39;,
+       &#39;When faced with using the word &quot;data&quot;, have you ever spent time considering if the word was a singular or plural noun?&#39;,
+       &#39;How much, if at all, do you care about the debate over the use of the word &quot;data&quot; as a singluar or plural noun?&#39;,
+       &#39;In your opinion, how important or unimportant is proper use of grammar?&#39;,
+       &#39;Gender&#39;, &#39;Age&#39;, &#39;Household Income&#39;, &#39;Education&#39;,
+       &#39;Location (Census Region)&#39;],
+      dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Everything else looks usable! We’ll collect the <span class="math notranslate nohighlight">\(p\)</span>-values of all the tests we run:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pvals</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">commas</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;RespondentID&#39;</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">col2</span> <span class="ow">in</span> <span class="n">commas</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;RespondentID&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">col</span> <span class="o">!=</span> <span class="n">col2</span><span class="p">:</span>
+            <span class="n">pvals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">contingency</span><span class="o">.</span><span class="n">chi2_contingency</span>\
+                         <span class="p">(</span><span class="n">chisq_table</span><span class="p">(</span><span class="n">commas</span><span class="p">,</span> <span class="n">col2</span><span class="p">,</span> <span class="n">col</span><span class="p">))[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pvals</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[2.1359199588922637e-10,
+ 2.6128514366119275e-23,
+ 0.43745396680738136,
+ 0.3377039287679846,
+ 0.24447447900218103,
+ 0.2707945772193671,
+ 0.9601037108628604,
+ 1.553656961877948e-14,
+ 0.02507153894449127,
+ 0.13024170886530348,
+ 0.01656656697760126,
+ 2.1359199588922637e-10,
+ 1.7986776086368326e-18,
+ 0.011296356366072539,
+ 2.9992859525216564e-08,
+ 0.00036933093635573407,
+ 0.014041252848884151,
+ 0.6289453540554488,
+ 3.70563898184614e-14,
+ 0.8325492068869516,
+ 3.3147029057493167e-05,
+ 0.11146883471712238,
+ 2.6128514366119275e-23,
+ 1.7986776086368326e-18,
+ 0.023000236181127023,
+ 3.083593576094446e-08,
+ 2.2927558393598515e-61,
+ 9.759883174772929e-24,
+ 0.0009441828426169297,
+ 0.38375571770738026,
+ 0.06978767870690113,
+ 0.008056369776353264,
+ 0.3405343499710523,
+ 0.43745396680738136,
+ 0.011296356366072539,
+ 0.023000236181127023,
+ 3.3287750238865536e-18,
+ 5.898915155380134e-12,
+ 0.47372320015969493,
+ 0.10268712155789393,
+ 0.0014516598512929596,
+ 0.6751907148766849,
+ 2.3017061937933766e-06,
+ 0.7219433897679408,
+ 0.3377039287679846,
+ 2.9992859525216564e-08,
+ 3.083593576094446e-08,
+ 3.3287750238865775e-18,
+ 3.165846783365897e-32,
+ 2.4872182459516427e-05,
+ 0.9765980118996199,
+ 0.5838738534714951,
+ 0.6169310639423792,
+ 3.3493633602644437e-07,
+ 0.11613708301955349,
+ 0.24447447900218103,
+ 0.000369330936355733,
+ 2.292755839359917e-61,
+ 5.898915155380134e-12,
+ 3.165846783365897e-32,
+ 6.564846719273692e-15,
+ 0.007206440287688862,
+ 0.3987363187925883,
+ 0.08778689754429672,
+ 0.010941721063865376,
+ 0.9031376557735719,
+ 0.2707945772193671,
+ 0.014041252848884142,
+ 9.759883174773e-24,
+ 0.47372320015969493,
+ 2.487218245951647e-05,
+ 6.5648467192736445e-15,
+ 0.0030640366610387225,
+ 0.01952045453656809,
+ 0.1848361620349747,
+ 2.2708532920571933e-05,
+ 0.9446239032407809,
+ 0.9601037108628604,
+ 0.6289453540554488,
+ 0.0009441828426169297,
+ 0.10268712155789393,
+ 0.9765980118996199,
+ 0.007206440287688862,
+ 0.0030640366610387225,
+ 0.9379864452302957,
+ 0.10248223699223048,
+ 0.30130985039321456,
+ 0.5062178042363672,
+ 1.553656961877948e-14,
+ 3.705638981846168e-14,
+ 0.38375571770738026,
+ 0.0014516598512929581,
+ 0.5838738534714951,
+ 0.39873631879258825,
+ 0.01952045453656808,
+ 0.9379864452302956,
+ 3.3551988931530774e-13,
+ 1.3513467294229284e-09,
+ 0.2702260840104164,
+ 0.025071538944491285,
+ 0.8325492068869517,
+ 0.06978767870690103,
+ 0.6751907148766849,
+ 0.6169310639423791,
+ 0.08778689754429679,
+ 0.1848361620349747,
+ 0.10248223699223048,
+ 3.3551988931530774e-13,
+ 9.255410522737304e-12,
+ 0.7586872411533564,
+ 0.13024170886530356,
+ 3.314702905749321e-05,
+ 0.008056369776353236,
+ 2.3017061937933766e-06,
+ 3.349363360264456e-07,
+ 0.010941721063865376,
+ 2.2708532920571933e-05,
+ 0.30130985039321456,
+ 1.3513467294229284e-09,
+ 9.255410522737304e-12,
+ 0.38792353827329024,
+ 0.01656656697760126,
+ 0.11146883471712239,
+ 0.3405343499710523,
+ 0.7219433897679408,
+ 0.11613708301955349,
+ 0.9031376557735719,
+ 0.9446239032407812,
+ 0.5062178042363672,
+ 0.2702260840104164,
+ 0.7586872411533561,
+ 0.38792353827329024]
+</pre></div>
+</div>
+</div>
+</div>
+<p>So how many tests did we run?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">pvals</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>132
+</pre></div>
+</div>
+</div>
+</div>
+<p>If we started with a typical Type I Error threshold of 5% and then added in the Bonferroni Correction, we’d be looking for <span class="math notranslate nohighlight">\(p\)</span>-values less than:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mf">0.05</span><span class="o">/</span><span class="mi">132</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0003787878787878788
+</pre></div>
+</div>
+</div>
+</div>
+<p>This would move some of the results above from “significant” to “insignificant”. But also some significance results would be unaffected, including our finding about the correlation between age and Oxford comma use.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Phase_2/topic_15_ANOVA/central-lecturer-repo/ds-anova-main"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-in-the-data">Reading in the Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exploration">Exploration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#an-initial-question">An Initial Question</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-scipy-stats-contingency-chi2-contingency">Using <code class="docutils literal notranslate"><span class="pre">scipy.stats.contingency.chi2_contingency()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-exploration">Further Exploration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#searching-systematically">Searching Systematically</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By James Irving, PhD
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

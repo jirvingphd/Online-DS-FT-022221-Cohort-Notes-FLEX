@@ -1,0 +1,4228 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Topic 37: Intro to Time Series &#8212; Data Science Curriculum</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Phase_4/topic_37_intro_to_time_series/topic_37_intro_to_time_series_crime_v3-SG';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Topic 38: Time Series Models" href="../topic_38_time_series_models/topic_38-time_series_models_v3_SG.html" />
+    <link rel="prev" title="Topic 36: Recommendation Systems" href="../topic_36_recommendation_systems/topic_36_Recommendation_Systems_with_Surprise.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/flatironschool_banner.jpg" class="logo__image only-light" alt="Data Science Curriculum - Home"/>
+    <script>document.write(`<img src="../../_static/flatironschool_banner.jpg" class="logo__image only-dark" alt="Data Science Curriculum - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Data Science Curriculum
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 1 - Python &amp; Data Fundamentals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_01_getting_started/topic_01_getting_started.html">Topic 1: Getting Started with Data Science</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_02_bash_git/topic_02_bash_and_git.html">Topic 02:  Bash and Git</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_03_control_flow_functions/topic_03_control_flow_and_functions.html">Topic 03: Control Flow, Functions, and Statistics</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_04_python_libraries/topic_04_intro_to_libraries_numpy_SG.html">Topic 04-Part 1: Python Libraries &amp; NumPy</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_04_python_libraries/topic_04_pt-2_brief_intro_to_pandas-SG.html">Topic 04-Part 2: Brief Intro to Pandas with Doctor Who</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_05_data_cleaning_in_pandas/topic_05_Data_Cleaning_in_Pandas.html">Topic 05: Data Cleaning in Pandas</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_06_data_visualization/topic_06_visualizations_heroes_project_SG.html">Topic 06:  Data Visualizations</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_07_SQL_and_relational_databases/topic_07_SQL_and_relational_databases_SG.html">TOPIC 07: SQL DATABASES</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_08_noSQL_databases/topic_08_mongodb-SG.html">Topic 08: NoSQL Databases</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_09_json_and_apis/topic_09_json-api-SG.html">Topic 09: Using APIs and JSON Data</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_10_webscraping/topic_10_SG_HTML_CSS_web_scraping.html">Topic 10: HTML, CSS, &amp; Web Scraping</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 2 - Statistics &amp; Regression</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_11_probability_and_combinatorics/topic_11_playlist_probabilities-SG.html">Topic 11 - Intro to Combinatorics &amp; Probability</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_12_statistical_distributions/topic-12-distributions-with-movies-sg.html">Exploring Distributions with Movies Data</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_13_central_limit_theorem/topic_13_central_limit_theorem_SG.html">Topic 13: Central Limit Theorem</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_14_hypothesis_testing/topic_14_hypothesis_testing-SG.html">Topic 14: Hypothesis Testing -  T-Tests</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_15_ANOVA/topic_15_ANOVA_with_neuro_data-SG.html">Topic 15: ANOVAs &amp; Statistical Power with  Neuro Data</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_16_AB_testing/topic_16_AB_testing_with_movies-SG.html">Topic 16: Practicing AB Testing with Movies</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_17_bayesian_statistics/topic_17_bayesian_statistics-SG.html">Topic 17: Bayesian Statistics</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_18_linear_regression/topic_18_intro_to_linear_regression_SG.html">Topic 18: Intro to Linear Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_19_part1_multiple_regression/topic_19_Multiple_Regression_v2-SG.html">Topic 19: Multiple Linear Regression</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_19_part2_model_validation/topic_19_part_2_Multiple_Regression_v2-SG.html">Topic 19 Part 2: Feature Selection &amp; Model Validation</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_20_extensions_linear_models/topic_20_extensions_to_linear_models_SG.html">Topic 20: Extensions to Linear Models</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 3 - Machine Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_21_OOP/topic_21_OOP_playing_cards_SG.html">Topic 21: Object-Oriented Programming</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_22_linear_algebra/topic_22_linear_algebra_SG.html">Topic 22: Linear Algebra</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_23_calculus_gradient_descent/topic_23_gradient_descent_SG.html">Topic 23: Cost Functions and Gradient Descent</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_24_regularization/topic_24_Regularization_Ridge_Lasso_v2_SG.html">Topic 24: Feature Selection &amp; Regularization (Ridge and Lasso Regression)</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_25_logistic_regression/topic_25_pt1_LogisticRegression_titanic-v2-SG.html">Topic 25-Pt 1: Intro to Logistic Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_25_logistic_regression/topic_25_pt2_LogisticRegression_titanic-v2-SG.html">Topic 25-Part 2: Evaluating Classifiers, Dealing with Class Imbalance, and <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code></a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_27_KNN/Topic_27_KNN_with_pipelines_with_lab_v3_SG.html">Topic 27: K-Nearest Neighbors<br/> +Topic 32: Pipelines</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_29_decision_trees/topic_29_decision_trees_v2_titanic-SG.html">Topic 29: Decision Trees</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_30_ensemble_methods/topic_30_ensemble_methods-SG.html">Topic 30: Ensemble Methods</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_31_support_vector_machines/topic_31_SupportVectorMachines_SG.html">Topic 31: Support Vector Machines</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 4 - Advanced ML &amp; Time Series</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../topic_33_pca/topic_33_PCA_SG.html">Topic 33: Principal Component Analysis</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_34_clustering/topic_34_Kmeans_clustering_v3_SG.html">Topic 34: Clustering</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_35-36_using_databricks_for_pyspark/using_databricks_for_pyspark.html">How to Use Databricks for PySpark Canvas Material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topic_36_recommendation_systems/topic_36_Recommendation_Systems_with_Surprise.html">Topic 36: Recommendation Systems</a></li>
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Topic 37: Intro to Time Series</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_38_time_series_models/topic_38-time_series_models_v3_SG.html">Topic 38: Time Series Models</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_39_NLP/topic_39_NLP_finding_trump_v3_SG.html">Topic 39: Natural Language Processing + Topic 28: Bayesian Classification</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_40-41_neural_networks/topic_40-41_Artificial_Neural_Networks_v1_SG.html">Topic 40-41: Artificial Neural Networks</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_42_tuning_neural_networks/topic_42_tuning_ANNs_with_deep_NLP_v1_SG.html">Topic 42 - Tuning Neural Networks + Deep NLP</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_43_AWS/topic_43_operationalizing_code_AWS_SG.html">Topic 43: Operationalizing Code &amp; AWS</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 5 - Capstone &amp; Bonus Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/Capstone_Kickoff.html">Capstone Kickoff!</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/APIs/working_with_apis.html">Working with APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/developing_app_functions/developing-streamlit-app-functions_SG.html">Developing Streamlit App Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/tableau/tableau_fundamentals_2021-SG.html">Tableau Fundamentals</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/Bonus%20Notebooks/plotly_visuals.html">Plotly Question</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/master?urlpath=tree/Phase_4/topic_37_intro_to_time_series/topic_37_intro_to_time_series_crime_v3-SG.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/blob/master/Phase_4/topic_37_intro_to_time_series/topic_37_intro_to_time_series_crime_v3-SG.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/issues/new?title=Issue%20on%20page%20%2FPhase_4/topic_37_intro_to_time_series/topic_37_intro_to_time_series_crime_v3-SG.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/Phase_4/topic_37_intro_to_time_series/topic_37_intro_to_time_series_crime_v3-SG.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Topic 37: Intro to Time Series</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Topic 37: Intro to Time Series</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#questions">Questions?</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#intro-to-time-series">Intro to Time Series</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#working-with-time-series">Working with Time Series</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-time-series-from-a-dataframe">Creating a Time Series from a DataFrame</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-is-from-baltimore-s-open-data-portal">Data is from Baltimore’s Open-Data Portal</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preparing-data-for-time-series-visualization">Preparing Data for Time Series Visualization</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-do-we-notice-about-the-index">What do we notice about the index?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-time-series">Visualizing Time Series</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#q-what-went-wrong-what-are-we-looking-at">Q: What went wrong? What are we looking at?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#time-series-frequencies-resampling">Time Series Frequencies &amp; Resampling</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#q-it-worked-but-whats-the-issue">Q: It worked! But whats the issue?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slicing-with-time-series">Slicing With Time Series</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#much-better-sort-of-but-whats-the-issue-now">Much better! sort of… but whats the issue now?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#time-series-frequencies">Time series Frequencies</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-frequency-aliases">Pandas Frequency Aliases</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#compare-resampled-ts">Compare Resampled ts</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualize-all-crimes-as-d-freq">Visualize all CRIMES as “D” Freq</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-dictionaries-for-time-series-preprocessing">Using Dictionaries for TIme Series preprocessing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#now-that-we-have-the-same-frequency-for-each-crime-series-make-them-into-a-dataframe">Now that we have the same frequency for each crime series, make them into a dataframe</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualize-all-ts-with-the-differnet-requency-codes">Visualize all ts with the differnet requency codes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dealing-with-null-values">Dealing with Null Values</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#q-what-do-we-notice-about-our-null-values-where-are-they">Q: what do we notice about our null values? Where are they?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#time-series-trends">Time Series Trends</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-trends">Types of Trends</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stationarity">Stationarity</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#detecting-trends">Detecting Trends</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#augmented-dickey-fuller-test-for-stationarity">Augmented Dickey Fuller Test for Stationarity</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#removing-trends">Removing Trends</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#trend-removal-methods">Trend Removal Methods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#q-what-do-we-notice-what-methods-achieved-stationarity">Q: What do we notice? What methods achieved stationarity?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#seasonal-decomposition">Seasonal Decomposition</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#checking-which-components-are-stationary">Checking which components are stationary</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#appendix">APPENDIX</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#date-str-formatting">Date Str Formatting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#attempting-using-grouper-like-in-lab-but-not-working">Attempting Using Grouper like in lab, but not working</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="topic-37-intro-to-time-series">
+<h1>Topic 37: Intro to Time Series<a class="headerlink" href="#topic-37-intro-to-time-series" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p>05/27/21</p></li>
+<li><p>onl01-dtsc-ft-022221</p></li>
+</ul>
+<section id="learning-objectives">
+<h2>Learning Objectives:<a class="headerlink" href="#learning-objectives" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Learn how to load in timeseries data into pandas</p></li>
+<li><p>Learn how to plot timeseries in pandas</p></li>
+<li><p>Learn how to resample at different time frequencies</p></li>
+<li><p>Learn about types of time series trends and how to remove them.</p></li>
+<li><p>Learn about seasonal decomposition</p></li>
+<li><p>Prepare a time series dataset to use for modeling next class</p></li>
+</ul>
+</section>
+<section id="questions">
+<h2>Questions?<a class="headerlink" href="#questions" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="intro-to-time-series">
+<h1>Intro to Time Series<a class="headerlink" href="#intro-to-time-series" title="Permalink to this heading">#</a></h1>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html">Pandas Timeseries Documentation</a></p></li>
+<li><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#timeseries-offset-aliases">‘Timeseries Offset Aliases’</a></p></li>
+<li><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#anchored-offsets">Anchored Offsets</a></p></li>
+<li><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Timestamp.html">https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Timestamp.html</a></p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="working-with-time-series">
+<h1>Working with Time Series<a class="headerlink" href="#working-with-time-series" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Import the essentials</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mpl</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span><span class="o">,</span><span class="nn">sys</span>
+
+
+<span class="c1">## Setting figures to timeseries-friendly</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="c1"># sns.set_context(&#39;talk&#39;)</span>
+
+<span class="c1"># import warnings</span>
+<span class="c1"># warnings.filterwarnings(&#39;ignore&#39;)</span>
+
+<span class="c1">## Time Series Tools from statsmodels</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.tsa.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tsa</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Statsmodels version = </span><span class="si">{</span><span class="n">statsmodels</span><span class="o">.</span><span class="n">__version__</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Statsmodels version = 0.12.2
+</pre></div>
+</div>
+</div>
+</div>
+<section id="creating-a-time-series-from-a-dataframe">
+<h2>Creating a Time Series from a DataFrame<a class="headerlink" href="#creating-a-time-series-from-a-dataframe" title="Permalink to this heading">#</a></h2>
+<section id="data-is-from-baltimore-s-open-data-portal">
+<h3>Data is from Baltimore’s Open-Data Portal<a class="headerlink" href="#data-is-from-baltimore-s-open-data-portal" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>New Crime Stats Just downloaded:</p></li>
+<li><p><a class="reference external" href="https://www.baltimorepolice.org/crime-stats/open-data">Baltimore Open Data</a></p>
+<ul>
+<li><p>We Are Using <a class="reference external" href="https://data.baltimorecity.gov/search?q=crime%20data">Part 1 Crime</a>:</p></li>
+<li><p><a class="reference external" href="https://data.baltimorecity.gov/datasets/3eeb0a2cbae94b3e8549a8193717a9e1_0/explore">https://data.baltimorecity.gov/datasets/3eeb0a2cbae94b3e8549a8193717a9e1_0/explore</a></p></li>
+</ul>
+</li>
+<li><p><strong>Note: to save space, I converted the .csv to a .csv.gz using this code</strong></p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">## Read orig csv from Downloads and save .gz vers to local folder</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;/Users/jamesirving/Downloads/Part1_Crime_data.csv&#39;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;baltimore_crime_05-26-21.csv.gz&#39;</span><span class="p">,</span><span class="n">compression</span><span class="o">=</span><span class="s1">&#39;gzip&#39;</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Read in the data</span>
+<span class="n">file</span> <span class="o">=</span> <span class="s1">&#39;baltimore_crime_05-26-21.csv.gz&#39;</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>X</th>
+      <th>Y</th>
+      <th>RowID</th>
+      <th>CrimeDateTime</th>
+      <th>CrimeCode</th>
+      <th>Location</th>
+      <th>Description</th>
+      <th>Inside_Outside</th>
+      <th>Weapon</th>
+      <th>Post</th>
+      <th>District</th>
+      <th>Neighborhood</th>
+      <th>Latitude</th>
+      <th>Longitude</th>
+      <th>GeoLocation</th>
+      <th>Premise</th>
+      <th>VRIName</th>
+      <th>Total_Incidents</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-76.6985</td>
+      <td>39.3324</td>
+      <td>1</td>
+      <td>2021/05/22 14:01:44+00</td>
+      <td>1A</td>
+      <td>4900 LIBERTY HEIGHTS AVE</td>
+      <td>HOMICIDE</td>
+      <td>Outside</td>
+      <td>FIREARM</td>
+      <td>622</td>
+      <td>NORTHWEST</td>
+      <td>HOWARD PARK</td>
+      <td>39.3324</td>
+      <td>-76.6985</td>
+      <td>(39.3324,-76.6985)</td>
+      <td>PARKING LOT</td>
+      <td>NaN</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-76.6755</td>
+      <td>39.2928</td>
+      <td>2</td>
+      <td>2021/05/22 00:01:00+00</td>
+      <td>4D</td>
+      <td>3500 W FRANKLIN ST</td>
+      <td>AGG. ASSAULT</td>
+      <td>O</td>
+      <td>HANDS</td>
+      <td>824</td>
+      <td>SOUTHWEST</td>
+      <td>ALLENDALE</td>
+      <td>39.2928</td>
+      <td>-76.6755</td>
+      <td>(39.2928,-76.6755)</td>
+      <td>STREET</td>
+      <td>NaN</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-76.6552</td>
+      <td>39.2976</td>
+      <td>3</td>
+      <td>2021/05/22 18:11:00+00</td>
+      <td>1A</td>
+      <td>2400 CALVERTON HEIGHTS AVE</td>
+      <td>HOMICIDE</td>
+      <td>Outside</td>
+      <td>FIREARM</td>
+      <td>723</td>
+      <td>WESTERN</td>
+      <td>EVERGREEN LAWN</td>
+      <td>39.2976</td>
+      <td>-76.6552</td>
+      <td>(39.2976,-76.6552)</td>
+      <td>DWELLING</td>
+      <td>NaN</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-76.6064</td>
+      <td>39.2948</td>
+      <td>4</td>
+      <td>2021/05/22 19:44:00+00</td>
+      <td>4E</td>
+      <td>400 ENSOR ST</td>
+      <td>COMMON ASSAULT</td>
+      <td>O</td>
+      <td>NaN</td>
+      <td>324</td>
+      <td>EASTERN</td>
+      <td>OLDTOWN</td>
+      <td>39.2948</td>
+      <td>-76.6064</td>
+      <td>(39.2948,-76.6064)</td>
+      <td>STREET</td>
+      <td>NaN</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-76.5957</td>
+      <td>39.2995</td>
+      <td>5</td>
+      <td>2021/05/22 15:10:00+00</td>
+      <td>4E</td>
+      <td>1600 E MADISON ST</td>
+      <td>COMMON ASSAULT</td>
+      <td>O</td>
+      <td>NaN</td>
+      <td>323</td>
+      <td>EASTERN</td>
+      <td>GAY STREET</td>
+      <td>39.2995</td>
+      <td>-76.5957</td>
+      <td>(39.2995,-76.5957)</td>
+      <td>STREET</td>
+      <td>NaN</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>336768</th>
+      <td>-76.6913</td>
+      <td>39.2896</td>
+      <td>337407</td>
+      <td>1975/06/01 00:00:00+00</td>
+      <td>2A</td>
+      <td>4400 OLD FREDERICK RD</td>
+      <td>RAPE</td>
+      <td>I</td>
+      <td>OTHER</td>
+      <td>822</td>
+      <td>SOUTHWEST</td>
+      <td>UPLANDS</td>
+      <td>39.2896</td>
+      <td>-76.6913</td>
+      <td>(39.2896,-76.6913)</td>
+      <td>OTHER - INSIDE</td>
+      <td>NaN</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>336769</th>
+      <td>-76.6872</td>
+      <td>39.3262</td>
+      <td>337408</td>
+      <td>1973/07/01 23:00:00+00</td>
+      <td>2A</td>
+      <td>4000 SPRINGDALE AVE</td>
+      <td>RAPE</td>
+      <td>I</td>
+      <td>OTHER</td>
+      <td>621</td>
+      <td>NORTHWEST</td>
+      <td>CENTRAL FOREST PARK</td>
+      <td>39.3262</td>
+      <td>-76.6872</td>
+      <td>(39.3262,-76.6872)</td>
+      <td>ROW/TOWNHOUSE-OCC</td>
+      <td>NaN</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>336770</th>
+      <td>-76.6571</td>
+      <td>39.3100</td>
+      <td>337409</td>
+      <td>1970/06/15 00:01:00+00</td>
+      <td>2A</td>
+      <td>2400 ST STEPHENS CT</td>
+      <td>RAPE</td>
+      <td>I</td>
+      <td>OTHER</td>
+      <td>731</td>
+      <td>WESTERN</td>
+      <td>MONDAWMIN</td>
+      <td>39.3100</td>
+      <td>-76.6571</td>
+      <td>(39.31,-76.6571)</td>
+      <td>ROW/TOWNHOUSE-OCC</td>
+      <td>NaN</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>336771</th>
+      <td>-76.6353</td>
+      <td>39.3589</td>
+      <td>337410</td>
+      <td>1969/07/20 21:00:00+00</td>
+      <td>2A</td>
+      <td>5400 ROLAND AVE</td>
+      <td>RAPE</td>
+      <td>NaN</td>
+      <td>OTHER</td>
+      <td>534</td>
+      <td>NORTHERN</td>
+      <td>ROLAND PARK</td>
+      <td>39.3589</td>
+      <td>-76.6353</td>
+      <td>(39.3589,-76.6353)</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>336772</th>
+      <td>-76.7026</td>
+      <td>39.3269</td>
+      <td>337411</td>
+      <td>1963/10/30 00:00:00+00</td>
+      <td>2A</td>
+      <td>3100 FERNDALE AVE</td>
+      <td>RAPE</td>
+      <td>I</td>
+      <td>OTHER</td>
+      <td>622</td>
+      <td>NORTHWEST</td>
+      <td>HOWARD PARK</td>
+      <td>39.3269</td>
+      <td>-76.7026</td>
+      <td>(39.3269,-76.7026)</td>
+      <td>ROW/TOWNHOUSE-OCC</td>
+      <td>NaN</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+<p>336773 rows × 18 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Keeping Necessary/Desired Columns</span>
+<span class="n">keep_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;CrimeDateTime&#39;</span><span class="p">,</span><span class="s1">&#39;Description&#39;</span><span class="p">,</span><span class="s1">&#39;Total_Incidents&#39;</span><span class="p">,</span>
+             <span class="s1">&#39;District&#39;</span><span class="p">,</span><span class="s1">&#39;Neighborhood&#39;</span>
+<span class="c1">#               &#39;Weapon&#39;, &#39;Latitude&#39;,&#39;Longitude&#39;,</span>
+            <span class="p">]</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">keep_cols</span><span class="p">]</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>CrimeDateTime</th>
+      <th>Description</th>
+      <th>Total_Incidents</th>
+      <th>District</th>
+      <th>Neighborhood</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2021/05/22 14:01:44+00</td>
+      <td>HOMICIDE</td>
+      <td>1</td>
+      <td>NORTHWEST</td>
+      <td>HOWARD PARK</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2021/05/22 00:01:00+00</td>
+      <td>AGG. ASSAULT</td>
+      <td>1</td>
+      <td>SOUTHWEST</td>
+      <td>ALLENDALE</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2021/05/22 18:11:00+00</td>
+      <td>HOMICIDE</td>
+      <td>1</td>
+      <td>WESTERN</td>
+      <td>EVERGREEN LAWN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2021/05/22 19:44:00+00</td>
+      <td>COMMON ASSAULT</td>
+      <td>1</td>
+      <td>EASTERN</td>
+      <td>OLDTOWN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2021/05/22 15:10:00+00</td>
+      <td>COMMON ASSAULT</td>
+      <td>1</td>
+      <td>EASTERN</td>
+      <td>GAY STREET</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>336768</th>
+      <td>1975/06/01 00:00:00+00</td>
+      <td>RAPE</td>
+      <td>1</td>
+      <td>SOUTHWEST</td>
+      <td>UPLANDS</td>
+    </tr>
+    <tr>
+      <th>336769</th>
+      <td>1973/07/01 23:00:00+00</td>
+      <td>RAPE</td>
+      <td>1</td>
+      <td>NORTHWEST</td>
+      <td>CENTRAL FOREST PARK</td>
+    </tr>
+    <tr>
+      <th>336770</th>
+      <td>1970/06/15 00:01:00+00</td>
+      <td>RAPE</td>
+      <td>1</td>
+      <td>WESTERN</td>
+      <td>MONDAWMIN</td>
+    </tr>
+    <tr>
+      <th>336771</th>
+      <td>1969/07/20 21:00:00+00</td>
+      <td>RAPE</td>
+      <td>1</td>
+      <td>NORTHERN</td>
+      <td>ROLAND PARK</td>
+    </tr>
+    <tr>
+      <th>336772</th>
+      <td>1963/10/30 00:00:00+00</td>
+      <td>RAPE</td>
+      <td>1</td>
+      <td>NORTHWEST</td>
+      <td>HOWARD PARK</td>
+    </tr>
+  </tbody>
+</table>
+<p>336773 rows × 5 columns</p>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="preparing-data-for-time-series-visualization">
+<h2>Preparing Data for Time Series Visualization<a class="headerlink" href="#preparing-data-for-time-series-visualization" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Index must be a <code class="docutils literal notranslate"><span class="pre">datetimeindex</span></code></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Check Index </span>
+<span class="n">df</span><span class="o">.</span><span class="n">index</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>RangeIndex(start=0, stop=336773, step=1)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Convert CrimeDateTime to datetime and set as index</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;CrimeDateTime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;CrimeDateTime&#39;</span><span class="p">])</span>
+<span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;CrimeDateTime&#39;</span><span class="p">,</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">index</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;ipython-input-42-f7419459dba5&gt;:2: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df[&#39;CrimeDateTime&#39;] = pd.to_datetime(df[&#39;CrimeDateTime&#39;])
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>DatetimeIndex([&#39;2021-05-22 14:01:44+00:00&#39;, &#39;2021-05-22 00:01:00+00:00&#39;,
+               &#39;2021-05-22 18:11:00+00:00&#39;, &#39;2021-05-22 19:44:00+00:00&#39;,
+               &#39;2021-05-22 15:10:00+00:00&#39;, &#39;2021-05-22 13:00:00+00:00&#39;,
+               &#39;2021-05-22 13:00:00+00:00&#39;, &#39;2021-05-22 11:40:00+00:00&#39;,
+               &#39;2021-05-22 12:00:00+00:00&#39;, &#39;2021-05-22 22:00:00+00:00&#39;,
+               ...
+               &#39;1979-01-01 00:01:00+00:00&#39;, &#39;1978-01-01 00:00:00+00:00&#39;,
+               &#39;1978-01-01 10:30:00+00:00&#39;, &#39;1978-01-01 00:00:00+00:00&#39;,
+               &#39;1977-05-01 00:01:00+00:00&#39;, &#39;1975-06-01 00:00:00+00:00&#39;,
+               &#39;1973-07-01 23:00:00+00:00&#39;, &#39;1970-06-15 00:01:00+00:00&#39;,
+               &#39;1969-07-20 21:00:00+00:00&#39;, &#39;1963-10-30 00:00:00+00:00&#39;],
+              dtype=&#39;datetime64[ns, UTC]&#39;, name=&#39;CrimeDateTime&#39;, length=336773, freq=None)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Description</th>
+      <th>Total_Incidents</th>
+      <th>District</th>
+      <th>Neighborhood</th>
+    </tr>
+    <tr>
+      <th>CrimeDateTime</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2021-05-22 14:01:44+00:00</th>
+      <td>HOMICIDE</td>
+      <td>1</td>
+      <td>NORTHWEST</td>
+      <td>HOWARD PARK</td>
+    </tr>
+    <tr>
+      <th>2021-05-22 00:01:00+00:00</th>
+      <td>AGG. ASSAULT</td>
+      <td>1</td>
+      <td>SOUTHWEST</td>
+      <td>ALLENDALE</td>
+    </tr>
+    <tr>
+      <th>2021-05-22 18:11:00+00:00</th>
+      <td>HOMICIDE</td>
+      <td>1</td>
+      <td>WESTERN</td>
+      <td>EVERGREEN LAWN</td>
+    </tr>
+    <tr>
+      <th>2021-05-22 19:44:00+00:00</th>
+      <td>COMMON ASSAULT</td>
+      <td>1</td>
+      <td>EASTERN</td>
+      <td>OLDTOWN</td>
+    </tr>
+    <tr>
+      <th>2021-05-22 15:10:00+00:00</th>
+      <td>COMMON ASSAULT</td>
+      <td>1</td>
+      <td>EASTERN</td>
+      <td>GAY STREET</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<section id="what-do-we-notice-about-the-index">
+<h3>What do we notice about the index?<a class="headerlink" href="#what-do-we-notice-about-the-index" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>frequency?</p></li>
+<li><p>range?</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Description&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">to_frame</span><span class="p">()</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">bar</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style  type="text/css" >
+#T_504da030_bf08_11eb_aa96_acde48001122row0_col0{
+            width:  10em;
+             height:  80%;
+            background:  linear-gradient(90deg,#d65f5f 100.0%, transparent 100.0%);
+        }#T_504da030_bf08_11eb_aa96_acde48001122row1_col0{
+            width:  10em;
+             height:  80%;
+            background:  linear-gradient(90deg,#d65f5f 76.5%, transparent 76.5%);
+        }#T_504da030_bf08_11eb_aa96_acde48001122row2_col0{
+            width:  10em;
+             height:  80%;
+            background:  linear-gradient(90deg,#d65f5f 62.1%, transparent 62.1%);
+        }#T_504da030_bf08_11eb_aa96_acde48001122row3_col0{
+            width:  10em;
+             height:  80%;
+            background:  linear-gradient(90deg,#d65f5f 57.1%, transparent 57.1%);
+        }#T_504da030_bf08_11eb_aa96_acde48001122row4_col0{
+            width:  10em;
+             height:  80%;
+            background:  linear-gradient(90deg,#d65f5f 50.6%, transparent 50.6%);
+        }#T_504da030_bf08_11eb_aa96_acde48001122row5_col0{
+            width:  10em;
+             height:  80%;
+            background:  linear-gradient(90deg,#d65f5f 38.3%, transparent 38.3%);
+        }#T_504da030_bf08_11eb_aa96_acde48001122row6_col0{
+            width:  10em;
+             height:  80%;
+            background:  linear-gradient(90deg,#d65f5f 29.5%, transparent 29.5%);
+        }#T_504da030_bf08_11eb_aa96_acde48001122row7_col0{
+            width:  10em;
+             height:  80%;
+            background:  linear-gradient(90deg,#d65f5f 6.1%, transparent 6.1%);
+        }#T_504da030_bf08_11eb_aa96_acde48001122row8_col0{
+            width:  10em;
+             height:  80%;
+            background:  linear-gradient(90deg,#d65f5f 4.6%, transparent 4.6%);
+        }#T_504da030_bf08_11eb_aa96_acde48001122row9_col0{
+            width:  10em;
+             height:  80%;
+            background:  linear-gradient(90deg,#d65f5f 3.0%, transparent 3.0%);
+        }#T_504da030_bf08_11eb_aa96_acde48001122row10_col0{
+            width:  10em;
+             height:  80%;
+            background:  linear-gradient(90deg,#d65f5f 2.3%, transparent 2.3%);
+        }#T_504da030_bf08_11eb_aa96_acde48001122row11_col0,#T_504da030_bf08_11eb_aa96_acde48001122row12_col0{
+            width:  10em;
+             height:  80%;
+            background:  linear-gradient(90deg,#d65f5f 1.3%, transparent 1.3%);
+        }#T_504da030_bf08_11eb_aa96_acde48001122row13_col0{
+            width:  10em;
+             height:  80%;
+        }</style><table id="T_504da030_bf08_11eb_aa96_acde48001122" ><thead>    <tr>        <th class="blank level0" ></th>        <th class="col_heading level0 col0" >Description</th>    </tr></thead><tbody>
+                <tr>
+                        <th id="T_504da030_bf08_11eb_aa96_acde48001122level0_row0" class="row_heading level0 row0" >LARCENY</th>
+                        <td id="T_504da030_bf08_11eb_aa96_acde48001122row0_col0" class="data row0 col0" >74681</td>
+            </tr>
+            <tr>
+                        <th id="T_504da030_bf08_11eb_aa96_acde48001122level0_row1" class="row_heading level0 row1" >COMMON ASSAULT</th>
+                        <td id="T_504da030_bf08_11eb_aa96_acde48001122row1_col0" class="data row1 col0" >57451</td>
+            </tr>
+            <tr>
+                        <th id="T_504da030_bf08_11eb_aa96_acde48001122level0_row2" class="row_heading level0 row2" >BURGLARY</th>
+                        <td id="T_504da030_bf08_11eb_aa96_acde48001122row2_col0" class="data row2 col0" >46935</td>
+            </tr>
+            <tr>
+                        <th id="T_504da030_bf08_11eb_aa96_acde48001122level0_row3" class="row_heading level0 row3" >LARCENY FROM AUTO</th>
+                        <td id="T_504da030_bf08_11eb_aa96_acde48001122row3_col0" class="data row3 col0" >43223</td>
+            </tr>
+            <tr>
+                        <th id="T_504da030_bf08_11eb_aa96_acde48001122level0_row4" class="row_heading level0 row4" >AGG. ASSAULT</th>
+                        <td id="T_504da030_bf08_11eb_aa96_acde48001122row4_col0" class="data row4 col0" >38478</td>
+            </tr>
+            <tr>
+                        <th id="T_504da030_bf08_11eb_aa96_acde48001122level0_row5" class="row_heading level0 row5" >AUTO THEFT</th>
+                        <td id="T_504da030_bf08_11eb_aa96_acde48001122row5_col0" class="data row5 col0" >29502</td>
+            </tr>
+            <tr>
+                        <th id="T_504da030_bf08_11eb_aa96_acde48001122level0_row6" class="row_heading level0 row6" >ROBBERY - STREET</th>
+                        <td id="T_504da030_bf08_11eb_aa96_acde48001122row6_col0" class="data row6 col0" >23056</td>
+            </tr>
+            <tr>
+                        <th id="T_504da030_bf08_11eb_aa96_acde48001122level0_row7" class="row_heading level0 row7" >ROBBERY - COMMERCIAL</th>
+                        <td id="T_504da030_bf08_11eb_aa96_acde48001122row7_col0" class="data row7 col0" >5872</td>
+            </tr>
+            <tr>
+                        <th id="T_504da030_bf08_11eb_aa96_acde48001122level0_row8" class="row_heading level0 row8" >SHOOTING</th>
+                        <td id="T_504da030_bf08_11eb_aa96_acde48001122row8_col0" class="data row8 col0" >4788</td>
+            </tr>
+            <tr>
+                        <th id="T_504da030_bf08_11eb_aa96_acde48001122level0_row9" class="row_heading level0 row9" >ROBBERY - RESIDENCE</th>
+                        <td id="T_504da030_bf08_11eb_aa96_acde48001122row9_col0" class="data row9 col0" >3590</td>
+            </tr>
+            <tr>
+                        <th id="T_504da030_bf08_11eb_aa96_acde48001122level0_row10" class="row_heading level0 row10" >ROBBERY - CARJACKING</th>
+                        <td id="T_504da030_bf08_11eb_aa96_acde48001122row10_col0" class="data row10 col0" >3128</td>
+            </tr>
+            <tr>
+                        <th id="T_504da030_bf08_11eb_aa96_acde48001122level0_row11" class="row_heading level0 row11" >RAPE</th>
+                        <td id="T_504da030_bf08_11eb_aa96_acde48001122row11_col0" class="data row11 col0" >2333</td>
+            </tr>
+            <tr>
+                        <th id="T_504da030_bf08_11eb_aa96_acde48001122level0_row12" class="row_heading level0 row12" >HOMICIDE</th>
+                        <td id="T_504da030_bf08_11eb_aa96_acde48001122row12_col0" class="data row12 col0" >2327</td>
+            </tr>
+            <tr>
+                        <th id="T_504da030_bf08_11eb_aa96_acde48001122level0_row13" class="row_heading level0 row13" >ARSON</th>
+                        <td id="T_504da030_bf08_11eb_aa96_acde48001122row13_col0" class="data row13 col0" >1409</td>
+            </tr>
+    </tbody></table></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Grab All Shootings  - using groupby</span>
+<span class="n">group_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Description&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="s1">&#39;SHOOTING&#39;</span><span class="p">)</span>
+<span class="n">group_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Description</th>
+      <th>Total_Incidents</th>
+      <th>District</th>
+      <th>Neighborhood</th>
+    </tr>
+    <tr>
+      <th>CrimeDateTime</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2021-05-22 22:54:00+00:00</th>
+      <td>SHOOTING</td>
+      <td>1</td>
+      <td>WESTERN</td>
+      <td>SANDTOWN-WINCHESTER</td>
+    </tr>
+    <tr>
+      <th>2021-05-21 15:48:00+00:00</th>
+      <td>SHOOTING</td>
+      <td>1</td>
+      <td>WESTERN</td>
+      <td>EVERGREEN LAWN</td>
+    </tr>
+    <tr>
+      <th>2021-05-21 15:48:00+00:00</th>
+      <td>SHOOTING</td>
+      <td>1</td>
+      <td>WESTERN</td>
+      <td>EVERGREEN LAWN</td>
+    </tr>
+    <tr>
+      <th>2021-05-20 19:42:00+00:00</th>
+      <td>SHOOTING</td>
+      <td>1</td>
+      <td>CENTRAL</td>
+      <td>UPTON</td>
+    </tr>
+    <tr>
+      <th>2021-05-20 23:00:00+00:00</th>
+      <td>SHOOTING</td>
+      <td>1</td>
+      <td>NORTHWEST</td>
+      <td>TOWANDA-GRANTLEY</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>2014-01-05 19:41:00+00:00</th>
+      <td>SHOOTING</td>
+      <td>1</td>
+      <td>CENTRAL</td>
+      <td>UPTON</td>
+    </tr>
+    <tr>
+      <th>2014-01-05 16:30:00+00:00</th>
+      <td>SHOOTING</td>
+      <td>1</td>
+      <td>SOUTHWEST</td>
+      <td>ROGNEL HEIGHTS</td>
+    </tr>
+    <tr>
+      <th>2014-01-03 14:32:00+00:00</th>
+      <td>SHOOTING</td>
+      <td>1</td>
+      <td>WESTERN</td>
+      <td>FRANKLIN SQUARE</td>
+    </tr>
+    <tr>
+      <th>2014-01-01 22:31:00+00:00</th>
+      <td>SHOOTING</td>
+      <td>1</td>
+      <td>NORTHEAST</td>
+      <td>GLENHAM-BELHAR</td>
+    </tr>
+    <tr>
+      <th>2014-01-01 17:35:00+00:00</th>
+      <td>SHOOTING</td>
+      <td>1</td>
+      <td>NORTHWEST</td>
+      <td>CENTRAL PARK HEIGHTS</td>
+    </tr>
+  </tbody>
+</table>
+<p>4788 rows × 4 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Checking total-incidents value_counts</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Total_Incidents&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1    336773
+Name: Total_Incidents, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Lets get just Shootings in a new series</span>
+<span class="n">crime</span> <span class="o">=</span> <span class="s1">&#39;SHOOTING&#39;</span>
+<span class="n">group_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Description&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="n">crime</span><span class="p">)[</span><span class="s1">&#39;Total_Incidents&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">crime</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Get list of crimes to iterate through</span>
+<span class="n">crimes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Description&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+<span class="n">crimes</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;HOMICIDE&#39;,
+ &#39;AGG. ASSAULT&#39;,
+ &#39;COMMON ASSAULT&#39;,
+ &#39;LARCENY&#39;,
+ &#39;AUTO THEFT&#39;,
+ &#39;ROBBERY - CARJACKING&#39;,
+ &#39;BURGLARY&#39;,
+ &#39;LARCENY FROM AUTO&#39;,
+ &#39;ROBBERY - COMMERCIAL&#39;,
+ &#39;SHOOTING&#39;,
+ &#39;ROBBERY - RESIDENCE&#39;,
+ &#39;ROBBERY - STREET&#39;,
+ &#39;ARSON&#39;,
+ &#39;RAPE&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## make a dict of all crime types&#39; DataFrames </span>
+<span class="n">CRIMES</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="c1">## For each crime type</span>
+<span class="k">for</span> <span class="n">crime</span> <span class="ow">in</span> <span class="n">crimes</span><span class="p">:</span>    
+    <span class="c1">## Get the group df</span>
+    <span class="n">group_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Description&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="n">crime</span><span class="p">)[</span><span class="s1">&#39;Total_Incidents&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">crime</span><span class="p">)</span>
+    <span class="c1">## Save the group_df into the CRIMES dict</span>
+    <span class="n">CRIMES</span><span class="p">[</span><span class="n">crime</span><span class="p">]</span> <span class="o">=</span><span class="n">group_df</span>
+    
+<span class="c1">## Display the keys</span>
+<span class="n">CRIMES</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dict_keys([&#39;HOMICIDE&#39;, &#39;AGG. ASSAULT&#39;, &#39;COMMON ASSAULT&#39;, &#39;LARCENY&#39;, &#39;AUTO THEFT&#39;, &#39;ROBBERY - CARJACKING&#39;, &#39;BURGLARY&#39;, &#39;LARCENY FROM AUTO&#39;, &#39;ROBBERY - COMMERCIAL&#39;, &#39;SHOOTING&#39;, &#39;ROBBERY - RESIDENCE&#39;, &#39;ROBBERY - STREET&#39;, &#39;ARSON&#39;, &#39;RAPE&#39;])
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="visualizing-time-series">
+<h1>Visualizing Time Series<a class="headerlink" href="#visualizing-time-series" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Pull out shooting from CRIMES dict</span>
+<span class="n">ts</span> <span class="o">=</span> <span class="n">CRIMES</span><span class="p">[</span><span class="s1">&#39;SHOOTING&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Plot the ts</span>
+<span class="n">ts</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;CrimeDateTime&#39;&gt;
+</pre></div>
+</div>
+<img alt="../../_images/a6590d25610ff24020d203d30e8073a179cffb91d77ab200556443fbd45a743b.png" src="../../_images/a6590d25610ff24020d203d30e8073a179cffb91d77ab200556443fbd45a743b.png" />
+</div>
+</div>
+<section id="q-what-went-wrong-what-are-we-looking-at">
+<h2>Q: What went wrong? What are we looking at?<a class="headerlink" href="#q-what-went-wrong-what-are-we-looking-at" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li></li>
+</ul>
+</section>
+<section id="time-series-frequencies-resampling">
+<h2>Time Series Frequencies &amp; Resampling<a class="headerlink" href="#time-series-frequencies-resampling" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Resample to daily data (&quot;D&quot;)</span>
+<span class="n">ts</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s2">&quot;D&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">ts</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CrimeDateTime
+1970-01-01 00:00:00+00:00    11
+1970-01-02 00:00:00+00:00     0
+1970-01-03 00:00:00+00:00     0
+1970-01-04 00:00:00+00:00     0
+1970-01-05 00:00:00+00:00     0
+                             ..
+2021-05-18 00:00:00+00:00     3
+2021-05-19 00:00:00+00:00     0
+2021-05-20 00:00:00+00:00     3
+2021-05-21 00:00:00+00:00     2
+2021-05-22 00:00:00+00:00     1
+Freq: D, Name: SHOOTING, Length: 18770, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Check the index, whats different?</span>
+<span class="n">ts</span><span class="o">.</span><span class="n">index</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>DatetimeIndex([&#39;1970-01-01 00:00:00+00:00&#39;, &#39;1970-01-02 00:00:00+00:00&#39;,
+               &#39;1970-01-03 00:00:00+00:00&#39;, &#39;1970-01-04 00:00:00+00:00&#39;,
+               &#39;1970-01-05 00:00:00+00:00&#39;, &#39;1970-01-06 00:00:00+00:00&#39;,
+               &#39;1970-01-07 00:00:00+00:00&#39;, &#39;1970-01-08 00:00:00+00:00&#39;,
+               &#39;1970-01-09 00:00:00+00:00&#39;, &#39;1970-01-10 00:00:00+00:00&#39;,
+               ...
+               &#39;2021-05-13 00:00:00+00:00&#39;, &#39;2021-05-14 00:00:00+00:00&#39;,
+               &#39;2021-05-15 00:00:00+00:00&#39;, &#39;2021-05-16 00:00:00+00:00&#39;,
+               &#39;2021-05-17 00:00:00+00:00&#39;, &#39;2021-05-18 00:00:00+00:00&#39;,
+               &#39;2021-05-19 00:00:00+00:00&#39;, &#39;2021-05-20 00:00:00+00:00&#39;,
+               &#39;2021-05-21 00:00:00+00:00&#39;, &#39;2021-05-22 00:00:00+00:00&#39;],
+              dtype=&#39;datetime64[ns, UTC]&#39;, name=&#39;CrimeDateTime&#39;, length=18770, freq=&#39;D&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## PLot the time series</span>
+<span class="n">ts</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;CrimeDateTime&#39;&gt;
+</pre></div>
+</div>
+<img alt="../../_images/f775c5207ccf36c99f9a95bd46406e7850c81a5ba5bbb59e8592b51f959bb02e.png" src="../../_images/f775c5207ccf36c99f9a95bd46406e7850c81a5ba5bbb59e8592b51f959bb02e.png" />
+</div>
+</div>
+<blockquote>
+<div></div></blockquote>
+<section id="q-it-worked-but-whats-the-issue">
+<h3>Q: It worked! But whats the issue?<a class="headerlink" href="#q-it-worked-but-whats-the-issue" title="Permalink to this heading">#</a></h3>
+</section>
+</section>
+<section id="slicing-with-time-series">
+<h2>Slicing With Time Series<a class="headerlink" href="#slicing-with-time-series" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Make sure your index is sorted first’</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">.loc</span></code> with dates as strings for slicing</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Slice out dates prior to rise in daily counts</span>
+<span class="n">ts</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ts</span><span class="p">[</span><span class="mi">2015</span><span class="p">:]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CrimeDateTime
+1975-07-09 00:00:00+00:00    0
+1975-07-10 00:00:00+00:00    0
+1975-07-11 00:00:00+00:00    0
+1975-07-12 00:00:00+00:00    0
+1975-07-13 00:00:00+00:00    0
+                            ..
+2021-05-18 00:00:00+00:00    3
+2021-05-19 00:00:00+00:00    0
+2021-05-20 00:00:00+00:00    3
+2021-05-21 00:00:00+00:00    2
+2021-05-22 00:00:00+00:00    1
+Freq: D, Name: SHOOTING, Length: 16755, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ts</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;2015-&quot;</span><span class="p">:]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CrimeDateTime
+2015-06-01 00:00:00+00:00    1
+2015-06-02 00:00:00+00:00    3
+2015-06-03 00:00:00+00:00    0
+2015-06-04 00:00:00+00:00    0
+2015-06-05 00:00:00+00:00    0
+                            ..
+2021-05-18 00:00:00+00:00    3
+2021-05-19 00:00:00+00:00    0
+2021-05-20 00:00:00+00:00    3
+2021-05-21 00:00:00+00:00    2
+2021-05-22 00:00:00+00:00    1
+Freq: D, Name: SHOOTING, Length: 2183, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ts</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;2015&quot;</span><span class="p">:]</span>
+<span class="n">ts</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;CrimeDateTime&#39;&gt;
+</pre></div>
+</div>
+<img alt="../../_images/1ab5641dfed432b9c4c53864ec028bf736bfa9659fe7058be9d42bae57cedc8d.png" src="../../_images/1ab5641dfed432b9c4c53864ec028bf736bfa9659fe7058be9d42bae57cedc8d.png" />
+</div>
+</div>
+<blockquote>
+<div></div></blockquote>
+<section id="much-better-sort-of-but-whats-the-issue-now">
+<h3>Much better! sort of… but whats the issue now?<a class="headerlink" href="#much-better-sort-of-but-whats-the-issue-now" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="time-series-frequencies">
+<h3>Time series Frequencies<a class="headerlink" href="#time-series-frequencies" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>We want the daily counts for our crimes.</p>
+<ul>
+<li><p>In order to do so we have to resample the ts using the correct frequency alias.</p></li>
+</ul>
+</li>
+<li><p>For time series modeling, we will need our time series as a specific frequency without missing data.</p></li>
+</ul>
+<section id="pandas-frequency-aliases">
+<h4>Pandas Frequency Aliases<a class="headerlink" href="#pandas-frequency-aliases" title="Permalink to this heading">#</a></h4>
+<p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#timeseries-offset-aliases">https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#timeseries-offset-aliases</a></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Alias</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>B</p></td>
+<td><p>business day frequency</p></td>
+</tr>
+<tr class="row-odd"><td><p>C</p></td>
+<td><p>custom business day frequency</p></td>
+</tr>
+<tr class="row-even"><td><p>D</p></td>
+<td><p>calendar day frequency</p></td>
+</tr>
+<tr class="row-odd"><td><p>W</p></td>
+<td><p>weekly frequency</p></td>
+</tr>
+<tr class="row-even"><td><p>M</p></td>
+<td><p>month end frequency</p></td>
+</tr>
+<tr class="row-odd"><td><p>SM</p></td>
+<td><p>semi-month end frequency (15th and end of month)</p></td>
+</tr>
+<tr class="row-even"><td><p>BM</p></td>
+<td><p>business month end frequency</p></td>
+</tr>
+<tr class="row-odd"><td><p>CBM</p></td>
+<td><p>custom business month end frequency</p></td>
+</tr>
+<tr class="row-even"><td><p>MS</p></td>
+<td><p>month start frequency</p></td>
+</tr>
+<tr class="row-odd"><td><p>SMS</p></td>
+<td><p>semi-month start frequency (1st and 15th)</p></td>
+</tr>
+<tr class="row-even"><td><p>BMS</p></td>
+<td><p>business month start frequency</p></td>
+</tr>
+<tr class="row-odd"><td><p>CBMS</p></td>
+<td><p>custom business month start frequency</p></td>
+</tr>
+<tr class="row-even"><td><p>Q</p></td>
+<td><p>quarter end frequency</p></td>
+</tr>
+<tr class="row-odd"><td><p>BQ</p></td>
+<td><p>business quarter end frequency</p></td>
+</tr>
+<tr class="row-even"><td><p>QS</p></td>
+<td><p>quarter start frequency</p></td>
+</tr>
+<tr class="row-odd"><td><p>BQS</p></td>
+<td><p>business quarter start frequency</p></td>
+</tr>
+<tr class="row-even"><td><p>A, Y</p></td>
+<td><p>year end frequency</p></td>
+</tr>
+<tr class="row-odd"><td><p>BA, BY</p></td>
+<td><p>business year end frequency</p></td>
+</tr>
+<tr class="row-even"><td><p>AS, YS</p></td>
+<td><p>year start frequency</p></td>
+</tr>
+<tr class="row-odd"><td><p>BAS, BYS</p></td>
+<td><p>business year start frequency</p></td>
+</tr>
+<tr class="row-even"><td><p>BH</p></td>
+<td><p>business hour frequency</p></td>
+</tr>
+<tr class="row-odd"><td><p>H</p></td>
+<td><p>hourly frequency</p></td>
+</tr>
+<tr class="row-even"><td><p>T</p></td>
+<td><p>min	minutely frequency</p></td>
+</tr>
+<tr class="row-odd"><td><p>S</p></td>
+<td><p>secondly frequency</p></td>
+</tr>
+<tr class="row-even"><td><p>L</p></td>
+<td><p>ms	milliseconds</p></td>
+</tr>
+<tr class="row-odd"><td><p>U</p></td>
+<td><p>us	microseconds</p></td>
+</tr>
+<tr class="row-even"><td><p>N</p></td>
+<td><p>nanoseconds</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="compare-resampled-ts">
+<h4>Compare Resampled ts<a class="headerlink" href="#compare-resampled-ts" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Plot the same ts as different frequencies</span>
+<span class="c1">## Specify freq codes daily, every 3 days, weekly, Monthly, Quarterly, yearly</span>
+<span class="n">freq_codes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;D&#39;</span><span class="p">,</span><span class="s1">&#39;3D&#39;</span><span class="p">,</span><span class="s1">&#39;W&#39;</span><span class="p">,</span><span class="s1">&#39;M&#39;</span><span class="p">,</span><span class="s1">&#39;Q&#39;</span><span class="p">,</span><span class="s1">&#39;A&#39;</span><span class="p">]</span>
+<span class="c1">## select ts from CRIMES</span>
+<span class="n">ts</span> <span class="o">=</span> <span class="n">CRIMES</span><span class="p">[</span><span class="s1">&#39;SHOOTING&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;2015&#39;</span><span class="p">:]</span>
+<span class="c1">## For each freq code</span>
+<span class="k">for</span> <span class="n">freq</span> <span class="ow">in</span> <span class="n">freq_codes</span><span class="p">:</span>
+    <span class="c1">## make a new figure, resample and plot</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">ts</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="n">freq</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">freq</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/987121f99aa5df8cb321dad1aac4e3d2b02d1e8ea828a0437d8250f3a97ca9c4.png" src="../../_images/987121f99aa5df8cb321dad1aac4e3d2b02d1e8ea828a0437d8250f3a97ca9c4.png" />
+<img alt="../../_images/00d461e7060d60a0ccb44a4f106ad0154fd327e58c3b355b69ba95f75b526711.png" src="../../_images/00d461e7060d60a0ccb44a4f106ad0154fd327e58c3b355b69ba95f75b526711.png" />
+<img alt="../../_images/565fc1b675d7bc75f619d491b56d93126898f63241ff13d5a3195fe53065555e.png" src="../../_images/565fc1b675d7bc75f619d491b56d93126898f63241ff13d5a3195fe53065555e.png" />
+<img alt="../../_images/8a3f733293386948ce5557506e1af2b210d11c47b5991a44c244d4135165b99f.png" src="../../_images/8a3f733293386948ce5557506e1af2b210d11c47b5991a44c244d4135165b99f.png" />
+<img alt="../../_images/cceb951afa46f4e111c19a60e1366567f97d8daffd4a60e85dc6eb8e09751502.png" src="../../_images/cceb951afa46f4e111c19a60e1366567f97d8daffd4a60e85dc6eb8e09751502.png" />
+<img alt="../../_images/fc544c4e42c447ed444616581f86a2286f2e335479306c54e5ca1c82e6c427b5.png" src="../../_images/fc544c4e42c447ed444616581f86a2286f2e335479306c54e5ca1c82e6c427b5.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Plot the same ts as different frequencies</span>
+<span class="c1">## Specify freq codes daily, every 3 days, weekly, Monthly, Quarterly, yearly</span>
+<span class="n">freq_codes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;D&#39;</span><span class="p">,</span><span class="s1">&#39;3D&#39;</span><span class="p">,</span><span class="s1">&#39;W&#39;</span><span class="p">,</span><span class="s1">&#39;M&#39;</span><span class="p">,</span><span class="s1">&#39;Q&#39;</span><span class="p">,</span><span class="s1">&#39;A&#39;</span><span class="p">]</span>
+<span class="c1">## select ts from CRIMES</span>
+<span class="n">ts</span> <span class="o">=</span> <span class="n">CRIMES</span><span class="p">[</span><span class="s1">&#39;SHOOTING&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;2015&#39;</span><span class="p">:]</span>
+<span class="c1">## For each freq code</span>
+<span class="k">for</span> <span class="n">freq</span> <span class="ow">in</span> <span class="n">freq_codes</span><span class="p">:</span>
+    <span class="c1">## make a new figure, resample and plot</span>
+<span class="c1">#     plt.figure()</span>
+    <span class="n">ts</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="n">freq</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">freq</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/589351894dd4347c7a5602a027111c9ea0d4225fba7f1b87f39dde7f3c66eef5.png" src="../../_images/589351894dd4347c7a5602a027111c9ea0d4225fba7f1b87f39dde7f3c66eef5.png" />
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="visualize-all-crimes-as-d-freq">
+<h2>Visualize all CRIMES as “D” Freq<a class="headerlink" href="#visualize-all-crimes-as-d-freq" title="Permalink to this heading">#</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Loop through all CRIMES, slice out 2015-Present, and resample as “D”</strong>
+- We can always downsample without issue, but upsampling is a problematic</p></li>
+</ul>
+</div></blockquote>
+<section id="using-dictionaries-for-time-series-preprocessing">
+<h3>Using Dictionaries for TIme Series preprocessing<a class="headerlink" href="#using-dictionaries-for-time-series-preprocessing" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Description</th>
+      <th>Total_Incidents</th>
+      <th>District</th>
+      <th>Neighborhood</th>
+    </tr>
+    <tr>
+      <th>CrimeDateTime</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2021-05-22 14:01:44+00:00</th>
+      <td>HOMICIDE</td>
+      <td>1</td>
+      <td>NORTHWEST</td>
+      <td>HOWARD PARK</td>
+    </tr>
+    <tr>
+      <th>2021-05-22 00:01:00+00:00</th>
+      <td>AGG. ASSAULT</td>
+      <td>1</td>
+      <td>SOUTHWEST</td>
+      <td>ALLENDALE</td>
+    </tr>
+    <tr>
+      <th>2021-05-22 18:11:00+00:00</th>
+      <td>HOMICIDE</td>
+      <td>1</td>
+      <td>WESTERN</td>
+      <td>EVERGREEN LAWN</td>
+    </tr>
+    <tr>
+      <th>2021-05-22 19:44:00+00:00</th>
+      <td>COMMON ASSAULT</td>
+      <td>1</td>
+      <td>EASTERN</td>
+      <td>OLDTOWN</td>
+    </tr>
+    <tr>
+      <th>2021-05-22 15:10:00+00:00</th>
+      <td>COMMON ASSAULT</td>
+      <td>1</td>
+      <td>EASTERN</td>
+      <td>GAY STREET</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1975-06-01 00:00:00+00:00</th>
+      <td>RAPE</td>
+      <td>1</td>
+      <td>SOUTHWEST</td>
+      <td>UPLANDS</td>
+    </tr>
+    <tr>
+      <th>1973-07-01 23:00:00+00:00</th>
+      <td>RAPE</td>
+      <td>1</td>
+      <td>NORTHWEST</td>
+      <td>CENTRAL FOREST PARK</td>
+    </tr>
+    <tr>
+      <th>1970-06-15 00:01:00+00:00</th>
+      <td>RAPE</td>
+      <td>1</td>
+      <td>WESTERN</td>
+      <td>MONDAWMIN</td>
+    </tr>
+    <tr>
+      <th>1969-07-20 21:00:00+00:00</th>
+      <td>RAPE</td>
+      <td>1</td>
+      <td>NORTHERN</td>
+      <td>ROLAND PARK</td>
+    </tr>
+    <tr>
+      <th>1963-10-30 00:00:00+00:00</th>
+      <td>RAPE</td>
+      <td>1</td>
+      <td>NORTHWEST</td>
+      <td>HOWARD PARK</td>
+    </tr>
+  </tbody>
+</table>
+<p>336773 rows × 4 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## make a dict of all crime types&#39; DataFrames </span>
+<span class="n">TS</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="c1">## For each crime type</span>
+<span class="k">for</span> <span class="n">crime</span> <span class="ow">in</span> <span class="n">crimes</span><span class="p">:</span>    
+    <span class="c1">## Get the group df</span>
+    <span class="n">group_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Description&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="n">crime</span><span class="p">)[</span><span class="s1">&#39;Total_Incidents&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">crime</span><span class="p">)</span>
+    <span class="c1">## Save the group_df into the CRIMES dict</span>
+    <span class="n">TS</span><span class="p">[</span><span class="n">crime</span><span class="p">]</span> <span class="o">=</span><span class="n">group_df</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">&#39;D&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;2014&#39;</span><span class="p">:]</span>
+    
+<span class="c1">## Display the keys</span>
+<span class="n">TS</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dict_keys([&#39;HOMICIDE&#39;, &#39;AGG. ASSAULT&#39;, &#39;COMMON ASSAULT&#39;, &#39;LARCENY&#39;, &#39;AUTO THEFT&#39;, &#39;ROBBERY - CARJACKING&#39;, &#39;BURGLARY&#39;, &#39;LARCENY FROM AUTO&#39;, &#39;ROBBERY - COMMERCIAL&#39;, &#39;SHOOTING&#39;, &#39;ROBBERY - RESIDENCE&#39;, &#39;ROBBERY - STREET&#39;, &#39;ARSON&#39;, &#39;RAPE&#39;])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Check shooting</span>
+<span class="n">TS</span><span class="p">[</span><span class="s2">&quot;SHOOTING&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CrimeDateTime
+2014-01-01 00:00:00+00:00    2
+2014-01-02 00:00:00+00:00    0
+2014-01-03 00:00:00+00:00    1
+2014-01-04 00:00:00+00:00    0
+2014-01-05 00:00:00+00:00    2
+                            ..
+2021-05-18 00:00:00+00:00    3
+2021-05-19 00:00:00+00:00    0
+2021-05-20 00:00:00+00:00    3
+2021-05-21 00:00:00+00:00    2
+2021-05-22 00:00:00+00:00    1
+Freq: D, Name: SHOOTING, Length: 2699, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="now-that-we-have-the-same-frequency-for-each-crime-series-make-them-into-a-dataframe">
+<h3>Now that we have the same frequency for each crime series, make them into a dataframe<a class="headerlink" href="#now-that-we-have-the-same-frequency-for-each-crime-series-make-them-into-a-dataframe" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Concatenate all ts together into one ts_df</span>
+<span class="n">ts_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">TS</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ts_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>HOMICIDE</th>
+      <th>AGG. ASSAULT</th>
+      <th>COMMON ASSAULT</th>
+      <th>LARCENY</th>
+      <th>AUTO THEFT</th>
+      <th>ROBBERY - CARJACKING</th>
+      <th>BURGLARY</th>
+      <th>LARCENY FROM AUTO</th>
+      <th>ROBBERY - COMMERCIAL</th>
+      <th>SHOOTING</th>
+      <th>ROBBERY - RESIDENCE</th>
+      <th>ROBBERY - STREET</th>
+      <th>ARSON</th>
+      <th>RAPE</th>
+    </tr>
+    <tr>
+      <th>CrimeDateTime</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2014-01-01 00:00:00+00:00</th>
+      <td>2</td>
+      <td>22</td>
+      <td>19</td>
+      <td>34</td>
+      <td>9</td>
+      <td>NaN</td>
+      <td>20</td>
+      <td>15</td>
+      <td>2</td>
+      <td>2</td>
+      <td>1.0</td>
+      <td>8.0</td>
+      <td>NaN</td>
+      <td>5.0</td>
+    </tr>
+    <tr>
+      <th>2014-01-02 00:00:00+00:00</th>
+      <td>3</td>
+      <td>6</td>
+      <td>23</td>
+      <td>26</td>
+      <td>7</td>
+      <td>1.0</td>
+      <td>28</td>
+      <td>10</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1.0</td>
+      <td>4.0</td>
+      <td>NaN</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2014-01-03 00:00:00+00:00</th>
+      <td>1</td>
+      <td>11</td>
+      <td>17</td>
+      <td>16</td>
+      <td>3</td>
+      <td>0.0</td>
+      <td>13</td>
+      <td>6</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1.0</td>
+      <td>2.0</td>
+      <td>NaN</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2014-01-04 00:00:00+00:00</th>
+      <td>0</td>
+      <td>14</td>
+      <td>23</td>
+      <td>23</td>
+      <td>14</td>
+      <td>0.0</td>
+      <td>20</td>
+      <td>15</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1.0</td>
+      <td>7.0</td>
+      <td>NaN</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2014-01-05 00:00:00+00:00</th>
+      <td>0</td>
+      <td>9</td>
+      <td>22</td>
+      <td>19</td>
+      <td>11</td>
+      <td>2.0</td>
+      <td>14</td>
+      <td>13</td>
+      <td>0</td>
+      <td>2</td>
+      <td>1.0</td>
+      <td>10.0</td>
+      <td>NaN</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>2021-05-18 00:00:00+00:00</th>
+      <td>0</td>
+      <td>9</td>
+      <td>12</td>
+      <td>19</td>
+      <td>8</td>
+      <td>0.0</td>
+      <td>9</td>
+      <td>5</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2.0</td>
+      <td>5.0</td>
+      <td>2.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2021-05-19 00:00:00+00:00</th>
+      <td>1</td>
+      <td>7</td>
+      <td>24</td>
+      <td>12</td>
+      <td>10</td>
+      <td>1.0</td>
+      <td>6</td>
+      <td>5</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2.0</td>
+      <td>6.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2021-05-20 00:00:00+00:00</th>
+      <td>0</td>
+      <td>15</td>
+      <td>15</td>
+      <td>14</td>
+      <td>5</td>
+      <td>3.0</td>
+      <td>10</td>
+      <td>6</td>
+      <td>2</td>
+      <td>3</td>
+      <td>1.0</td>
+      <td>10.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2021-05-21 00:00:00+00:00</th>
+      <td>2</td>
+      <td>11</td>
+      <td>19</td>
+      <td>6</td>
+      <td>9</td>
+      <td>1.0</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>2</td>
+      <td>1.0</td>
+      <td>9.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2021-05-22 00:00:00+00:00</th>
+      <td>2</td>
+      <td>11</td>
+      <td>14</td>
+      <td>5</td>
+      <td>5</td>
+      <td>1.0</td>
+      <td>3</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>2699 rows × 14 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="visualize-all-ts-with-the-differnet-requency-codes">
+<h3>Visualize all ts with the differnet requency codes<a class="headerlink" href="#visualize-all-ts-with-the-differnet-requency-codes" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Plot the same ts as different frequencies</span>
+<span class="n">ts_df</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;CrimeDateTime&#39;&gt;
+</pre></div>
+</div>
+<img alt="../../_images/713efc9c74d8dcdba9c24717f257c47bd53113f272a48af00fba74f0cadcdb58.png" src="../../_images/713efc9c74d8dcdba9c24717f257c47bd53113f272a48af00fba74f0cadcdb58.png" />
+</div>
+</div>
+</section>
+<section id="dealing-with-null-values">
+<h3>Dealing with Null Values<a class="headerlink" href="#dealing-with-null-values" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Check For Null Values</span>
+<span class="n">ts_df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>HOMICIDE                0
+AGG. ASSAULT            0
+COMMON ASSAULT          0
+LARCENY                 0
+AUTO THEFT              0
+ROBBERY - CARJACKING    1
+BURGLARY                0
+LARCENY FROM AUTO       0
+ROBBERY - COMMERCIAL    0
+SHOOTING                0
+ROBBERY - RESIDENCE     1
+ROBBERY - STREET        1
+ARSON                   9
+RAPE                    6
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># save a T/F index for if a row has any nulls</span>
+<span class="n">nulls</span> <span class="o">=</span> <span class="n">ts_df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+
+<span class="c1"># check out the null rows</span>
+<span class="n">ts_df</span><span class="p">[</span><span class="n">nulls</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>HOMICIDE</th>
+      <th>AGG. ASSAULT</th>
+      <th>COMMON ASSAULT</th>
+      <th>LARCENY</th>
+      <th>AUTO THEFT</th>
+      <th>ROBBERY - CARJACKING</th>
+      <th>BURGLARY</th>
+      <th>LARCENY FROM AUTO</th>
+      <th>ROBBERY - COMMERCIAL</th>
+      <th>SHOOTING</th>
+      <th>ROBBERY - RESIDENCE</th>
+      <th>ROBBERY - STREET</th>
+      <th>ARSON</th>
+      <th>RAPE</th>
+    </tr>
+    <tr>
+      <th>CrimeDateTime</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2014-01-01 00:00:00+00:00</th>
+      <td>2</td>
+      <td>22</td>
+      <td>19</td>
+      <td>34</td>
+      <td>9</td>
+      <td>NaN</td>
+      <td>20</td>
+      <td>15</td>
+      <td>2</td>
+      <td>2</td>
+      <td>1.0</td>
+      <td>8.0</td>
+      <td>NaN</td>
+      <td>5.0</td>
+    </tr>
+    <tr>
+      <th>2014-01-02 00:00:00+00:00</th>
+      <td>3</td>
+      <td>6</td>
+      <td>23</td>
+      <td>26</td>
+      <td>7</td>
+      <td>1.0</td>
+      <td>28</td>
+      <td>10</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1.0</td>
+      <td>4.0</td>
+      <td>NaN</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2014-01-03 00:00:00+00:00</th>
+      <td>1</td>
+      <td>11</td>
+      <td>17</td>
+      <td>16</td>
+      <td>3</td>
+      <td>0.0</td>
+      <td>13</td>
+      <td>6</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1.0</td>
+      <td>2.0</td>
+      <td>NaN</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2014-01-04 00:00:00+00:00</th>
+      <td>0</td>
+      <td>14</td>
+      <td>23</td>
+      <td>23</td>
+      <td>14</td>
+      <td>0.0</td>
+      <td>20</td>
+      <td>15</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1.0</td>
+      <td>7.0</td>
+      <td>NaN</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2014-01-05 00:00:00+00:00</th>
+      <td>0</td>
+      <td>9</td>
+      <td>22</td>
+      <td>19</td>
+      <td>11</td>
+      <td>2.0</td>
+      <td>14</td>
+      <td>13</td>
+      <td>0</td>
+      <td>2</td>
+      <td>1.0</td>
+      <td>10.0</td>
+      <td>NaN</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2021-05-17 00:00:00+00:00</th>
+      <td>3</td>
+      <td>14</td>
+      <td>25</td>
+      <td>12</td>
+      <td>5</td>
+      <td>2.0</td>
+      <td>11</td>
+      <td>12</td>
+      <td>1</td>
+      <td>3</td>
+      <td>0.0</td>
+      <td>6.0</td>
+      <td>0.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2021-05-18 00:00:00+00:00</th>
+      <td>0</td>
+      <td>9</td>
+      <td>12</td>
+      <td>19</td>
+      <td>8</td>
+      <td>0.0</td>
+      <td>9</td>
+      <td>5</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2.0</td>
+      <td>5.0</td>
+      <td>2.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2021-05-19 00:00:00+00:00</th>
+      <td>1</td>
+      <td>7</td>
+      <td>24</td>
+      <td>12</td>
+      <td>10</td>
+      <td>1.0</td>
+      <td>6</td>
+      <td>5</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2.0</td>
+      <td>6.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2021-05-20 00:00:00+00:00</th>
+      <td>0</td>
+      <td>15</td>
+      <td>15</td>
+      <td>14</td>
+      <td>5</td>
+      <td>3.0</td>
+      <td>10</td>
+      <td>6</td>
+      <td>2</td>
+      <td>3</td>
+      <td>1.0</td>
+      <td>10.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2021-05-21 00:00:00+00:00</th>
+      <td>2</td>
+      <td>11</td>
+      <td>19</td>
+      <td>6</td>
+      <td>9</td>
+      <td>1.0</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>2</td>
+      <td>1.0</td>
+      <td>9.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2021-05-22 00:00:00+00:00</th>
+      <td>2</td>
+      <td>11</td>
+      <td>14</td>
+      <td>5</td>
+      <td>5</td>
+      <td>1.0</td>
+      <td>3</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<section id="q-what-do-we-notice-about-our-null-values-where-are-they">
+<h4>Q: what do we notice about our null values? Where are they?<a class="headerlink" href="#q-what-do-we-notice-about-our-null-values-where-are-they" title="Permalink to this heading">#</a></h4>
+<blockquote>
+<div><ul class="simple">
+<li><p>We have several options for filling in null values for time series, based on what would be best for our data.</p></li>
+</ul>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## FFill null values with the next non-null value</span>
+<span class="n">ts_df</span><span class="o">.</span><span class="n">bfill</span><span class="p">()[</span><span class="n">nulls</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>HOMICIDE</th>
+      <th>AGG. ASSAULT</th>
+      <th>COMMON ASSAULT</th>
+      <th>LARCENY</th>
+      <th>AUTO THEFT</th>
+      <th>ROBBERY - CARJACKING</th>
+      <th>BURGLARY</th>
+      <th>LARCENY FROM AUTO</th>
+      <th>ROBBERY - COMMERCIAL</th>
+      <th>SHOOTING</th>
+      <th>ROBBERY - RESIDENCE</th>
+      <th>ROBBERY - STREET</th>
+      <th>ARSON</th>
+      <th>RAPE</th>
+    </tr>
+    <tr>
+      <th>CrimeDateTime</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2014-01-01 00:00:00+00:00</th>
+      <td>2</td>
+      <td>22</td>
+      <td>19</td>
+      <td>34</td>
+      <td>9</td>
+      <td>1.0</td>
+      <td>20</td>
+      <td>15</td>
+      <td>2</td>
+      <td>2</td>
+      <td>1.0</td>
+      <td>8.0</td>
+      <td>2.0</td>
+      <td>5.0</td>
+    </tr>
+    <tr>
+      <th>2014-01-02 00:00:00+00:00</th>
+      <td>3</td>
+      <td>6</td>
+      <td>23</td>
+      <td>26</td>
+      <td>7</td>
+      <td>1.0</td>
+      <td>28</td>
+      <td>10</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1.0</td>
+      <td>4.0</td>
+      <td>2.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2014-01-03 00:00:00+00:00</th>
+      <td>1</td>
+      <td>11</td>
+      <td>17</td>
+      <td>16</td>
+      <td>3</td>
+      <td>0.0</td>
+      <td>13</td>
+      <td>6</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1.0</td>
+      <td>2.0</td>
+      <td>2.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2014-01-04 00:00:00+00:00</th>
+      <td>0</td>
+      <td>14</td>
+      <td>23</td>
+      <td>23</td>
+      <td>14</td>
+      <td>0.0</td>
+      <td>20</td>
+      <td>15</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1.0</td>
+      <td>7.0</td>
+      <td>2.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2014-01-05 00:00:00+00:00</th>
+      <td>0</td>
+      <td>9</td>
+      <td>22</td>
+      <td>19</td>
+      <td>11</td>
+      <td>2.0</td>
+      <td>14</td>
+      <td>13</td>
+      <td>0</td>
+      <td>2</td>
+      <td>1.0</td>
+      <td>10.0</td>
+      <td>2.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2021-05-17 00:00:00+00:00</th>
+      <td>3</td>
+      <td>14</td>
+      <td>25</td>
+      <td>12</td>
+      <td>5</td>
+      <td>2.0</td>
+      <td>11</td>
+      <td>12</td>
+      <td>1</td>
+      <td>3</td>
+      <td>0.0</td>
+      <td>6.0</td>
+      <td>0.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2021-05-18 00:00:00+00:00</th>
+      <td>0</td>
+      <td>9</td>
+      <td>12</td>
+      <td>19</td>
+      <td>8</td>
+      <td>0.0</td>
+      <td>9</td>
+      <td>5</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2.0</td>
+      <td>5.0</td>
+      <td>2.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2021-05-19 00:00:00+00:00</th>
+      <td>1</td>
+      <td>7</td>
+      <td>24</td>
+      <td>12</td>
+      <td>10</td>
+      <td>1.0</td>
+      <td>6</td>
+      <td>5</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2.0</td>
+      <td>6.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2021-05-20 00:00:00+00:00</th>
+      <td>0</td>
+      <td>15</td>
+      <td>15</td>
+      <td>14</td>
+      <td>5</td>
+      <td>3.0</td>
+      <td>10</td>
+      <td>6</td>
+      <td>2</td>
+      <td>3</td>
+      <td>1.0</td>
+      <td>10.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2021-05-21 00:00:00+00:00</th>
+      <td>2</td>
+      <td>11</td>
+      <td>19</td>
+      <td>6</td>
+      <td>9</td>
+      <td>1.0</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>2</td>
+      <td>1.0</td>
+      <td>9.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2021-05-22 00:00:00+00:00</th>
+      <td>2</td>
+      <td>11</td>
+      <td>14</td>
+      <td>5</td>
+      <td>5</td>
+      <td>1.0</td>
+      <td>3</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## FFill null values with the previous non-null value</span>
+<span class="n">ts_df</span><span class="o">.</span><span class="n">ffill</span><span class="p">()[</span><span class="n">nulls</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>HOMICIDE</th>
+      <th>AGG. ASSAULT</th>
+      <th>COMMON ASSAULT</th>
+      <th>LARCENY</th>
+      <th>AUTO THEFT</th>
+      <th>ROBBERY - CARJACKING</th>
+      <th>BURGLARY</th>
+      <th>LARCENY FROM AUTO</th>
+      <th>ROBBERY - COMMERCIAL</th>
+      <th>SHOOTING</th>
+      <th>ROBBERY - RESIDENCE</th>
+      <th>ROBBERY - STREET</th>
+      <th>ARSON</th>
+      <th>RAPE</th>
+    </tr>
+    <tr>
+      <th>CrimeDateTime</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2014-01-01 00:00:00+00:00</th>
+      <td>2</td>
+      <td>22</td>
+      <td>19</td>
+      <td>34</td>
+      <td>9</td>
+      <td>NaN</td>
+      <td>20</td>
+      <td>15</td>
+      <td>2</td>
+      <td>2</td>
+      <td>1.0</td>
+      <td>8.0</td>
+      <td>NaN</td>
+      <td>5.0</td>
+    </tr>
+    <tr>
+      <th>2014-01-02 00:00:00+00:00</th>
+      <td>3</td>
+      <td>6</td>
+      <td>23</td>
+      <td>26</td>
+      <td>7</td>
+      <td>1.0</td>
+      <td>28</td>
+      <td>10</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1.0</td>
+      <td>4.0</td>
+      <td>NaN</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2014-01-03 00:00:00+00:00</th>
+      <td>1</td>
+      <td>11</td>
+      <td>17</td>
+      <td>16</td>
+      <td>3</td>
+      <td>0.0</td>
+      <td>13</td>
+      <td>6</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1.0</td>
+      <td>2.0</td>
+      <td>NaN</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2014-01-04 00:00:00+00:00</th>
+      <td>0</td>
+      <td>14</td>
+      <td>23</td>
+      <td>23</td>
+      <td>14</td>
+      <td>0.0</td>
+      <td>20</td>
+      <td>15</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1.0</td>
+      <td>7.0</td>
+      <td>NaN</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2014-01-05 00:00:00+00:00</th>
+      <td>0</td>
+      <td>9</td>
+      <td>22</td>
+      <td>19</td>
+      <td>11</td>
+      <td>2.0</td>
+      <td>14</td>
+      <td>13</td>
+      <td>0</td>
+      <td>2</td>
+      <td>1.0</td>
+      <td>10.0</td>
+      <td>NaN</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2021-05-17 00:00:00+00:00</th>
+      <td>3</td>
+      <td>14</td>
+      <td>25</td>
+      <td>12</td>
+      <td>5</td>
+      <td>2.0</td>
+      <td>11</td>
+      <td>12</td>
+      <td>1</td>
+      <td>3</td>
+      <td>0.0</td>
+      <td>6.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2021-05-18 00:00:00+00:00</th>
+      <td>0</td>
+      <td>9</td>
+      <td>12</td>
+      <td>19</td>
+      <td>8</td>
+      <td>0.0</td>
+      <td>9</td>
+      <td>5</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2.0</td>
+      <td>5.0</td>
+      <td>2.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2021-05-19 00:00:00+00:00</th>
+      <td>1</td>
+      <td>7</td>
+      <td>24</td>
+      <td>12</td>
+      <td>10</td>
+      <td>1.0</td>
+      <td>6</td>
+      <td>5</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2.0</td>
+      <td>6.0</td>
+      <td>2.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2021-05-20 00:00:00+00:00</th>
+      <td>0</td>
+      <td>15</td>
+      <td>15</td>
+      <td>14</td>
+      <td>5</td>
+      <td>3.0</td>
+      <td>10</td>
+      <td>6</td>
+      <td>2</td>
+      <td>3</td>
+      <td>1.0</td>
+      <td>10.0</td>
+      <td>2.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2021-05-21 00:00:00+00:00</th>
+      <td>2</td>
+      <td>11</td>
+      <td>19</td>
+      <td>6</td>
+      <td>9</td>
+      <td>1.0</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>2</td>
+      <td>1.0</td>
+      <td>9.0</td>
+      <td>2.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2021-05-22 00:00:00+00:00</th>
+      <td>2</td>
+      <td>11</td>
+      <td>14</td>
+      <td>5</td>
+      <td>5</td>
+      <td>1.0</td>
+      <td>3</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1.0</td>
+      <td>9.0</td>
+      <td>2.0</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## We have crime counts, so it makes sense to fill with 0</span>
+<span class="n">ts_df</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Save df to csv for time series modeling next class</span>
+<span class="c1"># ts_df.to_csv(&#39;baltimore_crime_counts_2021.csv&#39;)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="time-series-trends">
+<h1>Time Series Trends<a class="headerlink" href="#time-series-trends" title="Permalink to this heading">#</a></h1>
+<section id="types-of-trends">
+<h2>Types of Trends<a class="headerlink" href="#types-of-trends" title="Permalink to this heading">#</a></h2>
+<img src="https://raw.githubusercontent.com/learn-co-students/dsc-removing-trends-online-ds-ft-100719/master/images/new_trendseasonal.png" width=80%><section id="stationarity">
+<h3>Stationarity<a class="headerlink" href="#stationarity" title="Permalink to this heading">#</a></h3>
+<div style="text-align:center;font-size:2em">Mean</div>
+<img src="https://raw.githubusercontent.com/jirvingphd/dsc-types-of-trends-online-ds-ft-100719/master/images/new_mean_nonstationary.png" width=70%>
+<br><br>
+<div style="text-align:center;font-size:3em">Variance</div>
+<img src="https://raw.githubusercontent.com/jirvingphd/dsc-types-of-trends-online-ds-ft-100719/master/images/new_cov_nonstationary.png" width=70%>
+</div></section>
+</section>
+<section id="detecting-trends">
+<h2>Detecting Trends<a class="headerlink" href="#detecting-trends" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Grab ROBBERY - STREET and resample as weekly data</span>
+<span class="n">ts</span> <span class="o">=</span> <span class="n">ts_df</span><span class="p">[</span><span class="s2">&quot;ROBBERY - STREET&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s2">&quot;W&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">ts</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;CrimeDateTime&#39;&gt;
+</pre></div>
+</div>
+<img alt="../../_images/1a5699abef5050916028678c431a9b635dac7262de82549baf5d902663730bc8.png" src="../../_images/1a5699abef5050916028678c431a9b635dac7262de82549baf5d902663730bc8.png" />
+</div>
+</div>
+<section id="augmented-dickey-fuller-test-for-stationarity">
+<h3>Augmented Dickey Fuller Test for Stationarity<a class="headerlink" href="#augmented-dickey-fuller-test-for-stationarity" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Lab Function</span>
+<span class="c1"># from statsmodels.tsa.stattools import adfuller</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">adfuller_test_df</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;AD Fuller Results&#39;</span><span class="p">]):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns the AD Fuller Test Results and p-values for the null hypothesis</span>
+<span class="sd">    that there the data is non-stationary (that there is a unit root in the data)&quot;&quot;&quot;</span>
+    
+    <span class="n">df_res</span> <span class="o">=</span> <span class="n">tsa</span><span class="o">.</span><span class="n">stattools</span><span class="o">.</span><span class="n">adfuller</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span>
+
+    <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Test Statistic&#39;</span><span class="p">,</span><span class="s1">&#39;p-value&#39;</span><span class="p">,</span><span class="s1">&#39;#Lags Used&#39;</span><span class="p">,</span><span class="s1">&#39;# of Observations Used&#39;</span><span class="p">]</span>
+    <span class="n">res</span>  <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">names</span><span class="p">,</span><span class="n">df_res</span><span class="p">[:</span><span class="mi">4</span><span class="p">]))</span>
+    
+    <span class="n">res</span><span class="p">[</span><span class="s1">&#39;p&lt;.05&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="s1">&#39;p-value&#39;</span><span class="p">]</span><span class="o">&lt;</span><span class="mf">.05</span>
+    <span class="n">res</span><span class="p">[</span><span class="s1">&#39;Stationary?&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="s1">&#39;p&lt;.05&#39;</span><span class="p">]</span>
+    
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">index</span><span class="p">,</span><span class="nb">str</span><span class="p">):</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="n">index</span><span class="p">]</span>
+    <span class="n">res_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">res</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">)</span>
+    <span class="n">res_df</span> <span class="o">=</span> <span class="n">res_df</span><span class="p">[[</span><span class="s1">&#39;Test Statistic&#39;</span><span class="p">,</span><span class="s1">&#39;#Lags Used&#39;</span><span class="p">,</span>
+                     <span class="s1">&#39;# of Observations Used&#39;</span><span class="p">,</span><span class="s1">&#39;p-value&#39;</span><span class="p">,</span><span class="s1">&#39;p&lt;.05&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;Stationary?&#39;</span><span class="p">]]</span>
+    <span class="k">return</span> <span class="n">res_df</span>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">stationarity_check</span><span class="p">(</span><span class="n">TS</span><span class="p">,</span><span class="n">window</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span><span class="n">plot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;AD Fuller Results&#39;</span><span class="p">]):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Adapted from https://github.com/learn-co-curriculum/dsc-removing-trends-lab/tree/solution&quot;&quot;&quot;</span>
+    
+    <span class="c1"># Calculate rolling statistics</span>
+    <span class="n">roll_mean</span> <span class="o">=</span> <span class="n">TS</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">window</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">roll_std</span> <span class="o">=</span> <span class="n">TS</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">window</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+    
+    <span class="c1"># Perform the Dickey Fuller Test</span>
+    <span class="n">dftest</span> <span class="o">=</span> <span class="n">adfuller_test_df</span><span class="p">(</span><span class="n">TS</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">plot</span><span class="p">:</span>
+        <span class="c1"># Plot rolling statistics:</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">TS</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Original (freq=</span><span class="si">{</span><span class="n">TS</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">freq</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">roll_mean</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Rolling Mean (window=</span><span class="si">{</span><span class="n">window</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">roll_std</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Rolling Std (window=</span><span class="si">{</span><span class="n">window</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Rolling Mean &amp; Standard Deviation&#39;</span><span class="p">)</span>
+        <span class="n">display</span><span class="p">(</span><span class="n">dftest</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        
+    <span class="k">return</span> <span class="n">dftest</span>
+    
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Test stationariy check function </span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">stationarity_check</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Test Statistic</th>
+      <th>#Lags Used</th>
+      <th># of Observations Used</th>
+      <th>p-value</th>
+      <th>p&lt;.05</th>
+      <th>Stationary?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>AD Fuller Results</th>
+      <td>-2.720824</td>
+      <td>5</td>
+      <td>380</td>
+      <td>0.070504</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><img alt="../../_images/8c37be17703e461b01163bb5eba9b886e65207c6939b0185215b46ee2477a448.png" src="../../_images/8c37be17703e461b01163bb5eba9b886e65207c6939b0185215b46ee2477a448.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="removing-trends">
+<h2>Removing Trends<a class="headerlink" href="#removing-trends" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>For time series modeling, we will want to get our time series stationary.*</p></li>
+</ul>
+<section id="trend-removal-methods">
+<h3>Trend Removal Methods<a class="headerlink" href="#trend-removal-methods" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Differencing (<code class="docutils literal notranslate"><span class="pre">.diff()</span></code>)</p></li>
+<li><p>Log-Transformation (<code class="docutils literal notranslate"><span class="pre">np.log</span></code>)</p></li>
+<li><p>Subtract Rolling Mean (<code class="docutils literal notranslate"><span class="pre">ts-ts.rolling().mean()</span></code>)</p></li>
+<li><p>Subtract Exponentially-Weighted Mean (<code class="docutils literal notranslate"><span class="pre">ts-ts.ewm().mean()</span></code>)</p></li>
+<li><p>Seasonal Decomposition (<code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">statsmodels.tsa.seasonal</span> <span class="pre">import</span> <span class="pre">seasonal_decompose</span></code>
+)</p></li>
+</ul>
+<p><em><code class="docutils literal notranslate"><span class="pre">*</span></code>=caveat to be discussed tomorrow</em></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Plot Original Time Series and Check for Stationarity</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">adfuller_test_df</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span>
+<span class="n">ts</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">res</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Test Statistic</th>
+      <th>#Lags Used</th>
+      <th># of Observations Used</th>
+      <th>p-value</th>
+      <th>p&lt;.05</th>
+      <th>Stationary?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>AD Fuller Results</th>
+      <td>-1.851922</td>
+      <td>4</td>
+      <td>172</td>
+      <td>0.355005</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><img alt="../../_images/1a5699abef5050916028678c431a9b635dac7262de82549baf5d902663730bc8.png" src="../../_images/1a5699abef5050916028678c431a9b635dac7262de82549baf5d902663730bc8.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Apply differnncing, plot and get adfuller test</span>
+<span class="n">ts_diff</span> <span class="o">=</span><span class="n">ts</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="n">ts_diff</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">adfuller_test_df</span><span class="p">(</span><span class="n">ts_diff</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Test Statistic</th>
+      <th>#Lags Used</th>
+      <th># of Observations Used</th>
+      <th>p-value</th>
+      <th>p&lt;.05</th>
+      <th>Stationary?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>AD Fuller Results</th>
+      <td>-11.342414</td>
+      <td>5</td>
+      <td>379</td>
+      <td>1.046701e-20</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><img alt="../../_images/4542a083766548072fe8dffa75cbb67091e49106bd38066c1064f306f1ebc6f1.png" src="../../_images/4542a083766548072fe8dffa75cbb67091e49106bd38066c1064f306f1ebc6f1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Log Transform, plot and get adfuller test</span>
+<span class="n">ts_log</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span>
+<span class="n">ts_log</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">adfuller_test_df</span><span class="p">(</span><span class="n">ts_log</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Test Statistic</th>
+      <th>#Lags Used</th>
+      <th># of Observations Used</th>
+      <th>p-value</th>
+      <th>p&lt;.05</th>
+      <th>Stationary?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>AD Fuller Results</th>
+      <td>-2.582485</td>
+      <td>4</td>
+      <td>381</td>
+      <td>0.096672</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><img alt="../../_images/20d5f8ba8c517d221ab2a95a5472e275ab9b70086e7418d1f39f3cee631d45c8.png" src="../../_images/20d5f8ba8c517d221ab2a95a5472e275ab9b70086e7418d1f39f3cee631d45c8.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ts</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">freq</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Week: weekday=6&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Subtract Rolling mean</span>
+<span class="n">ts_rolling</span> <span class="o">=</span> <span class="n">ts</span><span class="o">-</span><span class="n">ts</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">ts_rolling</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ts_rolling</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">adfuller_test_df</span><span class="p">(</span><span class="n">ts_rolling</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Test Statistic</th>
+      <th>#Lags Used</th>
+      <th># of Observations Used</th>
+      <th>p-value</th>
+      <th>p&lt;.05</th>
+      <th>Stationary?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>AD Fuller Results</th>
+      <td>-11.055785</td>
+      <td>4</td>
+      <td>378</td>
+      <td>4.949090e-20</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><img alt="../../_images/88c009bbf04dde7b1f6904a36f43d5459fa85fe37f0d5194706c7f039cc7716b.png" src="../../_images/88c009bbf04dde7b1f6904a36f43d5459fa85fe37f0d5194706c7f039cc7716b.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Subtract Exponentially Weight Mean Rolling mean</span>
+<span class="n">ts_ewm</span> <span class="o">=</span> <span class="n">ts</span><span class="o">-</span><span class="n">ts</span><span class="o">.</span><span class="n">ewm</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="n">ts_ewm</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">ts_ewm</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">adfuller_test_df</span><span class="p">(</span><span class="n">ts_ewm</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Test Statistic</th>
+      <th>#Lags Used</th>
+      <th># of Observations Used</th>
+      <th>p-value</th>
+      <th>p&lt;.05</th>
+      <th>Stationary?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>AD Fuller Results</th>
+      <td>-10.919076</td>
+      <td>1</td>
+      <td>384</td>
+      <td>1.049201e-19</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><img alt="../../_images/81a3a2ba1a97c9bbe0dbd062756801909ad5237962f6f68ce70ab8bbe93951b9.png" src="../../_images/81a3a2ba1a97c9bbe0dbd062756801909ad5237962f6f68ce70ab8bbe93951b9.png" />
+</div>
+</div>
+</section>
+<section id="q-what-do-we-notice-what-methods-achieved-stationarity">
+<h3>Q: What do we notice? What methods achieved stationarity?<a class="headerlink" href="#q-what-do-we-notice-what-methods-achieved-stationarity" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="seasonal-decomposition">
+<h3>Seasonal Decomposition<a class="headerlink" href="#seasonal-decomposition" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Use seasonal decompose on the ts and plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">decomp</span> <span class="o">=</span> <span class="n">tsa</span><span class="o">.</span><span class="n">seasonal_decompose</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span>
+<span class="n">decomp</span><span class="o">.</span><span class="n">plot</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/a92c8ff94bc767c6b057b534c3bfc151858bfbf47f6feeff23e77ca2a81f5274.png" src="../../_images/a92c8ff94bc767c6b057b534c3bfc151858bfbf47f6feeff23e77ca2a81f5274.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">decomp</span><span class="o">.</span><span class="n">seasonal</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CrimeDateTime
+2014-01-05 00:00:00+00:00    -5.828279
+2014-01-12 00:00:00+00:00   -11.339497
+2014-01-19 00:00:00+00:00    -1.809048
+2014-01-26 00:00:00+00:00     0.894477
+2014-02-02 00:00:00+00:00    -5.926036
+                               ...    
+2021-04-25 00:00:00+00:00    -7.674433
+2021-05-02 00:00:00+00:00    -4.418023
+2021-05-09 00:00:00+00:00    -3.014177
+2021-05-16 00:00:00+00:00    10.702170
+2021-05-23 00:00:00+00:00    11.110823
+Freq: W-SUN, Name: seasonal, Length: 386, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<section id="checking-which-components-are-stationary">
+<h4>Checking which components are stationary<a class="headerlink" href="#checking-which-components-are-stationary" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Save seasonal/trend/resid in a dictionary.</span>
+<span class="n">decomp_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;seasonal&#39;</span><span class="p">:</span><span class="n">decomp</span><span class="o">.</span><span class="n">seasonal</span><span class="p">,</span>
+              <span class="s1">&#39;trend&#39;</span><span class="p">:</span><span class="n">decomp</span><span class="o">.</span><span class="n">trend</span><span class="p">,</span>
+              <span class="s1">&#39;resod&#39;</span><span class="p">:</span><span class="n">decomp</span><span class="o">.</span><span class="n">resid</span><span class="p">}</span>
+<span class="n">decomp_dict</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;seasonal&#39;: CrimeDateTime
+ 2014-01-05 00:00:00+00:00    -5.828279
+ 2014-01-12 00:00:00+00:00   -11.339497
+ 2014-01-19 00:00:00+00:00    -1.809048
+ 2014-01-26 00:00:00+00:00     0.894477
+ 2014-02-02 00:00:00+00:00    -5.926036
+                                ...    
+ 2021-04-25 00:00:00+00:00    -7.674433
+ 2021-05-02 00:00:00+00:00    -4.418023
+ 2021-05-09 00:00:00+00:00    -3.014177
+ 2021-05-16 00:00:00+00:00    10.702170
+ 2021-05-23 00:00:00+00:00    11.110823
+ Freq: W-SUN, Name: seasonal, Length: 386, dtype: float64,
+ &#39;trend&#39;: CrimeDateTime
+ 2014-01-05 00:00:00+00:00   NaN
+ 2014-01-12 00:00:00+00:00   NaN
+ 2014-01-19 00:00:00+00:00   NaN
+ 2014-01-26 00:00:00+00:00   NaN
+ 2014-02-02 00:00:00+00:00   NaN
+                              ..
+ 2021-04-25 00:00:00+00:00   NaN
+ 2021-05-02 00:00:00+00:00   NaN
+ 2021-05-09 00:00:00+00:00   NaN
+ 2021-05-16 00:00:00+00:00   NaN
+ 2021-05-23 00:00:00+00:00   NaN
+ Freq: W-SUN, Name: trend, Length: 386, dtype: float64,
+ &#39;resod&#39;: CrimeDateTime
+ 2014-01-05 00:00:00+00:00   NaN
+ 2014-01-12 00:00:00+00:00   NaN
+ 2014-01-19 00:00:00+00:00   NaN
+ 2014-01-26 00:00:00+00:00   NaN
+ 2014-02-02 00:00:00+00:00   NaN
+                              ..
+ 2021-04-25 00:00:00+00:00   NaN
+ 2021-05-02 00:00:00+00:00   NaN
+ 2021-05-09 00:00:00+00:00   NaN
+ 2021-05-16 00:00:00+00:00   NaN
+ 2021-05-23 00:00:00+00:00   NaN
+ Freq: W-SUN, Name: resid, Length: 386, dtype: float64}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Make a list of adfuller results to append</span>
+<span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="c1">## Save results of orig ts</span>
+<span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">adfuller_test_df</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Original&#39;</span><span class="p">]))</span>
+
+<span class="c1">## Loop through decomp dict, </span>
+<span class="k">for</span> <span class="n">trend</span><span class="p">,</span> <span class="n">ts_</span> <span class="ow">in</span> <span class="n">decomp_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="c1"># Fill any missing values, get adfuller result</span>
+    <span class="n">ts_</span> <span class="o">=</span> <span class="n">ts_</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">adfuller_test_df</span><span class="p">(</span><span class="n">ts_</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="n">trend</span><span class="p">)</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+
+    
+    <span class="c1">## Append res to decomp_stationary</span>
+
+<span class="c1">## make into a df</span>
+<span class="n">res_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+<span class="n">res_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Test Statistic</th>
+      <th>#Lags Used</th>
+      <th># of Observations Used</th>
+      <th>p-value</th>
+      <th>p&lt;.05</th>
+      <th>Stationary?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Original</th>
+      <td>-2.720824</td>
+      <td>5</td>
+      <td>380</td>
+      <td>7.050365e-02</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>seasonal</th>
+      <td>-6.405976</td>
+      <td>17</td>
+      <td>368</td>
+      <td>1.942891e-08</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>trend</th>
+      <td>-1.256098</td>
+      <td>0</td>
+      <td>385</td>
+      <td>6.490106e-01</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>resod</th>
+      <td>-9.523942</td>
+      <td>1</td>
+      <td>384</td>
+      <td>3.012835e-16</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Pldot decomp again for convenient comparison</span>
+<span class="n">decomp</span><span class="o">.</span><span class="n">plot</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/a92c8ff94bc767c6b057b534c3bfc151858bfbf47f6feeff23e77ca2a81f5274.png" src="../../_images/a92c8ff94bc767c6b057b534c3bfc151858bfbf47f6feeff23e77ca2a81f5274.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="summary">
+<h3>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Tomorrow we will continue working with the dataset we processed today for time series modeling.</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="appendix">
+<h1>APPENDIX<a class="headerlink" href="#appendix" title="Permalink to this heading">#</a></h1>
+<section id="date-str-formatting">
+<h2>Date Str Formatting<a class="headerlink" href="#date-str-formatting" title="Permalink to this heading">#</a></h2>
+<p>Formatting follows the Python datetime <strong><a href='http://strftime.org/'>strftime</a></strong> codes.<br>
+The following examples are based on <tt>datetime.datetime(2001, 2, 3, 16, 5, 6)</tt>:
+<br><br></p>
+<table style="display: inline-block">  
+<tr><th>CODE</th><th>MEANING</th><th>EXAMPLE</th><tr>
+<tr><td>%Y</td><td>Year with century as a decimal number.</td><td>2001</td></tr>
+<tr><td>%y</td><td>Year without century as a zero-padded decimal number.</td><td>01</td></tr>
+<tr><td>%m</td><td>Month as a zero-padded decimal number.</td><td>02</td></tr>
+<tr><td>%B</td><td>Month as locale’s full name.</td><td>February</td></tr>
+<tr><td>%b</td><td>Month as locale’s abbreviated name.</td><td>Feb</td></tr>
+<tr><td>%d</td><td>Day of the month as a zero-padded decimal number.</td><td>03</td></tr>  
+<tr><td>%A</td><td>Weekday as locale’s full name.</td><td>Saturday</td></tr>
+<tr><td>%a</td><td>Weekday as locale’s abbreviated name.</td><td>Sat</td></tr>
+<tr><td>%H</td><td>Hour (24-hour clock) as a zero-padded decimal number.</td><td>16</td></tr>
+<tr><td>%I</td><td>Hour (12-hour clock) as a zero-padded decimal number.</td><td>04</td></tr>
+<tr><td>%p</td><td>Locale’s equivalent of either AM or PM.</td><td>PM</td></tr>
+<tr><td>%M</td><td>Minute as a zero-padded decimal number.</td><td>05</td></tr>
+<tr><td>%S</td><td>Second as a zero-padded decimal number.</td><td>06</td></tr>
+</table>
+<table style="display: inline-block">
+<tr><th>CODE</th><th>MEANING</th><th>EXAMPLE</th><tr>
+<tr><td>%#m</td><td>Month as a decimal number. (Windows)</td><td>2</td></tr>
+<tr><td>%-m</td><td>Month as a decimal number. (Mac/Linux)</td><td>2</td></tr>
+<tr><td>%#x</td><td>Long date</td><td>Saturday, February 03, 2001</td></tr>
+<tr><td>%#c</td><td>Long date and time</td><td>Saturday, February 03, 2001 16:05:06</td></tr>
+</table>  
+</section>
+<section id="attempting-using-grouper-like-in-lab-but-not-working">
+<h2>Attempting Using Grouper like in lab, but not working<a class="headerlink" href="#attempting-using-grouper-like-in-lab-but-not-working" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ts_q = ts.to_frame()</span>
+
+<span class="c1"># ts_q#.plot()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span> <span class="c1"># Use pandas grouper to group values using annual frequency</span>
+<span class="c1"># year_groups = ts_q.groupby(pd.Grouper(freq =&#39;A&#39;))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># # Create a new DataFrame and store yearly values in columns </span>
+<span class="c1"># ts_annual = pd.DataFrame()</span>
+
+<span class="c1"># for yr, group in year_groups:</span>
+<span class="c1"># #     display(group.values)</span>
+<span class="c1"># #     ts_annual[yr.year] = group.values.ravel()</span>
+    
+<span class="c1"># # Plot the yearly groups as subplots</span>
+<span class="c1"># # ts_annual.plot(figsize = (13,8), subplots=True, legend=True);</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "learn-env-new"
+        },
+        kernelOptions: {
+            name: "learn-env-new",
+            path: "./Phase_4/topic_37_intro_to_time_series"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'learn-env-new'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../topic_36_recommendation_systems/topic_36_Recommendation_Systems_with_Surprise.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Topic 36: Recommendation Systems</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../topic_38_time_series_models/topic_38-time_series_models_v3_SG.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Topic 38: Time Series Models</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Topic 37: Intro to Time Series</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#questions">Questions?</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#intro-to-time-series">Intro to Time Series</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#working-with-time-series">Working with Time Series</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-time-series-from-a-dataframe">Creating a Time Series from a DataFrame</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-is-from-baltimore-s-open-data-portal">Data is from Baltimore’s Open-Data Portal</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preparing-data-for-time-series-visualization">Preparing Data for Time Series Visualization</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-do-we-notice-about-the-index">What do we notice about the index?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-time-series">Visualizing Time Series</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#q-what-went-wrong-what-are-we-looking-at">Q: What went wrong? What are we looking at?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#time-series-frequencies-resampling">Time Series Frequencies &amp; Resampling</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#q-it-worked-but-whats-the-issue">Q: It worked! But whats the issue?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slicing-with-time-series">Slicing With Time Series</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#much-better-sort-of-but-whats-the-issue-now">Much better! sort of… but whats the issue now?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#time-series-frequencies">Time series Frequencies</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-frequency-aliases">Pandas Frequency Aliases</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#compare-resampled-ts">Compare Resampled ts</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualize-all-crimes-as-d-freq">Visualize all CRIMES as “D” Freq</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-dictionaries-for-time-series-preprocessing">Using Dictionaries for TIme Series preprocessing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#now-that-we-have-the-same-frequency-for-each-crime-series-make-them-into-a-dataframe">Now that we have the same frequency for each crime series, make them into a dataframe</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualize-all-ts-with-the-differnet-requency-codes">Visualize all ts with the differnet requency codes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dealing-with-null-values">Dealing with Null Values</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#q-what-do-we-notice-about-our-null-values-where-are-they">Q: what do we notice about our null values? Where are they?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#time-series-trends">Time Series Trends</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-trends">Types of Trends</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stationarity">Stationarity</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#detecting-trends">Detecting Trends</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#augmented-dickey-fuller-test-for-stationarity">Augmented Dickey Fuller Test for Stationarity</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#removing-trends">Removing Trends</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#trend-removal-methods">Trend Removal Methods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#q-what-do-we-notice-what-methods-achieved-stationarity">Q: What do we notice? What methods achieved stationarity?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#seasonal-decomposition">Seasonal Decomposition</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#checking-which-components-are-stationary">Checking which components are stationary</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#appendix">APPENDIX</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#date-str-formatting">Date Str Formatting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#attempting-using-grouper-like-in-lab-but-not-working">Attempting Using Grouper like in lab, but not working</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By James Irving, PhD
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

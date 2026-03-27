@@ -1,0 +1,1369 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Topic 1: Getting Started with Data Science &#8212; Data Science Curriculum</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Phase_1/topic_01_getting_started/topic_01_getting_started';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Topic 02: Bash and Git" href="../topic_02_bash_git/topic_02_bash_and_git.html" />
+    <link rel="prev" title="Data Science Curriculum" href="../../intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/flatironschool_banner.jpg" class="logo__image only-light" alt="Data Science Curriculum - Home"/>
+    <script>document.write(`<img src="../../_static/flatironschool_banner.jpg" class="logo__image only-dark" alt="Data Science Curriculum - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Data Science Curriculum
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 1 - Python &amp; Data Fundamentals</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Topic 1: Getting Started with Data Science</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_02_bash_git/topic_02_bash_and_git.html">Topic 02:  Bash and Git</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_03_control_flow_functions/topic_03_control_flow_and_functions.html">Topic 03: Control Flow, Functions, and Statistics</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_04_python_libraries/topic_04_intro_to_libraries_numpy_SG.html">Topic 04-Part 1: Python Libraries &amp; NumPy</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_04_python_libraries/topic_04_pt-2_brief_intro_to_pandas-SG.html">Topic 04-Part 2: Brief Intro to Pandas with Doctor Who</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topic_05_data_cleaning_in_pandas/topic_05_Data_Cleaning_in_Pandas.html">Topic 05: Data Cleaning in Pandas</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_06_data_visualization/topic_06_visualizations_heroes_project_SG.html">Topic 06:  Data Visualizations</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_07_SQL_and_relational_databases/topic_07_SQL_and_relational_databases_SG.html">TOPIC 07: SQL DATABASES</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_08_noSQL_databases/topic_08_mongodb-SG.html">Topic 08: NoSQL Databases</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_09_json_and_apis/topic_09_json-api-SG.html">Topic 09: Using APIs and JSON Data</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_10_webscraping/topic_10_SG_HTML_CSS_web_scraping.html">Topic 10: HTML, CSS, &amp; Web Scraping</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 2 - Statistics &amp; Regression</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_11_probability_and_combinatorics/topic_11_playlist_probabilities-SG.html">Topic 11 - Intro to Combinatorics &amp; Probability</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_12_statistical_distributions/topic-12-distributions-with-movies-sg.html">Exploring Distributions with Movies Data</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_13_central_limit_theorem/topic_13_central_limit_theorem_SG.html">Topic 13: Central Limit Theorem</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_14_hypothesis_testing/topic_14_hypothesis_testing-SG.html">Topic 14: Hypothesis Testing -  T-Tests</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_15_ANOVA/topic_15_ANOVA_with_neuro_data-SG.html">Topic 15: ANOVAs &amp; Statistical Power with  Neuro Data</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_16_AB_testing/topic_16_AB_testing_with_movies-SG.html">Topic 16: Practicing AB Testing with Movies</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_17_bayesian_statistics/topic_17_bayesian_statistics-SG.html">Topic 17: Bayesian Statistics</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_18_linear_regression/topic_18_intro_to_linear_regression_SG.html">Topic 18: Intro to Linear Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_19_part1_multiple_regression/topic_19_Multiple_Regression_v2-SG.html">Topic 19: Multiple Linear Regression</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_19_part2_model_validation/topic_19_part_2_Multiple_Regression_v2-SG.html">Topic 19 Part 2: Feature Selection &amp; Model Validation</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_20_extensions_linear_models/topic_20_extensions_to_linear_models_SG.html">Topic 20: Extensions to Linear Models</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 3 - Machine Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_21_OOP/topic_21_OOP_playing_cards_SG.html">Topic 21: Object-Oriented Programming</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_22_linear_algebra/topic_22_linear_algebra_SG.html">Topic 22: Linear Algebra</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_23_calculus_gradient_descent/topic_23_gradient_descent_SG.html">Topic 23: Cost Functions and Gradient Descent</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_24_regularization/topic_24_Regularization_Ridge_Lasso_v2_SG.html">Topic 24: Feature Selection &amp; Regularization (Ridge and Lasso Regression)</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_25_logistic_regression/topic_25_pt1_LogisticRegression_titanic-v2-SG.html">Topic 25-Pt 1: Intro to Logistic Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_25_logistic_regression/topic_25_pt2_LogisticRegression_titanic-v2-SG.html">Topic 25-Part 2: Evaluating Classifiers, Dealing with Class Imbalance, and <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code></a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_27_KNN/Topic_27_KNN_with_pipelines_with_lab_v3_SG.html">Topic 27: K-Nearest Neighbors<br/> +Topic 32: Pipelines</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_29_decision_trees/topic_29_decision_trees_v2_titanic-SG.html">Topic 29: Decision Trees</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_30_ensemble_methods/topic_30_ensemble_methods-SG.html">Topic 30: Ensemble Methods</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_31_support_vector_machines/topic_31_SupportVectorMachines_SG.html">Topic 31: Support Vector Machines</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 4 - Advanced ML &amp; Time Series</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_33_pca/topic_33_PCA_SG.html">Topic 33: Principal Component Analysis</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_34_clustering/topic_34_Kmeans_clustering_v3_SG.html">Topic 34: Clustering</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_35-36_using_databricks_for_pyspark/using_databricks_for_pyspark.html">How to Use Databricks for PySpark Canvas Material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_36_recommendation_systems/topic_36_Recommendation_Systems_with_Surprise.html">Topic 36: Recommendation Systems</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_37_intro_to_time_series/topic_37_intro_to_time_series_crime_v3-SG.html">Topic 37: Intro to Time Series</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_38_time_series_models/topic_38-time_series_models_v3_SG.html">Topic 38: Time Series Models</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_39_NLP/topic_39_NLP_finding_trump_v3_SG.html">Topic 39: Natural Language Processing + Topic 28: Bayesian Classification</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_40-41_neural_networks/topic_40-41_Artificial_Neural_Networks_v1_SG.html">Topic 40-41: Artificial Neural Networks</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_42_tuning_neural_networks/topic_42_tuning_ANNs_with_deep_NLP_v1_SG.html">Topic 42 - Tuning Neural Networks + Deep NLP</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_43_AWS/topic_43_operationalizing_code_AWS_SG.html">Topic 43: Operationalizing Code &amp; AWS</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 5 - Capstone &amp; Bonus Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/Capstone_Kickoff.html">Capstone Kickoff!</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/APIs/working_with_apis.html">Working with APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/developing_app_functions/developing-streamlit-app-functions_SG.html">Developing Streamlit App Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/tableau/tableau_fundamentals_2021-SG.html">Tableau Fundamentals</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/Bonus%20Notebooks/plotly_visuals.html">Plotly Question</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/master?urlpath=tree/Phase_1/topic_01_getting_started/topic_01_getting_started.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/blob/master/Phase_1/topic_01_getting_started/topic_01_getting_started.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/issues/new?title=Issue%20on%20page%20%2FPhase_1/topic_01_getting_started/topic_01_getting_started.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/Phase_1/topic_01_getting_started/topic_01_getting_started.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Topic 1: Getting Started with Data Science</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Topic 1: Getting Started with Data Science</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#announcements">Announcements</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#questions-comments-issues">Questions/Comments/Issues?</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#from-questions-doc">From Questions Doc:</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#new-questions">New Questions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#walk-through-cohort-resources-resources">🚸 Walk through Cohort Resources Resources</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#walk-through-environment-setup">🚸 Walk through Environment Setup</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#question-to-the-group">Question to the group:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-if">What if…</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#i-have-a-new-mac-with-an-m1-chip">I have a new Mac with an M1 chip?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#learn-env-doesn-t-show-up-in-your-list-of-jupyter-notebook-kernels">“learn-env” doesn’t show up in your list of jupyter notebook kernels?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#your-terminal-doesn-t-activate-learn-env-automatically">Your terminal doesn’t activate learn-env automatically</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#install-a-code-editor">✅ Install a Code Editor</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#you-should-install-one-or-the-other-or-both-of-the-following">You should install one or the other (or both!) of the following:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#once-you-ve-installed-a-code-editor">Once you’ve installed a code editor:</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#install-jupyter-notebook-extensions">✅ Install Jupyter Notebook Extensions</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jupyter-notebook-extensions-resources">Jupyter Notebook Extensions Resources</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation-activation">Installation &amp; activation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#turning-on-extensions">Turning on extensions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recommended-extensions-settings">Recommended extensions &amp; settings</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#workflow-for-labs">Workflow for Labs</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#on-illumidesk">On Illumidesk</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#locally">Locally</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#git-commands-for-saving-changes">Git Commands for saving changes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#activity-if-there-s-time-remaining">⏰ Activity (if there’s time remaining)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coding-activity">Coding Activity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#demo-note-taking-with-google-colab-https-colab-research-google-com">Demo Note Taking with Google Colab - https://colab.research.google.com/</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="topic-1-getting-started-with-data-science">
+<h1>Topic 1: Getting Started with Data Science<a class="headerlink" href="#topic-1-getting-started-with-data-science" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p>022221FT Cohort</p></li>
+<li><p>02/23/21</p></li>
+</ul>
+<section id="learning-objectives">
+<h2>Learning Objectives<a class="headerlink" href="#learning-objectives" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Discuss where to find resources and highlight important ones</strong></p>
+<ul>
+<li><p>Walk through Homepage resources</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Cohort Folder</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Cheatsheets</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Student Resources Spreadsheet</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Recipe for Success</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Go over the general workflow for tackling labs on Illumidesk and in your local environment</strong></p></li>
+<li><p><strong>Environment setup review/overview</strong></p>
+<ul>
+<li><p>I will demo setting up learn-env on my own laptop.</p></li>
+<li><p>Making sure <code class="docutils literal notranslate"><span class="pre">learn-env</span></code> appear in jupyter notebook.</p></li>
+</ul>
+</li>
+<li><p><strong>Learn about Jupyter Notebook extensions</strong></p>
+<ul>
+<li><p>How to install and why?</p></li>
+<li><p>Best extensions and settings to activate/use</p></li>
+</ul>
+</li>
+<li><p><strong>Installing a code editor like SublimeText or VSCode</strong></p></li>
+</ul>
+</section>
+<section id="announcements">
+<h2>Announcements<a class="headerlink" href="#announcements" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Bonus environment troubleshooting session today from 5-6 pm EST</strong></p></li>
+</ul>
+<section id="questions-comments-issues">
+<h3>Questions/Comments/Issues?<a class="headerlink" href="#questions-comments-issues" title="Permalink to this heading">#</a></h3>
+<section id="from-questions-doc">
+<h4>From Questions Doc:<a class="headerlink" href="#from-questions-doc" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Could you explain in non-technical language what exactly we were doing in the environment setup, and how commands in Terminal are structured?</p></li>
+</ul>
+<section id="new-questions">
+<h5>New Questions<a class="headerlink" href="#new-questions" title="Permalink to this heading">#</a></h5>
+<ul class="simple">
+<li><p>The zsh message on mac’s and how to resolve it:
+<code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">BASH_SILENCE_DEPRECATION_WARNING=1</span></code></p></li>
+<li><p>Equivlents, literal strings.</p></li>
+<li><p>dive into automatic activate of learn-env</p></li>
+<li><p>Why do we have learn-env? What is the point of a virtual environment?</p></li>
+<li><p>“Hi” is “Hi” &lt;— this was True, which I thought would be False</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">list_1</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Hi&#39;</span><span class="p">]</span>
+<span class="n">list_2</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Hi&#39;</span><span class="p">]</span>
+<span class="n">list_1</span> <span class="o">==</span> <span class="n">list_2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">id</span><span class="p">(</span><span class="n">list_1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>140571449566024
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">id</span><span class="p">(</span><span class="n">list_2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>140571449602952
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">list_1</span> <span class="ow">is</span> <span class="n">list_2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>False
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;Hi&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="p">[</span><span class="s1">&#39;Hi&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>False
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">id</span><span class="p">(</span><span class="s1">&#39;Hi&#39;</span><span class="p">),</span> <span class="nb">id</span><span class="p">(</span><span class="s1">&#39;Hi&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(140571449531952, 140571449531952)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;Hi&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span> <span class="o">==</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span> <span class="ow">is</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="walk-through-cohort-resources-resources">
+<h1>🚸 Walk through Cohort Resources Resources<a class="headerlink" href="#walk-through-cohort-resources-resources" title="Permalink to this heading">#</a></h1>
+<ul class="contains-task-list simple">
+<li><p><strong>You can find lots of great resources at the top of our <a class="reference external" href="https://learning.flatironschool.com/courses/2679">Homeroom page</a></strong></p>
+<ul class="contains-task-list">
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Open Cohort Folder</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Open the Master Cheat Sheet collection</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Show the Student Resources Spreadsheet</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Open the Questions for Study Group google sheet</p></li>
+</ul>
+</li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <strong>Walk through the <a class="reference external" href="https://docs.google.com/document/d/1YvRiVr_qUMJ-tnwWegx7JN-O7CtEVBTAfboasTJH4oI/edit?usp=sharing">Recipe for Success</a></strong></p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="walk-through-environment-setup">
+<h1>🚸 Walk through Environment Setup<a class="headerlink" href="#walk-through-environment-setup" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="s1">&#39;cheese&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="contains-task-list simple">
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <strong>Walk through <a class="reference external" href="https://docs.google.com/presentation/d/1RKgrPf99l7m5r0dRvPp4nFzQQ9NgpA082boj7nvzx4M/edit?usp=sharing">Flatiron Tools: Illumidesk and Your Local Environment Slides</a></strong></p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <a class="reference external" href="https://github.com/learn-co-curriculum/dsc-data-science-env-config">Walk through setting up learn-env on my mac</a></p></li>
+</ul>
+<section id="question-to-the-group">
+<h2>Question to the group:<a class="headerlink" href="#question-to-the-group" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Who has already taken a stab at installing their environment?</p>
+<ul>
+<li><p>Success?</p></li>
+<li><p>Errors?</p></li>
+</ul>
+</li>
+<li><p>Anyone (especially windows users) getting an error every time their terminal starts about conda init?</p></li>
+</ul>
+</section>
+<section id="what-if">
+<h2>What if…<a class="headerlink" href="#what-if" title="Permalink to this heading">#</a></h2>
+<section id="i-have-a-new-mac-with-an-m1-chip">
+<h3>I have a new Mac with an M1 chip?<a class="headerlink" href="#i-have-a-new-mac-with-an-m1-chip" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>I <strong>think</strong> you should be okay with setting up your environment.</p></li>
+<li><p>I found <a class="reference external" href="https://vineethbharadwaj.medium.com/setting-up-anaconda-navigator-spyder-jupyter-python-environments-on-macbook-with-m1-chip-for-2a4b9849c1ec">this blog post that you may find helpful</a></p></li>
+<li><p>While we don’t use it until phase 4, here are some guides on install <code class="docutils literal notranslate"><span class="pre">tensorflow</span></code> on the M1 macs:</p>
+<ul>
+<li><p>Article: <a class="reference external" href="https://www.ai-buzz.com/18-steps-to-install-tensorflow_macos-on-m1-macbook-2020/">https://www.ai-buzz.com/18-steps-to-install-tensorflow_macos-on-m1-macbook-2020/</a></p></li>
+<li><p>Video: <a class="reference external" href="https://youtu.be/W_Qbrnp6uis">https://youtu.be/W_Qbrnp6uis</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="learn-env-doesn-t-show-up-in-your-list-of-jupyter-notebook-kernels">
+<h3>“learn-env” doesn’t show up in your list of jupyter notebook kernels?<a class="headerlink" href="#learn-env-doesn-t-show-up-in-your-list-of-jupyter-notebook-kernels" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Make sure that had activated your <code class="docutils literal notranslate"><span class="pre">learn-env</span></code> before booting up your notebook server.</p></li>
+<li><p>Make sure that you had entered the following command in your terminal after installing your learn-env</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="w">  </span>python<span class="w"> </span>-m<span class="w"> </span>ipykernel<span class="w"> </span>install<span class="w"> </span>--user<span class="w"> </span>--name<span class="o">=</span>learn-env<span class="sb">```</span>
+</pre></div>
+</div>
+</section>
+<section id="your-terminal-doesn-t-activate-learn-env-automatically">
+<h3>Your terminal doesn’t activate learn-env automatically<a class="headerlink" href="#your-terminal-doesn-t-activate-learn-env-automatically" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Enter the following command into your terminal (Windows Users replace <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span></code> with <code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">activate</span></code>)<br></p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;conda activate learn-env&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bash_profile<span class="sb">```</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="install-a-code-editor">
+<h1>✅ Install a Code Editor<a class="headerlink" href="#install-a-code-editor" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p>When dealing with code, the default text editing applications included in Windows and MacOS are not ideal (especially on Mac).</p></li>
+</ul>
+<section id="you-should-install-one-or-the-other-or-both-of-the-following">
+<h2>You should install one or the other (or both!) of the following:<a class="headerlink" href="#you-should-install-one-or-the-other-or-both-of-the-following" title="Permalink to this heading">#</a></h2>
+<ul class="contains-task-list simple">
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <a class="reference external" href="https://www.sublimetext.com/">SublimeText</a></p>
+<ul>
+<li><p>Great lightweight text editor with some convenient features.</p></li>
+<li><p><a class="reference external" href="https://docs.anaconda.com/anaconda/user-guide/tasks/integration/sublime/">Official Anaconda Guide on setting up SublimeText</a></p></li>
+</ul>
+</li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <a class="reference external" href="https://code.visualstudio.com/">VSCode</a></p>
+<ul>
+<li><p>Great more full-featured text editor that is bordering on being an IDE (integrated development environment)</p></li>
+<li><p><a class="reference external" href="https://docs.anaconda.com/anaconda/user-guide/tasks/integration/python-vsc/">Official Anaconda Guide on setting up VSCode</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="once-you-ve-installed-a-code-editor">
+<h2>Once you’ve installed a code editor:<a class="headerlink" href="#once-you-ve-installed-a-code-editor" title="Permalink to this heading">#</a></h2>
+<ul class="contains-task-list simple">
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Check out your ~/.bash_profile (<strong>we will discuss your .bash_profile again as part of topic 02: bash and git</strong>)</p></li>
+<li><p><strong>BONUS HACK:</strong> Add a “jnb” shortcut that allows you to type <code class="docutils literal notranslate"><span class="pre">jnb</span></code> to open jupyter notebook.</p></li>
+<li><p>Add:
+<code class="docutils literal notranslate"><span class="pre">alias</span> <span class="pre">jnb=&quot;jupyter</span> <span class="pre">notebook&quot;</span> <span class="pre">to</span> <span class="pre">your</span> <span class="pre">.bash_profile</span></code></p>
+<ul>
+<li><p>Note: if you are using a different shell besides bash, you will need to find out its equivalent of <code class="docutils literal notranslate"><span class="pre">.bash_profile</span></code> (e.g. .zschrc)</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="install-jupyter-notebook-extensions">
+<h1>✅ Install Jupyter Notebook Extensions<a class="headerlink" href="#install-jupyter-notebook-extensions" title="Permalink to this heading">#</a></h1>
+<section id="jupyter-notebook-extensions-resources">
+<h2>Jupyter Notebook Extensions Resources<a class="headerlink" href="#jupyter-notebook-extensions-resources" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://jupyter-contrib-nbextensions.readthedocs.io/en/latest/">Documentation</a></p></li>
+<li><p><a class="reference external" href="https://youtu.be/Fl7Xwr_kUkw">Study Group Video</a></p></li>
+</ul>
+</section>
+<section id="installation-activation">
+<h2>Installation &amp; activation<a class="headerlink" href="#installation-activation" title="Permalink to this heading">#</a></h2>
+<ul>
+<li><p><strong>The best way to install is via <code class="docutils literal notranslate"><span class="pre">conda</span></code></strong>
+0. Open your terminal and make sure learn-env is activated.</p>
+<ol class="arabic simple">
+<li><p>Install the extensions via conda</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="w">  </span>conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>jupyter_contrib_nbextensions
+<span class="w">  </span><span class="sb">```</span>
+
+<span class="m">2</span>.<span class="w"> </span>Activate<span class="w"> </span>the<span class="w"> </span>extension<span class="w"> </span>configurator
+<span class="sb">```</span>bash
+jupyter<span class="w"> </span>nbextension<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>jupyter_nbextensions_configurator
+<span class="w">  </span><span class="sb">```</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="turning-on-extensions">
+<h2>Turning on extensions<a class="headerlink" href="#turning-on-extensions" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>When you boot up jupyter notebook, there should be a new tab at the top called <code class="docutils literal notranslate"><span class="pre">nbextensions</span></code>.</strong> Click on the tab to open the list of available extensions.</p></li>
+<li><p>This opens a menu of all of the available extensions with checkboxes to activate them;</p>
+<ul>
+<li><p><em><strong>NOTE: If the list of available notebook extensions is grayed out:</strong></em></p>
+<ul>
+<li><p>Uncheck “<code class="docutils literal notranslate"><span class="pre">disable</span> <span class="pre">configuration</span> <span class="pre">for</span> <span class="pre">nbextensions</span> <span class="pre">without</span> <span class="pre">explicit</span> <span class="pre">compatibility</span> <span class="pre">(they</span> <span class="pre">may</span> <span class="pre">break</span> <span class="pre">your</span> <span class="pre">notebook</span> <span class="pre">environment,</span> <span class="pre">but</span> <span class="pre">can</span> <span class="pre">be</span> <span class="pre">useful</span> <span class="pre">to</span> <span class="pre">show</span> <span class="pre">for</span> <span class="pre">nbextension</span> <span class="pre">development)</span></code>” at the top of the page next to the search box.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Clicking the name of an extension will load its options menu</strong> below the table of extensions.</p></li>
+</ul>
+</section>
+<section id="recommended-extensions-settings">
+<h2>Recommended extensions &amp; settings<a class="headerlink" href="#recommended-extensions-settings" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Variable</span> <span class="pre">Inspector</span></code>:</p>
+<ul>
+<li><p>Lets you see details about all of the variables in your notebook.</p></li>
+<li><p>HUGELY helpful for new coders.</p></li>
+<li><p>Recommended options:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">Display</span> <span class="pre">window</span> <span class="pre">at</span> <span class="pre">startup</span></code> (for now while you are learning python)</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Table</span> <span class="pre">of</span> <span class="pre">Contents</span> <span class="pre">(2)</span></code>:</p>
+<ul>
+<li><p>Clickable sidebar with markdown headers as bookmarks/links.</p></li>
+<li><p>Recommended options:</p>
+<ul>
+<li><p>Change <code class="docutils literal notranslate"><span class="pre">Maximum</span> <span class="pre">level</span> <span class="pre">of</span> <span class="pre">nested</span> <span class="pre">sections</span> <span class="pre">to</span> <span class="pre">display</span> <span class="pre">on</span> <span class="pre">the</span> <span class="pre">tables</span> <span class="pre">of</span> <span class="pre">contents</span></code> to 3.</p></li>
+<li><p>Check <code class="docutils literal notranslate"><span class="pre">Display</span> <span class="pre">Table</span> <span class="pre">of</span> <span class="pre">Contents</span> <span class="pre">as</span> <span class="pre">a</span> <span class="pre">sidebar</span> <span class="pre">(otherwise</span> <span class="pre">as</span> <span class="pre">a</span> <span class="pre">floating</span> <span class="pre">window)</span></code></p></li>
+<li><p>Check <code class="docutils literal notranslate"><span class="pre">Collapse/uncollapse</span> <span class="pre">ToC</span> <span class="pre">sections</span> <span class="pre">when</span> <span class="pre">the</span> <span class="pre">collapsible_headings</span> <span class="pre">nbextension</span> <span class="pre">is</span> <span class="pre">used</span> <span class="pre">to</span> <span class="pre">collapse/uncollapse</span> <span class="pre">sections</span> <span class="pre">in</span> <span class="pre">the</span> <span class="pre">notebook.</span> <span class="pre">For</span> <span class="pre">the</span> <span class="pre">inverse</span> <span class="pre">behaviour,</span> <span class="pre">see</span> <span class="pre">collapsible_headings'</span> <span class="pre">configuration</span></code></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Collapsible</span> <span class="pre">Headings</span></code>: Collapse sections of your notebook using markdown headers.</p>
+<ul>
+<li><p>Recommended options:</p>
+<ul>
+<li><p>Check ‘Collapse/uncollapse notebook sections when the ToC2 nbextension is used to collapse/uncollapse sections in the table of contents. For the inverse behaviour, see ToC2’s configuration’ at towards the bottom of the options.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Codefolding</span></code>: Lets you collapse function definitions and blocks of code.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Live</span> <span class="pre">Markdown</span> <span class="pre">Preview</span></code>: Shows a preview of what the markdown cell you are editing will look like once you render it with Shift+Enter</p>
+<ul>
+<li><p>Recommended options:</p>
+<ul>
+<li><p>Check <code class="docutils literal notranslate"><span class="pre">Show</span> <span class="pre">the</span> <span class="pre">input</span> <span class="pre">&amp;</span> <span class="pre">output</span> <span class="pre">of</span> <span class="pre">markdown</span> <span class="pre">cells</span> <span class="pre">side-by-side</span> <span class="pre">while</span> <span class="pre">editing</span> <span class="pre">them.</span></code></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">spellchecker</span></code></p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="workflow-for-labs">
+<h1>Workflow for Labs<a class="headerlink" href="#workflow-for-labs" title="Permalink to this heading">#</a></h1>
+<section id="on-illumidesk">
+<h2>On Illumidesk<a class="headerlink" href="#on-illumidesk" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Any code done on Illumidesk will be saved to Illumidesk ONLY.</p></li>
+<li><p>In order to save your labs, you will need to follow the instructions on this repo’s README:</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/learn-co-curriculum/dsc-saving-illumidesk-work-to-github">learn-co-curriculum/dsc-saving-illumidesk-work-to-github</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="locally">
+<h2>Locally<a class="headerlink" href="#locally" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fork and clone lesson to your PC.</p></li>
+<li><p>From your terminal, <code class="docutils literal notranslate"><span class="pre">cd</span></code> into the cloned repo’s folder.</p></li>
+<li><p>Launch jupyter notebook with terminal.</p></li>
+<li><p>Complete the lab.</p></li>
+<li><p>Save &amp; checkpoint notebook</p></li>
+<li><p>In a new terminal located in the same folder, commit your changes and push to git</p>
+<ul>
+<li><p>You can use the SAME terminal, but only if you shut down Jupyter Notebook completely (the <code class="docutils literal notranslate"><span class="pre">Quit</span></code> button)</p></li>
+</ul>
+</li>
+</ul>
+<section id="git-commands-for-saving-changes">
+<h3>Git Commands for saving changes<a class="headerlink" href="#git-commands-for-saving-changes" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Note we will cover more of Git tomorrow for the S.G. on section 2</p></li>
+<li><p>To save your updated repo:</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">## cd to base folder of repo</span>
+<span class="nb">cd</span><span class="w"> </span>path/to/repo
+
+<span class="c1">## Add changes to commit</span>
+git<span class="w"> </span>add<span class="w"> </span>.
+<span class="c1"># Commit the changes with a  message</span>
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;your message here&quot;</span>
+<span class="c1"># Push changes to GitHub profile</span>
+git<span class="w"> </span>push
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Note, you can actually accomplish steps 2 and 3 above in one line of code with</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>commit<span class="w"> </span>-am<span class="w"> </span><span class="s2">&quot;message&quot;</span>
+git<span class="w"> </span>push
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="activity-if-there-s-time-remaining">
+<h1>⏰ Activity (if there’s time remaining)<a class="headerlink" href="#activity-if-there-s-time-remaining" title="Permalink to this heading">#</a></h1>
+<section id="coding-activity">
+<h2>Coding Activity<a class="headerlink" href="#coding-activity" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>For today, we will do together as a group, not as group-activity.</p></li>
+<li><p>Two Options:</p>
+<ul>
+<li><p>Data Visualziation Lab</p></li>
+<li><p>Bonus Python Review with Bento-Boxes</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="demo-note-taking-with-google-colab-https-colab-research-google-com">
+<h2>Demo Note Taking with Google Colab - <a class="reference external" href="https://colab.research.google.com/">https://colab.research.google.com/</a><a class="headerlink" href="#demo-note-taking-with-google-colab-https-colab-research-google-com" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://towardsdatascience.com/cheat-sheet-for-google-colab-63853778c093">TowardsDataScience Article Cheat-Sheet on using Google Colab</a></p></li>
+<li><p><a class="reference external" href="https://colab.research.google.com/github/tensorflow/examples/blob/master/courses/udacity_intro_to_tensorflow_for_deep_learning/l01c01_introduction_to_colab_and_python.ipynb">Official Google Colab Intro to Colab and Python Notebook</a></p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "learn-env"
+        },
+        kernelOptions: {
+            name: "learn-env",
+            path: "./Phase_1/topic_01_getting_started"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'learn-env'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../../intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Data Science Curriculum</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../topic_02_bash_git/topic_02_bash_and_git.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Topic 02:  Bash and Git</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Topic 1: Getting Started with Data Science</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#announcements">Announcements</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#questions-comments-issues">Questions/Comments/Issues?</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#from-questions-doc">From Questions Doc:</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#new-questions">New Questions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#walk-through-cohort-resources-resources">🚸 Walk through Cohort Resources Resources</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#walk-through-environment-setup">🚸 Walk through Environment Setup</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#question-to-the-group">Question to the group:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-if">What if…</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#i-have-a-new-mac-with-an-m1-chip">I have a new Mac with an M1 chip?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#learn-env-doesn-t-show-up-in-your-list-of-jupyter-notebook-kernels">“learn-env” doesn’t show up in your list of jupyter notebook kernels?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#your-terminal-doesn-t-activate-learn-env-automatically">Your terminal doesn’t activate learn-env automatically</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#install-a-code-editor">✅ Install a Code Editor</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#you-should-install-one-or-the-other-or-both-of-the-following">You should install one or the other (or both!) of the following:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#once-you-ve-installed-a-code-editor">Once you’ve installed a code editor:</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#install-jupyter-notebook-extensions">✅ Install Jupyter Notebook Extensions</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jupyter-notebook-extensions-resources">Jupyter Notebook Extensions Resources</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation-activation">Installation &amp; activation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#turning-on-extensions">Turning on extensions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recommended-extensions-settings">Recommended extensions &amp; settings</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#workflow-for-labs">Workflow for Labs</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#on-illumidesk">On Illumidesk</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#locally">Locally</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#git-commands-for-saving-changes">Git Commands for saving changes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#activity-if-there-s-time-remaining">⏰ Activity (if there’s time remaining)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coding-activity">Coding Activity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#demo-note-taking-with-google-colab-https-colab-research-google-com">Demo Note Taking with Google Colab - https://colab.research.google.com/</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By James Irving, PhD
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

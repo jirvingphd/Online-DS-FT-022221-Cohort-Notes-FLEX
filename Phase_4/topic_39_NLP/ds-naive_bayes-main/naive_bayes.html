@@ -1,0 +1,2035 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Objectives &#8212; Data Science Curriculum</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Phase_4/topic_39_NLP/ds-naive_bayes-main/naive_bayes';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/flatironschool_banner.jpg" class="logo__image only-light" alt="Data Science Curriculum - Home"/>
+    <script>document.write(`<img src="../../../_static/flatironschool_banner.jpg" class="logo__image only-dark" alt="Data Science Curriculum - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../intro.html">
+                    Data Science Curriculum
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 1 - Python &amp; Data Fundamentals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_01_getting_started/topic_01_getting_started.html">Topic 1: Getting Started with Data Science</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_02_bash_git/topic_02_bash_and_git.html">Topic 02:  Bash and Git</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_03_control_flow_functions/topic_03_control_flow_and_functions.html">Topic 03: Control Flow, Functions, and Statistics</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_04_python_libraries/topic_04_intro_to_libraries_numpy_SG.html">Topic 04-Part 1: Python Libraries &amp; NumPy</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_04_python_libraries/topic_04_pt-2_brief_intro_to_pandas-SG.html">Topic 04-Part 2: Brief Intro to Pandas with Doctor Who</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_05_data_cleaning_in_pandas/topic_05_Data_Cleaning_in_Pandas.html">Topic 05: Data Cleaning in Pandas</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_06_data_visualization/topic_06_visualizations_heroes_project_SG.html">Topic 06:  Data Visualizations</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_07_SQL_and_relational_databases/topic_07_SQL_and_relational_databases_SG.html">TOPIC 07: SQL DATABASES</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_08_noSQL_databases/topic_08_mongodb-SG.html">Topic 08: NoSQL Databases</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_09_json_and_apis/topic_09_json-api-SG.html">Topic 09: Using APIs and JSON Data</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_10_webscraping/topic_10_SG_HTML_CSS_web_scraping.html">Topic 10: HTML, CSS, &amp; Web Scraping</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 2 - Statistics &amp; Regression</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_11_probability_and_combinatorics/topic_11_playlist_probabilities-SG.html">Topic 11 - Intro to Combinatorics &amp; Probability</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_12_statistical_distributions/topic-12-distributions-with-movies-sg.html">Exploring Distributions with Movies Data</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_13_central_limit_theorem/topic_13_central_limit_theorem_SG.html">Topic 13: Central Limit Theorem</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_14_hypothesis_testing/topic_14_hypothesis_testing-SG.html">Topic 14: Hypothesis Testing -  T-Tests</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_15_ANOVA/topic_15_ANOVA_with_neuro_data-SG.html">Topic 15: ANOVAs &amp; Statistical Power with  Neuro Data</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_16_AB_testing/topic_16_AB_testing_with_movies-SG.html">Topic 16: Practicing AB Testing with Movies</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_17_bayesian_statistics/topic_17_bayesian_statistics-SG.html">Topic 17: Bayesian Statistics</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_18_linear_regression/topic_18_intro_to_linear_regression_SG.html">Topic 18: Intro to Linear Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_19_part1_multiple_regression/topic_19_Multiple_Regression_v2-SG.html">Topic 19: Multiple Linear Regression</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_19_part2_model_validation/topic_19_part_2_Multiple_Regression_v2-SG.html">Topic 19 Part 2: Feature Selection &amp; Model Validation</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_20_extensions_linear_models/topic_20_extensions_to_linear_models_SG.html">Topic 20: Extensions to Linear Models</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 3 - Machine Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_21_OOP/topic_21_OOP_playing_cards_SG.html">Topic 21: Object-Oriented Programming</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_22_linear_algebra/topic_22_linear_algebra_SG.html">Topic 22: Linear Algebra</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_23_calculus_gradient_descent/topic_23_gradient_descent_SG.html">Topic 23: Cost Functions and Gradient Descent</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_24_regularization/topic_24_Regularization_Ridge_Lasso_v2_SG.html">Topic 24: Feature Selection &amp; Regularization (Ridge and Lasso Regression)</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_25_logistic_regression/topic_25_pt1_LogisticRegression_titanic-v2-SG.html">Topic 25-Pt 1: Intro to Logistic Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_25_logistic_regression/topic_25_pt2_LogisticRegression_titanic-v2-SG.html">Topic 25-Part 2: Evaluating Classifiers, Dealing with Class Imbalance, and <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code></a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_27_KNN/Topic_27_KNN_with_pipelines_with_lab_v3_SG.html">Topic 27: K-Nearest Neighbors<br/> +Topic 32: Pipelines</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_29_decision_trees/topic_29_decision_trees_v2_titanic-SG.html">Topic 29: Decision Trees</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_30_ensemble_methods/topic_30_ensemble_methods-SG.html">Topic 30: Ensemble Methods</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_31_support_vector_machines/topic_31_SupportVectorMachines_SG.html">Topic 31: Support Vector Machines</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 4 - Advanced ML &amp; Time Series</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../topic_33_pca/topic_33_PCA_SG.html">Topic 33: Principal Component Analysis</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_34_clustering/topic_34_Kmeans_clustering_v3_SG.html">Topic 34: Clustering</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_35-36_using_databricks_for_pyspark/using_databricks_for_pyspark.html">How to Use Databricks for PySpark Canvas Material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../topic_36_recommendation_systems/topic_36_Recommendation_Systems_with_Surprise.html">Topic 36: Recommendation Systems</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_37_intro_to_time_series/topic_37_intro_to_time_series_crime_v3-SG.html">Topic 37: Intro to Time Series</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_38_time_series_models/topic_38-time_series_models_v3_SG.html">Topic 38: Time Series Models</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_39_NLP_finding_trump_v3_SG.html">Topic 39: Natural Language Processing + Topic 28: Bayesian Classification</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_40-41_neural_networks/topic_40-41_Artificial_Neural_Networks_v1_SG.html">Topic 40-41: Artificial Neural Networks</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_42_tuning_neural_networks/topic_42_tuning_ANNs_with_deep_NLP_v1_SG.html">Topic 42 - Tuning Neural Networks + Deep NLP</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_43_AWS/topic_43_operationalizing_code_AWS_SG.html">Topic 43: Operationalizing Code &amp; AWS</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 5 - Capstone &amp; Bonus Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/Capstone_Kickoff.html">Capstone Kickoff!</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/APIs/working_with_apis.html">Working with APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/developing_app_functions/developing-streamlit-app-functions_SG.html">Developing Streamlit App Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/tableau/tableau_fundamentals_2021-SG.html">Tableau Fundamentals</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/Bonus%20Notebooks/plotly_visuals.html">Plotly Question</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/master?urlpath=tree/Phase_4/topic_39_NLP/ds-naive_bayes-main/naive_bayes.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/blob/master/Phase_4/topic_39_NLP/ds-naive_bayes-main/naive_bayes.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/issues/new?title=Issue%20on%20page%20%2FPhase_4/topic_39_NLP/ds-naive_bayes-main/naive_bayes.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/Phase_4/topic_39_NLP/ds-naive_bayes-main/naive_bayes.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Objectives</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Objectives</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#motivating-the-bayesian-classifier">Motivating  The Bayesian Classifier 🧐</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#naive-bayes-setup">Naive Bayes Setup</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-s-so-great-about-this">What’s So Great About This?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-naive-assumption">The Naive Assumption</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-formula">The Formula</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-parts-can-we-find">What Parts Can We Find?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calculating-that-our-email-is-spam">Calculating That Our Email Is Spam</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extending-it-with-multiple-words">Extending It With Multiple Words</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#naive-bayes-modeling-example">Naive Bayes Modeling Example</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-bayes-s-theorem-for-classification">Using Bayes’s Theorem for Classification</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#does-this-look-like-a-classification-problem">Does this look like a classification problem?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#elephant-example">Elephant Example</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#naive-bayes-by-hand">Naive Bayes by Hand</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculation-of-likelihoods">Calculation of Likelihoods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#posteriors">Posteriors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#more-dimensions">More Dimensions</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#what-s-naive-about-this">What’s “Naive” about This?</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Posteriors</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussiannb"><code class="docutils literal notranslate"><span class="pre">GaussianNB</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comma-survey-example">Comma Survey Example</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculating-priors-and-likelihoods">Calculating Priors and Likelihoods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculating-posteriors">Calculating Posteriors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-with-multinomialnb">Comparison with <code class="docutils literal notranslate"><span class="pre">MultinomialNB</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Table of Contents<span class="tocSkip"></span></h1>
+<div class="toc"><ul class="toc-item"><li><span><a href="#Objectives" data-toc-modified-id="Objectives-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>Objectives</a></span></li><li><span><a href="#Motivating--The-Bayesian-Classifier-🧐" data-toc-modified-id="Motivating--The-Bayesian-Classifier-🧐-2"><span class="toc-item-num">2&nbsp;&nbsp;</span>Motivating  The Bayesian Classifier 🧐</a></span><ul class="toc-item"><li><span><a href="#Naive-Bayes-Setup" data-toc-modified-id="Naive-Bayes-Setup-2.1"><span class="toc-item-num">2.1&nbsp;&nbsp;</span>Naive Bayes Setup</a></span><ul class="toc-item"><li><span><a href="#What's-So-Great-About-This?" data-toc-modified-id="What's-So-Great-About-This?-2.1.1"><span class="toc-item-num">2.1.1&nbsp;&nbsp;</span>What's So Great About This?</a></span></li></ul></li><li><span><a href="#The-Naive-Assumption" data-toc-modified-id="The-Naive-Assumption-2.2"><span class="toc-item-num">2.2&nbsp;&nbsp;</span>The Naive Assumption</a></span></li><li><span><a href="#The-Formula" data-toc-modified-id="The-Formula-2.3"><span class="toc-item-num">2.3&nbsp;&nbsp;</span>The Formula</a></span><ul class="toc-item"><li><span><a href="#What-Parts-Can-We-Find?" data-toc-modified-id="What-Parts-Can-We-Find?-2.3.1"><span class="toc-item-num">2.3.1&nbsp;&nbsp;</span>What Parts Can We Find?</a></span></li></ul></li><li><span><a href="#Calculating-That-Our-Email-Is-Spam" data-toc-modified-id="Calculating-That-Our-Email-Is-Spam-2.4"><span class="toc-item-num">2.4&nbsp;&nbsp;</span>Calculating That Our Email Is Spam</a></span></li><li><span><a href="#Extending-It-With-Multiple-Words" data-toc-modified-id="Extending-It-With-Multiple-Words-2.5"><span class="toc-item-num">2.5&nbsp;&nbsp;</span>Extending It With Multiple Words</a></span></li></ul></li><li><span><a href="#Naive-Bayes-Modeling-Example" data-toc-modified-id="Naive-Bayes-Modeling-Example-3"><span class="toc-item-num">3&nbsp;&nbsp;</span>Naive Bayes Modeling Example</a></span><ul class="toc-item"><li><span><a href="#Using-Bayes's-Theorem-for-Classification" data-toc-modified-id="Using-Bayes's-Theorem-for-Classification-3.1"><span class="toc-item-num">3.1&nbsp;&nbsp;</span>Using Bayes's Theorem for Classification</a></span><ul class="toc-item"><li><span><a href="#Does-this-look-like-a-classification-problem?" data-toc-modified-id="Does-this-look-like-a-classification-problem?-3.1.1"><span class="toc-item-num">3.1.1&nbsp;&nbsp;</span>Does this look like a classification problem?</a></span></li></ul></li><li><span><a href="#Elephant-Example" data-toc-modified-id="Elephant-Example-3.2"><span class="toc-item-num">3.2&nbsp;&nbsp;</span>Elephant Example</a></span><ul class="toc-item"><li><span><a href="#Naive-Bayes-by-Hand" data-toc-modified-id="Naive-Bayes-by-Hand-3.2.1"><span class="toc-item-num">3.2.1&nbsp;&nbsp;</span>Naive Bayes by Hand</a></span></li><li><span><a href="#Calculation-of-Likelihoods" data-toc-modified-id="Calculation-of-Likelihoods-3.2.2"><span class="toc-item-num">3.2.2&nbsp;&nbsp;</span>Calculation of Likelihoods</a></span></li><li><span><a href="#Posteriors" data-toc-modified-id="Posteriors-3.2.3"><span class="toc-item-num">3.2.3&nbsp;&nbsp;</span>Posteriors</a></span></li><li><span><a href="#More-Dimensions" data-toc-modified-id="More-Dimensions-3.2.4"><span class="toc-item-num">3.2.4&nbsp;&nbsp;</span>More Dimensions</a></span></li><li><span><a href="#GaussianNB" data-toc-modified-id="GaussianNB-3.2.5"><span class="toc-item-num">3.2.5&nbsp;&nbsp;</span><a href="https://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.GaussianNB.html" target="_blank"><code>GaussianNB</code></a></a></span></li></ul></li><li><span><a href="#Comma-Survey-Example" data-toc-modified-id="Comma-Survey-Example-3.3"><span class="toc-item-num">3.3&nbsp;&nbsp;</span>Comma Survey Example</a></span><ul class="toc-item"><li><span><a href="#Calculating-Priors-and-Likelihoods" data-toc-modified-id="Calculating-Priors-and-Likelihoods-3.3.1"><span class="toc-item-num">3.3.1&nbsp;&nbsp;</span>Calculating Priors and Likelihoods</a></span></li><li><span><a href="#Calculating-Posteriors" data-toc-modified-id="Calculating-Posteriors-3.3.2"><span class="toc-item-num">3.3.2&nbsp;&nbsp;</span>Calculating Posteriors</a></span></li><li><span><a href="#Comparison-with-MultinomialNB" data-toc-modified-id="Comparison-with-MultinomialNB-3.3.3"><span class="toc-item-num">3.3.3&nbsp;&nbsp;</span>Comparison with <a href="https://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.MultinomialNB.html" target="_blank"><code>MultinomialNB</code></a></a></span></li></ul></li></ul></li></ul></div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">stats</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.naive_bayes</span><span class="w"> </span><span class="kn">import</span> <span class="n">MultinomialNB</span><span class="p">,</span> <span class="n">GaussianNB</span>
+    <span class="c1"># There is also a BernoulliNB for a dataset with binary predictors</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_confusion_matrix</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">OneHotEncoder</span>
+
+<span class="o">%</span><span class="k">matplotlib</span> inline
+</pre></div>
+</div>
+</div>
+</div>
+<section class="tex2jax_ignore mathjax_ignore" id="objectives">
+<h1>Objectives<a class="headerlink" href="#objectives" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Describe how Bayes’s Theorem can be used to make predictions of a target</p></li>
+<li><p>Identify the appropriate variant of Naive Bayes models for a particular business problem</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="motivating-the-bayesian-classifier">
+<h1>Motivating  The Bayesian Classifier 🧐<a class="headerlink" href="#motivating-the-bayesian-classifier" title="Permalink to this heading">#</a></h1>
+<blockquote>
+<div><p>Let’s take a second to go through an example to get a feel for how Bayes’ Theorem can help us with classification. Specifically about document classification</p>
+</div></blockquote>
+<p>Spam, Spam, Spam, Spam, Spam…</p>
+<p><img alt="Many cans of spam" src="../../../_images/wall_of_spam.jpeg" /></p>
+<blockquote>
+<div><p>This is the classic example: detecting email spam!</p>
+</div></blockquote>
+<p><strong>The Problem Setup</strong></p>
+<blockquote>
+<div><p>We get emails that can be either emails we care about (<em><strong>ham</strong></em> 🐷) or emails we don’t care about (<em><strong>spam</strong></em> 🥫).</p>
+<p>We can probably look at the words in the email and get an idea of whether they are spam or not just by observing if they contain red-flag words 🚩</p>
+<p>We won’t always be right, but if we see an email that uses word(s) that are more often associated with spam, then we can feel more confident as labeling that email as spam!</p>
+</div></blockquote>
+<section id="naive-bayes-setup">
+<h2>Naive Bayes Setup<a class="headerlink" href="#naive-bayes-setup" title="Permalink to this heading">#</a></h2>
+<p>What we gotta do:</p>
+<ol class="arabic simple">
+<li><p>Look at spam and not spam (ham) emails</p></li>
+<li><p>Identify words that suggest classification</p></li>
+<li><p>Determine probability that words occur in each classification</p></li>
+<li><p>Profit (classify new emails as “spam” or “ham”)</p></li>
+</ol>
+<section id="what-s-so-great-about-this">
+<h3>What’s So Great About This?<a class="headerlink" href="#what-s-so-great-about-this" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>We can keep updating our belief based on the emails we detect</p></li>
+<li><p>Relatively simple</p></li>
+<li><p>Can expand to multiple words</p></li>
+</ul>
+</section>
+</section>
+<section id="the-naive-assumption">
+<h2>The Naive Assumption<a class="headerlink" href="#the-naive-assumption" title="Permalink to this heading">#</a></h2>
+<p><span class="math notranslate nohighlight">\(P(A,B) = P(A\cap B) = P(A)\ P(B)\)</span> only if independent</p>
+<p>In practice, makes sense &amp; is usually pretty good assumption</p>
+</section>
+<section id="the-formula">
+<h2>The Formula<a class="headerlink" href="#the-formula" title="Permalink to this heading">#</a></h2>
+<p>Let’s say the word that occurs is “cash”:</p>
+<div class="math notranslate nohighlight">
+\[ P(🥫 | &quot;cash&quot;) = \frac{P(&quot;cash&quot; | 🥫)P(🥫)}{P(&quot;cash&quot;)}\]</div>
+<section id="what-parts-can-we-find">
+<h3>What Parts Can We Find?<a class="headerlink" href="#what-parts-can-we-find" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(P(&quot;cash&quot;)\)</span></p>
+<ul>
+<li><p>That’s just the probability of finding the word “cash”! Frequency of the word!</p></li>
+</ul>
+</li>
+<li><p><span class="math notranslate nohighlight">\(P(🥫)\)</span></p>
+<ul>
+<li><p>Well, we start with some data (<em>prior knowledge</em>). So frequency of the spam occurring!</p></li>
+</ul>
+</li>
+<li><p><span class="math notranslate nohighlight">\(P(&quot;cash&quot; | 🥫)\)</span></p>
+<ul>
+<li><p>How frequently is “cash” used in a known spam emails. Count the frequency across all spam emails</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="calculating-that-our-email-is-spam">
+<h2>Calculating That Our Email Is Spam<a class="headerlink" href="#calculating-that-our-email-is-spam" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Let&#39;s just say 2% of all emails have the word &quot;cash&quot; in them</span>
+<span class="n">p_cash</span> <span class="o">=</span> <span class="mf">0.02</span>
+
+<span class="c1"># We normally would measure this from our data, but we&#39;ll take </span>
+<span class="c1"># it that 10% of all emails we collected were spam</span>
+<span class="n">p_spam</span> <span class="o">=</span> <span class="mf">0.10</span>
+
+<span class="c1"># 12% of all spam emails have the word &quot;cash&quot;</span>
+<span class="n">p_cash_given_its_spam</span> <span class="o">=</span> <span class="mf">0.12</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">p_spam_given_cash</span> <span class="o">=</span> <span class="n">p_cash_given_its_spam</span> <span class="o">*</span> <span class="n">p_spam</span> <span class="o">/</span> <span class="n">p_cash</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;If the email has the word &quot;cash&quot; in it, there is a </span><span class="si">{</span><span class="n">p_spam_given_cash</span><span class="o">*</span><span class="mi">100</span><span class="si">}</span><span class="s1">% chance the email is spam&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>If the email has the word &quot;cash&quot; in it, there is a 60.0% chance the email is spam
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p><strong>Check it</strong>: Does this make sense?</p>
+</div></blockquote>
+</section>
+<section id="extending-it-with-multiple-words">
+<h2>Extending It With Multiple Words<a class="headerlink" href="#extending-it-with-multiple-words" title="Permalink to this heading">#</a></h2>
+<blockquote>
+<div><p>With more words, the more certain we can be if it is/isn’t spam</p>
+</div></blockquote>
+<p>Spam:</p>
+<div class="math notranslate nohighlight">
+\[ P(🥫\ |&quot;buy&quot;,\ &quot;cash&quot;) \propto P(&quot;buy&quot;,\ &quot;cash&quot;|\ 🥫)\ P(🥫)\]</div>
+<p>But because of independence:</p>
+<div class="math notranslate nohighlight">
+\[ P(&quot;buy&quot;,\ &quot;cash&quot;|\ 🥫) = P(&quot;buy&quot;|\ 🥫)\ P(&quot;cash&quot;|\ 🥫)\]</div>
+<p>Normalize by dividing!</p>
+<div class="math notranslate nohighlight">
+\[
+P(🥫\ |&quot;buy&quot;,\ &quot;cash&quot;)  =
+    \frac
+        {P(&quot;buy&quot;|\ 🥫)P(&quot;cash&quot;|\ 🥫)\ P(🥫)}
+        {P(&quot;buy&quot;|\ 🥫)P(&quot;cash&quot;|\ 🥫)\ P(🥫) + P(&quot;buy&quot;|\ 🐷)P(&quot;cash&quot;|\ 🐷)\ P(🐷)}
+\]</div>
+<blockquote>
+<div><p><strong>Note:</strong> If we wanted to find the most probable class (especially useful for <em>multiclass</em>), we find the maximum numerator for the given criteria</p>
+</div></blockquote>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="naive-bayes-modeling-example">
+<h1>Naive Bayes Modeling Example<a class="headerlink" href="#naive-bayes-modeling-example" title="Permalink to this heading">#</a></h1>
+<section id="using-bayes-s-theorem-for-classification">
+<h2>Using Bayes’s Theorem for Classification<a class="headerlink" href="#using-bayes-s-theorem-for-classification" title="Permalink to this heading">#</a></h2>
+<p>Let’s recall Bayes’s Theorem:</p>
+<p><span class="math notranslate nohighlight">\(\large P(h|e) = \frac{P(h)P(e|h)}{P(e)}\)</span></p>
+<section id="does-this-look-like-a-classification-problem">
+<h3>Does this look like a classification problem?<a class="headerlink" href="#does-this-look-like-a-classification-problem" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Suppose we have three competing hypotheses <span class="math notranslate nohighlight">\(\{h_1, h_2, h_3\}\)</span> that would explain our evidence <span class="math notranslate nohighlight">\(e\)</span>.</p>
+<ul>
+<li><p>Then we could use Bayes’s Theorem to calculate the posterior probabilities for each of these three:</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(P(h_1|e) = \frac{P(h_1)P(e|h_1)}{P(e)}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(P(h_2|e) = \frac{P(h_2)P(e|h_2)}{P(e)}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(P(h_3|e) = \frac{P(h_3)P(e|h_3)}{P(e)}\)</span></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Suppose the evidence is a collection of elephant weights.</p></li>
+<li><p>Suppose each of the three hypotheses claims that the elephant whose measurements we have belongs to one of the three extant elephant species (<em>L. africana</em>, <em>L. cyclotis</em>, and <em>E. maximus</em>).</p></li>
+</ul>
+<p>In that case the left-hand sides of these equations represent the probability that the elephant in question belongs to a given species.</p>
+<p>If we think of the species as our target, then <strong>this is just an ordinary classification problem</strong>.</p>
+<p>What about the right-hand sides of the equations? <strong>These other probabilities we can calculate from our dataset.</strong></p>
+<ul class="simple">
+<li><p>The priors can simply be taken to be the percentages of the different classes in the dataset.</p></li>
+<li><p>What about the likelihoods?</p>
+<ul>
+<li><p>If the relevant features are <strong>categorical</strong>, we can simply count the numbers of each category in the dataset. For example, if the features are whether the elephant has tusks or not, then, to calculate the likelihoods, we’ll just count the tusked and non-tuksed elephants per species.</p></li>
+<li><p>If the relevant features are <strong>numerical</strong>, we’ll have to do something else. A good way of proceeding is to rely on (presumed) underlying distributions of the data. <a class="reference external" href="https://medium.com/analytics-vidhya/use-naive-bayes-algorithm-for-categorical-and-numerical-data-classification-935d90ab273f">Here</a> is an example of using the normal distribution to calculate likelihoods. We’ll follow this idea below for our elephant data.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="elephant-example">
+<h2>Elephant Example<a class="headerlink" href="#elephant-example" title="Permalink to this heading">#</a></h2>
+<p>Suppose we have a dataset that looks like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">elephs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/elephants.csv&#39;</span><span class="p">,</span> <span class="n">usecols</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;height (cm)&#39;</span><span class="p">,</span>
+                                                   <span class="s1">&#39;species&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">elephs</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>height (cm)</th>
+      <th>species</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>231.683867</td>
+      <td>maximus</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>277.714843</td>
+      <td>cyclotis</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>268.228131</td>
+      <td>africana</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>267.334322</td>
+      <td>cyclotis</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>270.165582</td>
+      <td>maximus</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;fivethirtyeight&#39;</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">elephs</span><span class="p">[</span><span class="n">elephs</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;maximus&#39;</span><span class="p">][</span><span class="s1">&#39;height (cm)&#39;</span><span class="p">],</span>
+            <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;maximus&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">elephs</span><span class="p">[</span><span class="n">elephs</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;africana&#39;</span><span class="p">][</span><span class="s1">&#39;height (cm)&#39;</span><span class="p">],</span>
+            <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;africana&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">elephs</span><span class="p">[</span><span class="n">elephs</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;cyclotis&#39;</span><span class="p">][</span><span class="s1">&#39;height (cm)&#39;</span><span class="p">],</span>
+            <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;cyclotis&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/6703d783fb60cd8457dfad9e228c3729e7bc7aa29e88db3fd9e1f622f225c650.png" src="../../../_images/6703d783fb60cd8457dfad9e228c3729e7bc7aa29e88db3fd9e1f622f225c650.png" />
+</div>
+</div>
+<section id="naive-bayes-by-hand">
+<h3>Naive Bayes by Hand<a class="headerlink" href="#naive-bayes-by-hand" title="Permalink to this heading">#</a></h3>
+<p>Suppose we want to make prediction of species for some new elephant whose weight we’ve just recorded. We’ll suppose the new elephant has:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">new_ht</span> <span class="o">=</span> <span class="mi">263</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>What we want to calculate is the mean and standard deviation for height for each elephant species. We’ll use these to calculate the relevant likelihoods.</p>
+<p>So:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">max_stats</span> <span class="o">=</span> <span class="n">elephs</span><span class="p">[</span><span class="n">elephs</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;maximus&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="s1">&#39;std&#39;</span><span class="p">],</span> <span class="p">:]</span>
+<span class="n">max_stats</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>height (cm)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>mean</th>
+      <td>256.143764</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>18.270532</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cyc_stats</span> <span class="o">=</span> <span class="n">elephs</span><span class="p">[</span><span class="n">elephs</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;cyclotis&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="s1">&#39;std&#39;</span><span class="p">],</span> <span class="p">:]</span>
+<span class="n">cyc_stats</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>height (cm)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>mean</th>
+      <td>278.993125</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>14.669292</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">afr_stats</span> <span class="o">=</span> <span class="n">elephs</span><span class="p">[</span><span class="n">elephs</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;africana&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="s1">&#39;std&#39;</span><span class="p">],</span> <span class="p">:]</span>
+<span class="n">afr_stats</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>height (cm)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>mean</th>
+      <td>286.642016</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>17.127223</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">elephs</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>cyclotis    50
+africana    50
+maximus     50
+Name: species, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="calculation-of-likelihoods">
+<h3>Calculation of Likelihoods<a class="headerlink" href="#calculation-of-likelihoods" title="Permalink to this heading">#</a></h3>
+<p>We’ll use the PDFs of the normal distributions with the discovered means and standard deviations to calculate likelihoods:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">max_stats</span><span class="p">[</span><span class="s1">&#39;height (cm)&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+           <span class="n">scale</span><span class="o">=</span><span class="n">max_stats</span><span class="p">[</span><span class="s1">&#39;height (cm)&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="mi">263</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.020350724281546377
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">cyc_stats</span><span class="p">[</span><span class="s1">&#39;height (cm)&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+          <span class="n">scale</span><span class="o">=</span><span class="n">cyc_stats</span><span class="p">[</span><span class="s1">&#39;height (cm)&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="mi">263</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.015010397188804914
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">afr_stats</span><span class="p">[</span><span class="s1">&#39;height (cm)&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+          <span class="n">scale</span><span class="o">=</span><span class="n">afr_stats</span><span class="p">[</span><span class="s1">&#39;height (cm)&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="mi">263</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.008983844678436815
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="posteriors">
+<h3>Posteriors<a class="headerlink" href="#posteriors" title="Permalink to this heading">#</a></h3>
+<p>What we have just calculated are the likelihoods, i.e.:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(P(height=263 | species=maximus) = 2.04\%\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(P(height=263 | species=cyclotis) = 1.50\%\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(P(height=263 | species=africana) = 0.90\%\)</span></p></li>
+</ul>
+<p>(Notice that they do NOT sum to 1!) But what we’d really like to know are the posteriors. I.e. what are:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(P(species=maximus | height=263)\)</span>?</p></li>
+<li><p><span class="math notranslate nohighlight">\(P(species=cyclotis | height=263)\)</span>?</p></li>
+<li><p><span class="math notranslate nohighlight">\(P(species=africana | height=263)\)</span>?</p></li>
+</ul>
+<p>Since we have equal numbers of each species, every prior is equal to <span class="math notranslate nohighlight">\(\frac{1}{3}\)</span>. Thus we can calculate the probability of the evidence:</p>
+<p><span class="math notranslate nohighlight">\(P(height=263) = \frac{1}{3}(0.0204 + 0.0150 + 0.0090) = 0.0148\)</span></p>
+<p>And therefore calculate the posteriors using Bayes’s Theorem:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(P(species=maximus | height=263) = \frac{1}{3}\frac{0.0204}{0.0148} = 45.9\%\)</span>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(P(species=cyclotis | height=263) = \frac{1}{3}\frac{0.0150}{0.0148} = 33.8\%\)</span>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(P(species=africana | height=263) = \frac{1}{3}\frac{0.0090}{0.0148} = 20.3\%\)</span>.</p></li>
+</ul>
+<p>Bayes’s Theorem shows us that the largest posterior belongs to the <em>maximus</em> species. (Note also that, since the priors are all the same, the largest posterior will necessarily belong to the species with the largest likelihood!)</p>
+<p>Therefore, the <em>maximus</em> species will be our prediction for an elephant of this height.</p>
+</section>
+<section id="more-dimensions">
+<h3>More Dimensions<a class="headerlink" href="#more-dimensions" title="Permalink to this heading">#</a></h3>
+<p>In fact, we also have elephant <em>weight</em> data available in addition to their heights. To accommodate multiple features we can make use of <strong>multivariate normal</strong> distributions.</p>
+<p><img alt="multivariate-normal" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/MultivariateNormal.png/440px-MultivariateNormal.png" /></p>
+<section id="what-s-naive-about-this">
+<h4>What’s “Naive” about This?<a class="headerlink" href="#what-s-naive-about-this" title="Permalink to this heading">#</a></h4>
+<p>For multiple predictors, we make the simplifying assumption that <strong>our predictors are probablistically independent</strong>. This will often be unrealistic, but it simplifies our calculations a great deal.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">elephants</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/elephants.csv&#39;</span><span class="p">,</span>
+                       <span class="n">usecols</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;height (cm)&#39;</span><span class="p">,</span> <span class="s1">&#39;weight (lbs)&#39;</span><span class="p">,</span> <span class="s1">&#39;species&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">elephants</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>height (cm)</th>
+      <th>weight (lbs)</th>
+      <th>species</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>231.683867</td>
+      <td>6469.491895</td>
+      <td>maximus</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>277.714843</td>
+      <td>7639.806953</td>
+      <td>cyclotis</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>268.228131</td>
+      <td>8561.517693</td>
+      <td>africana</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>267.334322</td>
+      <td>7673.608014</td>
+      <td>cyclotis</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>270.165582</td>
+      <td>7259.901759</td>
+      <td>maximus</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">maximus</span> <span class="o">=</span> <span class="n">elephants</span><span class="p">[</span><span class="n">elephants</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;maximus&#39;</span><span class="p">]</span>
+<span class="n">cyclotis</span> <span class="o">=</span> <span class="n">elephants</span><span class="p">[</span><span class="n">elephants</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;cyclotis&#39;</span><span class="p">]</span>
+<span class="n">africana</span> <span class="o">=</span> <span class="n">elephants</span><span class="p">[</span><span class="n">elephants</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;africana&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Suppose our new elephant with a height of 263 cm also has a weight of 7009 lbs.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">likeli_max</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="n">maximus</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span>
+                          <span class="n">cov</span><span class="o">=</span><span class="n">maximus</span><span class="o">.</span><span class="n">cov</span><span class="p">())</span><span class="o">.</span><span class="n">pdf</span><span class="p">([</span><span class="mi">263</span><span class="p">,</span> <span class="mi">7009</span><span class="p">])</span>
+<span class="n">likeli_max</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.0464392596305256e-05
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">likeli_cyc</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="n">cyclotis</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span>
+                         <span class="n">cov</span><span class="o">=</span><span class="n">cyclotis</span><span class="o">.</span><span class="n">cov</span><span class="p">())</span><span class="o">.</span><span class="n">pdf</span><span class="p">([</span><span class="mi">263</span><span class="p">,</span> <span class="mi">7009</span><span class="p">])</span>
+<span class="n">likeli_cyc</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5.811801818372359e-07
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">likeli_afr</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="n">africana</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span>
+                         <span class="n">cov</span><span class="o">=</span><span class="n">africana</span><span class="o">.</span><span class="n">cov</span><span class="p">())</span><span class="o">.</span><span class="n">pdf</span><span class="p">([</span><span class="mi">263</span><span class="p">,</span> <span class="mi">7009</span><span class="p">])</span>
+<span class="n">likeli_afr</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4.391536207783408e-08
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id1">
+<h4>Posteriors<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">post_max</span> <span class="o">=</span> <span class="n">likeli_max</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">([</span><span class="n">likeli_max</span><span class="p">,</span> <span class="n">likeli_cyc</span><span class="p">,</span> <span class="n">likeli_afr</span><span class="p">])</span>
+<span class="n">post_cyc</span> <span class="o">=</span> <span class="n">likeli_cyc</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">([</span><span class="n">likeli_max</span><span class="p">,</span> <span class="n">likeli_cyc</span><span class="p">,</span> <span class="n">likeli_afr</span><span class="p">])</span>
+<span class="n">post_afr</span> <span class="o">=</span> <span class="n">likeli_afr</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">([</span><span class="n">likeli_max</span><span class="p">,</span> <span class="n">likeli_cyc</span><span class="p">,</span> <span class="n">likeli_afr</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">post_max</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">post_cyc</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">post_afr</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.943631704546586
+0.05240820626601878
+0.0039600891873952234
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="gaussiannb">
+<h3><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.GaussianNB.html"><code class="docutils literal notranslate"><span class="pre">GaussianNB</span></code></a><a class="headerlink" href="#gaussiannb" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gnb</span> <span class="o">=</span> <span class="n">GaussianNB</span><span class="p">(</span><span class="n">priors</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">elephants</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;species&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">elephants</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">gnb</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GaussianNB(priors=[0.3333333333333333, 0.3333333333333333, 0.3333333333333333])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gnb</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">263</span><span class="p">,</span> <span class="mi">7009</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.00425713, 0.04799459, 0.94774828]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gnb</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8947368421052632
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_confusion_matrix</span><span class="p">(</span><span class="n">gnb</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/ee86ff301400a5492703c9c281e0f06d39f542511b5d9fb7ffbf281151a7e61c.png" src="../../../_images/ee86ff301400a5492703c9c281e0f06d39f542511b5d9fb7ffbf281151a7e61c.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="comma-survey-example">
+<h2>Comma Survey Example<a class="headerlink" href="#comma-survey-example" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">commas</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/comma-survey.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">commas</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>RespondentID</th>
+      <th>In your opinion, which sentence is more gramatically correct?</th>
+      <th>Prior to reading about it above, had you heard of the serial (or Oxford) comma?</th>
+      <th>How much, if at all, do you care about the use (or lack thereof) of the serial (or Oxford) comma in grammar?</th>
+      <th>How would you write the following sentence?</th>
+      <th>When faced with using the word "data", have you ever spent time considering if the word was a singular or plural noun?</th>
+      <th>How much, if at all, do you care about the debate over the use of the word "data" as a singluar or plural noun?</th>
+      <th>In your opinion, how important or unimportant is proper use of grammar?</th>
+      <th>Gender</th>
+      <th>Age</th>
+      <th>Household Income</th>
+      <th>Education</th>
+      <th>Location (Census Region)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3292953864</td>
+      <td>It's important for a person to be honest, kind...</td>
+      <td>Yes</td>
+      <td>Some</td>
+      <td>Some experts say it's important to drink milk,...</td>
+      <td>No</td>
+      <td>Not much</td>
+      <td>Somewhat important</td>
+      <td>Male</td>
+      <td>30-44</td>
+      <td>$50,000 - $99,999</td>
+      <td>Bachelor degree</td>
+      <td>South Atlantic</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>3292950324</td>
+      <td>It's important for a person to be honest, kind...</td>
+      <td>No</td>
+      <td>Not much</td>
+      <td>Some experts say it's important to drink milk,...</td>
+      <td>No</td>
+      <td>Not much</td>
+      <td>Somewhat unimportant</td>
+      <td>Male</td>
+      <td>30-44</td>
+      <td>$50,000 - $99,999</td>
+      <td>Graduate degree</td>
+      <td>Mountain</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3292942669</td>
+      <td>It's important for a person to be honest, kind...</td>
+      <td>Yes</td>
+      <td>Some</td>
+      <td>Some experts say it's important to drink milk,...</td>
+      <td>Yes</td>
+      <td>Not at all</td>
+      <td>Very important</td>
+      <td>Male</td>
+      <td>30-44</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>East North Central</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3292932796</td>
+      <td>It's important for a person to be honest, kind...</td>
+      <td>Yes</td>
+      <td>Some</td>
+      <td>Some experts say it's important to drink milk,...</td>
+      <td>No</td>
+      <td>Some</td>
+      <td>Somewhat important</td>
+      <td>Male</td>
+      <td>18-29</td>
+      <td>NaN</td>
+      <td>Less than high school degree</td>
+      <td>Middle Atlantic</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>3292932522</td>
+      <td>It's important for a person to be honest, kind...</td>
+      <td>No</td>
+      <td>Not much</td>
+      <td>Some experts say it's important to drink milk,...</td>
+      <td>No</td>
+      <td>Not much</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The first question on the survey was about the Oxford comma.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">commas</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>924
+</pre></div>
+</div>
+</div>
+</div>
+<p>We’ll go ahead and drop the NaNs:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">commas</span> <span class="o">=</span> <span class="n">commas</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">commas</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(825, 13)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">commas</span><span class="p">[</span><span class="s1">&#39;In your opinion, which sentence is more gramatically correct?&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>It&#39;s important for a person to be honest, kind, and loyal.    470
+It&#39;s important for a person to be honest, kind and loyal.     355
+Name: In your opinion, which sentence is more gramatically correct?, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Personally, I like the Oxford comma, since it can help eliminate ambiguities, such as:</p>
+<p>“This book is dedicated to my parents, Ayn Rand, and God” <br/> vs. <br/>
+“This book is dedicated to my parents, Ayn Rand and God”</p>
+<p>Let’s see how a Naive Bayes model would make a prediction here. We’ll think of the comma preference as our target.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">commas</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>45-60    248
+30-44    205
+&gt; 60     199
+18-29    173
+Name: Age, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Suppose we want to make a prediction about Oxford comma usage for a new person who falls into the <strong>45-60 age group</strong>.</p>
+<section id="calculating-priors-and-likelihoods">
+<h3>Calculating Priors and Likelihoods<a class="headerlink" href="#calculating-priors-and-likelihoods" title="Permalink to this heading">#</a></h3>
+<p>The following code makes a table of values that count up the number of survey respondents who fall into each of eight bins (the four age groups and the two answers to the first comma question).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">commas</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">):</span>
+    <span class="n">table</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">commas</span><span class="p">[(</span><span class="n">commas</span><span class="p">[</span><span class="s1">&#39;In your opinion, which sentence is &#39;</span>\
+                                       <span class="s1">&#39;more gramatically correct?&#39;</span><span class="p">]</span> <span class="o">==</span>\
+                                        <span class="s1">&#39;It</span><span class="se">\&#39;</span><span class="s1">s important for a person to be &#39;</span>\
+                                <span class="s1">&#39;honest, kind, and loyal.&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">commas</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">value</span><span class="p">)])</span>
+    <span class="n">table</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">commas</span><span class="p">[(</span><span class="n">commas</span><span class="p">[</span><span class="s1">&#39;In your opinion, which sentence is &#39;</span>\
+                                       <span class="s1">&#39;more gramatically correct?&#39;</span><span class="p">]</span> <span class="o">==</span>\
+                                        <span class="s1">&#39;It</span><span class="se">\&#39;</span><span class="s1">s important for a person to be &#39;</span>\
+                                <span class="s1">&#39;honest, kind and loyal.&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">commas</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">value</span><span class="p">)])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[123., 121.,  90., 136.],
+       [125.,  84., 109.,  37.]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Age45-60&#39;</span><span class="p">,</span>
+                            <span class="s1">&#39;Age&gt;60&#39;</span><span class="p">,</span>
+                            <span class="s1">&#39;Age30-44&#39;</span><span class="p">,</span>
+                            <span class="s1">&#39;Age18-29&#39;</span><span class="p">])</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Age45-60</th>
+      <th>Age&gt;60</th>
+      <th>Age30-44</th>
+      <th>Age18-29</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>123.0</td>
+      <td>121.0</td>
+      <td>90.0</td>
+      <td>136.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>125.0</td>
+      <td>84.0</td>
+      <td>109.0</td>
+      <td>37.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Oxford&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Age&gt;60&#39;</span><span class="p">,</span> <span class="s1">&#39;Age45-60&#39;</span><span class="p">,</span> <span class="s1">&#39;Age30-44&#39;</span><span class="p">,</span> <span class="s1">&#39;Age18-29&#39;</span><span class="p">,</span> <span class="s1">&#39;Oxford&#39;</span><span class="p">]]</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Age&gt;60</th>
+      <th>Age45-60</th>
+      <th>Age30-44</th>
+      <th>Age18-29</th>
+      <th>Oxford</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>121.0</td>
+      <td>123.0</td>
+      <td>90.0</td>
+      <td>136.0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>84.0</td>
+      <td>125.0</td>
+      <td>109.0</td>
+      <td>37.0</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Since all we have is a single categorical feature here we can just read our likelihoods and priors right off of this table:</p>
+<p>Likelihoods:</p>
+<ul class="simple">
+<li><p>Age45-60:</p>
+<ul>
+<li><p>P(Age45-60 | Oxford=True) = <span class="math notranslate nohighlight">\(\frac{123}{470} = 0.2617\)</span>;</p></li>
+<li><p>P(Age45-60 | Oxford=False) = <span class="math notranslate nohighlight">\(\frac{125}{355} = 0.3521\)</span>.</p></li>
+</ul>
+</li>
+</ul>
+<p>Priors:</p>
+<ul class="simple">
+<li><p>P(Oxford=True) = <span class="math notranslate nohighlight">\(\frac{470}{825} = 0.5697\)</span>;</p></li>
+<li><p>P(Oxford=False) = <span class="math notranslate nohighlight">\(\frac{355}{825} = 0.4303\)</span>.</p></li>
+</ul>
+</section>
+<section id="calculating-posteriors">
+<h3>Calculating Posteriors<a class="headerlink" href="#calculating-posteriors" title="Permalink to this heading">#</a></h3>
+<p>First we’ll calculate the probability of the evidence:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align} 
+    P(Age45-60) &amp;= P(Age45-60 | Oxford=True) \cdot P(Oxford=True) \\
+                &amp; \hspace{1cm} + P(Age45-60 | Oxford=False) \cdot P(Oxford=False)\\ 
+                &amp;= 0.2617 \cdot 0.5697 + 0.3521 \cdot 0.4303 \\
+                &amp;= 0.3006
+\end{align}\end{split}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">123</span><span class="o">+</span><span class="mi">125</span><span class="p">)</span><span class="o">/</span><span class="mi">825</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.3006060606060606
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now use Bayes’s Theorem to calculate the posteriors:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+P(Oxford=True | Age45-60) &amp;= P(Oxford=True) \cdot P(Age45-60 | Oxford=True) / P(Age45-60) \\
+                          &amp;= 0.5697 \cdot 0.2617 / 0.3006 \\
+                          &amp;= 0.4960 \\
+                          \\
+P(Oxford=False | Age45-60) &amp;= P(Oxford=False) \cdot P(Age45-60 | Oxford=False) / P(Age45-60) \\ 
+                          &amp;= 0.4303 \cdot 0.3521 / 0.3006 \\
+                          &amp;= 0.5040
+\end{align}\end{split}\]</div>
+<p>Close! But our prediction for someone in the 45-60 age group will be that they <strong>do not</strong> favor the Oxford comma.</p>
+</section>
+<section id="comparison-with-multinomialnb">
+<h3>Comparison with <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.MultinomialNB.html"><code class="docutils literal notranslate"><span class="pre">MultinomialNB</span></code></a><a class="headerlink" href="#comparison-with-multinomialnb" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">comma_model</span> <span class="o">=</span> <span class="n">MultinomialNB</span><span class="p">()</span>
+
+<span class="n">ohe</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">()</span>
+<span class="n">ohe</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">commas</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">ohe</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">commas</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">todense</span><span class="p">()</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">commas</span><span class="p">[</span><span class="s1">&#39;In your opinion, which sentence is more gramatically correct?&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">comma_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MultinomialNB()
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">comma_model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.50331754, 0.49668246]])
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "learn-env-new"
+        },
+        kernelOptions: {
+            name: "learn-env-new",
+            path: "./Phase_4/topic_39_NLP/ds-naive_bayes-main"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'learn-env-new'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Objectives</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#motivating-the-bayesian-classifier">Motivating  The Bayesian Classifier 🧐</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#naive-bayes-setup">Naive Bayes Setup</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-s-so-great-about-this">What’s So Great About This?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-naive-assumption">The Naive Assumption</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-formula">The Formula</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-parts-can-we-find">What Parts Can We Find?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calculating-that-our-email-is-spam">Calculating That Our Email Is Spam</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extending-it-with-multiple-words">Extending It With Multiple Words</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#naive-bayes-modeling-example">Naive Bayes Modeling Example</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-bayes-s-theorem-for-classification">Using Bayes’s Theorem for Classification</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#does-this-look-like-a-classification-problem">Does this look like a classification problem?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#elephant-example">Elephant Example</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#naive-bayes-by-hand">Naive Bayes by Hand</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculation-of-likelihoods">Calculation of Likelihoods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#posteriors">Posteriors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#more-dimensions">More Dimensions</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#what-s-naive-about-this">What’s “Naive” about This?</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Posteriors</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussiannb"><code class="docutils literal notranslate"><span class="pre">GaussianNB</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comma-survey-example">Comma Survey Example</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculating-priors-and-likelihoods">Calculating Priors and Likelihoods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculating-posteriors">Calculating Posteriors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-with-multinomialnb">Comparison with <code class="docutils literal notranslate"><span class="pre">MultinomialNB</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By James Irving, PhD
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

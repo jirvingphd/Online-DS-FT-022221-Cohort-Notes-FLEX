@@ -1,0 +1,5155 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>TOPIC 07: SQL DATABASES &#8212; Data Science Curriculum</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Phase_1/topic_07_SQL_and_relational_databases/topic_07_SQL_and_relational_databases_SG';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Topic 08: NoSQL Databases" href="../topic_08_noSQL_databases/topic_08_mongodb-SG.html" />
+    <link rel="prev" title="Topic 06: Data Visualizations" href="../topic_06_data_visualization/topic_06_visualizations_heroes_project_SG.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/flatironschool_banner.jpg" class="logo__image only-light" alt="Data Science Curriculum - Home"/>
+    <script>document.write(`<img src="../../_static/flatironschool_banner.jpg" class="logo__image only-dark" alt="Data Science Curriculum - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Data Science Curriculum
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 1 - Python &amp; Data Fundamentals</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../topic_01_getting_started/topic_01_getting_started.html">Topic 1: Getting Started with Data Science</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_02_bash_git/topic_02_bash_and_git.html">Topic 02:  Bash and Git</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_03_control_flow_functions/topic_03_control_flow_and_functions.html">Topic 03: Control Flow, Functions, and Statistics</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_04_python_libraries/topic_04_intro_to_libraries_numpy_SG.html">Topic 04-Part 1: Python Libraries &amp; NumPy</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_04_python_libraries/topic_04_pt-2_brief_intro_to_pandas-SG.html">Topic 04-Part 2: Brief Intro to Pandas with Doctor Who</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topic_05_data_cleaning_in_pandas/topic_05_Data_Cleaning_in_Pandas.html">Topic 05: Data Cleaning in Pandas</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_06_data_visualization/topic_06_visualizations_heroes_project_SG.html">Topic 06:  Data Visualizations</a></li>
+
+
+
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">TOPIC 07: SQL DATABASES</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_08_noSQL_databases/topic_08_mongodb-SG.html">Topic 08: NoSQL Databases</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_09_json_and_apis/topic_09_json-api-SG.html">Topic 09: Using APIs and JSON Data</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_10_webscraping/topic_10_SG_HTML_CSS_web_scraping.html">Topic 10: HTML, CSS, &amp; Web Scraping</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 2 - Statistics &amp; Regression</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_11_probability_and_combinatorics/topic_11_playlist_probabilities-SG.html">Topic 11 - Intro to Combinatorics &amp; Probability</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_12_statistical_distributions/topic-12-distributions-with-movies-sg.html">Exploring Distributions with Movies Data</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_13_central_limit_theorem/topic_13_central_limit_theorem_SG.html">Topic 13: Central Limit Theorem</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_14_hypothesis_testing/topic_14_hypothesis_testing-SG.html">Topic 14: Hypothesis Testing -  T-Tests</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_15_ANOVA/topic_15_ANOVA_with_neuro_data-SG.html">Topic 15: ANOVAs &amp; Statistical Power with  Neuro Data</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_16_AB_testing/topic_16_AB_testing_with_movies-SG.html">Topic 16: Practicing AB Testing with Movies</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_17_bayesian_statistics/topic_17_bayesian_statistics-SG.html">Topic 17: Bayesian Statistics</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_18_linear_regression/topic_18_intro_to_linear_regression_SG.html">Topic 18: Intro to Linear Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_19_part1_multiple_regression/topic_19_Multiple_Regression_v2-SG.html">Topic 19: Multiple Linear Regression</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_19_part2_model_validation/topic_19_part_2_Multiple_Regression_v2-SG.html">Topic 19 Part 2: Feature Selection &amp; Model Validation</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_20_extensions_linear_models/topic_20_extensions_to_linear_models_SG.html">Topic 20: Extensions to Linear Models</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 3 - Machine Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_21_OOP/topic_21_OOP_playing_cards_SG.html">Topic 21: Object-Oriented Programming</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_22_linear_algebra/topic_22_linear_algebra_SG.html">Topic 22: Linear Algebra</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_23_calculus_gradient_descent/topic_23_gradient_descent_SG.html">Topic 23: Cost Functions and Gradient Descent</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_24_regularization/topic_24_Regularization_Ridge_Lasso_v2_SG.html">Topic 24: Feature Selection &amp; Regularization (Ridge and Lasso Regression)</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_25_logistic_regression/topic_25_pt1_LogisticRegression_titanic-v2-SG.html">Topic 25-Pt 1: Intro to Logistic Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_25_logistic_regression/topic_25_pt2_LogisticRegression_titanic-v2-SG.html">Topic 25-Part 2: Evaluating Classifiers, Dealing with Class Imbalance, and <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code></a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_27_KNN/Topic_27_KNN_with_pipelines_with_lab_v3_SG.html">Topic 27: K-Nearest Neighbors<br/> +Topic 32: Pipelines</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_29_decision_trees/topic_29_decision_trees_v2_titanic-SG.html">Topic 29: Decision Trees</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_30_ensemble_methods/topic_30_ensemble_methods-SG.html">Topic 30: Ensemble Methods</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_31_support_vector_machines/topic_31_SupportVectorMachines_SG.html">Topic 31: Support Vector Machines</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 4 - Advanced ML &amp; Time Series</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_33_pca/topic_33_PCA_SG.html">Topic 33: Principal Component Analysis</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_34_clustering/topic_34_Kmeans_clustering_v3_SG.html">Topic 34: Clustering</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_35-36_using_databricks_for_pyspark/using_databricks_for_pyspark.html">How to Use Databricks for PySpark Canvas Material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_36_recommendation_systems/topic_36_Recommendation_Systems_with_Surprise.html">Topic 36: Recommendation Systems</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_37_intro_to_time_series/topic_37_intro_to_time_series_crime_v3-SG.html">Topic 37: Intro to Time Series</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_38_time_series_models/topic_38-time_series_models_v3_SG.html">Topic 38: Time Series Models</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_39_NLP/topic_39_NLP_finding_trump_v3_SG.html">Topic 39: Natural Language Processing + Topic 28: Bayesian Classification</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_40-41_neural_networks/topic_40-41_Artificial_Neural_Networks_v1_SG.html">Topic 40-41: Artificial Neural Networks</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_42_tuning_neural_networks/topic_42_tuning_ANNs_with_deep_NLP_v1_SG.html">Topic 42 - Tuning Neural Networks + Deep NLP</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_43_AWS/topic_43_operationalizing_code_AWS_SG.html">Topic 43: Operationalizing Code &amp; AWS</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 5 - Capstone &amp; Bonus Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/Capstone_Kickoff.html">Capstone Kickoff!</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/APIs/working_with_apis.html">Working with APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/developing_app_functions/developing-streamlit-app-functions_SG.html">Developing Streamlit App Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/tableau/tableau_fundamentals_2021-SG.html">Tableau Fundamentals</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/Bonus%20Notebooks/plotly_visuals.html">Plotly Question</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/master?urlpath=tree/Phase_1/topic_07_SQL_and_relational_databases/topic_07_SQL_and_relational_databases_SG.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/blob/master/Phase_1/topic_07_SQL_and_relational_databases/topic_07_SQL_and_relational_databases_SG.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/issues/new?title=Issue%20on%20page%20%2FPhase_1/topic_07_SQL_and_relational_databases/topic_07_SQL_and_relational_databases_SG.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/Phase_1/topic_07_SQL_and_relational_databases/topic_07_SQL_and_relational_databases_SG.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>TOPIC 07: SQL DATABASES</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">TOPIC 07: SQL DATABASES</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">LEARNING OBJECTIVES:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#breakout-group-activity-survive-on-sql-island">🏝 Breakout Group Activity:  Survive on sql-island</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#questions">Questions:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sql-databases">SQL Databases</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#q-why-do-we-need-databases-why-can-t-we-just-use-a-bunch-of-pandas-dataframes">⨠ Q: Why do we need databases? Why can’t we just use a bunch of Pandas DataFrames?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#querying-databases-selecting-data">Querying Databases - <code class="docutils literal notranslate"><span class="pre">SELECT</span></code>ing data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sql-with-sqlite3">SQL with <code class="docutils literal notranslate"><span class="pre">sqlite3</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-get-all-of-the-table-names-in-a-database">How to get all of the table names in a database</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-get-the-column-names-after-executing-a-query">How to get the column names after executing a query:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-activity-make-executing-the-query-dataframe-into-a-function">Quick Activity: Make executing the query -&gt; dataframe into a function</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-and-ordering">FILTERING AND ORDERING</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grouping-data-with-sql">GROUPING DATA WITH SQL</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aliasing">ALIASING</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-where-clause">The <code class="docutils literal notranslate"><span class="pre">WHERE</span></code> Clause</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-having-clause">The <code class="docutils literal notranslate"><span class="pre">HAVING</span></code> clause</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#combining-where-and-having">Combining <code class="docutils literal notranslate"><span class="pre">WHERE</span></code> and <code class="docutils literal notranslate"><span class="pre">HAVING</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#joins">JOINS</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-joins">TYPES OF JOINS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#join-statements"><code class="docutils literal notranslate"><span class="pre">JOIN</span></code> Statements</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#primary-vs-foreign-keys">Primary vs Foreign Keys</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-using-clause">The <code class="docutils literal notranslate"><span class="pre">USING</span></code> clause</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#task-displaying-product-details-along-with-order-details">Task: Displaying product details along with order details</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-relationships-between-tables">Types of Relationships Between Tables</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#one-to-one-one-to-many-many-to-many-joins">One-to-One, One-to-many, many-to-many Joins</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#one-to-one">One-to-One</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#one-to-many">One-to-Many</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#many-to-many">Many-to-Many</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sql-subqueries">SQL Subqueries</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-subquery">Example Subquery</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-sql">Pandas + SQL</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-sql-like-queries-in-pandas-df-query">Using SQL-like queries in Pandas - <code class="docutils literal notranslate"><span class="pre">df.query()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-sql-syntax-with-pandasql">Using SQL syntax with <code class="docutils literal notranslate"><span class="pre">pandasql</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-pandasql">Importing pandasql</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#writing-queries">Writing Queries</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#database-admin-101">DATABASE ADMIN 101</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-tables-sql-data-types">Creating Tables/SQL Data Types</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dropping-a-table">Dropping a Table</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-values-to-a-table">Adding values to a table</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">🏝 Breakout Group Activity:  Survive on sql-island</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fist-change-language-to-english">Fist, change language to English</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#take-note-of-the-tables-and-column-names">Take Note of the Tables and Column Names</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="topic-07-sql-databases">
+<h1>TOPIC 07: SQL DATABASES<a class="headerlink" href="#topic-07-sql-databases" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p>onl01-dtsc-ft-022221</p></li>
+<li><p>03/05/21</p></li>
+</ul>
+<section id="learning-objectives">
+<h2>LEARNING OBJECTIVES:<a class="headerlink" href="#learning-objectives" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Understand what a relational database is and how it is different than a DataFrame/Excel sheet.</p></li>
+<li><p>Understand how to read database map (AKA “Entity Relationship Diagram (ERD)”)</p>
+<ul>
+<li><p>Primary keys vs forgein keys</p></li>
+</ul>
+</li>
+<li><p>Understand how to select, filter, order, and group data using SQL</p></li>
+<li><p>Understand the different types of Joins</p></li>
+</ul>
+<section id="breakout-group-activity-survive-on-sql-island">
+<h3>🏝 Breakout Group Activity:  <a class="reference external" href="https://sql-island.informatik.uni-kl.de/">Survive on sql-island</a><a class="headerlink" href="#breakout-group-activity-survive-on-sql-island" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="questions">
+<h3>Questions:<a class="headerlink" href="#questions" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>When doing some of the admin tasks like inserting rows, I tried to run an insert command again and got a “database is locked” error. In what circumstances does this happen, and are there best practices for closing the connection to avoid locking?</p></li>
+<li><p>The SQL quiz had a question about the role of Associated Entities on many-to-many joins. I went back through the lessons and couldn’t find a section which talked about that term. What should we know about many-to-many joins other than that they can become very large?</p></li>
+<li><p>Can you rephrase the below statement?</p></li>
+</ul>
+<blockquote>
+<div><p>“For example, let’s say you have another table ‘restaurants’ that has many columns including name, city, and rating. If you were to join this ‘restaurants’ table with the offices table using the shared city column, you might get some unexpected behavior. That is, in the office table, there is only one office per city. However, because there will likely be more than one restaurant for each of these cities in your second table, you will get unique combinations of Offices and Restaurants from your join. If there are 513 restaurants for Boston in your restaurant table and 1 office for Boston, your joined table will have each of these 513 rows, one for each restaurant along with the one office.<br>
+If you had 2 offices for Boston and 513 restaurants, your join would have 1026 rows for Boston; 513 for each restaurant along with the first office and 513 for each restaurant with the second office. Three offices in Boston would similarly produce 1539 rows; one for each unique combination of restaurants and offices. This is where you should be particularly careful of many to many joins as the resulting set size can explode drastically potentially consuming vast amounts of memory and other resources.”</p>
+</div></blockquote>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="sql-databases">
+<h1>SQL Databases<a class="headerlink" href="#sql-databases" title="Permalink to this heading">#</a></h1>
+<img src="https://raw.githubusercontent.com/learn-co-students/dsc-sql-introduction-online-ds-sp-000/master/images/Database-Schema.png"><ul class="simple">
+<li><p>SQL is designed to work with <strong>relational data</strong>.</p></li>
+<li><p>This really just means pieces of data that are <strong>related to eachother</strong>.</p></li>
+<li><p>Each table has a <strong>primary key</strong> (like a DataFrame index), with a unique index for each row in the database.</p></li>
+<li><p>The name of the primary key is preceded by an asterix (*).</p></li>
+<li><p>Columns that are the <strong>primary key one on table</strong> can also appear on <strong>other tables</strong>.</p>
+<ul>
+<li><p>Then it is refered to as a <strong>foreign key</strong> aka the primary key from a different (“foreign”) table.</p></li>
+</ul>
+</li>
+</ul>
+<section id="q-why-do-we-need-databases-why-can-t-we-just-use-a-bunch-of-pandas-dataframes">
+<h2>⨠ Q: Why do we need databases? Why can’t we just use a bunch of Pandas DataFrames?<a class="headerlink" href="#q-why-do-we-need-databases-why-can-t-we-just-use-a-bunch-of-pandas-dataframes" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li></li>
+</ul>
+</section>
+<section id="querying-databases-selecting-data">
+<h2>Querying Databases - <code class="docutils literal notranslate"><span class="pre">SELECT</span></code>ing data<a class="headerlink" href="#querying-databases-selecting-data" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>To retrieve data from one or more tables you usually use a <code class="docutils literal notranslate"><span class="pre">SELECT</span></code> statement.</p></li>
+</ul>
+<div class="highlight-SQL notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">table</span><span class="p">;</span>
+</pre></div>
+</div>
+<blockquote>
+<div><ul class="simple">
+<li><p>NOTE: SQL queries dot not <em>have</em> to be all-caps, but it is a convention to help differentiate sql syntax versus names of tables/columns.</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>A more advanced select query.</p></li>
+</ul>
+<div class="highlight-SQL notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">col1</span><span class="p">,</span><span class="w"> </span><span class="n">col2</span><span class="p">,</span><span class="w"> </span><span class="n">col3</span>
+<span class="k">FROM</span><span class="w"> </span><span class="k">table</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">records</span><span class="w"> </span><span class="k">match</span><span class="w"> </span><span class="n">criteria</span>
+<span class="k">LIMIT</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>All select statements must:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>start with the <code class="docutils literal notranslate"><span class="pre">SELECT</span></code></strong></p></li>
+<li><p>followed by <strong>what you want to select</strong>. Separate multiple column names separated by a <code class="docutils literal notranslate"><span class="pre">,</span></code></p></li>
+<li><p>Then specify where the data is coming <code class="docutils literal notranslate"><span class="pre">FROM</span></code> followed by the table name.</p></li>
+<li><p><strong>Afterward, you can provide conditions such as filters or sorting</strong>.</p></li>
+</ol>
+</li>
+</ul>
+<div class="highlight-SQL notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">payments</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">amount</span><span class="w"> </span><span class="k">DESC</span>
+<span class="k">LIMIT</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
+</pre></div>
+</div>
+<!-- 
+```SQL
+
+```
+ -->
+</section>
+<section id="sql-with-sqlite3">
+<h2>SQL with <code class="docutils literal notranslate"><span class="pre">sqlite3</span></code><a class="headerlink" href="#sql-with-sqlite3" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">sqlite3</span></code> for SQL queries in Python.</p>
+<ol class="arabic simple">
+<li><p>Connect to database</p></li>
+<li><p>Create a cursor.</p></li>
+<li><p>Form your query</p></li>
+<li><p>Execute/fetch your results.</p></li>
+</ol>
+</li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sqlite3</span>
+<span class="n">connection</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;pet_database.db&#39;</span><span class="p">)</span> <span class="c1"># Creates pet_database, but empty until create a table    </span>
+<span class="n">cursor</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+
+<span class="c1"># Select from table</span>
+<span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;SELECT name FROM cats;&#39;&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;/Users/jamesirving/Documents/GitHub/_COHORT_NOTES/022221FT/Online-DS-FT-022221-Cohort-Notes/Phase_1/topic_07_SQL_and_relational_databases&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Our data.sqlite is in the datasets folder in our note repo.</span>
+<span class="n">db</span> <span class="o">=</span> <span class="s1">&#39;../../datasets/SQL/data.sqlite&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sqlite3</span>
+<span class="c1"># connect to database</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">db</span><span class="p">)</span>
+<span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+<span class="nb">type</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>sqlite3.Connection
+</pre></div>
+</div>
+</div>
+</div>
+<section id="how-to-get-all-of-the-table-names-in-a-database">
+<h3>How to get all of the table names in a database<a class="headerlink" href="#how-to-get-all-of-the-table-names-in-a-database" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><p>The container for all tables in a database with sqlite3 is called <code class="docutils literal notranslate"><span class="pre">sqlite_master</span></code></p></li>
+<li><p>We can find the name of all of the tables in a db using:</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>table_names = cur.execute(“””
+SELECT name
+FROM sqlite_master
+WHERE type=’table’;
+“””).fetchall()</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get table names</span>
+<span class="n">table_names</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">SELECT name </span>
+<span class="s2">FROM sqlite_master </span>
+<span class="s2">WHERE type=&#39;table&#39;;</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+<span class="n">table_names</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(&#39;orderdetails&#39;,),
+ (&#39;payments&#39;,),
+ (&#39;offices&#39;,),
+ (&#39;customers&#39;,),
+ (&#39;orders&#39;,),
+ (&#39;productlines&#39;,),
+ (&#39;products&#39;,),
+ (&#39;employees&#39;,),
+ (&#39;cats&#39;,)]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Clean up the list of table names to be just 1 list with strings</span>
+<span class="n">table_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">table_names</span><span class="p">]</span>
+<span class="n">table_names</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;orderdetails&#39;,
+ &#39;payments&#39;,
+ &#39;offices&#39;,
+ &#39;customers&#39;,
+ &#39;orders&#39;,
+ &#39;productlines&#39;,
+ &#39;products&#39;,
+ &#39;employees&#39;,
+ &#39;cats&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<img src="https://raw.githubusercontent.com/learn-co-students/dsc-sql-introduction-online-ds-sp-000/master/images/Database-Schema.png" width=500></section>
+<section id="how-to-get-the-column-names-after-executing-a-query">
+<h3>How to get the column names after executing a query:<a class="headerlink" href="#how-to-get-the-column-names-after-executing-a-query" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;select * from products&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">fetchall</span><span class="p">())</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>S10_1678</td>
+      <td>1969 Harley Davidson Ultimate Chopper</td>
+      <td>Motorcycles</td>
+      <td>1:10</td>
+      <td>Min Lin Diecast</td>
+      <td>This replica features working kickstand, front...</td>
+      <td>7933</td>
+      <td>48.81</td>
+      <td>95.70</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>S10_1949</td>
+      <td>1952 Alpine Renault 1300</td>
+      <td>Classic Cars</td>
+      <td>1:10</td>
+      <td>Classic Metal Creations</td>
+      <td>Turnable front wheels; steering function; deta...</td>
+      <td>7305</td>
+      <td>98.58</td>
+      <td>214.30</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>S10_2016</td>
+      <td>1996 Moto Guzzi 1100i</td>
+      <td>Motorcycles</td>
+      <td>1:10</td>
+      <td>Highway 66 Mini Classics</td>
+      <td>Official Moto Guzzi logos and insignias, saddl...</td>
+      <td>6625</td>
+      <td>68.99</td>
+      <td>118.94</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>S10_4698</td>
+      <td>2003 Harley-Davidson Eagle Drag Bike</td>
+      <td>Motorcycles</td>
+      <td>1:10</td>
+      <td>Red Start Diecast</td>
+      <td>Model features, official Harley Davidson logos...</td>
+      <td>5582</td>
+      <td>91.02</td>
+      <td>193.66</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>S10_4757</td>
+      <td>1972 Alfa Romeo GTA</td>
+      <td>Classic Cars</td>
+      <td>1:10</td>
+      <td>Motor City Art Classics</td>
+      <td>Features include: Turnable front wheels; steer...</td>
+      <td>3252</td>
+      <td>85.68</td>
+      <td>136.00</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>105</th>
+      <td>S700_3505</td>
+      <td>The Titanic</td>
+      <td>Ships</td>
+      <td>1:700</td>
+      <td>Carousel DieCast Legends</td>
+      <td>Completed model measures 19 1/2 inches long, 9...</td>
+      <td>1956</td>
+      <td>51.09</td>
+      <td>100.17</td>
+    </tr>
+    <tr>
+      <th>106</th>
+      <td>S700_3962</td>
+      <td>The Queen Mary</td>
+      <td>Ships</td>
+      <td>1:700</td>
+      <td>Welly Diecast Productions</td>
+      <td>Exact replica. Wood and Metal. Many extras inc...</td>
+      <td>5088</td>
+      <td>53.63</td>
+      <td>99.31</td>
+    </tr>
+    <tr>
+      <th>107</th>
+      <td>S700_4002</td>
+      <td>American Airlines: MD-11S</td>
+      <td>Planes</td>
+      <td>1:700</td>
+      <td>Second Gear Diecast</td>
+      <td>Polished finish. Exact replia with official lo...</td>
+      <td>8820</td>
+      <td>36.27</td>
+      <td>74.03</td>
+    </tr>
+    <tr>
+      <th>108</th>
+      <td>S72_1253</td>
+      <td>Boeing X-32A JSF</td>
+      <td>Planes</td>
+      <td>1:72</td>
+      <td>Motor City Art Classics</td>
+      <td>10" Wingspan with retractable landing gears.Co...</td>
+      <td>4857</td>
+      <td>32.77</td>
+      <td>49.66</td>
+    </tr>
+    <tr>
+      <th>109</th>
+      <td>S72_3212</td>
+      <td>Pont Yacht</td>
+      <td>Ships</td>
+      <td>1:72</td>
+      <td>Unimax Art Galleries</td>
+      <td>Measures 38 inches Long x 33 3/4 inches High. ...</td>
+      <td>414</td>
+      <td>33.30</td>
+      <td>54.60</td>
+    </tr>
+  </tbody>
+</table>
+<p>110 rows × 9 columns</p>
+</div></div></div>
+</div>
+<blockquote>
+<div><ul class="simple">
+<li><p>the cursor has a <code class="docutils literal notranslate"><span class="pre">.description</span></code> that contains information about the column names</p></li>
+</ul>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cur</span><span class="o">.</span><span class="n">description</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>((&#39;productCode&#39;, None, None, None, None, None, None),
+ (&#39;productName&#39;, None, None, None, None, None, None),
+ (&#39;productLine&#39;, None, None, None, None, None, None),
+ (&#39;productScale&#39;, None, None, None, None, None, None),
+ (&#39;productVendor&#39;, None, None, None, None, None, None),
+ (&#39;productDescription&#39;, None, None, None, None, None, None),
+ (&#39;quantityInStock&#39;, None, None, None, None, None, None),
+ (&#39;buyPrice&#39;, None, None, None, None, None, None),
+ (&#39;MSRP&#39;, None, None, None, None, None, None))
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Get a list of just the column names from the description</span>
+<span class="n">col_names</span> <span class="o">=</span><span class="p">[</span><span class="n">col</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cur</span><span class="o">.</span><span class="n">description</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">col_names</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;productCode&#39;, &#39;productName&#39;, &#39;productLine&#39;, &#39;productScale&#39;, &#39;productVendor&#39;, &#39;productDescription&#39;, &#39;quantityInStock&#39;, &#39;buyPrice&#39;, &#39;MSRP&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;select * from products&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fetchall</span><span class="p">(),</span>
+                  <span class="n">columns</span><span class="o">=</span><span class="n">col_names</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>productCode</th>
+      <th>productName</th>
+      <th>productLine</th>
+      <th>productScale</th>
+      <th>productVendor</th>
+      <th>productDescription</th>
+      <th>quantityInStock</th>
+      <th>buyPrice</th>
+      <th>MSRP</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>S10_1678</td>
+      <td>1969 Harley Davidson Ultimate Chopper</td>
+      <td>Motorcycles</td>
+      <td>1:10</td>
+      <td>Min Lin Diecast</td>
+      <td>This replica features working kickstand, front...</td>
+      <td>7933</td>
+      <td>48.81</td>
+      <td>95.70</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>S10_1949</td>
+      <td>1952 Alpine Renault 1300</td>
+      <td>Classic Cars</td>
+      <td>1:10</td>
+      <td>Classic Metal Creations</td>
+      <td>Turnable front wheels; steering function; deta...</td>
+      <td>7305</td>
+      <td>98.58</td>
+      <td>214.30</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>S10_2016</td>
+      <td>1996 Moto Guzzi 1100i</td>
+      <td>Motorcycles</td>
+      <td>1:10</td>
+      <td>Highway 66 Mini Classics</td>
+      <td>Official Moto Guzzi logos and insignias, saddl...</td>
+      <td>6625</td>
+      <td>68.99</td>
+      <td>118.94</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>S10_4698</td>
+      <td>2003 Harley-Davidson Eagle Drag Bike</td>
+      <td>Motorcycles</td>
+      <td>1:10</td>
+      <td>Red Start Diecast</td>
+      <td>Model features, official Harley Davidson logos...</td>
+      <td>5582</td>
+      <td>91.02</td>
+      <td>193.66</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>S10_4757</td>
+      <td>1972 Alfa Romeo GTA</td>
+      <td>Classic Cars</td>
+      <td>1:10</td>
+      <td>Motor City Art Classics</td>
+      <td>Features include: Turnable front wheels; steer...</td>
+      <td>3252</td>
+      <td>85.68</td>
+      <td>136.00</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;PRAGMA table_info(products)&quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(0, &#39;productCode&#39;, &#39;&#39;, 0, None, 0),
+ (1, &#39;productName&#39;, &#39;&#39;, 0, None, 0),
+ (2, &#39;productLine&#39;, &#39;&#39;, 0, None, 0),
+ (3, &#39;productScale&#39;, &#39;&#39;, 0, None, 0),
+ (4, &#39;productVendor&#39;, &#39;&#39;, 0, None, 0),
+ (5, &#39;productDescription&#39;, &#39;&#39;, 0, None, 0),
+ (6, &#39;quantityInStock&#39;, &#39;&#39;, 0, None, 0),
+ (7, &#39;buyPrice&#39;, &#39;&#39;, 0, None, 0),
+ (8, &#39;MSRP&#39;, &#39;&#39;, 0, None, 0)]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">query_to_df</span><span class="p">(</span><span class="n">query</span><span class="p">,</span><span class="n">cursor</span><span class="o">=</span><span class="n">cur</span><span class="p">):</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span><span class="o">.</span><span class="n">fetchall</span><span class="p">(),</span>
+                  <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">col</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cursor</span><span class="o">.</span><span class="n">description</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">df</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">query_to_df</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;SELECT * FROM EMPLOYEES&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>employeeNumber</th>
+      <th>lastName</th>
+      <th>firstName</th>
+      <th>extension</th>
+      <th>email</th>
+      <th>officeCode</th>
+      <th>reportsTo</th>
+      <th>jobTitle</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1002</td>
+      <td>Murphy</td>
+      <td>Diane</td>
+      <td>x5800</td>
+      <td>dmurphy@classicmodelcars.com</td>
+      <td>1</td>
+      <td></td>
+      <td>President</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1056</td>
+      <td>Patterson</td>
+      <td>Mary</td>
+      <td>x4611</td>
+      <td>mpatterso@classicmodelcars.com</td>
+      <td>1</td>
+      <td>1002</td>
+      <td>VP Sales</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1076</td>
+      <td>Firrelli</td>
+      <td>Jeff</td>
+      <td>x9273</td>
+      <td>jfirrelli@classicmodelcars.com</td>
+      <td>1</td>
+      <td>1002</td>
+      <td>VP Marketing</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1088</td>
+      <td>Patterson</td>
+      <td>William</td>
+      <td>x4871</td>
+      <td>wpatterson@classicmodelcars.com</td>
+      <td>6</td>
+      <td>1056</td>
+      <td>Sales Manager (APAC)</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1102</td>
+      <td>Bondur</td>
+      <td>Gerard</td>
+      <td>x5408</td>
+      <td>gbondur@classicmodelcars.com</td>
+      <td>4</td>
+      <td>1056</td>
+      <td>Sale Manager (EMEA)</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1143</td>
+      <td>Bow</td>
+      <td>Anthony</td>
+      <td>x5428</td>
+      <td>abow@classicmodelcars.com</td>
+      <td>1</td>
+      <td>1056</td>
+      <td>Sales Manager (NA)</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>1165</td>
+      <td>Jennings</td>
+      <td>Leslie</td>
+      <td>x3291</td>
+      <td>ljennings@classicmodelcars.com</td>
+      <td>1</td>
+      <td>1143</td>
+      <td>Sales Rep</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>1166</td>
+      <td>Thompson</td>
+      <td>Leslie</td>
+      <td>x4065</td>
+      <td>lthompson@classicmodelcars.com</td>
+      <td>1</td>
+      <td>1143</td>
+      <td>Sales Rep</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>1188</td>
+      <td>Firrelli</td>
+      <td>Julie</td>
+      <td>x2173</td>
+      <td>jfirrelli@classicmodelcars.com</td>
+      <td>2</td>
+      <td>1143</td>
+      <td>Sales Rep</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>1216</td>
+      <td>Patterson</td>
+      <td>Steve</td>
+      <td>x4334</td>
+      <td>spatterson@classicmodelcars.com</td>
+      <td>2</td>
+      <td>1143</td>
+      <td>Sales Rep</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>1286</td>
+      <td>Tseng</td>
+      <td>Foon Yue</td>
+      <td>x2248</td>
+      <td>ftseng@classicmodelcars.com</td>
+      <td>3</td>
+      <td>1143</td>
+      <td>Sales Rep</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>1323</td>
+      <td>Vanauf</td>
+      <td>George</td>
+      <td>x4102</td>
+      <td>gvanauf@classicmodelcars.com</td>
+      <td>3</td>
+      <td>1143</td>
+      <td>Sales Rep</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>1337</td>
+      <td>Bondur</td>
+      <td>Loui</td>
+      <td>x6493</td>
+      <td>lbondur@classicmodelcars.com</td>
+      <td>4</td>
+      <td>1102</td>
+      <td>Sales Rep</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>1370</td>
+      <td>Hernandez</td>
+      <td>Gerard</td>
+      <td>x2028</td>
+      <td>ghernande@classicmodelcars.com</td>
+      <td>4</td>
+      <td>1102</td>
+      <td>Sales Rep</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>1401</td>
+      <td>Castillo</td>
+      <td>Pamela</td>
+      <td>x2759</td>
+      <td>pcastillo@classicmodelcars.com</td>
+      <td>4</td>
+      <td>1102</td>
+      <td>Sales Rep</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>1501</td>
+      <td>Bott</td>
+      <td>Larry</td>
+      <td>x2311</td>
+      <td>lbott@classicmodelcars.com</td>
+      <td>7</td>
+      <td>1102</td>
+      <td>Sales Rep</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>1504</td>
+      <td>Jones</td>
+      <td>Barry</td>
+      <td>x102</td>
+      <td>bjones@classicmodelcars.com</td>
+      <td>7</td>
+      <td>1102</td>
+      <td>Sales Rep</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>1611</td>
+      <td>Fixter</td>
+      <td>Andy</td>
+      <td>x101</td>
+      <td>afixter@classicmodelcars.com</td>
+      <td>6</td>
+      <td>1088</td>
+      <td>Sales Rep</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>1612</td>
+      <td>Marsh</td>
+      <td>Peter</td>
+      <td>x102</td>
+      <td>pmarsh@classicmodelcars.com</td>
+      <td>6</td>
+      <td>1088</td>
+      <td>Sales Rep</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>1619</td>
+      <td>King</td>
+      <td>Tom</td>
+      <td>x103</td>
+      <td>tking@classicmodelcars.com</td>
+      <td>6</td>
+      <td>1088</td>
+      <td>Sales Rep</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>1621</td>
+      <td>Nishi</td>
+      <td>Mami</td>
+      <td>x101</td>
+      <td>mnishi@classicmodelcars.com</td>
+      <td>5</td>
+      <td>1056</td>
+      <td>Sales Rep</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>1625</td>
+      <td>Kato</td>
+      <td>Yoshimi</td>
+      <td>x102</td>
+      <td>ykato@classicmodelcars.com</td>
+      <td>5</td>
+      <td>1621</td>
+      <td>Sales Rep</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>1702</td>
+      <td>Gerard</td>
+      <td>Martin</td>
+      <td>x2312</td>
+      <td>mgerard@classicmodelcars.com</td>
+      <td>4</td>
+      <td>1102</td>
+      <td>Sales Rep</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="quick-activity-make-executing-the-query-dataframe-into-a-function">
+<h3>Quick Activity: Make executing the query -&gt; dataframe into a function<a class="headerlink" href="#quick-activity-make-executing-the-query-dataframe-into-a-function" title="Permalink to this heading">#</a></h3>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="filtering-and-ordering">
+<h1>FILTERING AND ORDERING<a class="headerlink" href="#filtering-and-ordering" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ORDER</span> <span class="pre">BY</span></code> - <code class="docutils literal notranslate"><span class="pre">DESC</span></code>/<code class="docutils literal notranslate"><span class="pre">ASC</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">LIMIT</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">BETWEEN</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NULL</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">COUNT</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GROUP</span> <span class="pre">BY</span></code></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;select * from products</span>
+<span class="s2">GROUP BY productLine </span>
+<span class="s2">ORDER BY quantityInStock DESC;&quot;&quot;&quot;</span>
+<span class="n">query_to_df</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>productCode</th>
+      <th>productName</th>
+      <th>productLine</th>
+      <th>productScale</th>
+      <th>productVendor</th>
+      <th>productDescription</th>
+      <th>quantityInStock</th>
+      <th>buyPrice</th>
+      <th>MSRP</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>S18_1342</td>
+      <td>1937 Lincoln Berline</td>
+      <td>Vintage Cars</td>
+      <td>1:18</td>
+      <td>Motor City Art Classics</td>
+      <td>Features opening engine cover, doors, trunk, a...</td>
+      <td>8693</td>
+      <td>60.62</td>
+      <td>102.74</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>S10_1678</td>
+      <td>1969 Harley Davidson Ultimate Chopper</td>
+      <td>Motorcycles</td>
+      <td>1:10</td>
+      <td>Min Lin Diecast</td>
+      <td>This replica features working kickstand, front...</td>
+      <td>7933</td>
+      <td>48.81</td>
+      <td>95.70</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>S10_1949</td>
+      <td>1952 Alpine Renault 1300</td>
+      <td>Classic Cars</td>
+      <td>1:10</td>
+      <td>Classic Metal Creations</td>
+      <td>Turnable front wheels; steering function; deta...</td>
+      <td>7305</td>
+      <td>98.58</td>
+      <td>214.30</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>S18_3259</td>
+      <td>Collectable Wooden Train</td>
+      <td>Trains</td>
+      <td>1:18</td>
+      <td>Carousel DieCast Legends</td>
+      <td>Hand crafted wooden toy train set is in about ...</td>
+      <td>6450</td>
+      <td>67.56</td>
+      <td>100.84</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>S18_1662</td>
+      <td>1980s Black Hawk Helicopter</td>
+      <td>Planes</td>
+      <td>1:18</td>
+      <td>Red Start Diecast</td>
+      <td>1:18 scale replica of actual Army's UH-60L BLA...</td>
+      <td>5330</td>
+      <td>77.27</td>
+      <td>157.69</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>S18_3029</td>
+      <td>1999 Yamaha Speed Boat</td>
+      <td>Ships</td>
+      <td>1:18</td>
+      <td>Min Lin Diecast</td>
+      <td>Exact replica. Wood and Metal. Many extras inc...</td>
+      <td>4259</td>
+      <td>51.61</td>
+      <td>86.02</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>S12_1666</td>
+      <td>1958 Setra Bus</td>
+      <td>Trucks and Buses</td>
+      <td>1:12</td>
+      <td>Welly Diecast Productions</td>
+      <td>Model features 30 windows, skylights &amp; glare r...</td>
+      <td>1579</td>
+      <td>77.90</td>
+      <td>136.67</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<section id="grouping-data-with-sql">
+<h2>GROUPING DATA WITH SQL<a class="headerlink" href="#grouping-data-with-sql" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Like we do with Pandas, we can use GROUP BY statements in SQL and then apply <strong>aggregate functions:</strong></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">COUNT</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MAX</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MIN</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SUM</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">AVG</span></code></p></li>
+</ul>
+</li>
+</ul>
+<div class="highlight-SQL notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">city</span><span class="p">,</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="n">employeeNumber</span><span class="p">)</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">offices</span><span class="w"> </span>
+<span class="k">JOIN</span><span class="w"> </span><span class="n">employees</span>
+<span class="k">USING</span><span class="p">(</span><span class="n">officeCode</span><span class="p">)</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">city</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="n">employeeNumber</span><span class="p">)</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">query</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;SELECT city, COUNT(employeeNumber)</span>
+<span class="s2">FROM offices </span>
+<span class="s2">JOIN employees</span>
+<span class="s2">USING(officeCode)</span>
+<span class="s2">GROUP BY city</span>
+<span class="s2">ORDER BY count(employeeNumber) DESC;&quot;&quot;&quot;</span>
+<span class="n">query_to_df</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>city</th>
+      <th>COUNT(employeeNumber)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>San Francisco</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Paris</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Sydney</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Tokyo</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>NYC</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>London</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Boston</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="aliasing">
+<h2>ALIASING<a class="headerlink" href="#aliasing" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>can assign a temporary name to data being imported</p></li>
+<li><p>Useful for <code class="docutils literal notranslate"><span class="pre">JOIN</span></code>,<code class="docutils literal notranslate"><span class="pre">GROUP</span> <span class="pre">BY</span></code>, and aggregates.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">query</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;SELECT city, COUNT(employeeNumber) AS numEmployees</span>
+<span class="s2">               FROM offices</span>
+<span class="s2">               JOIN employees</span>
+<span class="s2">               USING(officeCode)</span>
+<span class="s2">               GROUP BY 1</span>
+<span class="s2">               ORDER BY numEmployees DESC;&quot;&quot;&quot;</span>
+<span class="n">query_to_df</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>city</th>
+      <th>numEmployees</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>San Francisco</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Paris</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Sydney</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Tokyo</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>NYC</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>London</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Boston</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">query_to_df</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;SELECT customerName,</span>
+<span class="s2">               COUNT(customerName) AS number_purchases,</span>
+<span class="s2">               MIN(amount) AS min_purchase,</span>
+<span class="s2">               MAX(amount) AS max_purchase,</span>
+<span class="s2">               AVG(amount) AS avg_purchase,</span>
+<span class="s2">               SUM(amount) AS total_spent</span>
+<span class="s2">               FROM customers</span>
+<span class="s2">               JOIN payments</span>
+<span class="s2">               USING(customerNumber)</span>
+<span class="s2">               GROUP BY 1</span>
+<span class="s2">               ORDER BY SUM(amount) DESC;&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>customerName</th>
+      <th>number_purchases</th>
+      <th>min_purchase</th>
+      <th>max_purchase</th>
+      <th>avg_purchase</th>
+      <th>total_spent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Euro+ Shopping Channel</td>
+      <td>13</td>
+      <td>116208.40</td>
+      <td>65071.26</td>
+      <td>55056.844615</td>
+      <td>715738.98</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Mini Gifts Distributors Ltd.</td>
+      <td>9</td>
+      <td>101244.59</td>
+      <td>85410.87</td>
+      <td>64909.804444</td>
+      <td>584188.24</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Australian Collectors, Co.</td>
+      <td>4</td>
+      <td>44894.74</td>
+      <td>82261.22</td>
+      <td>45146.267500</td>
+      <td>180585.07</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Muscle Machine Inc</td>
+      <td>4</td>
+      <td>20314.44</td>
+      <td>58841.35</td>
+      <td>44478.487500</td>
+      <td>177913.95</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Dragon Souveniers, Ltd.</td>
+      <td>4</td>
+      <td>105743.00</td>
+      <td>44380.15</td>
+      <td>39062.757500</td>
+      <td>156251.03</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>93</th>
+      <td>Royale Belge</td>
+      <td>4</td>
+      <td>1128.20</td>
+      <td>1627.56</td>
+      <td>7304.295000</td>
+      <td>29217.18</td>
+    </tr>
+    <tr>
+      <th>94</th>
+      <td>Frau da Collezione</td>
+      <td>2</td>
+      <td>17746.26</td>
+      <td>7612.06</td>
+      <td>12679.160000</td>
+      <td>25358.32</td>
+    </tr>
+    <tr>
+      <th>95</th>
+      <td>Atelier graphique</td>
+      <td>3</td>
+      <td>14571.44</td>
+      <td>6066.78</td>
+      <td>7438.120000</td>
+      <td>22314.36</td>
+    </tr>
+    <tr>
+      <th>96</th>
+      <td>Auto-Moto Classics Inc.</td>
+      <td>3</td>
+      <td>5858.56</td>
+      <td>9658.74</td>
+      <td>7184.753333</td>
+      <td>21554.26</td>
+    </tr>
+    <tr>
+      <th>97</th>
+      <td>Boards &amp; Toys Co.</td>
+      <td>2</td>
+      <td>3452.75</td>
+      <td>4465.85</td>
+      <td>3959.300000</td>
+      <td>7918.60</td>
+    </tr>
+  </tbody>
+</table>
+<p>98 rows × 6 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="the-where-clause">
+<h2>The <code class="docutils literal notranslate"><span class="pre">WHERE</span></code> Clause<a class="headerlink" href="#the-where-clause" title="Permalink to this heading">#</a></h2>
+<p>In general, the <code class="docutils literal notranslate"><span class="pre">WHERE</span></code> clause filters query results by some condition. As you are starting to see, you can also combine multiple conditions.</p>
+<ul class="simple">
+<li></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;SELECT * FROM customers WHERE city = &#39;Boston&#39; OR city = &#39;Madrid&#39;;&quot;&quot;&quot;</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">())</span>
+<span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">cur</span><span class="o">.</span><span class="n">description</span><span class="p">]</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>To refine your searches, you can add <code class="docutils literal notranslate"><span class="pre">ORDER</span> <span class="pre">BY</span></code> and <code class="docutils literal notranslate"><span class="pre">LIMIT</span></code> clauses.</p>
+<ul>
+<li><p>The order by clause allows you to sort the results by a particular feature.</p></li>
+</ul>
+</li>
+<li><p>Finally, the limit clause is typically the last argument in a SQL query and simply limits the output to a set number of results.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">query_to_df</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;SELECT * FROM customers WHERE city = &#39;Boston&#39; OR city = &#39;Madrid&#39;;&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>customerNumber</th>
+      <th>customerName</th>
+      <th>contactLastName</th>
+      <th>contactFirstName</th>
+      <th>phone</th>
+      <th>addressLine1</th>
+      <th>addressLine2</th>
+      <th>city</th>
+      <th>state</th>
+      <th>postalCode</th>
+      <th>country</th>
+      <th>salesRepEmployeeNumber</th>
+      <th>creditLimit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>141</td>
+      <td>Euro+ Shopping Channel</td>
+      <td>Freyre</td>
+      <td>Diego</td>
+      <td>(91) 555 94 44</td>
+      <td>C/ Moralzarzal, 86</td>
+      <td></td>
+      <td>Madrid</td>
+      <td></td>
+      <td>28034</td>
+      <td>Spain</td>
+      <td>1370</td>
+      <td>227600.00</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>237</td>
+      <td>ANG Resellers</td>
+      <td>Camino</td>
+      <td>Alejandra</td>
+      <td>(91) 745 6555</td>
+      <td>Gran Vía, 1</td>
+      <td></td>
+      <td>Madrid</td>
+      <td></td>
+      <td>28001</td>
+      <td>Spain</td>
+      <td></td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>344</td>
+      <td>CAF Imports</td>
+      <td>Fernandez</td>
+      <td>Jesus</td>
+      <td>+34 913 728 555</td>
+      <td>Merchants House</td>
+      <td>27-30 Merchant's Quay</td>
+      <td>Madrid</td>
+      <td></td>
+      <td>28023</td>
+      <td>Spain</td>
+      <td>1702</td>
+      <td>59600.00</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>362</td>
+      <td>Gifts4AllAges.com</td>
+      <td>Yoshido</td>
+      <td>Juri</td>
+      <td>6175559555</td>
+      <td>8616 Spinnaker Dr.</td>
+      <td></td>
+      <td>Boston</td>
+      <td>MA</td>
+      <td>51003</td>
+      <td>USA</td>
+      <td>1216</td>
+      <td>41900.00</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>458</td>
+      <td>Corrida Auto Replicas, Ltd</td>
+      <td>Sommer</td>
+      <td>Martín</td>
+      <td>(91) 555 22 82</td>
+      <td>C/ Araquil, 67</td>
+      <td></td>
+      <td>Madrid</td>
+      <td></td>
+      <td>28023</td>
+      <td>Spain</td>
+      <td>1702</td>
+      <td>104600.00</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>465</td>
+      <td>Anton Designs, Ltd.</td>
+      <td>Anton</td>
+      <td>Carmen</td>
+      <td>+34 913 728555</td>
+      <td>c/ Gobelas, 19-1 Urb. La Florida</td>
+      <td></td>
+      <td>Madrid</td>
+      <td></td>
+      <td>28023</td>
+      <td>Spain</td>
+      <td></td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>495</td>
+      <td>Diecast Collectables</td>
+      <td>Franco</td>
+      <td>Valarie</td>
+      <td>6175552555</td>
+      <td>6251 Ingle Ln.</td>
+      <td></td>
+      <td>Boston</td>
+      <td>MA</td>
+      <td>51003</td>
+      <td>USA</td>
+      <td>1188</td>
+      <td>85100.00</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="the-having-clause">
+<h2>The <code class="docutils literal notranslate"><span class="pre">HAVING</span></code> clause<a class="headerlink" href="#the-having-clause" title="Permalink to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">HAVING</span></code> clause works similarly to the <code class="docutils literal notranslate"><span class="pre">WHERE</span></code> clause, except it is used to filter data selections on conditions <strong>after</strong> the <code class="docutils literal notranslate"><span class="pre">GROUP</span> <span class="pre">BY</span></code> clause.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">query_to_df</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;SELECT city, COUNT(customerNumber) AS number_customers</span>
+<span class="s2">               FROM customers</span>
+<span class="s2">               GROUP BY 1</span>
+<span class="s2">               HAVING COUNT(customerNumber)&gt;=5;&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>city</th>
+      <th>number_customers</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Madrid</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>NYC</td>
+      <td>5</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="combining-where-and-having">
+<h2>Combining <code class="docutils literal notranslate"><span class="pre">WHERE</span></code> and <code class="docutils literal notranslate"><span class="pre">HAVING</span></code><a class="headerlink" href="#combining-where-and-having" title="Permalink to this heading">#</a></h2>
+<p>We can also use the <code class="docutils literal notranslate"><span class="pre">WHERE</span></code> and <code class="docutils literal notranslate"><span class="pre">HAVING</span></code> clauses in conjunction with each other for more complex rules.</p>
+<ul class="simple">
+<li><p>For example, let’s say we want a list of customers who have made at least 3 purchases of over 50K each.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">query_to_df</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;SELECT customerName,</span>
+<span class="s2">               COUNT(amount) AS number_purchases_over_50K</span>
+<span class="s2">               FROM customers</span>
+<span class="s2">               JOIN payments</span>
+<span class="s2">               USING(customerNumber)</span>
+<span class="s2">               WHERE amount &gt;= 50000</span>
+<span class="s2">               GROUP BY 1</span>
+<span class="s2">               HAVING count(amount) &gt;= 3</span>
+<span class="s2">               ORDER BY number_purchases_over_50K DESC;&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>customerName</th>
+      <th>number_purchases_over_50K</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Euro+ Shopping Channel</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Mini Gifts Distributors Ltd.</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Tokyo Collectables, Ltd</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Technics Stores Inc.</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Royale Belge</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Reims Collectables</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Muscle Machine Inc</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Dragon Souveniers, Ltd.</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Down Under Souveniers, Inc</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Danish Wholesale Imports</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Blauer See Auto, Co.</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Baane Mini Imports</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Australian Collectors, Co.</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>Anna's Decorations, Ltd</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>Vitachrome Inc.</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>Toys4GrownUps.com</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>Toys of Finland, Co.</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>Suominen Souveniers</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>Stylish Desk Decors, Co.</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>Souveniers And Things Co.</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>Signal Gift Stores</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>Saveley &amp; Henriot, Co.</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>Salzburg Collectables</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>Rovelli Gifts</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>Québec Home Shopping Network</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>Oulu Toy Supplies, Inc.</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>Online Diecast Creations Co.</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>Motor Mint Distributors Inc.</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>Mini Wheels Co.</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>Mini Creations Ltd.</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>Mini Caravy</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>Mini Auto Werke</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>Marseille Mini Autos</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>Lyon Souveniers</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>Land of Toys Inc.</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>La Rochelle Gifts</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>La Corne D'abondance, Co.</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>Kelly's Gift Shop</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>Handji Gifts&amp; Co</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>Gift Ideas Corp.</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>Gift Depot Inc.</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>FunGiftIdeas.com</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>Enaco Distributors</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>43</th>
+      <td>Cruz &amp; Sons Co.</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>44</th>
+      <td>Corrida Auto Replicas, Ltd</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>45</th>
+      <td>Collectables For Less Inc.</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td>Classic Legends Inc.</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>47</th>
+      <td>Auto-Moto Classics Inc.</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>48</th>
+      <td>Auto Canal+ Petit</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>49</th>
+      <td>Australian Gift Network, Co</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>50</th>
+      <td>Atelier graphique</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>51</th>
+      <td>Alpha Cognac</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>52</th>
+      <td>AV Stores, Co.</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">query_to_df</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;SELECT customerName,</span>
+<span class="s2">               COUNT(amount) AS number_purchases_over_50K</span>
+<span class="s2">               FROM customers</span>
+<span class="s2">               JOIN payments</span>
+<span class="s2">               USING(customerNumber)</span>
+<span class="s2">               WHERE amount &gt;= 50000</span>
+<span class="s2">               GROUP BY 1</span>
+<span class="s2">               HAVING number_purchases_over_50K &gt;= 3</span>
+<span class="s2">               ORDER BY number_purchases_over_50K DESC;&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="joins">
+<h1>JOINS<a class="headerlink" href="#joins" title="Permalink to this heading">#</a></h1>
+<section id="types-of-joins">
+<h2>TYPES OF JOINS<a class="headerlink" href="#types-of-joins" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Joins may be:</p>
+<ul>
+<li><p>INNER (default)</p></li>
+<li><p>OUTER</p></li>
+<li><p>LEFT</p></li>
+<li><p>RIGHT</p></li>
+</ul>
+</li>
+</ul>
+<img src="https://raw.githubusercontent.com/learn-co-students/dsc-join-statements-online-ds-sp-000/master/images/venn.png">
+</section>
+<section id="join-statements">
+<h2><code class="docutils literal notranslate"><span class="pre">JOIN</span></code> Statements<a class="headerlink" href="#join-statements" title="Permalink to this heading">#</a></h2>
+<section id="primary-vs-foreign-keys">
+<h3>Primary vs Foreign Keys<a class="headerlink" href="#primary-vs-foreign-keys" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>primary key:</p></li>
+<li><p>forgein key:</p></li>
+</ul>
+<img src="https://raw.githubusercontent.com/learn-co-students/dsc-sql-introduction-online-ds-sp-000/master/images/Database-Schema.png"></section>
+<section id="the-using-clause">
+<h3>The <code class="docutils literal notranslate"><span class="pre">USING</span></code> clause<a class="headerlink" href="#the-using-clause" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>If the column name is identical,you can use  is the <code class="docutils literal notranslate"><span class="pre">USING</span></code> clause.</p></li>
+<li><p>Rather then saying on <code class="docutils literal notranslate"><span class="pre">tableA.column</span> <span class="pre">=</span> <span class="pre">tableB.column</span></code> we can simply say <code class="docutils literal notranslate"><span class="pre">using(column)</span></code>.</p></li>
+<li><p>Only works if the column is <strong>identically named</strong> for both tables.</p></li>
+</ul>
+<section id="task-displaying-product-details-along-with-order-details">
+<h4>Task: Displaying product details along with order details<a class="headerlink" href="#task-displaying-product-details-along-with-order-details" title="Permalink to this heading">#</a></h4>
+<p>Let’s say you need to generate some report that includes details about products from orders. To do that, we would need to take data from multiple tables in a single statement.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">query_to_df</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;SELECT * </span>
+<span class="s2">               FROM orderdetails</span>
+<span class="s2">               JOIN products</span>
+<span class="s2">               ON orderdetails.productCode = products.productCode</span>
+<span class="s2">               LIMIT 10;</span>
+<span class="s2">               &quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>orderNumber</th>
+      <th>productCode</th>
+      <th>quantityOrdered</th>
+      <th>priceEach</th>
+      <th>orderLineNumber</th>
+      <th>productCode</th>
+      <th>productName</th>
+      <th>productLine</th>
+      <th>productScale</th>
+      <th>productVendor</th>
+      <th>productDescription</th>
+      <th>quantityInStock</th>
+      <th>buyPrice</th>
+      <th>MSRP</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>10100</td>
+      <td>S18_1749</td>
+      <td>30</td>
+      <td>136.00</td>
+      <td>3</td>
+      <td>S18_1749</td>
+      <td>1917 Grand Touring Sedan</td>
+      <td>Vintage Cars</td>
+      <td>1:18</td>
+      <td>Welly Diecast Productions</td>
+      <td>This 1:18 scale replica of the 1917 Grand Tour...</td>
+      <td>2724</td>
+      <td>86.70</td>
+      <td>170.00</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>10100</td>
+      <td>S18_2248</td>
+      <td>50</td>
+      <td>55.09</td>
+      <td>2</td>
+      <td>S18_2248</td>
+      <td>1911 Ford Town Car</td>
+      <td>Vintage Cars</td>
+      <td>1:18</td>
+      <td>Motor City Art Classics</td>
+      <td>Features opening hood, opening doors, opening ...</td>
+      <td>540</td>
+      <td>33.30</td>
+      <td>60.54</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>10100</td>
+      <td>S18_4409</td>
+      <td>22</td>
+      <td>75.46</td>
+      <td>4</td>
+      <td>S18_4409</td>
+      <td>1932 Alfa Romeo 8C2300 Spider Sport</td>
+      <td>Vintage Cars</td>
+      <td>1:18</td>
+      <td>Exoto Designs</td>
+      <td>This 1:18 scale precision die cast replica fea...</td>
+      <td>6553</td>
+      <td>43.26</td>
+      <td>92.03</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>10100</td>
+      <td>S24_3969</td>
+      <td>49</td>
+      <td>35.29</td>
+      <td>1</td>
+      <td>S24_3969</td>
+      <td>1936 Mercedes Benz 500k Roadster</td>
+      <td>Vintage Cars</td>
+      <td>1:24</td>
+      <td>Red Start Diecast</td>
+      <td>This model features grille-mounted chrome horn...</td>
+      <td>2081</td>
+      <td>21.75</td>
+      <td>41.03</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>10101</td>
+      <td>S18_2325</td>
+      <td>25</td>
+      <td>108.06</td>
+      <td>4</td>
+      <td>S18_2325</td>
+      <td>1932 Model A Ford J-Coupe</td>
+      <td>Vintage Cars</td>
+      <td>1:18</td>
+      <td>Autoart Studio Design</td>
+      <td>This model features grille-mounted chrome horn...</td>
+      <td>9354</td>
+      <td>58.48</td>
+      <td>127.13</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>10101</td>
+      <td>S18_2795</td>
+      <td>26</td>
+      <td>167.06</td>
+      <td>1</td>
+      <td>S18_2795</td>
+      <td>1928 Mercedes-Benz SSK</td>
+      <td>Vintage Cars</td>
+      <td>1:18</td>
+      <td>Gearbox Collectibles</td>
+      <td>This 1:18 replica features grille-mounted chro...</td>
+      <td>548</td>
+      <td>72.56</td>
+      <td>168.75</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>10101</td>
+      <td>S24_1937</td>
+      <td>45</td>
+      <td>32.53</td>
+      <td>3</td>
+      <td>S24_1937</td>
+      <td>1939 Chevrolet Deluxe Coupe</td>
+      <td>Vintage Cars</td>
+      <td>1:24</td>
+      <td>Motor City Art Classics</td>
+      <td>This 1:24 scale die-cast replica of the 1939 C...</td>
+      <td>7332</td>
+      <td>22.57</td>
+      <td>33.19</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>10101</td>
+      <td>S24_2022</td>
+      <td>46</td>
+      <td>44.35</td>
+      <td>2</td>
+      <td>S24_2022</td>
+      <td>1938 Cadillac V-16 Presidential Limousine</td>
+      <td>Vintage Cars</td>
+      <td>1:24</td>
+      <td>Classic Metal Creations</td>
+      <td>This 1:24 scale precision die cast replica of ...</td>
+      <td>2847</td>
+      <td>20.61</td>
+      <td>44.80</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>10102</td>
+      <td>S18_1342</td>
+      <td>39</td>
+      <td>95.55</td>
+      <td>2</td>
+      <td>S18_1342</td>
+      <td>1937 Lincoln Berline</td>
+      <td>Vintage Cars</td>
+      <td>1:18</td>
+      <td>Motor City Art Classics</td>
+      <td>Features opening engine cover, doors, trunk, a...</td>
+      <td>8693</td>
+      <td>60.62</td>
+      <td>102.74</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>10102</td>
+      <td>S18_1367</td>
+      <td>41</td>
+      <td>43.13</td>
+      <td>1</td>
+      <td>S18_1367</td>
+      <td>1936 Mercedes-Benz 500K Special Roadster</td>
+      <td>Vintage Cars</td>
+      <td>1:18</td>
+      <td>Studio M Art Models</td>
+      <td>This 1:18 scale replica is constructed of heav...</td>
+      <td>8635</td>
+      <td>24.26</td>
+      <td>53.91</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+</section>
+<section id="types-of-relationships-between-tables">
+<h2>Types of Relationships Between Tables<a class="headerlink" href="#types-of-relationships-between-tables" title="Permalink to this heading">#</a></h2>
+<section id="one-to-one-one-to-many-many-to-many-joins">
+<h3>One-to-One, One-to-many, many-to-many Joins<a class="headerlink" href="#one-to-one-one-to-many-many-to-many-joins" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Let’s say we have databases A and B</strong></p></li>
+<li><p><strong>One-to-One joins:</strong></p>
+<ul>
+<li><p>There is only 1 entry in database B that aligns with each individual entry in database A</p></li>
+<li><p>e.g. A person and their social security number.</p></li>
+</ul>
+</li>
+<li><p><strong>One-to-Many join:</strong></p>
+<ul>
+<li><p>There are multiple entries in database B that match the entry in database A</p></li>
+<li><p>e.g. Joining an order number from db A with the individual products in db B.</p></li>
+</ul>
+</li>
+<li><p><strong>Many-to-many joins:</strong></p>
+<ul>
+<li><p>There are multiple entries in database A that match multiple entries in database B.</p></li>
+<li><p>e.g. A = classes at a college, B = students.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="one-to-one">
+<h3>One-to-One<a class="headerlink" href="#one-to-one" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>There is only 1 entry in database B that aligns with each individual entry in database A</p></li>
+<li><p>e.g. A person and their social security number.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Preview full offices table</span>
+<span class="n">query_to_df</span><span class="p">(</span><span class="s2">&quot;Select * FROM offices;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>officeCode</th>
+      <th>city</th>
+      <th>phone</th>
+      <th>addressLine1</th>
+      <th>addressLine2</th>
+      <th>state</th>
+      <th>country</th>
+      <th>postalCode</th>
+      <th>territory</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>San Francisco</td>
+      <td>+1 650 219 4782</td>
+      <td>100 Market Street</td>
+      <td>Suite 300</td>
+      <td>CA</td>
+      <td>USA</td>
+      <td>94080</td>
+      <td>NA</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>Boston</td>
+      <td>+1 215 837 0825</td>
+      <td>1550 Court Place</td>
+      <td>Suite 102</td>
+      <td>MA</td>
+      <td>USA</td>
+      <td>02107</td>
+      <td>NA</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>NYC</td>
+      <td>+1 212 555 3000</td>
+      <td>523 East 53rd Street</td>
+      <td>apt. 5A</td>
+      <td>NY</td>
+      <td>USA</td>
+      <td>10022</td>
+      <td>NA</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>Paris</td>
+      <td>+33 14 723 4404</td>
+      <td>43 Rue Jouffroy D'abbans</td>
+      <td></td>
+      <td></td>
+      <td>France</td>
+      <td>75017</td>
+      <td>EMEA</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>Tokyo</td>
+      <td>+81 33 224 5000</td>
+      <td>4-1 Kioicho</td>
+      <td></td>
+      <td>Chiyoda-Ku</td>
+      <td>Japan</td>
+      <td>102-8578</td>
+      <td>Japan</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>6</td>
+      <td>Sydney</td>
+      <td>+61 2 9264 2451</td>
+      <td>5-11 Wentworth Avenue</td>
+      <td>Floor #2</td>
+      <td></td>
+      <td>Australia</td>
+      <td>NSW 2010</td>
+      <td>APAC</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>7</td>
+      <td>London</td>
+      <td>+44 20 7877 2041</td>
+      <td>25 Old Broad Street</td>
+      <td>Level 7</td>
+      <td></td>
+      <td>UK</td>
+      <td>EC2N 1HN</td>
+      <td>EMEA</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Preview full employees table</span>
+<span class="n">query_to_df</span><span class="p">(</span><span class="s2">&quot;Select * FROM employees;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>employeeNumber</th>
+      <th>lastName</th>
+      <th>firstName</th>
+      <th>extension</th>
+      <th>email</th>
+      <th>officeCode</th>
+      <th>reportsTo</th>
+      <th>jobTitle</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1002</td>
+      <td>Murphy</td>
+      <td>Diane</td>
+      <td>x5800</td>
+      <td>dmurphy@classicmodelcars.com</td>
+      <td>1</td>
+      <td></td>
+      <td>President</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1056</td>
+      <td>Patterson</td>
+      <td>Mary</td>
+      <td>x4611</td>
+      <td>mpatterso@classicmodelcars.com</td>
+      <td>1</td>
+      <td>1002</td>
+      <td>VP Sales</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1076</td>
+      <td>Firrelli</td>
+      <td>Jeff</td>
+      <td>x9273</td>
+      <td>jfirrelli@classicmodelcars.com</td>
+      <td>1</td>
+      <td>1002</td>
+      <td>VP Marketing</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1088</td>
+      <td>Patterson</td>
+      <td>William</td>
+      <td>x4871</td>
+      <td>wpatterson@classicmodelcars.com</td>
+      <td>6</td>
+      <td>1056</td>
+      <td>Sales Manager (APAC)</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1102</td>
+      <td>Bondur</td>
+      <td>Gerard</td>
+      <td>x5408</td>
+      <td>gbondur@classicmodelcars.com</td>
+      <td>4</td>
+      <td>1056</td>
+      <td>Sale Manager (EMEA)</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1143</td>
+      <td>Bow</td>
+      <td>Anthony</td>
+      <td>x5428</td>
+      <td>abow@classicmodelcars.com</td>
+      <td>1</td>
+      <td>1056</td>
+      <td>Sales Manager (NA)</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>1165</td>
+      <td>Jennings</td>
+      <td>Leslie</td>
+      <td>x3291</td>
+      <td>ljennings@classicmodelcars.com</td>
+      <td>1</td>
+      <td>1143</td>
+      <td>Sales Rep</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>1166</td>
+      <td>Thompson</td>
+      <td>Leslie</td>
+      <td>x4065</td>
+      <td>lthompson@classicmodelcars.com</td>
+      <td>1</td>
+      <td>1143</td>
+      <td>Sales Rep</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>1188</td>
+      <td>Firrelli</td>
+      <td>Julie</td>
+      <td>x2173</td>
+      <td>jfirrelli@classicmodelcars.com</td>
+      <td>2</td>
+      <td>1143</td>
+      <td>Sales Rep</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>1216</td>
+      <td>Patterson</td>
+      <td>Steve</td>
+      <td>x4334</td>
+      <td>spatterson@classicmodelcars.com</td>
+      <td>2</td>
+      <td>1143</td>
+      <td>Sales Rep</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>1286</td>
+      <td>Tseng</td>
+      <td>Foon Yue</td>
+      <td>x2248</td>
+      <td>ftseng@classicmodelcars.com</td>
+      <td>3</td>
+      <td>1143</td>
+      <td>Sales Rep</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>1323</td>
+      <td>Vanauf</td>
+      <td>George</td>
+      <td>x4102</td>
+      <td>gvanauf@classicmodelcars.com</td>
+      <td>3</td>
+      <td>1143</td>
+      <td>Sales Rep</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>1337</td>
+      <td>Bondur</td>
+      <td>Loui</td>
+      <td>x6493</td>
+      <td>lbondur@classicmodelcars.com</td>
+      <td>4</td>
+      <td>1102</td>
+      <td>Sales Rep</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>1370</td>
+      <td>Hernandez</td>
+      <td>Gerard</td>
+      <td>x2028</td>
+      <td>ghernande@classicmodelcars.com</td>
+      <td>4</td>
+      <td>1102</td>
+      <td>Sales Rep</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>1401</td>
+      <td>Castillo</td>
+      <td>Pamela</td>
+      <td>x2759</td>
+      <td>pcastillo@classicmodelcars.com</td>
+      <td>4</td>
+      <td>1102</td>
+      <td>Sales Rep</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>1501</td>
+      <td>Bott</td>
+      <td>Larry</td>
+      <td>x2311</td>
+      <td>lbott@classicmodelcars.com</td>
+      <td>7</td>
+      <td>1102</td>
+      <td>Sales Rep</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>1504</td>
+      <td>Jones</td>
+      <td>Barry</td>
+      <td>x102</td>
+      <td>bjones@classicmodelcars.com</td>
+      <td>7</td>
+      <td>1102</td>
+      <td>Sales Rep</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>1611</td>
+      <td>Fixter</td>
+      <td>Andy</td>
+      <td>x101</td>
+      <td>afixter@classicmodelcars.com</td>
+      <td>6</td>
+      <td>1088</td>
+      <td>Sales Rep</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>1612</td>
+      <td>Marsh</td>
+      <td>Peter</td>
+      <td>x102</td>
+      <td>pmarsh@classicmodelcars.com</td>
+      <td>6</td>
+      <td>1088</td>
+      <td>Sales Rep</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>1619</td>
+      <td>King</td>
+      <td>Tom</td>
+      <td>x103</td>
+      <td>tking@classicmodelcars.com</td>
+      <td>6</td>
+      <td>1088</td>
+      <td>Sales Rep</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>1621</td>
+      <td>Nishi</td>
+      <td>Mami</td>
+      <td>x101</td>
+      <td>mnishi@classicmodelcars.com</td>
+      <td>5</td>
+      <td>1056</td>
+      <td>Sales Rep</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>1625</td>
+      <td>Kato</td>
+      <td>Yoshimi</td>
+      <td>x102</td>
+      <td>ykato@classicmodelcars.com</td>
+      <td>5</td>
+      <td>1621</td>
+      <td>Sales Rep</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>1702</td>
+      <td>Gerard</td>
+      <td>Martin</td>
+      <td>x2312</td>
+      <td>mgerard@classicmodelcars.com</td>
+      <td>4</td>
+      <td>1102</td>
+      <td>Sales Rep</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## One to one join</span>
+<span class="n">query_to_df</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;SELECT * FROM employees </span>
+<span class="s1">JOIN offices USING(officeCode)</span>
+<span class="s1">ORDER  BY officeCode;&#39;&#39;&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>employeeNumber</th>
+      <th>lastName</th>
+      <th>firstName</th>
+      <th>extension</th>
+      <th>email</th>
+      <th>officeCode</th>
+      <th>reportsTo</th>
+      <th>jobTitle</th>
+      <th>city</th>
+      <th>phone</th>
+      <th>addressLine1</th>
+      <th>addressLine2</th>
+      <th>state</th>
+      <th>country</th>
+      <th>postalCode</th>
+      <th>territory</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1002</td>
+      <td>Murphy</td>
+      <td>Diane</td>
+      <td>x5800</td>
+      <td>dmurphy@classicmodelcars.com</td>
+      <td>1</td>
+      <td></td>
+      <td>President</td>
+      <td>San Francisco</td>
+      <td>+1 650 219 4782</td>
+      <td>100 Market Street</td>
+      <td>Suite 300</td>
+      <td>CA</td>
+      <td>USA</td>
+      <td>94080</td>
+      <td>NA</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1056</td>
+      <td>Patterson</td>
+      <td>Mary</td>
+      <td>x4611</td>
+      <td>mpatterso@classicmodelcars.com</td>
+      <td>1</td>
+      <td>1002</td>
+      <td>VP Sales</td>
+      <td>San Francisco</td>
+      <td>+1 650 219 4782</td>
+      <td>100 Market Street</td>
+      <td>Suite 300</td>
+      <td>CA</td>
+      <td>USA</td>
+      <td>94080</td>
+      <td>NA</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1076</td>
+      <td>Firrelli</td>
+      <td>Jeff</td>
+      <td>x9273</td>
+      <td>jfirrelli@classicmodelcars.com</td>
+      <td>1</td>
+      <td>1002</td>
+      <td>VP Marketing</td>
+      <td>San Francisco</td>
+      <td>+1 650 219 4782</td>
+      <td>100 Market Street</td>
+      <td>Suite 300</td>
+      <td>CA</td>
+      <td>USA</td>
+      <td>94080</td>
+      <td>NA</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1143</td>
+      <td>Bow</td>
+      <td>Anthony</td>
+      <td>x5428</td>
+      <td>abow@classicmodelcars.com</td>
+      <td>1</td>
+      <td>1056</td>
+      <td>Sales Manager (NA)</td>
+      <td>San Francisco</td>
+      <td>+1 650 219 4782</td>
+      <td>100 Market Street</td>
+      <td>Suite 300</td>
+      <td>CA</td>
+      <td>USA</td>
+      <td>94080</td>
+      <td>NA</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1165</td>
+      <td>Jennings</td>
+      <td>Leslie</td>
+      <td>x3291</td>
+      <td>ljennings@classicmodelcars.com</td>
+      <td>1</td>
+      <td>1143</td>
+      <td>Sales Rep</td>
+      <td>San Francisco</td>
+      <td>+1 650 219 4782</td>
+      <td>100 Market Street</td>
+      <td>Suite 300</td>
+      <td>CA</td>
+      <td>USA</td>
+      <td>94080</td>
+      <td>NA</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1166</td>
+      <td>Thompson</td>
+      <td>Leslie</td>
+      <td>x4065</td>
+      <td>lthompson@classicmodelcars.com</td>
+      <td>1</td>
+      <td>1143</td>
+      <td>Sales Rep</td>
+      <td>San Francisco</td>
+      <td>+1 650 219 4782</td>
+      <td>100 Market Street</td>
+      <td>Suite 300</td>
+      <td>CA</td>
+      <td>USA</td>
+      <td>94080</td>
+      <td>NA</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>1188</td>
+      <td>Firrelli</td>
+      <td>Julie</td>
+      <td>x2173</td>
+      <td>jfirrelli@classicmodelcars.com</td>
+      <td>2</td>
+      <td>1143</td>
+      <td>Sales Rep</td>
+      <td>Boston</td>
+      <td>+1 215 837 0825</td>
+      <td>1550 Court Place</td>
+      <td>Suite 102</td>
+      <td>MA</td>
+      <td>USA</td>
+      <td>02107</td>
+      <td>NA</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>1216</td>
+      <td>Patterson</td>
+      <td>Steve</td>
+      <td>x4334</td>
+      <td>spatterson@classicmodelcars.com</td>
+      <td>2</td>
+      <td>1143</td>
+      <td>Sales Rep</td>
+      <td>Boston</td>
+      <td>+1 215 837 0825</td>
+      <td>1550 Court Place</td>
+      <td>Suite 102</td>
+      <td>MA</td>
+      <td>USA</td>
+      <td>02107</td>
+      <td>NA</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>1286</td>
+      <td>Tseng</td>
+      <td>Foon Yue</td>
+      <td>x2248</td>
+      <td>ftseng@classicmodelcars.com</td>
+      <td>3</td>
+      <td>1143</td>
+      <td>Sales Rep</td>
+      <td>NYC</td>
+      <td>+1 212 555 3000</td>
+      <td>523 East 53rd Street</td>
+      <td>apt. 5A</td>
+      <td>NY</td>
+      <td>USA</td>
+      <td>10022</td>
+      <td>NA</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>1323</td>
+      <td>Vanauf</td>
+      <td>George</td>
+      <td>x4102</td>
+      <td>gvanauf@classicmodelcars.com</td>
+      <td>3</td>
+      <td>1143</td>
+      <td>Sales Rep</td>
+      <td>NYC</td>
+      <td>+1 212 555 3000</td>
+      <td>523 East 53rd Street</td>
+      <td>apt. 5A</td>
+      <td>NY</td>
+      <td>USA</td>
+      <td>10022</td>
+      <td>NA</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>1102</td>
+      <td>Bondur</td>
+      <td>Gerard</td>
+      <td>x5408</td>
+      <td>gbondur@classicmodelcars.com</td>
+      <td>4</td>
+      <td>1056</td>
+      <td>Sale Manager (EMEA)</td>
+      <td>Paris</td>
+      <td>+33 14 723 4404</td>
+      <td>43 Rue Jouffroy D'abbans</td>
+      <td></td>
+      <td></td>
+      <td>France</td>
+      <td>75017</td>
+      <td>EMEA</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>1337</td>
+      <td>Bondur</td>
+      <td>Loui</td>
+      <td>x6493</td>
+      <td>lbondur@classicmodelcars.com</td>
+      <td>4</td>
+      <td>1102</td>
+      <td>Sales Rep</td>
+      <td>Paris</td>
+      <td>+33 14 723 4404</td>
+      <td>43 Rue Jouffroy D'abbans</td>
+      <td></td>
+      <td></td>
+      <td>France</td>
+      <td>75017</td>
+      <td>EMEA</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>1370</td>
+      <td>Hernandez</td>
+      <td>Gerard</td>
+      <td>x2028</td>
+      <td>ghernande@classicmodelcars.com</td>
+      <td>4</td>
+      <td>1102</td>
+      <td>Sales Rep</td>
+      <td>Paris</td>
+      <td>+33 14 723 4404</td>
+      <td>43 Rue Jouffroy D'abbans</td>
+      <td></td>
+      <td></td>
+      <td>France</td>
+      <td>75017</td>
+      <td>EMEA</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>1401</td>
+      <td>Castillo</td>
+      <td>Pamela</td>
+      <td>x2759</td>
+      <td>pcastillo@classicmodelcars.com</td>
+      <td>4</td>
+      <td>1102</td>
+      <td>Sales Rep</td>
+      <td>Paris</td>
+      <td>+33 14 723 4404</td>
+      <td>43 Rue Jouffroy D'abbans</td>
+      <td></td>
+      <td></td>
+      <td>France</td>
+      <td>75017</td>
+      <td>EMEA</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>1702</td>
+      <td>Gerard</td>
+      <td>Martin</td>
+      <td>x2312</td>
+      <td>mgerard@classicmodelcars.com</td>
+      <td>4</td>
+      <td>1102</td>
+      <td>Sales Rep</td>
+      <td>Paris</td>
+      <td>+33 14 723 4404</td>
+      <td>43 Rue Jouffroy D'abbans</td>
+      <td></td>
+      <td></td>
+      <td>France</td>
+      <td>75017</td>
+      <td>EMEA</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>1621</td>
+      <td>Nishi</td>
+      <td>Mami</td>
+      <td>x101</td>
+      <td>mnishi@classicmodelcars.com</td>
+      <td>5</td>
+      <td>1056</td>
+      <td>Sales Rep</td>
+      <td>Tokyo</td>
+      <td>+81 33 224 5000</td>
+      <td>4-1 Kioicho</td>
+      <td></td>
+      <td>Chiyoda-Ku</td>
+      <td>Japan</td>
+      <td>102-8578</td>
+      <td>Japan</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>1625</td>
+      <td>Kato</td>
+      <td>Yoshimi</td>
+      <td>x102</td>
+      <td>ykato@classicmodelcars.com</td>
+      <td>5</td>
+      <td>1621</td>
+      <td>Sales Rep</td>
+      <td>Tokyo</td>
+      <td>+81 33 224 5000</td>
+      <td>4-1 Kioicho</td>
+      <td></td>
+      <td>Chiyoda-Ku</td>
+      <td>Japan</td>
+      <td>102-8578</td>
+      <td>Japan</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>1088</td>
+      <td>Patterson</td>
+      <td>William</td>
+      <td>x4871</td>
+      <td>wpatterson@classicmodelcars.com</td>
+      <td>6</td>
+      <td>1056</td>
+      <td>Sales Manager (APAC)</td>
+      <td>Sydney</td>
+      <td>+61 2 9264 2451</td>
+      <td>5-11 Wentworth Avenue</td>
+      <td>Floor #2</td>
+      <td></td>
+      <td>Australia</td>
+      <td>NSW 2010</td>
+      <td>APAC</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>1611</td>
+      <td>Fixter</td>
+      <td>Andy</td>
+      <td>x101</td>
+      <td>afixter@classicmodelcars.com</td>
+      <td>6</td>
+      <td>1088</td>
+      <td>Sales Rep</td>
+      <td>Sydney</td>
+      <td>+61 2 9264 2451</td>
+      <td>5-11 Wentworth Avenue</td>
+      <td>Floor #2</td>
+      <td></td>
+      <td>Australia</td>
+      <td>NSW 2010</td>
+      <td>APAC</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>1612</td>
+      <td>Marsh</td>
+      <td>Peter</td>
+      <td>x102</td>
+      <td>pmarsh@classicmodelcars.com</td>
+      <td>6</td>
+      <td>1088</td>
+      <td>Sales Rep</td>
+      <td>Sydney</td>
+      <td>+61 2 9264 2451</td>
+      <td>5-11 Wentworth Avenue</td>
+      <td>Floor #2</td>
+      <td></td>
+      <td>Australia</td>
+      <td>NSW 2010</td>
+      <td>APAC</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>1619</td>
+      <td>King</td>
+      <td>Tom</td>
+      <td>x103</td>
+      <td>tking@classicmodelcars.com</td>
+      <td>6</td>
+      <td>1088</td>
+      <td>Sales Rep</td>
+      <td>Sydney</td>
+      <td>+61 2 9264 2451</td>
+      <td>5-11 Wentworth Avenue</td>
+      <td>Floor #2</td>
+      <td></td>
+      <td>Australia</td>
+      <td>NSW 2010</td>
+      <td>APAC</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>1501</td>
+      <td>Bott</td>
+      <td>Larry</td>
+      <td>x2311</td>
+      <td>lbott@classicmodelcars.com</td>
+      <td>7</td>
+      <td>1102</td>
+      <td>Sales Rep</td>
+      <td>London</td>
+      <td>+44 20 7877 2041</td>
+      <td>25 Old Broad Street</td>
+      <td>Level 7</td>
+      <td></td>
+      <td>UK</td>
+      <td>EC2N 1HN</td>
+      <td>EMEA</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>1504</td>
+      <td>Jones</td>
+      <td>Barry</td>
+      <td>x102</td>
+      <td>bjones@classicmodelcars.com</td>
+      <td>7</td>
+      <td>1102</td>
+      <td>Sales Rep</td>
+      <td>London</td>
+      <td>+44 20 7877 2041</td>
+      <td>25 Old Broad Street</td>
+      <td>Level 7</td>
+      <td></td>
+      <td>UK</td>
+      <td>EC2N 1HN</td>
+      <td>EMEA</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="one-to-many">
+<h3>One-to-Many<a class="headerlink" href="#one-to-many" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>There are multiple entries in database B that match the entry in database A</p></li>
+<li><p>e.g. Joining an order number from db A with the individual products in db B.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## preview table 1 </span>
+<span class="n">query_to_df</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM products;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>productCode</th>
+      <th>productName</th>
+      <th>productLine</th>
+      <th>productScale</th>
+      <th>productVendor</th>
+      <th>productDescription</th>
+      <th>quantityInStock</th>
+      <th>buyPrice</th>
+      <th>MSRP</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>S10_1678</td>
+      <td>1969 Harley Davidson Ultimate Chopper</td>
+      <td>Motorcycles</td>
+      <td>1:10</td>
+      <td>Min Lin Diecast</td>
+      <td>This replica features working kickstand, front...</td>
+      <td>7933</td>
+      <td>48.81</td>
+      <td>95.70</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>S10_1949</td>
+      <td>1952 Alpine Renault 1300</td>
+      <td>Classic Cars</td>
+      <td>1:10</td>
+      <td>Classic Metal Creations</td>
+      <td>Turnable front wheels; steering function; deta...</td>
+      <td>7305</td>
+      <td>98.58</td>
+      <td>214.30</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>S10_2016</td>
+      <td>1996 Moto Guzzi 1100i</td>
+      <td>Motorcycles</td>
+      <td>1:10</td>
+      <td>Highway 66 Mini Classics</td>
+      <td>Official Moto Guzzi logos and insignias, saddl...</td>
+      <td>6625</td>
+      <td>68.99</td>
+      <td>118.94</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>S10_4698</td>
+      <td>2003 Harley-Davidson Eagle Drag Bike</td>
+      <td>Motorcycles</td>
+      <td>1:10</td>
+      <td>Red Start Diecast</td>
+      <td>Model features, official Harley Davidson logos...</td>
+      <td>5582</td>
+      <td>91.02</td>
+      <td>193.66</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>S10_4757</td>
+      <td>1972 Alfa Romeo GTA</td>
+      <td>Classic Cars</td>
+      <td>1:10</td>
+      <td>Motor City Art Classics</td>
+      <td>Features include: Turnable front wheels; steer...</td>
+      <td>3252</td>
+      <td>85.68</td>
+      <td>136.00</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>105</th>
+      <td>S700_3505</td>
+      <td>The Titanic</td>
+      <td>Ships</td>
+      <td>1:700</td>
+      <td>Carousel DieCast Legends</td>
+      <td>Completed model measures 19 1/2 inches long, 9...</td>
+      <td>1956</td>
+      <td>51.09</td>
+      <td>100.17</td>
+    </tr>
+    <tr>
+      <th>106</th>
+      <td>S700_3962</td>
+      <td>The Queen Mary</td>
+      <td>Ships</td>
+      <td>1:700</td>
+      <td>Welly Diecast Productions</td>
+      <td>Exact replica. Wood and Metal. Many extras inc...</td>
+      <td>5088</td>
+      <td>53.63</td>
+      <td>99.31</td>
+    </tr>
+    <tr>
+      <th>107</th>
+      <td>S700_4002</td>
+      <td>American Airlines: MD-11S</td>
+      <td>Planes</td>
+      <td>1:700</td>
+      <td>Second Gear Diecast</td>
+      <td>Polished finish. Exact replia with official lo...</td>
+      <td>8820</td>
+      <td>36.27</td>
+      <td>74.03</td>
+    </tr>
+    <tr>
+      <th>108</th>
+      <td>S72_1253</td>
+      <td>Boeing X-32A JSF</td>
+      <td>Planes</td>
+      <td>1:72</td>
+      <td>Motor City Art Classics</td>
+      <td>10" Wingspan with retractable landing gears.Co...</td>
+      <td>4857</td>
+      <td>32.77</td>
+      <td>49.66</td>
+    </tr>
+    <tr>
+      <th>109</th>
+      <td>S72_3212</td>
+      <td>Pont Yacht</td>
+      <td>Ships</td>
+      <td>1:72</td>
+      <td>Unimax Art Galleries</td>
+      <td>Measures 38 inches Long x 33 3/4 inches High. ...</td>
+      <td>414</td>
+      <td>33.30</td>
+      <td>54.60</td>
+    </tr>
+  </tbody>
+</table>
+<p>110 rows × 9 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## preview table 2</span>
+<span class="n">query_to_df</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM productlines;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>productLine</th>
+      <th>textDescription</th>
+      <th>htmlDescription</th>
+      <th>image</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Classic Cars</td>
+      <td>Attention car enthusiasts: Make your wildest c...</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Motorcycles</td>
+      <td>Our motorcycles are state of the art replicas ...</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Planes</td>
+      <td>Unique, diecast airplane and helicopter replic...</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Ships</td>
+      <td>The perfect holiday or anniversary gift for ex...</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Trains</td>
+      <td>Model trains are a rewarding hobby for enthusi...</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Trucks and Buses</td>
+      <td>The Truck and Bus models are realistic replica...</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Vintage Cars</td>
+      <td>Our Vintage Car models realistically portray a...</td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## One-to-Many Join</span>
+<span class="n">query_to_df</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;SELECT * </span>
+<span class="s2">               FROM products</span>
+<span class="s2">               LEFT JOIN productlines</span>
+<span class="s2">               USING(productLine);&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>productCode</th>
+      <th>productName</th>
+      <th>productLine</th>
+      <th>productScale</th>
+      <th>productVendor</th>
+      <th>productDescription</th>
+      <th>quantityInStock</th>
+      <th>buyPrice</th>
+      <th>MSRP</th>
+      <th>textDescription</th>
+      <th>htmlDescription</th>
+      <th>image</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>S10_1678</td>
+      <td>1969 Harley Davidson Ultimate Chopper</td>
+      <td>Motorcycles</td>
+      <td>1:10</td>
+      <td>Min Lin Diecast</td>
+      <td>This replica features working kickstand, front...</td>
+      <td>7933</td>
+      <td>48.81</td>
+      <td>95.70</td>
+      <td>Our motorcycles are state of the art replicas ...</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>S10_1949</td>
+      <td>1952 Alpine Renault 1300</td>
+      <td>Classic Cars</td>
+      <td>1:10</td>
+      <td>Classic Metal Creations</td>
+      <td>Turnable front wheels; steering function; deta...</td>
+      <td>7305</td>
+      <td>98.58</td>
+      <td>214.30</td>
+      <td>Attention car enthusiasts: Make your wildest c...</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>S10_2016</td>
+      <td>1996 Moto Guzzi 1100i</td>
+      <td>Motorcycles</td>
+      <td>1:10</td>
+      <td>Highway 66 Mini Classics</td>
+      <td>Official Moto Guzzi logos and insignias, saddl...</td>
+      <td>6625</td>
+      <td>68.99</td>
+      <td>118.94</td>
+      <td>Our motorcycles are state of the art replicas ...</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>S10_4698</td>
+      <td>2003 Harley-Davidson Eagle Drag Bike</td>
+      <td>Motorcycles</td>
+      <td>1:10</td>
+      <td>Red Start Diecast</td>
+      <td>Model features, official Harley Davidson logos...</td>
+      <td>5582</td>
+      <td>91.02</td>
+      <td>193.66</td>
+      <td>Our motorcycles are state of the art replicas ...</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>S10_4757</td>
+      <td>1972 Alfa Romeo GTA</td>
+      <td>Classic Cars</td>
+      <td>1:10</td>
+      <td>Motor City Art Classics</td>
+      <td>Features include: Turnable front wheels; steer...</td>
+      <td>3252</td>
+      <td>85.68</td>
+      <td>136.00</td>
+      <td>Attention car enthusiasts: Make your wildest c...</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>105</th>
+      <td>S700_3505</td>
+      <td>The Titanic</td>
+      <td>Ships</td>
+      <td>1:700</td>
+      <td>Carousel DieCast Legends</td>
+      <td>Completed model measures 19 1/2 inches long, 9...</td>
+      <td>1956</td>
+      <td>51.09</td>
+      <td>100.17</td>
+      <td>The perfect holiday or anniversary gift for ex...</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>106</th>
+      <td>S700_3962</td>
+      <td>The Queen Mary</td>
+      <td>Ships</td>
+      <td>1:700</td>
+      <td>Welly Diecast Productions</td>
+      <td>Exact replica. Wood and Metal. Many extras inc...</td>
+      <td>5088</td>
+      <td>53.63</td>
+      <td>99.31</td>
+      <td>The perfect holiday or anniversary gift for ex...</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>107</th>
+      <td>S700_4002</td>
+      <td>American Airlines: MD-11S</td>
+      <td>Planes</td>
+      <td>1:700</td>
+      <td>Second Gear Diecast</td>
+      <td>Polished finish. Exact replia with official lo...</td>
+      <td>8820</td>
+      <td>36.27</td>
+      <td>74.03</td>
+      <td>Unique, diecast airplane and helicopter replic...</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>108</th>
+      <td>S72_1253</td>
+      <td>Boeing X-32A JSF</td>
+      <td>Planes</td>
+      <td>1:72</td>
+      <td>Motor City Art Classics</td>
+      <td>10" Wingspan with retractable landing gears.Co...</td>
+      <td>4857</td>
+      <td>32.77</td>
+      <td>49.66</td>
+      <td>Unique, diecast airplane and helicopter replic...</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>109</th>
+      <td>S72_3212</td>
+      <td>Pont Yacht</td>
+      <td>Ships</td>
+      <td>1:72</td>
+      <td>Unimax Art Galleries</td>
+      <td>Measures 38 inches Long x 33 3/4 inches High. ...</td>
+      <td>414</td>
+      <td>33.30</td>
+      <td>54.60</td>
+      <td>The perfect holiday or anniversary gift for ex...</td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+<p>110 rows × 12 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="many-to-many">
+<h3>Many-to-Many<a class="headerlink" href="#many-to-many" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>There are multiple entries in database A that match multiple entries in database B.</p></li>
+<li><p>e.g. A = classes at a college, B = students.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">query_to_df</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;SELECT * FROM offices</span>
+<span class="s2">                        JOIN customers</span>
+<span class="s2">                        USING(state);&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>officeCode</th>
+      <th>city</th>
+      <th>phone</th>
+      <th>addressLine1</th>
+      <th>addressLine2</th>
+      <th>state</th>
+      <th>country</th>
+      <th>postalCode</th>
+      <th>territory</th>
+      <th>customerNumber</th>
+      <th>...</th>
+      <th>contactLastName</th>
+      <th>contactFirstName</th>
+      <th>phone</th>
+      <th>addressLine1</th>
+      <th>addressLine2</th>
+      <th>city</th>
+      <th>postalCode</th>
+      <th>country</th>
+      <th>salesRepEmployeeNumber</th>
+      <th>creditLimit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>San Francisco</td>
+      <td>+1 650 219 4782</td>
+      <td>100 Market Street</td>
+      <td>Suite 300</td>
+      <td>CA</td>
+      <td>USA</td>
+      <td>94080</td>
+      <td>NA</td>
+      <td>124</td>
+      <td>...</td>
+      <td>Nelson</td>
+      <td>Susan</td>
+      <td>4155551450</td>
+      <td>5677 Strong St.</td>
+      <td></td>
+      <td>San Rafael</td>
+      <td>97562</td>
+      <td>USA</td>
+      <td>1165</td>
+      <td>210500.00</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>San Francisco</td>
+      <td>+1 650 219 4782</td>
+      <td>100 Market Street</td>
+      <td>Suite 300</td>
+      <td>CA</td>
+      <td>USA</td>
+      <td>94080</td>
+      <td>NA</td>
+      <td>129</td>
+      <td>...</td>
+      <td>Murphy</td>
+      <td>Julie</td>
+      <td>6505555787</td>
+      <td>5557 North Pendale Street</td>
+      <td></td>
+      <td>San Francisco</td>
+      <td>94217</td>
+      <td>USA</td>
+      <td>1165</td>
+      <td>64600.00</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>San Francisco</td>
+      <td>+1 650 219 4782</td>
+      <td>100 Market Street</td>
+      <td>Suite 300</td>
+      <td>CA</td>
+      <td>USA</td>
+      <td>94080</td>
+      <td>NA</td>
+      <td>161</td>
+      <td>...</td>
+      <td>Hashimoto</td>
+      <td>Juri</td>
+      <td>6505556809</td>
+      <td>9408 Furth Circle</td>
+      <td></td>
+      <td>Burlingame</td>
+      <td>94217</td>
+      <td>USA</td>
+      <td>1165</td>
+      <td>84600.00</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>San Francisco</td>
+      <td>+1 650 219 4782</td>
+      <td>100 Market Street</td>
+      <td>Suite 300</td>
+      <td>CA</td>
+      <td>USA</td>
+      <td>94080</td>
+      <td>NA</td>
+      <td>205</td>
+      <td>...</td>
+      <td>Young</td>
+      <td>Julie</td>
+      <td>6265557265</td>
+      <td>78934 Hillside Dr.</td>
+      <td></td>
+      <td>Pasadena</td>
+      <td>90003</td>
+      <td>USA</td>
+      <td>1166</td>
+      <td>90700.00</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>San Francisco</td>
+      <td>+1 650 219 4782</td>
+      <td>100 Market Street</td>
+      <td>Suite 300</td>
+      <td>CA</td>
+      <td>USA</td>
+      <td>94080</td>
+      <td>NA</td>
+      <td>219</td>
+      <td>...</td>
+      <td>Young</td>
+      <td>Mary</td>
+      <td>3105552373</td>
+      <td>4097 Douglas Av.</td>
+      <td></td>
+      <td>Glendale</td>
+      <td>92561</td>
+      <td>USA</td>
+      <td>1166</td>
+      <td>11000.00</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>240</th>
+      <td>7</td>
+      <td>London</td>
+      <td>+44 20 7877 2041</td>
+      <td>25 Old Broad Street</td>
+      <td>Level 7</td>
+      <td></td>
+      <td>UK</td>
+      <td>EC2N 1HN</td>
+      <td>EMEA</td>
+      <td>480</td>
+      <td>...</td>
+      <td>Semenov</td>
+      <td>Alexander</td>
+      <td>+7 812 293 0521</td>
+      <td>2 Pobedy Square</td>
+      <td></td>
+      <td>Saint Petersburg</td>
+      <td>196143</td>
+      <td>Russia</td>
+      <td></td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>241</th>
+      <td>7</td>
+      <td>London</td>
+      <td>+44 20 7877 2041</td>
+      <td>25 Old Broad Street</td>
+      <td>Level 7</td>
+      <td></td>
+      <td>UK</td>
+      <td>EC2N 1HN</td>
+      <td>EMEA</td>
+      <td>481</td>
+      <td>...</td>
+      <td>Altagar,G M</td>
+      <td>Raanan</td>
+      <td>+ 972 9 959 8555</td>
+      <td>3 Hagalim Blv.</td>
+      <td></td>
+      <td>Herzlia</td>
+      <td>47625</td>
+      <td>Israel</td>
+      <td></td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>242</th>
+      <td>7</td>
+      <td>London</td>
+      <td>+44 20 7877 2041</td>
+      <td>25 Old Broad Street</td>
+      <td>Level 7</td>
+      <td></td>
+      <td>UK</td>
+      <td>EC2N 1HN</td>
+      <td>EMEA</td>
+      <td>484</td>
+      <td>...</td>
+      <td>Roel</td>
+      <td>José Pedro</td>
+      <td>(95) 555 82 82</td>
+      <td>C/ Romero, 33</td>
+      <td></td>
+      <td>Sevilla</td>
+      <td>41101</td>
+      <td>Spain</td>
+      <td>1702</td>
+      <td>65700.00</td>
+    </tr>
+    <tr>
+      <th>243</th>
+      <td>7</td>
+      <td>London</td>
+      <td>+44 20 7877 2041</td>
+      <td>25 Old Broad Street</td>
+      <td>Level 7</td>
+      <td></td>
+      <td>UK</td>
+      <td>EC2N 1HN</td>
+      <td>EMEA</td>
+      <td>489</td>
+      <td>...</td>
+      <td>Smith</td>
+      <td>Thomas</td>
+      <td>(171) 555-7555</td>
+      <td>120 Hanover Sq.</td>
+      <td></td>
+      <td>London</td>
+      <td>WA1 1DP</td>
+      <td>UK</td>
+      <td>1501</td>
+      <td>43300.00</td>
+    </tr>
+    <tr>
+      <th>244</th>
+      <td>7</td>
+      <td>London</td>
+      <td>+44 20 7877 2041</td>
+      <td>25 Old Broad Street</td>
+      <td>Level 7</td>
+      <td></td>
+      <td>UK</td>
+      <td>EC2N 1HN</td>
+      <td>EMEA</td>
+      <td>496</td>
+      <td>...</td>
+      <td>Snowden</td>
+      <td>Tony</td>
+      <td>+64 9 5555500</td>
+      <td>Arenales 1938 3'A'</td>
+      <td></td>
+      <td>Auckland</td>
+      <td></td>
+      <td>New Zealand</td>
+      <td>1612</td>
+      <td>110000.00</td>
+    </tr>
+  </tbody>
+</table>
+<p>245 rows × 21 columns</p>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="sql-subqueries">
+<h2>SQL Subqueries<a class="headerlink" href="#sql-subqueries" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>WHen making a subq, start by testing the  sub-Q itself before using in the larger query</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;SELECT lastName, firstName, officeCode</span>
+<span class="s2">               FROM employees</span>
+<span class="s2">               WHERE officeCode IN (SELECT officeCode</span>
+<span class="s2">                                    FROM offices </span>
+<span class="s2">                                    WHERE country = &quot;USA&quot;);</span>
+<span class="s2">                                    &quot;&quot;&quot;</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">())</span>
+<span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">cur</span><span class="o">.</span><span class="n">description</span><span class="p">]</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+<section id="example-subquery">
+<h3>Example Subquery<a class="headerlink" href="#example-subquery" title="Permalink to this heading">#</a></h3>
+<div class="highlight-SQL notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">LAB_MONTH</span><span class="p">,</span><span class="n">MPI</span><span class="p">,</span><span class="n">CW_UPI</span><span class="p">,</span><span class="n">LAST_NAME</span><span class="p">,</span><span class="w"> </span><span class="n">FIRST_NAME</span>
+<span class="p">,</span><span class="n">FACILITY_NUMBER</span>
+<span class="p">,</span><span class="n">CCN</span>
+<span class="p">,</span><span class="n">FACILITY_NAME</span>
+<span class="p">,</span><span class="n">NUMBER_OF_CLINICS</span>
+<span class="p">,</span><span class="n">HOME_FACILITY</span>
+<span class="p">,</span><span class="n">TRANSIENT</span>
+<span class="p">,</span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="n">ADMITDATE</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="s1">&#39;7/1/2020&#39;</span><span class="w"> </span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="p">(</span><span class="n">PATIENTDISCHARGEDATE</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="s1">&#39;7/31/2020&#39;</span>
+<span class="w">    </span><span class="k">OR</span><span class="w"> </span><span class="n">PATIENTDISCHARGEDATE</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NULL</span><span class="p">)</span>
+<span class="w">  </span><span class="k">THEN</span><span class="w"> </span><span class="s1">&#39;FULL MONTH&#39;</span><span class="w"> </span><span class="k">ELSE</span><span class="w"> </span><span class="s1">&#39;LESS THAN A MONTH&#39;</span><span class="w"> </span><span class="k">END</span><span class="w"> </span><span class="n">FULL_MONTH</span>
+<span class="p">,</span><span class="n">ADMITDATE</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">ADMIT_DATE</span>
+<span class="p">,</span><span class="n">ADMITREASON</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">ADMIT_REASON</span>
+<span class="p">,</span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="n">PATIENTDISCHARGEDATE</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">ADMITDATE</span>
+<span class="w">  </span><span class="k">THEN</span><span class="w"> </span><span class="n">PATIENTDISCHARGEDATE</span><span class="w"> </span><span class="k">ELSE</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">END</span><span class="w"> </span><span class="n">DISCHARGE_DATE</span>
+<span class="k">FROM</span><span class="w"> </span><span class="p">(</span>
+<span class="w">  </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
+<span class="w">  </span><span class="p">,</span><span class="n">ROW_NUMBER</span><span class="p">()</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">MPI</span><span class="p">,</span><span class="w"> </span><span class="n">FACILITY_NUMBER</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">ADMITDATE</span><span class="w"> </span><span class="k">DESC</span><span class="p">)</span><span class="w"> </span><span class="n">ADMIT_ROW_NUM</span>
+<span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="k">DISTINCT</span>
+<span class="w">    </span><span class="n">LAB_MONTH</span>
+<span class="w">    </span><span class="p">,</span><span class="n">labs</span><span class="p">.</span><span class="n">IDPATIENT</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">MPI</span>
+<span class="w">    </span><span class="p">,</span><span class="k">map</span><span class="p">.</span><span class="n">CWIDPATIENT</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">CW_UPI</span>
+<span class="w">    </span><span class="p">,</span><span class="n">name</span><span class="p">.</span><span class="n">LASTNAME</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">LAST_NAME</span>
+<span class="w">    </span><span class="p">,</span><span class="n">name</span><span class="p">.</span><span class="n">FIRSTNAME</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">FIRST_NAME</span>
+<span class="w">    </span><span class="p">,</span><span class="n">cln</span><span class="p">.</span><span class="n">IDCORPCLINIC</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">FACILITY_NUMBER</span>
+<span class="w">    </span><span class="p">,</span><span class="k">TRANSLATE</span><span class="p">(</span><span class="n">MEDICARECERTNUM</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;-&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">CCN</span>
+<span class="w">    </span><span class="p">,</span><span class="n">NAMECLINIC</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">FACILITY_NAME</span>
+<span class="w">    </span><span class="p">,</span><span class="n">NUM_CLINICS</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">NUMBER_OF_CLINICS</span>
+<span class="w">    </span><span class="p">,</span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="n">labs</span><span class="p">.</span><span class="n">IDCLINICNUMBER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pnt</span><span class="p">.</span><span class="n">HOME_LOCATIONID</span>
+<span class="w">      </span><span class="k">THEN</span><span class="w"> </span><span class="s1">&#39;YES&#39;</span><span class="w"> </span><span class="k">ELSE</span><span class="w"> </span><span class="s1">&#39;NO&#39;</span><span class="w"> </span><span class="k">END</span><span class="w"> </span><span class="n">HOME_FACILITY</span>
+<span class="w">    </span><span class="p">,</span><span class="n">per</span><span class="p">.</span><span class="n">TRANSIENT</span>
+<span class="w">    </span><span class="p">,</span><span class="n">per</span><span class="p">.</span><span class="n">ADMITDATE</span>
+<span class="w">    </span><span class="p">,</span><span class="n">per</span><span class="p">.</span><span class="n">ADMITREASON</span>
+<span class="w">    </span><span class="p">,</span><span class="n">pnt</span><span class="p">.</span><span class="n">PATIENTDISCHARGEDATE</span>
+<span class="w">    </span><span class="p">,</span><span class="n">pnt</span><span class="p">.</span><span class="n">REC_EFFECTIVE_START_DATE</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">PNT_REC_EFFECTIVE_START_DATE</span>
+<span class="w">    </span><span class="k">FROM</span><span class="p">(</span>
+<span class="w">      </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
+<span class="w">      </span><span class="p">,</span><span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">IDCLINICNUMBER</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">IDPATIENT</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">NUM_CLINICS</span>
+<span class="w">      </span><span class="p">,</span><span class="n">TO_CHAR</span><span class="p">(</span><span class="n">LAST_DAY</span><span class="p">(</span><span class="n">DATEDRAW</span><span class="p">),</span><span class="s1">&#39;yyyymm&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">LAB_MONTH</span>
+<span class="w">      </span><span class="k">FROM</span><span class="w"> </span><span class="n">AUD_RSLTS_VW</span>
+<span class="w">      </span><span class="k">WHERE</span><span class="w"> </span><span class="n">AUD_CURRENT_ROW_FLAG</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Y&#39;</span>
+<span class="w">      </span><span class="k">AND</span><span class="w"> </span><span class="n">DATEDRAW</span><span class="w"> </span><span class="k">BETWEEN</span><span class="w"> </span><span class="s1">&#39;2020-07-01&#39;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="s1">&#39;2020-07-31&#39;</span>
+<span class="w">      </span><span class="p">)</span><span class="w"> </span><span class="n">labs</span>
+<span class="w">    </span><span class="k">LEFT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">AUD_CLINIC_VW</span><span class="w"> </span><span class="n">cln</span>
+<span class="w">    </span><span class="k">ON</span><span class="w"> </span><span class="n">labs</span><span class="p">.</span><span class="n">IDCLINICNUMBER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cln</span><span class="p">.</span><span class="n">CODECLINIC</span>
+<span class="w">    </span><span class="k">LEFT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">CWPATIENTMAP_VW</span><span class="w"> </span><span class="k">map</span>
+<span class="w">    </span><span class="k">ON</span><span class="w"> </span><span class="n">labs</span><span class="p">.</span><span class="n">IDPATIENT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">map</span><span class="p">.</span><span class="n">IDPATIENT</span>
+<span class="w">    </span><span class="k">LEFT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="p">(</span>
+<span class="w">      </span><span class="k">SELECT</span>
+<span class="w">      </span><span class="n">PATIENTID</span>
+<span class="w">      </span><span class="p">,</span><span class="n">LASTNAME</span>
+<span class="w">      </span><span class="p">,</span><span class="n">FIRSTNAME</span>
+<span class="w">      </span><span class="k">FROM</span><span class="w"> </span><span class="n">MSTR_PATIENT_DIM_VW</span>
+<span class="w">      </span><span class="k">WHERE</span><span class="w"> </span><span class="n">REC_CURRENT_IND</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">      </span><span class="p">)</span><span class="w"> </span><span class="n">name</span>
+<span class="w">    </span><span class="k">ON</span><span class="w"> </span><span class="n">labs</span><span class="p">.</span><span class="n">IDPATIENT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">name</span><span class="p">.</span><span class="n">PATIENTID</span>
+<span class="w">    </span><span class="k">LEFT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">MSTR_PATIENT_DIM_VW</span><span class="w"> </span><span class="n">pnt</span>
+<span class="w">    </span><span class="k">ON</span><span class="w"> </span><span class="n">labs</span><span class="p">.</span><span class="n">IDPATIENT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pnt</span><span class="p">.</span><span class="n">PATIENTID</span>
+<span class="w">    </span><span class="k">AND</span><span class="w"> </span><span class="n">labs</span><span class="p">.</span><span class="n">IDCLINICNUMBER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pnt</span><span class="p">.</span><span class="n">HOME_LOCATIONID</span>
+<span class="w">    </span><span class="k">LEFT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">MSTR_FACILITY_DIM_VW</span><span class="w"> </span><span class="n">fac</span>
+<span class="w">    </span><span class="k">ON</span><span class="w"> </span><span class="n">labs</span><span class="p">.</span><span class="n">IDCLINICNUMBER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fac</span><span class="p">.</span><span class="n">LOCATIONID</span>
+<span class="w">    </span><span class="k">LEFT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">CW_GAP_PERIOD_PREVALENCE_VW</span><span class="w"> </span><span class="n">per</span>
+<span class="w">    </span><span class="k">ON</span><span class="w"> </span><span class="n">labs</span><span class="p">.</span><span class="n">IDPATIENT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">per</span><span class="p">.</span><span class="n">ORGPATIENTID</span>
+<span class="w">    </span><span class="k">AND</span><span class="w"> </span><span class="n">cln</span><span class="p">.</span><span class="n">IDCORPCLINIC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LPAD</span><span class="p">(</span><span class="k">CAST</span><span class="p">(</span><span class="n">per</span><span class="p">.</span><span class="n">ORGFACILITYCODE</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">5</span><span class="p">)),</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;0&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="k">WHERE</span><span class="w"> </span><span class="n">NUM_CLINICS</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">    </span><span class="k">AND</span><span class="w"> </span><span class="n">cln</span><span class="p">.</span><span class="n">AUD_CURRENT_ROW_FLAG</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Y&#39;</span>
+<span class="w">    </span><span class="k">AND</span><span class="w"> </span><span class="n">fac</span><span class="p">.</span><span class="n">REC_CURRENT_IND</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">    </span><span class="k">AND</span><span class="w"> </span><span class="n">fac</span><span class="p">.</span><span class="n">REC_DELETED_IND</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="n">X</span>
+<span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="n">Y</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">ADMIT_ROW_NUM</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">NUMBER_OF_CLINICS</span><span class="w"> </span><span class="k">ASC</span><span class="p">,</span><span class="w"> </span><span class="n">MPI</span><span class="p">,</span><span class="w"> </span><span class="n">HOME_FACILITY</span><span class="w"> </span><span class="k">DESC</span><span class="p">,</span><span class="w"> </span><span class="n">FACILITY_NUMBER</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pandas-sql">
+<h1>Pandas + SQL<a class="headerlink" href="#pandas-sql" title="Permalink to this heading">#</a></h1>
+<section id="using-sql-like-queries-in-pandas-df-query">
+<h2>Using SQL-like queries in Pandas - <code class="docutils literal notranslate"><span class="pre">df.query()</span></code><a class="headerlink" href="#using-sql-like-queries-in-pandas-df-query" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Pandas DataFrames have a method called <code class="docutils literal notranslate"><span class="pre">.query()</span></code></p></li>
+<li><p>This allows us to use SQL-like commands to reference data.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">## Normal Pandas Syntax</span>
+<span class="n">foo_df</span> <span class="o">=</span> <span class="n">bar_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">bar_df</span><span class="p">[</span><span class="s1">&#39;Col_1&#39;</span><span class="p">]</span><span class="o">&gt;</span><span class="n">bar_df</span><span class="p">[</span><span class="s1">&#39;Col_2&#39;</span><span class="p">]]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">## Using .query()</span>
+<span class="n">foo_df</span> <span class="o">=</span> <span class="n">bar_df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;Col_1 &gt; Col_2&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>How to use:</p>
+<ul>
+<li><p>Enter the querty as a single string, using just column names to reference data.</p></li>
+<li><p>To use and/or statements, use <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> and <code class="docutils literal notranslate"><span class="pre">|</span></code>, respectively</p></li>
+</ul>
+</li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">foo_df</span> <span class="o">=</span> <span class="n">bar_df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;Col_1 &gt; Col_2 &amp; Col_2 &lt;= Col_3&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="using-sql-syntax-with-pandasql">
+<h2>Using SQL syntax with <code class="docutils literal notranslate"><span class="pre">pandasql</span></code><a class="headerlink" href="#using-sql-syntax-with-pandasql" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>There is a library is called <a class="reference external" href="https://pypi.org/project/pandasql/">pandasql</a> that allows for sql queries with pandas</p></li>
+</ul>
+<p>We can install <code class="docutils literal notranslate"><span class="pre">pandasql</span></code> using the bash command <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pandasql</span></code>.</p>
+<section id="importing-pandasql">
+<h3>Importing pandasql<a class="headerlink" href="#importing-pandasql" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>In order to use <code class="docutils literal notranslate"><span class="pre">pandasql</span></code>, we need to start by importing a <code class="docutils literal notranslate"><span class="pre">sqldf</span></code> object from <code class="docutils literal notranslate"><span class="pre">pandasql</span></code></p></li>
+<li><p>You must also already have loaded in all dataframes that you wish to query</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pandasql</span><span class="w"> </span><span class="kn">import</span> <span class="n">sqldf</span>
+<span class="n">pysqldf</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">q</span><span class="p">:</span> <span class="n">sqldf</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="nb">globals</span><span class="p">())</span>
+</pre></div>
+</div>
+</section>
+<section id="writing-queries">
+<h3>Writing Queries<a class="headerlink" href="#writing-queries" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;SELECT</span>
+<span class="s2">        m.date, m.beef, b.births</span>
+<span class="s2">     FROM</span>
+<span class="s2">        meats m</span>
+<span class="s2">     INNER JOIN</span>
+<span class="s2">        births b</span>
+<span class="s2">           ON m.date = b.date;&quot;&quot;&quot;</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="n">pysqldf</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+
+</pre></div>
+</div>
+</section>
+</section>
+<section id="database-admin-101">
+<h2>DATABASE ADMIN 101<a class="headerlink" href="#database-admin-101" title="Permalink to this heading">#</a></h2>
+<section id="creating-tables-sql-data-types">
+<h3>Creating Tables/SQL Data Types<a class="headerlink" href="#creating-tables-sql-data-types" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">IF</span> <span class="pre">NOT</span> <span class="pre">EXISTS</span> <span class="pre">table_name</span></code></p>
+<ul>
+<li><p>Must include (col_name, datatype, and if its the key)</p></li>
+</ul>
+</li>
+</ul>
+<div class="highlight-PYTHON notranslate"><div class="highlight"><pre><span></span>  cur.execute(&quot;&quot;&quot;CREATE TABLE IF NOT EXISTS cats (
+    id INTEGER PRIMARY KEY,
+    name TEXT,
+    age INTEGER,
+    breed TEXT)
+    &quot;&quot;&quot;)  
+    ```
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Data types in SQLite3:</p>
+<ul>
+<li><p><a class="reference external" href="https://www.sqlite.org/datatype3.html">https://www.sqlite.org/datatype3.html</a></p></li>
+</ul>
+</li>
+<li><p>Data types:</p>
+<ul>
+<li><p>TEXT</p></li>
+<li><p>INTEGER</p></li>
+<li><p>REAL</p></li>
+<li><p>BLOB</p></li>
+<li><p>NULL</p></li>
+</ul>
+</li>
+</ul>
+<section id="dropping-a-table">
+<h4>Dropping a Table<a class="headerlink" href="#dropping-a-table" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">DROP</span> <span class="pre">TABLE</span> <span class="pre">table_name</span></code></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">DROP</span> <span class="pre">TABLE</span> <span class="pre">IF</span> <span class="pre">EXISTS</span> <span class="pre">table_name</span></code></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="adding-values-to-a-table">
+<h4>Adding values to a table<a class="headerlink" href="#adding-values-to-a-table" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">INSERT</span> <span class="pre">INTO</span> <span class="pre">table_name</span></code></p>
+<ul>
+<li><p>list the columns to fill in first and then the VALUES()</p></li>
+</ul>
+</li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;INSERT INTO cats (name, age, breed) </span>
+<span class="s1">                  VALUES (&#39;Maru&#39;, 3, &#39;Scottish Fold&#39;);</span>
+<span class="s1">            &#39;&#39;&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>To add multiple:</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;INSERT INTO cats (name, age, breed) </span>
+<span class="s1">            VALUES (?, ?, ?);</span>
+<span class="s1">      &#39;&#39;&#39;</span><span class="p">,(</span><span class="n">dict_cats</span><span class="p">))</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">UPDATE</span></code></p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">dct</span> <span class="ow">in</span> <span class="n">contacts</span><span class="p">:</span>
+    <span class="n">fname</span> <span class="o">=</span> <span class="n">dct</span><span class="p">[</span><span class="s1">&#39;firstName&#39;</span><span class="p">]</span>
+    <span class="n">lname</span> <span class="o">=</span> <span class="n">dct</span><span class="p">[</span><span class="s1">&#39;lastName&#39;</span><span class="p">]</span>
+    <span class="n">role</span> <span class="o">=</span> <span class="n">dct</span><span class="p">[</span><span class="s1">&#39;role&#39;</span><span class="p">]</span>
+    <span class="n">phone</span> <span class="o">=</span> <span class="n">dct</span><span class="p">[</span><span class="s1">&#39;telephone &#39;</span><span class="p">]</span>
+    <span class="n">street</span> <span class="o">=</span> <span class="n">dct</span><span class="p">[</span><span class="s1">&#39;street&#39;</span><span class="p">]</span>
+    <span class="n">city</span> <span class="o">=</span> <span class="n">dct</span><span class="p">[</span><span class="s1">&#39;city&#39;</span><span class="p">]</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">dct</span><span class="p">[</span><span class="s1">&#39;state&#39;</span><span class="p">]</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">dct</span><span class="p">[</span><span class="s1">&#39;zipcode &#39;</span><span class="p">]</span>
+
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;INSERT INTO contactInfo (firstname, lastname, role, telephone, street, city, state, zipcode)</span>
+<span class="s1">VALUES (?,?,?,?,?,?,?,?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">lname</span><span class="p">,</span> <span class="n">role</span><span class="p">,</span> <span class="n">phone</span><span class="p">,</span> <span class="n">street</span><span class="p">,</span> <span class="n">city</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">z</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># cur.execute(&quot;&quot;&quot;CREATE TABLE cats (</span>
+<span class="c1">#     id INTEGER PRIMARY KEY,</span>
+<span class="c1">#     name TEXT,</span>
+<span class="c1">#     age INTEGER,</span>
+<span class="c1">#     breed TEXT)</span>
+<span class="c1">#     &quot;&quot;&quot;)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>🏝 Breakout Group Activity:  <a class="reference external" href="https://sql-island.informatik.uni-kl.de/">Survive on sql-island</a><a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Survive on sql-island</p>
+<ul>
+<li><p><a class="reference external" href="https://sql-island.informatik.uni-kl.de/">https://sql-island.informatik.uni-kl.de/</a></p></li>
+</ul>
+</li>
+<li><p>3 min walk through together before breakout rooms</p></li>
+</ul>
+<section id="fist-change-language-to-english">
+<h2>Fist, change language to English<a class="headerlink" href="#fist-change-language-to-english" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>click white menu button.
+<img src="https://raw.githubusercontent.com/flatiron-school/Online-DS-FT-022221-Cohort-Notes/master/assets/images/sql-island/SQL%20Island%201.png"></p></li>
+<li><p>Select option to change language (option 3)
+<img src="https://raw.githubusercontent.com/flatiron-school/Online-DS-FT-022221-Cohort-Notes/master/assets/images/sql-island/SQL%20Island%202.png" width=35%></p></li>
+<li><p>Select English
+<img src="https://raw.githubusercontent.com/flatiron-school/Online-DS-FT-022221-Cohort-Notes/master/assets/images/sql-island/SQL%20Island%203.png" width=35%></p></li>
+</ul>
+</section>
+<section id="take-note-of-the-tables-and-column-names">
+<h2>Take Note of the Tables and Column Names<a class="headerlink" href="#take-note-of-the-tables-and-column-names" title="Permalink to this heading">#</a></h2>
+<img src="https://raw.githubusercontent.com/flatiron-school/Online-DS-FT-022221-Cohort-Notes/master/assets/images/sql-island/SQL%20Island%204.png" width=80%></section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "learn-env-new"
+        },
+        kernelOptions: {
+            name: "learn-env-new",
+            path: "./Phase_1/topic_07_SQL_and_relational_databases"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'learn-env-new'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../topic_06_data_visualization/topic_06_visualizations_heroes_project_SG.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Topic 06:  Data Visualizations</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../topic_08_noSQL_databases/topic_08_mongodb-SG.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Topic 08: NoSQL Databases</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">TOPIC 07: SQL DATABASES</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">LEARNING OBJECTIVES:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#breakout-group-activity-survive-on-sql-island">🏝 Breakout Group Activity:  Survive on sql-island</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#questions">Questions:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sql-databases">SQL Databases</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#q-why-do-we-need-databases-why-can-t-we-just-use-a-bunch-of-pandas-dataframes">⨠ Q: Why do we need databases? Why can’t we just use a bunch of Pandas DataFrames?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#querying-databases-selecting-data">Querying Databases - <code class="docutils literal notranslate"><span class="pre">SELECT</span></code>ing data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sql-with-sqlite3">SQL with <code class="docutils literal notranslate"><span class="pre">sqlite3</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-get-all-of-the-table-names-in-a-database">How to get all of the table names in a database</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-get-the-column-names-after-executing-a-query">How to get the column names after executing a query:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-activity-make-executing-the-query-dataframe-into-a-function">Quick Activity: Make executing the query -&gt; dataframe into a function</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-and-ordering">FILTERING AND ORDERING</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grouping-data-with-sql">GROUPING DATA WITH SQL</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aliasing">ALIASING</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-where-clause">The <code class="docutils literal notranslate"><span class="pre">WHERE</span></code> Clause</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-having-clause">The <code class="docutils literal notranslate"><span class="pre">HAVING</span></code> clause</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#combining-where-and-having">Combining <code class="docutils literal notranslate"><span class="pre">WHERE</span></code> and <code class="docutils literal notranslate"><span class="pre">HAVING</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#joins">JOINS</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-joins">TYPES OF JOINS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#join-statements"><code class="docutils literal notranslate"><span class="pre">JOIN</span></code> Statements</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#primary-vs-foreign-keys">Primary vs Foreign Keys</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-using-clause">The <code class="docutils literal notranslate"><span class="pre">USING</span></code> clause</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#task-displaying-product-details-along-with-order-details">Task: Displaying product details along with order details</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-relationships-between-tables">Types of Relationships Between Tables</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#one-to-one-one-to-many-many-to-many-joins">One-to-One, One-to-many, many-to-many Joins</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#one-to-one">One-to-One</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#one-to-many">One-to-Many</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#many-to-many">Many-to-Many</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sql-subqueries">SQL Subqueries</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-subquery">Example Subquery</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-sql">Pandas + SQL</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-sql-like-queries-in-pandas-df-query">Using SQL-like queries in Pandas - <code class="docutils literal notranslate"><span class="pre">df.query()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-sql-syntax-with-pandasql">Using SQL syntax with <code class="docutils literal notranslate"><span class="pre">pandasql</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-pandasql">Importing pandasql</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#writing-queries">Writing Queries</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#database-admin-101">DATABASE ADMIN 101</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-tables-sql-data-types">Creating Tables/SQL Data Types</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dropping-a-table">Dropping a Table</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-values-to-a-table">Adding values to a table</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">🏝 Breakout Group Activity:  Survive on sql-island</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fist-change-language-to-english">Fist, change language to English</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#take-note-of-the-tables-and-column-names">Take Note of the Tables and Column Names</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By James Irving, PhD
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

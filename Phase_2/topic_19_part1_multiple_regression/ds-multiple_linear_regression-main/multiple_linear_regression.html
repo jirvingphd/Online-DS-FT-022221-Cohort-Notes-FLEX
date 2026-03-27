@@ -1,0 +1,3837 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Multiple Linear Regression &#8212; Data Science Curriculum</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Phase_2/topic_19_part1_multiple_regression/ds-multiple_linear_regression-main/multiple_linear_regression';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/flatironschool_banner.jpg" class="logo__image only-light" alt="Data Science Curriculum - Home"/>
+    <script>document.write(`<img src="../../../_static/flatironschool_banner.jpg" class="logo__image only-dark" alt="Data Science Curriculum - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../intro.html">
+                    Data Science Curriculum
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 1 - Python &amp; Data Fundamentals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_01_getting_started/topic_01_getting_started.html">Topic 1: Getting Started with Data Science</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_02_bash_git/topic_02_bash_and_git.html">Topic 02:  Bash and Git</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_03_control_flow_functions/topic_03_control_flow_and_functions.html">Topic 03: Control Flow, Functions, and Statistics</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_04_python_libraries/topic_04_intro_to_libraries_numpy_SG.html">Topic 04-Part 1: Python Libraries &amp; NumPy</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_04_python_libraries/topic_04_pt-2_brief_intro_to_pandas-SG.html">Topic 04-Part 2: Brief Intro to Pandas with Doctor Who</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_05_data_cleaning_in_pandas/topic_05_Data_Cleaning_in_Pandas.html">Topic 05: Data Cleaning in Pandas</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_06_data_visualization/topic_06_visualizations_heroes_project_SG.html">Topic 06:  Data Visualizations</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_07_SQL_and_relational_databases/topic_07_SQL_and_relational_databases_SG.html">TOPIC 07: SQL DATABASES</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_08_noSQL_databases/topic_08_mongodb-SG.html">Topic 08: NoSQL Databases</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_09_json_and_apis/topic_09_json-api-SG.html">Topic 09: Using APIs and JSON Data</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_10_webscraping/topic_10_SG_HTML_CSS_web_scraping.html">Topic 10: HTML, CSS, &amp; Web Scraping</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 2 - Statistics &amp; Regression</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../topic_11_probability_and_combinatorics/topic_11_playlist_probabilities-SG.html">Topic 11 - Intro to Combinatorics &amp; Probability</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_12_statistical_distributions/topic-12-distributions-with-movies-sg.html">Exploring Distributions with Movies Data</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_13_central_limit_theorem/topic_13_central_limit_theorem_SG.html">Topic 13: Central Limit Theorem</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_14_hypothesis_testing/topic_14_hypothesis_testing-SG.html">Topic 14: Hypothesis Testing -  T-Tests</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_15_ANOVA/topic_15_ANOVA_with_neuro_data-SG.html">Topic 15: ANOVAs &amp; Statistical Power with  Neuro Data</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_16_AB_testing/topic_16_AB_testing_with_movies-SG.html">Topic 16: Practicing AB Testing with Movies</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_17_bayesian_statistics/topic_17_bayesian_statistics-SG.html">Topic 17: Bayesian Statistics</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_18_linear_regression/topic_18_intro_to_linear_regression_SG.html">Topic 18: Intro to Linear Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_19_Multiple_Regression_v2-SG.html">Topic 19: Multiple Linear Regression</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_19_part2_model_validation/topic_19_part_2_Multiple_Regression_v2-SG.html">Topic 19 Part 2: Feature Selection &amp; Model Validation</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_20_extensions_linear_models/topic_20_extensions_to_linear_models_SG.html">Topic 20: Extensions to Linear Models</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 3 - Machine Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_21_OOP/topic_21_OOP_playing_cards_SG.html">Topic 21: Object-Oriented Programming</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_22_linear_algebra/topic_22_linear_algebra_SG.html">Topic 22: Linear Algebra</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_23_calculus_gradient_descent/topic_23_gradient_descent_SG.html">Topic 23: Cost Functions and Gradient Descent</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_24_regularization/topic_24_Regularization_Ridge_Lasso_v2_SG.html">Topic 24: Feature Selection &amp; Regularization (Ridge and Lasso Regression)</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_25_logistic_regression/topic_25_pt1_LogisticRegression_titanic-v2-SG.html">Topic 25-Pt 1: Intro to Logistic Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_25_logistic_regression/topic_25_pt2_LogisticRegression_titanic-v2-SG.html">Topic 25-Part 2: Evaluating Classifiers, Dealing with Class Imbalance, and <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code></a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_27_KNN/Topic_27_KNN_with_pipelines_with_lab_v3_SG.html">Topic 27: K-Nearest Neighbors<br/> +Topic 32: Pipelines</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_29_decision_trees/topic_29_decision_trees_v2_titanic-SG.html">Topic 29: Decision Trees</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_30_ensemble_methods/topic_30_ensemble_methods-SG.html">Topic 30: Ensemble Methods</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_31_support_vector_machines/topic_31_SupportVectorMachines_SG.html">Topic 31: Support Vector Machines</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 4 - Advanced ML &amp; Time Series</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_33_pca/topic_33_PCA_SG.html">Topic 33: Principal Component Analysis</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_34_clustering/topic_34_Kmeans_clustering_v3_SG.html">Topic 34: Clustering</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_35-36_using_databricks_for_pyspark/using_databricks_for_pyspark.html">How to Use Databricks for PySpark Canvas Material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_36_recommendation_systems/topic_36_Recommendation_Systems_with_Surprise.html">Topic 36: Recommendation Systems</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_37_intro_to_time_series/topic_37_intro_to_time_series_crime_v3-SG.html">Topic 37: Intro to Time Series</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_38_time_series_models/topic_38-time_series_models_v3_SG.html">Topic 38: Time Series Models</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_39_NLP/topic_39_NLP_finding_trump_v3_SG.html">Topic 39: Natural Language Processing + Topic 28: Bayesian Classification</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_40-41_neural_networks/topic_40-41_Artificial_Neural_Networks_v1_SG.html">Topic 40-41: Artificial Neural Networks</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_42_tuning_neural_networks/topic_42_tuning_ANNs_with_deep_NLP_v1_SG.html">Topic 42 - Tuning Neural Networks + Deep NLP</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_43_AWS/topic_43_operationalizing_code_AWS_SG.html">Topic 43: Operationalizing Code &amp; AWS</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 5 - Capstone &amp; Bonus Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/Capstone_Kickoff.html">Capstone Kickoff!</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/APIs/working_with_apis.html">Working with APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/developing_app_functions/developing-streamlit-app-functions_SG.html">Developing Streamlit App Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/tableau/tableau_fundamentals_2021-SG.html">Tableau Fundamentals</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/Bonus%20Notebooks/plotly_visuals.html">Plotly Question</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/master?urlpath=tree/Phase_2/topic_19_part1_multiple_regression/ds-multiple_linear_regression-main/multiple_linear_regression.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/blob/master/Phase_2/topic_19_part1_multiple_regression/ds-multiple_linear_regression-main/multiple_linear_regression.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/issues/new?title=Issue%20on%20page%20%2FPhase_2/topic_19_part1_multiple_regression/ds-multiple_linear_regression-main/multiple_linear_regression.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/Phase_2/topic_19_part1_multiple_regression/ds-multiple_linear_regression-main/multiple_linear_regression.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Multiple Linear Regression</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Multiple Linear Regression</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#agenda">Agenda</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-with-multiple-predictors">Regression with Multiple Predictors</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#confounding-variables">Confounding Variables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dealing-with-categorical-variables">Dealing with Categorical Variables</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dummying">Dummying</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple-regression-in-statsmodels">Multiple Regression in <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diamonds-dataset">Diamonds Dataset</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#check-distribution-of-target">Check distribution of target</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#build-model-with-log-scaled-target">Build model with log-scaled target</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#putting-it-in-practice-wine-dataset">Putting it in Practice: Wine Dataset 🍷</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-the-regression">Running the Regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scaling">Scaling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple-regression-in-scikit-learn">Multiple Regression in Scikit-Learn</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sklearn-metrics">Sklearn Metrics</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#level-up-regression-with-categorical-features-with-the-comma-dataset">Level Up: Regression with Categorical Features with the Comma Dataset</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="multiple-linear-regression">
+<h1>Multiple Linear Regression<a class="headerlink" href="#multiple-linear-regression" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">OneHotEncoder</span><span class="p">,</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_regression</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">metrics</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">random</span><span class="w"> </span><span class="kn">import</span> <span class="n">gauss</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits.mplot3d</span><span class="w"> </span><span class="kn">import</span> <span class="n">Axes3D</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">stats</span> <span class="k">as</span> <span class="n">stats</span>
+
+<span class="o">%</span><span class="k">matplotlib</span> inline
+</pre></div>
+</div>
+</div>
+</div>
+<p><img alt="mlr" src="https://miro.medium.com/max/1280/1*lJKFo3yyZaFIx4ET1dLmlg.png" /></p>
+<section id="agenda">
+<h2>Agenda<a class="headerlink" href="#agenda" title="Permalink to this heading">#</a></h2>
+<p>SWBAT:</p>
+<ul class="simple">
+<li><p>conduct linear regressions in <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> and in <code class="docutils literal notranslate"><span class="pre">sklearn</span></code>;</p></li>
+<li><p>use the one-hot strategy to encode categorical variables.</p></li>
+</ul>
+</section>
+<section id="regression-with-multiple-predictors">
+<h2>Regression with Multiple Predictors<a class="headerlink" href="#regression-with-multiple-predictors" title="Permalink to this heading">#</a></h2>
+<p>The main idea here is pretty simple. Whereas, in simple linear regression we took our dependent variable to be a function only of a single independent variable, here we’ll be taking the dependent variable to be a function of multiple independent variables.</p>
+<p>Our regression equation, then, instead of looking like <span class="math notranslate nohighlight">\(\hat{y} = mx + b\)</span>, will now look like:</p>
+<p><span class="math notranslate nohighlight">\(\hat{y} = \hat{\beta}_0 + \hat{\beta}_1x_1 + ... + \hat{\beta}_nx_n\)</span>.</p>
+<p>Remember that the hats ( <span class="math notranslate nohighlight">\(\hat{}\)</span> ) indicate parameters that are estimated.</p>
+<p>Is this still a best-fit <em>line</em>? Well, no. What does the graph of, say, z = x + y look like? <a class="reference external" href="https://academo.org/demos/3d-surface-plotter/">Here’s</a> a 3d-plotter. (Of course, once we get x’s with subscripts beyond 2 it’s going to be very hard to visualize. But in practice linear regressions can make use of dozens or even of hundreds of independent variables!)</p>
+<p>Is it possible to calculate the betas by hand? Yes, a multiple regression problem still has a closed-form solution:</p>
+<p>In a word, for a multiple linear regression problem where <span class="math notranslate nohighlight">\(X\)</span> is the matrix of independent variable values and <span class="math notranslate nohighlight">\(y\)</span> is the vector of dependent variable values, the vector of optimizing regression coefficients <span class="math notranslate nohighlight">\(\vec{b}\)</span> is given by:</p>
+<p><span class="math notranslate nohighlight">\(\vec{b} = (X^TX)^{-1}X^Ty\)</span>.</p>
+<p>We’ll focus more directly on matrix mathematics later in the course, so don’t worry if this equation is opaque to you. See <a class="reference external" href="https://stattrek.com/multiple-regression/regression-coefficients.aspx">here</a> for a nice explanation and example.</p>
+</section>
+<section id="confounding-variables">
+<h2>Confounding Variables<a class="headerlink" href="#confounding-variables" title="Permalink to this heading">#</a></h2>
+<p>Suppose I have a simple linear regression that models the growth of corn plants as a function of the temperature of the ambient air. And suppose there is a noticeable positive correlation between temperature and plant height.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corn</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/corn.csv&#39;</span><span class="p">,</span>
+                  <span class="n">usecols</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;temp&#39;</span><span class="p">,</span> <span class="s1">&#39;humid&#39;</span><span class="p">,</span> <span class="s1">&#39;height&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">corn</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;temp&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;height&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Temperature ($\degree$ F)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Height (cm)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Corn plant height as a function of temperature&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/e11574c6cfeb99fbf4143974f07ed95db536ba405af5e978819913508168a235.png" src="../../../_images/e11574c6cfeb99fbf4143974f07ed95db536ba405af5e978819913508168a235.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corn</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>temp</th>
+      <th>humid</th>
+      <th>height</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>58.086965</td>
+      <td>49.848304</td>
+      <td>122.222368</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>70.582087</td>
+      <td>22.855446</td>
+      <td>110.079666</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>75.868571</td>
+      <td>72.856834</td>
+      <td>256.812528</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>74.732376</td>
+      <td>38.907566</td>
+      <td>167.889601</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>77.384666</td>
+      <td>42.570524</td>
+      <td>188.914312</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>It seems that higher temperatures lead to taller corn plants. But it’s hard to know for sure. One <strong>confounding variable</strong> might be <em>humidity</em>. If we haven’t controlled for humidity, then it’s difficult to draw conclusions.</p>
+<p>One solution is to use <strong>both features</strong> in a single model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">corn</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;humid&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;height&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Humidity (%)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Height (cm)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Corn plant height as a function of humidity&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/d8a41288f9c017f7af95bc63acd623157f1588988ced3d81184389b32654e83b.png" src="../../../_images/d8a41288f9c017f7af95bc63acd623157f1588988ced3d81184389b32654e83b.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">corn</span><span class="p">[</span><span class="s1">&#39;temp&#39;</span><span class="p">],</span> <span class="n">corn</span><span class="p">[</span><span class="s1">&#39;humid&#39;</span><span class="p">],</span> <span class="n">corn</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">],</span>
+           <span class="n">depthshade</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#ff0000&#39;</span><span class="p">)</span>
+<span class="c1"># create x,y</span>
+<span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">corn</span><span class="p">[</span><span class="s1">&#39;temp&#39;</span><span class="p">],</span> <span class="n">corn</span><span class="p">[</span><span class="s1">&#39;humid&#39;</span><span class="p">])</span>
+
+<span class="c1"># calculate corresponding z</span>
+<span class="n">z</span> <span class="o">=</span> <span class="mf">4.3825</span> <span class="o">*</span> <span class="n">xx</span> <span class="o">+</span> <span class="mf">2.4693</span> <span class="o">*</span> <span class="n">yy</span> <span class="o">-</span> <span class="mf">255.5434</span>
+
+<span class="c1"># plot the surface</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#00ff00&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">view_init</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="n">azim</span><span class="o">=</span><span class="mi">240</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Temperature ($\degree$ F)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Humidity (%)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s1">&#39;Height (cm)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Corn plant height as a function of temperature and humidity&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/69961a291916aea1bcedef4b354503a84c519cf4286da86464393c66d7833ea5.png" src="../../../_images/69961a291916aea1bcedef4b354503a84c519cf4286da86464393c66d7833ea5.png" />
+</div>
+</div>
+<p>One risk we run when adding more predictors to a model is that their correlations with the target may be nearly <em>collinear</em> with each other. This can make it difficult to determine which predictor is doing the heavy lifting. We shall explore this theme of <strong>multicollinearity</strong> in more depth in due course.</p>
+</section>
+<section id="dealing-with-categorical-variables">
+<h2>Dealing with Categorical Variables<a class="headerlink" href="#dealing-with-categorical-variables" title="Permalink to this heading">#</a></h2>
+<p>One issue we’d like to resolve is what to do with categorical variables, i.e. variables that represent categories rather than continua. In a Pandas DataFrame, these columns may well have strings or objects for values, but they need not. A certain heart-disease dataset from Kaggle, for example, has a target variable that takes values 0-4, each representing a different stage of heart disease.</p>
+<section id="dummying">
+<h3>Dummying<a class="headerlink" href="#dummying" title="Permalink to this heading">#</a></h3>
+<p>One very effective way of dealing with categorical variables is to dummy them out. What this involves is making a new column for <em>each categorical value in the column we’re dummying out</em>.</p>
+<p>These new columns will be filled only with 0’s and 1’s, a 1 representing the presence of the relevant categorical value.</p>
+<p>Let’s look at a simple example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">comma_use</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/comma-survey.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>For more on this dataset see <a class="reference external" href="https://fivethirtyeight.com/features/elitist-superfluous-or-popular-we-polled-americans-on-the-oxford-comma/">here</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">comma_use</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>RespondentID</th>
+      <th>In your opinion, which sentence is more gramatically correct?</th>
+      <th>Prior to reading about it above, had you heard of the serial (or Oxford) comma?</th>
+      <th>How much, if at all, do you care about the use (or lack thereof) of the serial (or Oxford) comma in grammar?</th>
+      <th>How would you write the following sentence?</th>
+      <th>When faced with using the word "data", have you ever spent time considering if the word was a singular or plural noun?</th>
+      <th>How much, if at all, do you care about the debate over the use of the word "data" as a singluar or plural noun?</th>
+      <th>In your opinion, how important or unimportant is proper use of grammar?</th>
+      <th>Gender</th>
+      <th>Age</th>
+      <th>Household Income</th>
+      <th>Education</th>
+      <th>Location (Census Region)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3292953864</td>
+      <td>It's important for a person to be honest, kind...</td>
+      <td>Yes</td>
+      <td>Some</td>
+      <td>Some experts say it's important to drink milk,...</td>
+      <td>No</td>
+      <td>Not much</td>
+      <td>Somewhat important</td>
+      <td>Male</td>
+      <td>30-44</td>
+      <td>$50,000 - $99,999</td>
+      <td>Bachelor degree</td>
+      <td>South Atlantic</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>3292950324</td>
+      <td>It's important for a person to be honest, kind...</td>
+      <td>No</td>
+      <td>Not much</td>
+      <td>Some experts say it's important to drink milk,...</td>
+      <td>No</td>
+      <td>Not much</td>
+      <td>Somewhat unimportant</td>
+      <td>Male</td>
+      <td>30-44</td>
+      <td>$50,000 - $99,999</td>
+      <td>Graduate degree</td>
+      <td>Mountain</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3292942669</td>
+      <td>It's important for a person to be honest, kind...</td>
+      <td>Yes</td>
+      <td>Some</td>
+      <td>Some experts say it's important to drink milk,...</td>
+      <td>Yes</td>
+      <td>Not at all</td>
+      <td>Very important</td>
+      <td>Male</td>
+      <td>30-44</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>East North Central</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3292932796</td>
+      <td>It's important for a person to be honest, kind...</td>
+      <td>Yes</td>
+      <td>Some</td>
+      <td>Some experts say it's important to drink milk,...</td>
+      <td>No</td>
+      <td>Some</td>
+      <td>Somewhat important</td>
+      <td>Male</td>
+      <td>18-29</td>
+      <td>NaN</td>
+      <td>Less than high school degree</td>
+      <td>Middle Atlantic</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>3292932522</td>
+      <td>It's important for a person to be honest, kind...</td>
+      <td>No</td>
+      <td>Not much</td>
+      <td>Some experts say it's important to drink milk,...</td>
+      <td>No</td>
+      <td>Not much</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">comma_use</span><span class="p">[</span><span class="s1">&#39;In your opinion, which sentence is more gramatically correct?&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>It&#39;s important for a person to be honest, kind, and loyal.    641
+It&#39;s important for a person to be honest, kind and loyal.     488
+Name: In your opinion, which sentence is more gramatically correct?, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">comma_use</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1129, 13)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">comma_use</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>924
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">comma_use</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">comma_use</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(825, 13)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Let&#39;s try using sklearn&#39;s OneHotEncoder to create our dummy columns:</span>
+
+<span class="n">ohe</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="s1">&#39;first&#39;</span><span class="p">)</span>
+<span class="n">comma_trans</span> <span class="o">=</span> <span class="n">ohe</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">comma_use</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;RespondentID&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Could we have used <code class="docutils literal notranslate"><span class="pre">pd.get_dummies()</span></code> instead?</p>
+<p>Well, yes. And in fact <code class="docutils literal notranslate"><span class="pre">get_dummies()</span></code> is in some ways easier; for one thing, it’s built right into Pandas. But there are drawbacks with it as well. The main advantage of the <code class="docutils literal notranslate"><span class="pre">sklearn</span></code> tool is that it stores information about the columns and creates a persistent function that can be used on future data of the same form. See <a class="reference external" href="https://stackoverflow.com/questions/36631163/pandas-get-dummies-vs-sklearns-onehotencoder-what-are-the-pros-and-cons">this page</a> for more.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">comma_use</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;RespondentID&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>In your opinion, which sentence is more gramatically correct?_It's important for a person to be honest, kind and loyal.</th>
+      <th>In your opinion, which sentence is more gramatically correct?_It's important for a person to be honest, kind, and loyal.</th>
+      <th>Prior to reading about it above, had you heard of the serial (or Oxford) comma?_No</th>
+      <th>Prior to reading about it above, had you heard of the serial (or Oxford) comma?_Yes</th>
+      <th>How much, if at all, do you care about the use (or lack thereof) of the serial (or Oxford) comma in grammar?_A lot</th>
+      <th>How much, if at all, do you care about the use (or lack thereof) of the serial (or Oxford) comma in grammar?_Not at all</th>
+      <th>How much, if at all, do you care about the use (or lack thereof) of the serial (or Oxford) comma in grammar?_Not much</th>
+      <th>How much, if at all, do you care about the use (or lack thereof) of the serial (or Oxford) comma in grammar?_Some</th>
+      <th>How would you write the following sentence?_Some experts say it's important to drink milk, but the data are inconclusive.</th>
+      <th>How would you write the following sentence?_Some experts say it's important to drink milk, but the data is inconclusive.</th>
+      <th>...</th>
+      <th>Education_Some college or Associate degree</th>
+      <th>Location (Census Region)_East North Central</th>
+      <th>Location (Census Region)_East South Central</th>
+      <th>Location (Census Region)_Middle Atlantic</th>
+      <th>Location (Census Region)_Mountain</th>
+      <th>Location (Census Region)_New England</th>
+      <th>Location (Census Region)_Pacific</th>
+      <th>Location (Census Region)_South Atlantic</th>
+      <th>Location (Census Region)_West North Central</th>
+      <th>Location (Census Region)_West South Central</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>...</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>...</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>...</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1124</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>...</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1125</th>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>...</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1126</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1127</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1128</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>825 rows × 46 columns</p>
+</div></div></div>
+</div>
+<p>So what did the encoder do?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">comma_trans</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;825x34 sparse matrix of type &#39;&lt;class &#39;numpy.float64&#39;&gt;&#39;
+	with 7174 stored elements in Compressed Sparse Row format&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">comma_trans</span><span class="o">.</span><span class="n">todense</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>matrix([[0., 1., 0., ..., 1., 0., 0.],
+        [1., 0., 0., ..., 0., 0., 0.],
+        [1., 0., 0., ..., 0., 0., 0.],
+        ...,
+        [1., 1., 0., ..., 0., 0., 0.],
+        [0., 1., 0., ..., 0., 0., 0.],
+        [0., 1., 0., ..., 0., 0., 0.]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ohe</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&quot;x0_It&#39;s important for a person to be honest, kind, and loyal.&quot;,
+       &#39;x1_Yes&#39;, &#39;x2_Not at all&#39;, &#39;x2_Not much&#39;, &#39;x2_Some&#39;,
+       &quot;x3_Some experts say it&#39;s important to drink milk, but the data is inconclusive.&quot;,
+       &#39;x4_Yes&#39;, &#39;x5_Not at all&#39;, &#39;x5_Not much&#39;, &#39;x5_Some&#39;,
+       &#39;x6_Somewhat important&#39;, &#39;x6_Somewhat unimportant&#39;,
+       &#39;x6_Very important&#39;, &#39;x6_Very unimportant&#39;, &#39;x7_Male&#39;, &#39;x8_30-44&#39;,
+       &#39;x8_45-60&#39;, &#39;x8_&gt; 60&#39;, &#39;x9_$100,000 - $149,999&#39;, &#39;x9_$150,000+&#39;,
+       &#39;x9_$25,000 - $49,999&#39;, &#39;x9_$50,000 - $99,999&#39;,
+       &#39;x10_Graduate degree&#39;, &#39;x10_High school degree&#39;,
+       &#39;x10_Less than high school degree&#39;,
+       &#39;x10_Some college or Associate degree&#39;, &#39;x11_East South Central&#39;,
+       &#39;x11_Middle Atlantic&#39;, &#39;x11_Mountain&#39;, &#39;x11_New England&#39;,
+       &#39;x11_Pacific&#39;, &#39;x11_South Atlantic&#39;, &#39;x11_West North Central&#39;,
+       &#39;x11_West South Central&#39;], dtype=object)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">comma_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">comma_trans</span><span class="o">.</span><span class="n">todense</span><span class="p">(),</span> <span class="n">columns</span><span class="o">=</span><span class="n">ohe</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">())</span>
+<span class="n">comma_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>x0_It's important for a person to be honest, kind, and loyal.</th>
+      <th>x1_Yes</th>
+      <th>x2_Not at all</th>
+      <th>x2_Not much</th>
+      <th>x2_Some</th>
+      <th>x3_Some experts say it's important to drink milk, but the data is inconclusive.</th>
+      <th>x4_Yes</th>
+      <th>x5_Not at all</th>
+      <th>x5_Not much</th>
+      <th>x5_Some</th>
+      <th>...</th>
+      <th>x10_Less than high school degree</th>
+      <th>x10_Some college or Associate degree</th>
+      <th>x11_East South Central</th>
+      <th>x11_Middle Atlantic</th>
+      <th>x11_Mountain</th>
+      <th>x11_New England</th>
+      <th>x11_Pacific</th>
+      <th>x11_South Atlantic</th>
+      <th>x11_West North Central</th>
+      <th>x11_West South Central</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 34 columns</p>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="multiple-regression-in-statsmodels">
+<h2>Multiple Regression in <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code><a class="headerlink" href="#multiple-regression-in-statsmodels" title="Permalink to this heading">#</a></h2>
+<p>Let’s build a multiple regression with <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>. Let’s start with a toy model:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">centers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<span class="n">preds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">center</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span> <span class="k">for</span> <span class="n">center</span> <span class="ow">in</span> <span class="n">centers</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+<span class="n">preds_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;var</span><span class="si">{</span><span class="n">center</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">center</span> <span class="ow">in</span> <span class="n">centers</span><span class="p">])</span>
+
+<span class="n">target</span> <span class="o">=</span> <span class="n">preds_df</span><span class="p">[</span><span class="s1">&#39;var1&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">preds_df</span><span class="p">[</span><span class="s1">&#39;var2&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">3</span><span class="o">*</span><span class="n">preds_df</span><span class="p">[</span><span class="s1">&#39;var3&#39;</span><span class="p">]</span>\
+    <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="n">preds_df</span><span class="p">[</span><span class="s1">&#39;var4&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">5</span><span class="o">*</span><span class="n">preds_df</span><span class="p">[</span><span class="s1">&#39;var5&#39;</span><span class="p">]</span>
+<span class="n">target_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">preds_df</span><span class="p">,</span> <span class="n">target_df</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>var1</th>
+      <th>var2</th>
+      <th>var3</th>
+      <th>var4</th>
+      <th>var5</th>
+      <th>target</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>4.370539</td>
+      <td>1.860799</td>
+      <td>6.910419</td>
+      <td>6.930321</td>
+      <td>-1.274850</td>
+      <td>50.170425</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.958793</td>
+      <td>3.711761</td>
+      <td>3.209436</td>
+      <td>-1.915778</td>
+      <td>2.070367</td>
+      <td>21.699344</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-1.131153</td>
+      <td>1.444110</td>
+      <td>5.881965</td>
+      <td>3.598023</td>
+      <td>-1.247996</td>
+      <td>27.555072</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-0.064700</td>
+      <td>-0.753187</td>
+      <td>2.760350</td>
+      <td>-1.334131</td>
+      <td>2.059206</td>
+      <td>11.669481</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-0.746462</td>
+      <td>2.975584</td>
+      <td>3.502414</td>
+      <td>5.817913</td>
+      <td>5.063123</td>
+      <td>64.299212</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;target&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">OLS</span><span class="p">(</span><span class="n">endog</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">exog</span><span class="o">=</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>OLS Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>         <td>target</td>      <th>  R-squared (uncentered):</th>       <td>   1.000</td> 
+</tr>
+<tr>
+  <th>Model:</th>                   <td>OLS</td>       <th>  Adj. R-squared (uncentered):</th>  <td>   1.000</td> 
+</tr>
+<tr>
+  <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th>           <td>9.545e+32</td>
+</tr>
+<tr>
+  <th>Date:</th>             <td>Thu, 08 Apr 2021</td> <th>  Prob (F-statistic):</th>            <td>  0.00</td>  
+</tr>
+<tr>
+  <th>Time:</th>                 <td>13:10:51</td>     <th>  Log-Likelihood:    </th>           <td>  6132.2</td> 
+</tr>
+<tr>
+  <th>No. Observations:</th>      <td>   200</td>      <th>  AIC:               </th>          <td>-1.225e+04</td>
+</tr>
+<tr>
+  <th>Df Residuals:</th>          <td>   195</td>      <th>  BIC:               </th>          <td>-1.224e+04</td>
+</tr>
+<tr>
+  <th>Df Model:</th>              <td>     5</td>      <th>                     </th>               <td> </td>    
+</tr>
+<tr>
+  <th>Covariance Type:</th>      <td>nonrobust</td>    <th>                     </th>               <td> </td>    
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+    <td></td>      <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>var1</th> <td>    1.0000</td> <td> 2.76e-16</td> <td> 3.62e+15</td> <td> 0.000</td> <td>    1.000</td> <td>    1.000</td>
+</tr>
+<tr>
+  <th>var2</th> <td>    2.0000</td> <td> 2.49e-16</td> <td> 8.03e+15</td> <td> 0.000</td> <td>    2.000</td> <td>    2.000</td>
+</tr>
+<tr>
+  <th>var3</th> <td>    3.0000</td> <td> 2.46e-16</td> <td> 1.22e+16</td> <td> 0.000</td> <td>    3.000</td> <td>    3.000</td>
+</tr>
+<tr>
+  <th>var4</th> <td>    4.0000</td> <td> 2.55e-16</td> <td> 1.57e+16</td> <td> 0.000</td> <td>    4.000</td> <td>    4.000</td>
+</tr>
+<tr>
+  <th>var5</th> <td>    5.0000</td> <td> 2.15e-16</td> <td> 2.33e+16</td> <td> 0.000</td> <td>    5.000</td> <td>    5.000</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+  <th>Omnibus:</th>       <td> 1.257</td> <th>  Durbin-Watson:     </th> <td>   1.671</td>
+</tr>
+<tr>
+  <th>Prob(Omnibus):</th> <td> 0.533</td> <th>  Jarque-Bera (JB):  </th> <td>   1.358</td>
+</tr>
+<tr>
+  <th>Skew:</th>          <td> 0.169</td> <th>  Prob(JB):          </th> <td>   0.507</td>
+</tr>
+<tr>
+  <th>Kurtosis:</th>      <td> 2.779</td> <th>  Cond. No.          </th> <td>    2.78</td>
+</tr>
+</table><br/><br/>Notes:<br/>[1] R² is computed without centering (uncentered) since the model does not contain a constant.<br/>[2] Standard Errors assume that the covariance matrix of the errors is correctly specified.</div></div>
+</div>
+<section id="diamonds-dataset">
+<h3>Diamonds Dataset<a class="headerlink" href="#diamonds-dataset" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;diamonds&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;cut&#39;</span><span class="p">,</span> <span class="s1">&#39;color&#39;</span><span class="p">,</span> <span class="s1">&#39;clarity&#39;</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>carat</th>
+      <th>depth</th>
+      <th>table</th>
+      <th>price</th>
+      <th>x</th>
+      <th>y</th>
+      <th>z</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.23</td>
+      <td>61.5</td>
+      <td>55.0</td>
+      <td>326</td>
+      <td>3.95</td>
+      <td>3.98</td>
+      <td>2.43</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.21</td>
+      <td>59.8</td>
+      <td>61.0</td>
+      <td>326</td>
+      <td>3.89</td>
+      <td>3.84</td>
+      <td>2.31</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.23</td>
+      <td>56.9</td>
+      <td>65.0</td>
+      <td>327</td>
+      <td>4.05</td>
+      <td>4.07</td>
+      <td>2.31</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.29</td>
+      <td>62.4</td>
+      <td>58.0</td>
+      <td>334</td>
+      <td>4.20</td>
+      <td>4.23</td>
+      <td>2.63</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.31</td>
+      <td>63.3</td>
+      <td>58.0</td>
+      <td>335</td>
+      <td>4.34</td>
+      <td>4.35</td>
+      <td>2.75</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;price&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;price&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model2</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">OLS</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">model2</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>OLS Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>          <td>price</td>      <th>  R-squared (uncentered):</th>       <td>   0.926</td>  
+</tr>
+<tr>
+  <th>Model:</th>                   <td>OLS</td>       <th>  Adj. R-squared (uncentered):</th>  <td>   0.926</td>  
+</tr>
+<tr>
+  <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th>           <td>1.120e+05</td> 
+</tr>
+<tr>
+  <th>Date:</th>             <td>Thu, 08 Apr 2021</td> <th>  Prob (F-statistic):</th>            <td>  0.00</td>   
+</tr>
+<tr>
+  <th>Time:</th>                 <td>13:10:53</td>     <th>  Log-Likelihood:    </th>          <td>-4.7196e+05</td>
+</tr>
+<tr>
+  <th>No. Observations:</th>      <td> 53940</td>      <th>  AIC:               </th>           <td>9.439e+05</td> 
+</tr>
+<tr>
+  <th>Df Residuals:</th>          <td> 53934</td>      <th>  BIC:               </th>           <td>9.440e+05</td> 
+</tr>
+<tr>
+  <th>Df Model:</th>              <td>     6</td>      <th>                     </th>               <td> </td>     
+</tr>
+<tr>
+  <th>Covariance Type:</th>      <td>nonrobust</td>    <th>                     </th>               <td> </td>     
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+    <td></td>       <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>carat</th> <td> 9533.9516</td> <td>   59.317</td> <td>  160.730</td> <td> 0.000</td> <td> 9417.691</td> <td> 9650.213</td>
+</tr>
+<tr>
+  <th>depth</th> <td>   28.2911</td> <td>    2.416</td> <td>   11.712</td> <td> 0.000</td> <td>   23.556</td> <td>   33.026</td>
+</tr>
+<tr>
+  <th>table</th> <td>  -18.8220</td> <td>    2.558</td> <td>   -7.358</td> <td> 0.000</td> <td>  -23.836</td> <td>  -13.808</td>
+</tr>
+<tr>
+  <th>x</th>     <td> -522.6300</td> <td>   40.351</td> <td>  -12.952</td> <td> 0.000</td> <td> -601.718</td> <td> -443.542</td>
+</tr>
+<tr>
+  <th>y</th>     <td>  182.3295</td> <td>   25.907</td> <td>    7.038</td> <td> 0.000</td> <td>  131.552</td> <td>  233.107</td>
+</tr>
+<tr>
+  <th>z</th>     <td> -676.7502</td> <td>   42.361</td> <td>  -15.976</td> <td> 0.000</td> <td> -759.778</td> <td> -593.722</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+  <th>Omnibus:</th>       <td>14555.339</td> <th>  Durbin-Watson:     </th>  <td>   1.147</td> 
+</tr>
+<tr>
+  <th>Prob(Omnibus):</th>  <td> 0.000</td>   <th>  Jarque-Bera (JB):  </th> <td>287131.956</td>
+</tr>
+<tr>
+  <th>Skew:</th>           <td> 0.809</td>   <th>  Prob(JB):          </th>  <td>    0.00</td> 
+</tr>
+<tr>
+  <th>Kurtosis:</th>       <td>14.186</td>   <th>  Cond. No.          </th>  <td>    829.</td> 
+</tr>
+</table><br/><br/>Notes:<br/>[1] R² is computed without centering (uncentered) since the model does not contain a constant.<br/>[2] Standard Errors assume that the covariance matrix of the errors is correctly specified.</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sm</span><span class="o">.</span><span class="n">graphics</span><span class="o">.</span><span class="n">plot_regress_exog</span><span class="p">(</span><span class="n">model2</span><span class="p">,</span> <span class="s1">&#39;carat&#39;</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">)));</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/29c2ff3c2c50009a9bc9606348d0089de171b903bc94c2aa8a0322f643ef301d.png" src="../../../_images/29c2ff3c2c50009a9bc9606348d0089de171b903bc94c2aa8a0322f643ef301d.png" />
+</div>
+</div>
+<section id="check-distribution-of-target">
+<h4>Check distribution of target<a class="headerlink" href="#check-distribution-of-target" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="o">.</span><span class="n">hist</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/8628a179d8e7f3ada9d652c5ac15b748fd8ad205eda435b4eba2423341c06130.png" src="../../../_images/8628a179d8e7f3ada9d652c5ac15b748fd8ad205eda435b4eba2423341c06130.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_scld</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="n">y_scld</span><span class="o">.</span><span class="n">hist</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/22adba383e46e8ac4cd24ad0cc0db3c4d45a5ae3add5588cf979fee3ddcc66be.png" src="../../../_images/22adba383e46e8ac4cd24ad0cc0db3c4d45a5ae3add5588cf979fee3ddcc66be.png" />
+</div>
+</div>
+</section>
+<section id="build-model-with-log-scaled-target">
+<h4>Build model with log-scaled target<a class="headerlink" href="#build-model-with-log-scaled-target" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model3</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">OLS</span><span class="p">(</span><span class="n">y_scld</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">model3</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>OLS Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>          <td>price</td>      <th>  R-squared (uncentered):</th>      <td>   0.999</td> 
+</tr>
+<tr>
+  <th>Model:</th>                   <td>OLS</td>       <th>  Adj. R-squared (uncentered):</th> <td>   0.999</td> 
+</tr>
+<tr>
+  <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th>          <td>7.072e+06</td>
+</tr>
+<tr>
+  <th>Date:</th>             <td>Thu, 08 Apr 2021</td> <th>  Prob (F-statistic):</th>           <td>  0.00</td>  
+</tr>
+<tr>
+  <th>Time:</th>                 <td>13:10:56</td>     <th>  Log-Likelihood:    </th>          <td> -7833.4</td> 
+</tr>
+<tr>
+  <th>No. Observations:</th>      <td> 53940</td>      <th>  AIC:               </th>          <td>1.568e+04</td>
+</tr>
+<tr>
+  <th>Df Residuals:</th>          <td> 53934</td>      <th>  BIC:               </th>          <td>1.573e+04</td>
+</tr>
+<tr>
+  <th>Df Model:</th>              <td>     6</td>      <th>                     </th>              <td> </td>    
+</tr>
+<tr>
+  <th>Covariance Type:</th>      <td>nonrobust</td>    <th>                     </th>              <td> </td>    
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+    <td></td>       <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>carat</th> <td>   -0.7522</td> <td>    0.011</td> <td>  -69.197</td> <td> 0.000</td> <td>   -0.774</td> <td>   -0.731</td>
+</tr>
+<tr>
+  <th>depth</th> <td>    0.0319</td> <td>    0.000</td> <td>   72.131</td> <td> 0.000</td> <td>    0.031</td> <td>    0.033</td>
+</tr>
+<tr>
+  <th>table</th> <td>   -0.0062</td> <td>    0.000</td> <td>  -13.212</td> <td> 0.000</td> <td>   -0.007</td> <td>   -0.005</td>
+</tr>
+<tr>
+  <th>x</th>     <td>    1.1098</td> <td>    0.007</td> <td>  150.072</td> <td> 0.000</td> <td>    1.095</td> <td>    1.124</td>
+</tr>
+<tr>
+  <th>y</th>     <td>    0.0506</td> <td>    0.005</td> <td>   10.660</td> <td> 0.000</td> <td>    0.041</td> <td>    0.060</td>
+</tr>
+<tr>
+  <th>z</th>     <td>    0.0340</td> <td>    0.008</td> <td>    4.377</td> <td> 0.000</td> <td>    0.019</td> <td>    0.049</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+  <th>Omnibus:</th>       <td>50951.621</td> <th>  Durbin-Watson:     </th>   <td>   1.363</td>  
+</tr>
+<tr>
+  <th>Prob(Omnibus):</th>  <td> 0.000</td>   <th>  Jarque-Bera (JB):  </th> <td>28055158.482</td>
+</tr>
+<tr>
+  <th>Skew:</th>           <td> 3.704</td>   <th>  Prob(JB):          </th>   <td>    0.00</td>  
+</tr>
+<tr>
+  <th>Kurtosis:</th>       <td>114.481</td>  <th>  Cond. No.          </th>   <td>    829.</td>  
+</tr>
+</table><br/><br/>Notes:<br/>[1] R² is computed without centering (uncentered) since the model does not contain a constant.<br/>[2] Standard Errors assume that the covariance matrix of the errors is correctly specified.</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sm</span><span class="o">.</span><span class="n">graphics</span><span class="o">.</span><span class="n">plot_regress_exog</span><span class="p">(</span><span class="n">model3</span><span class="p">,</span> <span class="s1">&#39;carat&#39;</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">)));</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/84c52ba3ce4ac3d3f907ca8e2a52cfce9b4deb92473c93afcaadfbfa320cdb34.png" src="../../../_images/84c52ba3ce4ac3d3f907ca8e2a52cfce9b4deb92473c93afcaadfbfa320cdb34.png" />
+</div>
+</div>
+<p><strong>Remember that <span class="math notranslate nohighlight">\(R^2\)</span> can be negative!</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bad_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+<span class="n">worse_pred</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">metrics</span><span class="o">.</span><span class="n">r2_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">bad_pred</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">metrics</span><span class="o">.</span><span class="n">r2_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">worse_pred</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0
+-0.06283248452205892
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="putting-it-in-practice-wine-dataset">
+<h1>Putting it in Practice: Wine Dataset 🍷<a class="headerlink" href="#putting-it-in-practice-wine-dataset" title="Permalink to this heading">#</a></h1>
+<p>This dataset includes measurable attributes of different wines as well as their rated quality.</p>
+<p>Imagine we want to attempt to estimate the perceived quality of a wine using these attributes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/wine.csv&#39;</span><span class="p">)</span>
+
+<span class="n">wine</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fixed acidity</th>
+      <th>volatile acidity</th>
+      <th>citric acid</th>
+      <th>residual sugar</th>
+      <th>chlorides</th>
+      <th>free sulfur dioxide</th>
+      <th>total sulfur dioxide</th>
+      <th>density</th>
+      <th>pH</th>
+      <th>sulphates</th>
+      <th>alcohol</th>
+      <th>quality</th>
+      <th>red_wine</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>7.4</td>
+      <td>0.70</td>
+      <td>0.00</td>
+      <td>1.9</td>
+      <td>0.076</td>
+      <td>11.0</td>
+      <td>34.0</td>
+      <td>0.9978</td>
+      <td>3.51</td>
+      <td>0.56</td>
+      <td>9.4</td>
+      <td>5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>7.8</td>
+      <td>0.88</td>
+      <td>0.00</td>
+      <td>2.6</td>
+      <td>0.098</td>
+      <td>25.0</td>
+      <td>67.0</td>
+      <td>0.9968</td>
+      <td>3.20</td>
+      <td>0.68</td>
+      <td>9.8</td>
+      <td>5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>7.8</td>
+      <td>0.76</td>
+      <td>0.04</td>
+      <td>2.3</td>
+      <td>0.092</td>
+      <td>15.0</td>
+      <td>54.0</td>
+      <td>0.9970</td>
+      <td>3.26</td>
+      <td>0.65</td>
+      <td>9.8</td>
+      <td>5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>11.2</td>
+      <td>0.28</td>
+      <td>0.56</td>
+      <td>1.9</td>
+      <td>0.075</td>
+      <td>17.0</td>
+      <td>60.0</td>
+      <td>0.9980</td>
+      <td>3.16</td>
+      <td>0.58</td>
+      <td>9.8</td>
+      <td>6</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>7.4</td>
+      <td>0.70</td>
+      <td>0.00</td>
+      <td>1.9</td>
+      <td>0.076</td>
+      <td>11.0</td>
+      <td>34.0</td>
+      <td>0.9978</td>
+      <td>3.51</td>
+      <td>0.56</td>
+      <td>9.4</td>
+      <td>5</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span><span class="p">[</span><span class="s1">&#39;quality&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6    2836
+5    2138
+7    1079
+4     216
+8     193
+3      30
+9       5
+Name: quality, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span><span class="p">[</span><span class="s1">&#39;red_wine&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    4898
+1    1599
+Name: red_wine, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 6497 entries, 0 to 6496
+Data columns (total 13 columns):
+ #   Column                Non-Null Count  Dtype  
+---  ------                --------------  -----  
+ 0   fixed acidity         6497 non-null   float64
+ 1   volatile acidity      6497 non-null   float64
+ 2   citric acid           6497 non-null   float64
+ 3   residual sugar        6497 non-null   float64
+ 4   chlorides             6497 non-null   float64
+ 5   free sulfur dioxide   6497 non-null   float64
+ 6   total sulfur dioxide  6497 non-null   float64
+ 7   density               6497 non-null   float64
+ 8   pH                    6497 non-null   float64
+ 9   sulphates             6497 non-null   float64
+ 10  alcohol               6497 non-null   float64
+ 11  quality               6497 non-null   int64  
+ 12  red_wine              6497 non-null   int64  
+dtypes: float64(11), int64(2)
+memory usage: 660.0 KB
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fixed acidity</th>
+      <th>volatile acidity</th>
+      <th>citric acid</th>
+      <th>residual sugar</th>
+      <th>chlorides</th>
+      <th>free sulfur dioxide</th>
+      <th>total sulfur dioxide</th>
+      <th>density</th>
+      <th>pH</th>
+      <th>sulphates</th>
+      <th>alcohol</th>
+      <th>quality</th>
+      <th>red_wine</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>6497.000000</td>
+      <td>6497.000000</td>
+      <td>6497.000000</td>
+      <td>6497.000000</td>
+      <td>6497.000000</td>
+      <td>6497.000000</td>
+      <td>6497.000000</td>
+      <td>6497.000000</td>
+      <td>6497.000000</td>
+      <td>6497.000000</td>
+      <td>6497.000000</td>
+      <td>6497.000000</td>
+      <td>6497.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>7.215307</td>
+      <td>0.339666</td>
+      <td>0.318633</td>
+      <td>5.443235</td>
+      <td>0.056034</td>
+      <td>30.525319</td>
+      <td>115.744574</td>
+      <td>0.994697</td>
+      <td>3.218501</td>
+      <td>0.531268</td>
+      <td>10.491801</td>
+      <td>5.818378</td>
+      <td>0.246114</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>1.296434</td>
+      <td>0.164636</td>
+      <td>0.145318</td>
+      <td>4.757804</td>
+      <td>0.035034</td>
+      <td>17.749400</td>
+      <td>56.521855</td>
+      <td>0.002999</td>
+      <td>0.160787</td>
+      <td>0.148806</td>
+      <td>1.192712</td>
+      <td>0.873255</td>
+      <td>0.430779</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>3.800000</td>
+      <td>0.080000</td>
+      <td>0.000000</td>
+      <td>0.600000</td>
+      <td>0.009000</td>
+      <td>1.000000</td>
+      <td>6.000000</td>
+      <td>0.987110</td>
+      <td>2.720000</td>
+      <td>0.220000</td>
+      <td>8.000000</td>
+      <td>3.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>6.400000</td>
+      <td>0.230000</td>
+      <td>0.250000</td>
+      <td>1.800000</td>
+      <td>0.038000</td>
+      <td>17.000000</td>
+      <td>77.000000</td>
+      <td>0.992340</td>
+      <td>3.110000</td>
+      <td>0.430000</td>
+      <td>9.500000</td>
+      <td>5.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>7.000000</td>
+      <td>0.290000</td>
+      <td>0.310000</td>
+      <td>3.000000</td>
+      <td>0.047000</td>
+      <td>29.000000</td>
+      <td>118.000000</td>
+      <td>0.994890</td>
+      <td>3.210000</td>
+      <td>0.510000</td>
+      <td>10.300000</td>
+      <td>6.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>7.700000</td>
+      <td>0.400000</td>
+      <td>0.390000</td>
+      <td>8.100000</td>
+      <td>0.065000</td>
+      <td>41.000000</td>
+      <td>156.000000</td>
+      <td>0.996990</td>
+      <td>3.320000</td>
+      <td>0.600000</td>
+      <td>11.300000</td>
+      <td>6.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>15.900000</td>
+      <td>1.580000</td>
+      <td>1.660000</td>
+      <td>65.800000</td>
+      <td>0.611000</td>
+      <td>289.000000</td>
+      <td>440.000000</td>
+      <td>1.038980</td>
+      <td>4.010000</td>
+      <td>2.000000</td>
+      <td>14.900000</td>
+      <td>9.000000</td>
+      <td>1.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<section id="running-the-regression">
+<h2>Running the Regression<a class="headerlink" href="#running-the-regression" title="Permalink to this heading">#</a></h2>
+<p>First, we’ll separate the data into our predictors (X) and target (y)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine_preds</span> <span class="o">=</span> <span class="n">wine</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;quality&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">wine_target</span> <span class="o">=</span> <span class="n">wine</span><span class="p">[</span><span class="s1">&#39;quality&#39;</span><span class="p">]</span>
+<span class="n">wine_preds</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fixed acidity</th>
+      <th>volatile acidity</th>
+      <th>citric acid</th>
+      <th>residual sugar</th>
+      <th>chlorides</th>
+      <th>free sulfur dioxide</th>
+      <th>total sulfur dioxide</th>
+      <th>density</th>
+      <th>pH</th>
+      <th>sulphates</th>
+      <th>alcohol</th>
+      <th>red_wine</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>7.4</td>
+      <td>0.70</td>
+      <td>0.00</td>
+      <td>1.9</td>
+      <td>0.076</td>
+      <td>11.0</td>
+      <td>34.0</td>
+      <td>0.9978</td>
+      <td>3.51</td>
+      <td>0.56</td>
+      <td>9.4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>7.8</td>
+      <td>0.88</td>
+      <td>0.00</td>
+      <td>2.6</td>
+      <td>0.098</td>
+      <td>25.0</td>
+      <td>67.0</td>
+      <td>0.9968</td>
+      <td>3.20</td>
+      <td>0.68</td>
+      <td>9.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>7.8</td>
+      <td>0.76</td>
+      <td>0.04</td>
+      <td>2.3</td>
+      <td>0.092</td>
+      <td>15.0</td>
+      <td>54.0</td>
+      <td>0.9970</td>
+      <td>3.26</td>
+      <td>0.65</td>
+      <td>9.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>11.2</td>
+      <td>0.28</td>
+      <td>0.56</td>
+      <td>1.9</td>
+      <td>0.075</td>
+      <td>17.0</td>
+      <td>60.0</td>
+      <td>0.9980</td>
+      <td>3.16</td>
+      <td>0.58</td>
+      <td>9.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>7.4</td>
+      <td>0.70</td>
+      <td>0.00</td>
+      <td>1.9</td>
+      <td>0.076</td>
+      <td>11.0</td>
+      <td>34.0</td>
+      <td>0.9978</td>
+      <td>3.51</td>
+      <td>0.56</td>
+      <td>9.4</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Now we can perform our (multiple) linear regression! Since we already used <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>, let’s use that again to fit the model and then check the summary:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># use sm.add_constant() to add constant term/y-intercept</span>
+<span class="n">predictors</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">add_constant</span><span class="p">(</span><span class="n">wine_preds</span><span class="p">)</span>
+<span class="n">predictors</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>const</th>
+      <th>fixed acidity</th>
+      <th>volatile acidity</th>
+      <th>citric acid</th>
+      <th>residual sugar</th>
+      <th>chlorides</th>
+      <th>free sulfur dioxide</th>
+      <th>total sulfur dioxide</th>
+      <th>density</th>
+      <th>pH</th>
+      <th>sulphates</th>
+      <th>alcohol</th>
+      <th>red_wine</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1.0</td>
+      <td>7.4</td>
+      <td>0.70</td>
+      <td>0.00</td>
+      <td>1.9</td>
+      <td>0.076</td>
+      <td>11.0</td>
+      <td>34.0</td>
+      <td>0.99780</td>
+      <td>3.51</td>
+      <td>0.56</td>
+      <td>9.4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.0</td>
+      <td>7.8</td>
+      <td>0.88</td>
+      <td>0.00</td>
+      <td>2.6</td>
+      <td>0.098</td>
+      <td>25.0</td>
+      <td>67.0</td>
+      <td>0.99680</td>
+      <td>3.20</td>
+      <td>0.68</td>
+      <td>9.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1.0</td>
+      <td>7.8</td>
+      <td>0.76</td>
+      <td>0.04</td>
+      <td>2.3</td>
+      <td>0.092</td>
+      <td>15.0</td>
+      <td>54.0</td>
+      <td>0.99700</td>
+      <td>3.26</td>
+      <td>0.65</td>
+      <td>9.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1.0</td>
+      <td>11.2</td>
+      <td>0.28</td>
+      <td>0.56</td>
+      <td>1.9</td>
+      <td>0.075</td>
+      <td>17.0</td>
+      <td>60.0</td>
+      <td>0.99800</td>
+      <td>3.16</td>
+      <td>0.58</td>
+      <td>9.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1.0</td>
+      <td>7.4</td>
+      <td>0.70</td>
+      <td>0.00</td>
+      <td>1.9</td>
+      <td>0.076</td>
+      <td>11.0</td>
+      <td>34.0</td>
+      <td>0.99780</td>
+      <td>3.51</td>
+      <td>0.56</td>
+      <td>9.4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>6492</th>
+      <td>1.0</td>
+      <td>6.2</td>
+      <td>0.21</td>
+      <td>0.29</td>
+      <td>1.6</td>
+      <td>0.039</td>
+      <td>24.0</td>
+      <td>92.0</td>
+      <td>0.99114</td>
+      <td>3.27</td>
+      <td>0.50</td>
+      <td>11.2</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6493</th>
+      <td>1.0</td>
+      <td>6.6</td>
+      <td>0.32</td>
+      <td>0.36</td>
+      <td>8.0</td>
+      <td>0.047</td>
+      <td>57.0</td>
+      <td>168.0</td>
+      <td>0.99490</td>
+      <td>3.15</td>
+      <td>0.46</td>
+      <td>9.6</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6494</th>
+      <td>1.0</td>
+      <td>6.5</td>
+      <td>0.24</td>
+      <td>0.19</td>
+      <td>1.2</td>
+      <td>0.041</td>
+      <td>30.0</td>
+      <td>111.0</td>
+      <td>0.99254</td>
+      <td>2.99</td>
+      <td>0.46</td>
+      <td>9.4</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6495</th>
+      <td>1.0</td>
+      <td>5.5</td>
+      <td>0.29</td>
+      <td>0.30</td>
+      <td>1.1</td>
+      <td>0.022</td>
+      <td>20.0</td>
+      <td>110.0</td>
+      <td>0.98869</td>
+      <td>3.34</td>
+      <td>0.38</td>
+      <td>12.8</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6496</th>
+      <td>1.0</td>
+      <td>6.0</td>
+      <td>0.21</td>
+      <td>0.38</td>
+      <td>0.8</td>
+      <td>0.020</td>
+      <td>22.0</td>
+      <td>98.0</td>
+      <td>0.98941</td>
+      <td>3.26</td>
+      <td>0.32</td>
+      <td>11.8</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>6497 rows × 13 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">OLS</span><span class="p">(</span><span class="n">wine_target</span><span class="p">,</span> <span class="n">predictors</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>OLS Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>         <td>quality</td>     <th>  R-squared:         </th> <td>   0.297</td> 
+</tr>
+<tr>
+  <th>Model:</th>                   <td>OLS</td>       <th>  Adj. R-squared:    </th> <td>   0.295</td> 
+</tr>
+<tr>
+  <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th> <td>   227.8</td> 
+</tr>
+<tr>
+  <th>Date:</th>             <td>Thu, 08 Apr 2021</td> <th>  Prob (F-statistic):</th>  <td>  0.00</td>  
+</tr>
+<tr>
+  <th>Time:</th>                 <td>13:10:59</td>     <th>  Log-Likelihood:    </th> <td> -7195.2</td> 
+</tr>
+<tr>
+  <th>No. Observations:</th>      <td>  6497</td>      <th>  AIC:               </th> <td>1.442e+04</td>
+</tr>
+<tr>
+  <th>Df Residuals:</th>          <td>  6484</td>      <th>  BIC:               </th> <td>1.450e+04</td>
+</tr>
+<tr>
+  <th>Df Model:</th>              <td>    12</td>      <th>                     </th>     <td> </td>    
+</tr>
+<tr>
+  <th>Covariance Type:</th>      <td>nonrobust</td>    <th>                     </th>     <td> </td>    
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+            <td></td>              <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>const</th>                <td>  104.3904</td> <td>   14.105</td> <td>    7.401</td> <td> 0.000</td> <td>   76.741</td> <td>  132.040</td>
+</tr>
+<tr>
+  <th>fixed acidity</th>        <td>    0.0851</td> <td>    0.016</td> <td>    5.396</td> <td> 0.000</td> <td>    0.054</td> <td>    0.116</td>
+</tr>
+<tr>
+  <th>volatile acidity</th>     <td>   -1.4924</td> <td>    0.081</td> <td>  -18.345</td> <td> 0.000</td> <td>   -1.652</td> <td>   -1.333</td>
+</tr>
+<tr>
+  <th>citric acid</th>          <td>   -0.0626</td> <td>    0.080</td> <td>   -0.786</td> <td> 0.432</td> <td>   -0.219</td> <td>    0.094</td>
+</tr>
+<tr>
+  <th>residual sugar</th>       <td>    0.0624</td> <td>    0.006</td> <td>   10.522</td> <td> 0.000</td> <td>    0.051</td> <td>    0.074</td>
+</tr>
+<tr>
+  <th>chlorides</th>            <td>   -0.7573</td> <td>    0.334</td> <td>   -2.264</td> <td> 0.024</td> <td>   -1.413</td> <td>   -0.102</td>
+</tr>
+<tr>
+  <th>free sulfur dioxide</th>  <td>    0.0049</td> <td>    0.001</td> <td>    6.443</td> <td> 0.000</td> <td>    0.003</td> <td>    0.006</td>
+</tr>
+<tr>
+  <th>total sulfur dioxide</th> <td>   -0.0014</td> <td>    0.000</td> <td>   -4.333</td> <td> 0.000</td> <td>   -0.002</td> <td>   -0.001</td>
+</tr>
+<tr>
+  <th>density</th>              <td> -103.9096</td> <td>   14.336</td> <td>   -7.248</td> <td> 0.000</td> <td> -132.013</td> <td>  -75.806</td>
+</tr>
+<tr>
+  <th>pH</th>                   <td>    0.4988</td> <td>    0.091</td> <td>    5.506</td> <td> 0.000</td> <td>    0.321</td> <td>    0.676</td>
+</tr>
+<tr>
+  <th>sulphates</th>            <td>    0.7217</td> <td>    0.076</td> <td>    9.466</td> <td> 0.000</td> <td>    0.572</td> <td>    0.871</td>
+</tr>
+<tr>
+  <th>alcohol</th>              <td>    0.2227</td> <td>    0.018</td> <td>   12.320</td> <td> 0.000</td> <td>    0.187</td> <td>    0.258</td>
+</tr>
+<tr>
+  <th>red_wine</th>             <td>    0.3613</td> <td>    0.057</td> <td>    6.367</td> <td> 0.000</td> <td>    0.250</td> <td>    0.473</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+  <th>Omnibus:</th>       <td>140.992</td> <th>  Durbin-Watson:     </th> <td>   1.648</td>
+</tr>
+<tr>
+  <th>Prob(Omnibus):</th> <td> 0.000</td>  <th>  Jarque-Bera (JB):  </th> <td> 313.985</td>
+</tr>
+<tr>
+  <th>Skew:</th>          <td> 0.016</td>  <th>  Prob(JB):          </th> <td>6.59e-69</td>
+</tr>
+<tr>
+  <th>Kurtosis:</th>      <td> 4.077</td>  <th>  Cond. No.          </th> <td>2.96e+05</td>
+</tr>
+</table><br/><br/>Notes:<br/>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.<br/>[2] The condition number is large, 2.96e+05. This might indicate that there are<br/>strong multicollinearity or other numerical problems.</div></div>
+</div>
+</section>
+<section id="scaling">
+<h2>Scaling<a class="headerlink" href="#scaling" title="Permalink to this heading">#</a></h2>
+<p>Before we construct a linear regression, let’s <em>scale</em> our columns as z-scores. Why?</p>
+<p>In a word, it’s useful to have all of our variables be on the same scale, so that the resulting coefficients are easier to interpret. If the scales of the variables are very different one from another, then some of the coefficients may end up on very large or very tiny scales.</p>
+<p>For more on this, see <a class="reference external" href="https://stats.stackexchange.com/questions/32649/some-of-my-predictors-are-on-very-different-scales-do-i-need-to-transform-them">this post</a>.</p>
+<p>Let’s try a model with our wine dataset now.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We&#39;ll include all the columns for now.</span>
+
+<span class="n">wine_preds_scaled</span> <span class="o">=</span> <span class="p">(</span><span class="n">wine_preds</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">wine_preds</span><span class="p">))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">wine_preds</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine_preds_scaled</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fixed acidity</th>
+      <th>volatile acidity</th>
+      <th>citric acid</th>
+      <th>residual sugar</th>
+      <th>chlorides</th>
+      <th>free sulfur dioxide</th>
+      <th>total sulfur dioxide</th>
+      <th>density</th>
+      <th>pH</th>
+      <th>sulphates</th>
+      <th>alcohol</th>
+      <th>red_wine</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>6.497000e+03</td>
+      <td>6.497000e+03</td>
+      <td>6.497000e+03</td>
+      <td>6.497000e+03</td>
+      <td>6.497000e+03</td>
+      <td>6.497000e+03</td>
+      <td>6.497000e+03</td>
+      <td>6.497000e+03</td>
+      <td>6.497000e+03</td>
+      <td>6.497000e+03</td>
+      <td>6.497000e+03</td>
+      <td>6497.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>-3.849639e-16</td>
+      <td>1.049902e-16</td>
+      <td>2.187295e-17</td>
+      <td>3.499672e-17</td>
+      <td>3.499672e-17</td>
+      <td>-8.749179e-17</td>
+      <td>-6.999344e-17</td>
+      <td>-3.534668e-15</td>
+      <td>2.729744e-15</td>
+      <td>-5.424491e-16</td>
+      <td>9.361622e-16</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>1.000077e+00</td>
+      <td>1.000077e+00</td>
+      <td>1.000077e+00</td>
+      <td>1.000077e+00</td>
+      <td>1.000077e+00</td>
+      <td>1.000077e+00</td>
+      <td>1.000077e+00</td>
+      <td>1.000077e+00</td>
+      <td>1.000077e+00</td>
+      <td>1.000077e+00</td>
+      <td>1.000077e+00</td>
+      <td>1.000077</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>-2.634589e+00</td>
+      <td>-1.577330e+00</td>
+      <td>-2.192833e+00</td>
+      <td>-1.018034e+00</td>
+      <td>-1.342639e+00</td>
+      <td>-1.663583e+00</td>
+      <td>-1.941780e+00</td>
+      <td>-2.530192e+00</td>
+      <td>-3.100615e+00</td>
+      <td>-2.091935e+00</td>
+      <td>-2.089350e+00</td>
+      <td>-0.571367</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>-6.289329e-01</td>
+      <td>-6.661613e-01</td>
+      <td>-4.723335e-01</td>
+      <td>-7.657978e-01</td>
+      <td>-5.147986e-01</td>
+      <td>-7.620742e-01</td>
+      <td>-6.855323e-01</td>
+      <td>-7.859527e-01</td>
+      <td>-6.748622e-01</td>
+      <td>-6.805919e-01</td>
+      <td>-8.316152e-01</td>
+      <td>-0.571367</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>-1.660892e-01</td>
+      <td>-3.016939e-01</td>
+      <td>-5.941375e-02</td>
+      <td>-5.135612e-01</td>
+      <td>-2.578826e-01</td>
+      <td>-8.594301e-02</td>
+      <td>3.990667e-02</td>
+      <td>6.448888e-02</td>
+      <td>-5.287424e-02</td>
+      <td>-1.429373e-01</td>
+      <td>-1.608231e-01</td>
+      <td>-0.571367</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>3.738951e-01</td>
+      <td>3.664962e-01</td>
+      <td>4.911459e-01</td>
+      <td>5.584445e-01</td>
+      <td>2.559494e-01</td>
+      <td>5.901882e-01</td>
+      <td>7.122647e-01</td>
+      <td>7.648525e-01</td>
+      <td>6.313125e-01</td>
+      <td>4.619241e-01</td>
+      <td>6.776670e-01</td>
+      <td>-0.571367</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>6.699425e+00</td>
+      <td>7.534354e+00</td>
+      <td>9.231281e+00</td>
+      <td>1.268682e+01</td>
+      <td>1.584219e+01</td>
+      <td>1.456357e+01</td>
+      <td>5.737257e+00</td>
+      <td>1.476879e+01</td>
+      <td>4.923029e+00</td>
+      <td>9.870879e+00</td>
+      <td>3.696231e+00</td>
+      <td>1.750190</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">predictors</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">add_constant</span><span class="p">(</span><span class="n">wine_preds_scaled</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">OLS</span><span class="p">(</span><span class="n">wine_target</span><span class="p">,</span> <span class="n">predictors</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>OLS Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>         <td>quality</td>     <th>  R-squared:         </th> <td>   0.297</td> 
+</tr>
+<tr>
+  <th>Model:</th>                   <td>OLS</td>       <th>  Adj. R-squared:    </th> <td>   0.295</td> 
+</tr>
+<tr>
+  <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th> <td>   227.8</td> 
+</tr>
+<tr>
+  <th>Date:</th>             <td>Thu, 08 Apr 2021</td> <th>  Prob (F-statistic):</th>  <td>  0.00</td>  
+</tr>
+<tr>
+  <th>Time:</th>                 <td>13:10:59</td>     <th>  Log-Likelihood:    </th> <td> -7195.2</td> 
+</tr>
+<tr>
+  <th>No. Observations:</th>      <td>  6497</td>      <th>  AIC:               </th> <td>1.442e+04</td>
+</tr>
+<tr>
+  <th>Df Residuals:</th>          <td>  6484</td>      <th>  BIC:               </th> <td>1.450e+04</td>
+</tr>
+<tr>
+  <th>Df Model:</th>              <td>    12</td>      <th>                     </th>     <td> </td>    
+</tr>
+<tr>
+  <th>Covariance Type:</th>      <td>nonrobust</td>    <th>                     </th>     <td> </td>    
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+            <td></td>              <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>const</th>                <td>    5.8184</td> <td>    0.009</td> <td>  639.726</td> <td> 0.000</td> <td>    5.801</td> <td>    5.836</td>
+</tr>
+<tr>
+  <th>fixed acidity</th>        <td>    0.1103</td> <td>    0.020</td> <td>    5.396</td> <td> 0.000</td> <td>    0.070</td> <td>    0.150</td>
+</tr>
+<tr>
+  <th>volatile acidity</th>     <td>   -0.2457</td> <td>    0.013</td> <td>  -18.345</td> <td> 0.000</td> <td>   -0.272</td> <td>   -0.219</td>
+</tr>
+<tr>
+  <th>citric acid</th>          <td>   -0.0091</td> <td>    0.012</td> <td>   -0.786</td> <td> 0.432</td> <td>   -0.032</td> <td>    0.014</td>
+</tr>
+<tr>
+  <th>residual sugar</th>       <td>    0.2970</td> <td>    0.028</td> <td>   10.522</td> <td> 0.000</td> <td>    0.242</td> <td>    0.352</td>
+</tr>
+<tr>
+  <th>chlorides</th>            <td>   -0.0265</td> <td>    0.012</td> <td>   -2.264</td> <td> 0.024</td> <td>   -0.049</td> <td>   -0.004</td>
+</tr>
+<tr>
+  <th>free sulfur dioxide</th>  <td>    0.0876</td> <td>    0.014</td> <td>    6.443</td> <td> 0.000</td> <td>    0.061</td> <td>    0.114</td>
+</tr>
+<tr>
+  <th>total sulfur dioxide</th> <td>   -0.0793</td> <td>    0.018</td> <td>   -4.333</td> <td> 0.000</td> <td>   -0.115</td> <td>   -0.043</td>
+</tr>
+<tr>
+  <th>density</th>              <td>   -0.3116</td> <td>    0.043</td> <td>   -7.248</td> <td> 0.000</td> <td>   -0.396</td> <td>   -0.227</td>
+</tr>
+<tr>
+  <th>pH</th>                   <td>    0.0802</td> <td>    0.015</td> <td>    5.506</td> <td> 0.000</td> <td>    0.052</td> <td>    0.109</td>
+</tr>
+<tr>
+  <th>sulphates</th>            <td>    0.1074</td> <td>    0.011</td> <td>    9.466</td> <td> 0.000</td> <td>    0.085</td> <td>    0.130</td>
+</tr>
+<tr>
+  <th>alcohol</th>              <td>    0.2656</td> <td>    0.022</td> <td>   12.320</td> <td> 0.000</td> <td>    0.223</td> <td>    0.308</td>
+</tr>
+<tr>
+  <th>red_wine</th>             <td>    0.1556</td> <td>    0.024</td> <td>    6.367</td> <td> 0.000</td> <td>    0.108</td> <td>    0.204</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+  <th>Omnibus:</th>       <td>140.992</td> <th>  Durbin-Watson:     </th> <td>   1.648</td>
+</tr>
+<tr>
+  <th>Prob(Omnibus):</th> <td> 0.000</td>  <th>  Jarque-Bera (JB):  </th> <td> 313.985</td>
+</tr>
+<tr>
+  <th>Skew:</th>          <td> 0.016</td>  <th>  Prob(JB):          </th> <td>6.59e-69</td>
+</tr>
+<tr>
+  <th>Kurtosis:</th>      <td> 4.077</td>  <th>  Cond. No.          </th> <td>    12.6</td>
+</tr>
+</table><br/><br/>Notes:<br/>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.</div></div>
+</div>
+</section>
+<section id="multiple-regression-in-scikit-learn">
+<h2>Multiple Regression in Scikit-Learn<a class="headerlink" href="#multiple-regression-in-scikit-learn" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Let&#39;s create a StandardScaler object to scale our data for us.</span>
+<span class="n">ss</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+
+
+<span class="c1"># Now we&#39;ll apply it to our data by using the .fit() and .transform() methods.</span>
+
+<span class="n">ss</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">wine_preds</span><span class="p">)</span>
+
+<span class="n">wine_preds_st_scaled</span> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">wine_preds</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check that the scaling worked about the same as when we did it by hand</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">wine_preds_st_scaled</span><span class="p">,</span> <span class="n">wine_preds_scaled</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine_preds_scaled</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fixed acidity</th>
+      <th>volatile acidity</th>
+      <th>citric acid</th>
+      <th>residual sugar</th>
+      <th>chlorides</th>
+      <th>free sulfur dioxide</th>
+      <th>total sulfur dioxide</th>
+      <th>density</th>
+      <th>pH</th>
+      <th>sulphates</th>
+      <th>alcohol</th>
+      <th>red_wine</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.142473</td>
+      <td>2.188833</td>
+      <td>-2.192833</td>
+      <td>-0.744778</td>
+      <td>0.569958</td>
+      <td>-1.100140</td>
+      <td>-1.446359</td>
+      <td>1.034993</td>
+      <td>1.813090</td>
+      <td>0.193097</td>
+      <td>-0.915464</td>
+      <td>1.75019</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.451036</td>
+      <td>3.282235</td>
+      <td>-2.192833</td>
+      <td>-0.597640</td>
+      <td>1.197975</td>
+      <td>-0.311320</td>
+      <td>-0.862469</td>
+      <td>0.701486</td>
+      <td>-0.115073</td>
+      <td>0.999579</td>
+      <td>-0.580068</td>
+      <td>1.75019</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.451036</td>
+      <td>2.553300</td>
+      <td>-1.917553</td>
+      <td>-0.660699</td>
+      <td>1.026697</td>
+      <td>-0.874763</td>
+      <td>-1.092486</td>
+      <td>0.768188</td>
+      <td>0.258120</td>
+      <td>0.797958</td>
+      <td>-0.580068</td>
+      <td>1.75019</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3.073817</td>
+      <td>-0.362438</td>
+      <td>1.661085</td>
+      <td>-0.744778</td>
+      <td>0.541412</td>
+      <td>-0.762074</td>
+      <td>-0.986324</td>
+      <td>1.101694</td>
+      <td>-0.363868</td>
+      <td>0.327510</td>
+      <td>-0.580068</td>
+      <td>1.75019</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.142473</td>
+      <td>2.188833</td>
+      <td>-2.192833</td>
+      <td>-0.744778</td>
+      <td>0.569958</td>
+      <td>-1.100140</td>
+      <td>-1.446359</td>
+      <td>1.034993</td>
+      <td>1.813090</td>
+      <td>0.193097</td>
+      <td>-0.915464</td>
+      <td>1.75019</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine_preds_st_scaled</span><span class="p">[:</span><span class="mi">5</span><span class="p">,</span> <span class="p">:]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 0.14247327,  2.18883292, -2.19283252, -0.7447781 ,  0.56995782,
+        -1.10013986, -1.44635852,  1.03499282,  1.81308951,  0.19309677,
+        -0.91546416,  1.75018984],
+       [ 0.45103572,  3.28223494, -2.19283252, -0.59764007,  1.1979747 ,
+        -0.31132009, -0.86246863,  0.70148631, -0.11507303,  0.99957862,
+        -0.58006813,  1.75018984],
+       [ 0.45103572,  2.55330026, -1.91755268, -0.66069923,  1.02669737,
+        -0.87476278, -1.09248586,  0.76818761,  0.25811972,  0.79795816,
+        -0.58006813,  1.75018984],
+       [ 3.07381662, -0.36243847,  1.66108525, -0.7447781 ,  0.54141159,
+        -0.76207424, -0.98632406,  1.10169412, -0.3638682 ,  0.32751041,
+        -0.58006813,  1.75018984],
+       [ 0.14247327,  2.18883292, -2.19283252, -0.7447781 ,  0.56995782,
+        -1.10013986, -1.44635852,  1.03499282,  1.81308951,  0.19309677,
+        -0.91546416,  1.75018984]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Now we can fit a LinearRegression object to our training data!</span>
+
+<span class="n">lr</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">lr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">wine_preds_st_scaled</span><span class="p">,</span> <span class="n">wine_target</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LinearRegression()
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We can use the .coef_ attribute to recover the results</span>
+<span class="c1"># of the regression.</span>
+
+<span class="n">lr</span><span class="o">.</span><span class="n">coef_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 0.11027401, -0.24568548, -0.00909927,  0.29704168, -0.02652718,
+        0.08762284, -0.07927578, -0.311567  ,  0.08018737,  0.10739154,
+        0.26556038,  0.155642  ])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lr</span><span class="o">.</span><span class="n">intercept_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5.818377712790517
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lr</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">wine_preds_st_scaled</span><span class="p">,</span> <span class="n">wine_target</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.29653465192890527
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">wine_preds_st_scaled</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([4.9711381 , 4.91138099, 5.03013256, ..., 5.3914881 , 6.45904385,
+       6.24475934])
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="sklearn-metrics">
+<h2>Sklearn Metrics<a class="headerlink" href="#sklearn-metrics" title="Permalink to this heading">#</a></h2>
+<p>The metrics module in sklearn has a number of metrics that we can use to meaure the accuracy of our model, including the <span class="math notranslate nohighlight">\(R^2\)</span> score, the mean absolute error and the mean squared error. Note that the default ‘score’ on our model object is the <span class="math notranslate nohighlight">\(R^2\)</span> score. Let’s go back to our wine dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">metrics</span><span class="o">.</span><span class="n">r2_score</span><span class="p">(</span><span class="n">wine_target</span><span class="p">,</span> <span class="n">lr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">wine_preds_st_scaled</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.29653465192890527
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s make sure this metric is properly calibrated. If we put simply <span class="math notranslate nohighlight">\(\bar{y}\)</span> as our prediction, then we should get an <span class="math notranslate nohighlight">\(R^2\)</span> score of <em>0</em>. And if we predict, say, <span class="math notranslate nohighlight">\(\bar{y} + 1\)</span>, then we should get a <em>negative</em> <span class="math notranslate nohighlight">\(R^2\)</span> score.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">avg_quality</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">wine_target</span><span class="p">)</span>
+<span class="n">num</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">wine_target</span><span class="p">)</span>
+
+<span class="n">metrics</span><span class="o">.</span><span class="n">r2_score</span><span class="p">(</span><span class="n">wine_target</span><span class="p">,</span> <span class="n">avg_quality</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">num</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">metrics</span><span class="o">.</span><span class="n">r2_score</span><span class="p">(</span><span class="n">wine_target</span><span class="p">,</span> <span class="p">(</span><span class="n">avg_quality</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">num</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-1.31154869162707
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">metrics</span><span class="o">.</span><span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">wine_target</span><span class="p">,</span> <span class="n">lr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">wine_preds_st_scaled</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.568537539040229
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">metrics</span><span class="o">.</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">wine_target</span><span class="p">,</span> <span class="n">lr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">wine_preds_st_scaled</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5363623573886502
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="level-up-regression-with-categorical-features-with-the-comma-dataset">
+<h1>Level Up: Regression with Categorical Features with the Comma Dataset<a class="headerlink" href="#level-up-regression-with-categorical-features-with-the-comma-dataset" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">comma_df</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;x0_It&#39;s important for a person to be honest, kind, and loyal.&#39;,
+       &#39;x1_Yes&#39;, &#39;x2_Not at all&#39;, &#39;x2_Not much&#39;, &#39;x2_Some&#39;,
+       &#39;x3_Some experts say it&#39;s important to drink milk, but the data is inconclusive.&#39;,
+       &#39;x4_Yes&#39;, &#39;x5_Not at all&#39;, &#39;x5_Not much&#39;, &#39;x5_Some&#39;,
+       &#39;x6_Somewhat important&#39;, &#39;x6_Somewhat unimportant&#39;, &#39;x6_Very important&#39;,
+       &#39;x6_Very unimportant&#39;, &#39;x7_Male&#39;, &#39;x8_30-44&#39;, &#39;x8_45-60&#39;, &#39;x8_&gt; 60&#39;,
+       &#39;x9_$100,000 - $149,999&#39;, &#39;x9_$150,000+&#39;, &#39;x9_$25,000 - $49,999&#39;,
+       &#39;x9_$50,000 - $99,999&#39;, &#39;x10_Graduate degree&#39;, &#39;x10_High school degree&#39;,
+       &#39;x10_Less than high school degree&#39;,
+       &#39;x10_Some college or Associate degree&#39;, &#39;x11_East South Central&#39;,
+       &#39;x11_Middle Atlantic&#39;, &#39;x11_Mountain&#39;, &#39;x11_New England&#39;, &#39;x11_Pacific&#39;,
+       &#39;x11_South Atlantic&#39;, &#39;x11_West North Central&#39;,
+       &#39;x11_West South Central&#39;],
+      dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We&#39;ll try to predict the first column of df: the extent to which</span>
+<span class="c1"># the person accepts the sentence</span>
+<span class="c1"># without the Oxford comma as more grammatically correct.</span>
+
+<span class="n">comma_target</span> <span class="o">=</span> <span class="n">comma_df</span><span class="p">[</span><span class="s1">&#39;x0_It</span><span class="se">\&#39;</span><span class="s1">s important for a person to be honest, kind, and loyal.&#39;</span><span class="p">]</span>
+
+<span class="n">comma_predictors</span> <span class="o">=</span> <span class="n">comma_df</span><span class="p">[[</span><span class="s1">&#39;x8_30-44&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;x8_45-60&#39;</span><span class="p">,</span> <span class="s1">&#39;x8_&gt; 60&#39;</span><span class="p">,</span> <span class="s1">&#39;x9_$100,000 - $149,999&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;x9_$150,000+&#39;</span><span class="p">,</span> <span class="s1">&#39;x9_$25,000 - $49,999&#39;</span><span class="p">,</span> <span class="s1">&#39;x9_$50,000 - $99,999&#39;</span><span class="p">]]</span>
+
+<span class="n">comma_lr</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+
+<span class="n">comma_lr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">comma_predictors</span><span class="p">,</span> <span class="n">comma_target</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LinearRegression()
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">comma_lr</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">comma_predictors</span><span class="p">,</span> <span class="n">comma_target</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.06787480451929673
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">comma_lr</span><span class="o">.</span><span class="n">coef_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-0.19156396, -0.28625016, -0.32526961, -0.02213833, -0.08411478,
+       -0.12790946, -0.05293649])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">comma_df</span><span class="o">.</span><span class="n">corr</span><span class="p">()[</span><span class="s1">&#39;x0_It</span><span class="se">\&#39;</span><span class="s1">s important for a person to be honest, kind, and loyal.&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x0_It&#39;s important for a person to be honest, kind, and loyal.                      1.000000
+x1_Yes                                                                             0.194395
+x2_Not at all                                                                     -0.208253
+x2_Not much                                                                       -0.154735
+x2_Some                                                                            0.039525
+x3_Some experts say it&#39;s important to drink milk, but the data is inconclusive.   -0.028032
+x4_Yes                                                                             0.006351
+x5_Not at all                                                                     -0.062906
+x5_Not much                                                                        0.005660
+x5_Some                                                                            0.021905
+x6_Somewhat important                                                             -0.060440
+x6_Somewhat unimportant                                                            0.004779
+x6_Very important                                                                  0.053627
+x6_Very unimportant                                                                0.042843
+x7_Male                                                                           -0.007906
+x8_30-44                                                                           0.023863
+x8_45-60                                                                          -0.097627
+x8_&gt; 60                                                                           -0.133730
+x9_$100,000 - $149,999                                                             0.014077
+x9_$150,000+                                                                      -0.045436
+x9_$25,000 - $49,999                                                              -0.052653
+x9_$50,000 - $99,999                                                              -0.015090
+x10_Graduate degree                                                                0.046685
+x10_High school degree                                                            -0.030399
+x10_Less than high school degree                                                   0.011053
+x10_Some college or Associate degree                                              -0.062061
+x11_East South Central                                                             0.015785
+x11_Middle Atlantic                                                               -0.112698
+x11_Mountain                                                                       0.016404
+x11_New England                                                                   -0.005816
+x11_Pacific                                                                       -0.063463
+x11_South Atlantic                                                                 0.065443
+x11_West North Central                                                            -0.010483
+x11_West South Central                                                             0.017191
+Name: x0_It&#39;s important for a person to be honest, kind, and loyal., dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>For more on the interpretation of regression coefficients for categorical variables, see <a class="reference external" href="https://github.com/hoffm386/coefficients-of-dropped-categorical-variables">Erin’s repo</a>.</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Phase_2/topic_19_part1_multiple_regression/ds-multiple_linear_regression-main"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Multiple Linear Regression</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#agenda">Agenda</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-with-multiple-predictors">Regression with Multiple Predictors</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#confounding-variables">Confounding Variables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dealing-with-categorical-variables">Dealing with Categorical Variables</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dummying">Dummying</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple-regression-in-statsmodels">Multiple Regression in <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diamonds-dataset">Diamonds Dataset</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#check-distribution-of-target">Check distribution of target</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#build-model-with-log-scaled-target">Build model with log-scaled target</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#putting-it-in-practice-wine-dataset">Putting it in Practice: Wine Dataset 🍷</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-the-regression">Running the Regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scaling">Scaling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple-regression-in-scikit-learn">Multiple Regression in Scikit-Learn</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sklearn-metrics">Sklearn Metrics</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#level-up-regression-with-categorical-features-with-the-comma-dataset">Level Up: Regression with Categorical Features with the Comma Dataset</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By James Irving, PhD
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,2619 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Feature Selection and Feature Engineering &#8212; Data Science Curriculum</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Phase_2/topic_19_part2_model_validation/ds-feature_selection_and_feature_engineering/feature_selection_and_feature_engineering-022221FT';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/flatironschool_banner.jpg" class="logo__image only-light" alt="Data Science Curriculum - Home"/>
+    <script>document.write(`<img src="../../../_static/flatironschool_banner.jpg" class="logo__image only-dark" alt="Data Science Curriculum - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../intro.html">
+                    Data Science Curriculum
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 1 - Python &amp; Data Fundamentals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_01_getting_started/topic_01_getting_started.html">Topic 1: Getting Started with Data Science</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_02_bash_git/topic_02_bash_and_git.html">Topic 02:  Bash and Git</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_03_control_flow_functions/topic_03_control_flow_and_functions.html">Topic 03: Control Flow, Functions, and Statistics</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_04_python_libraries/topic_04_intro_to_libraries_numpy_SG.html">Topic 04-Part 1: Python Libraries &amp; NumPy</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_04_python_libraries/topic_04_pt-2_brief_intro_to_pandas-SG.html">Topic 04-Part 2: Brief Intro to Pandas with Doctor Who</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_05_data_cleaning_in_pandas/topic_05_Data_Cleaning_in_Pandas.html">Topic 05: Data Cleaning in Pandas</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_06_data_visualization/topic_06_visualizations_heroes_project_SG.html">Topic 06:  Data Visualizations</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_07_SQL_and_relational_databases/topic_07_SQL_and_relational_databases_SG.html">TOPIC 07: SQL DATABASES</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_08_noSQL_databases/topic_08_mongodb-SG.html">Topic 08: NoSQL Databases</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_09_json_and_apis/topic_09_json-api-SG.html">Topic 09: Using APIs and JSON Data</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_10_webscraping/topic_10_SG_HTML_CSS_web_scraping.html">Topic 10: HTML, CSS, &amp; Web Scraping</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 2 - Statistics &amp; Regression</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../topic_11_probability_and_combinatorics/topic_11_playlist_probabilities-SG.html">Topic 11 - Intro to Combinatorics &amp; Probability</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_12_statistical_distributions/topic-12-distributions-with-movies-sg.html">Exploring Distributions with Movies Data</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_13_central_limit_theorem/topic_13_central_limit_theorem_SG.html">Topic 13: Central Limit Theorem</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_14_hypothesis_testing/topic_14_hypothesis_testing-SG.html">Topic 14: Hypothesis Testing -  T-Tests</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_15_ANOVA/topic_15_ANOVA_with_neuro_data-SG.html">Topic 15: ANOVAs &amp; Statistical Power with  Neuro Data</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_16_AB_testing/topic_16_AB_testing_with_movies-SG.html">Topic 16: Practicing AB Testing with Movies</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_17_bayesian_statistics/topic_17_bayesian_statistics-SG.html">Topic 17: Bayesian Statistics</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_18_linear_regression/topic_18_intro_to_linear_regression_SG.html">Topic 18: Intro to Linear Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_19_part1_multiple_regression/topic_19_Multiple_Regression_v2-SG.html">Topic 19: Multiple Linear Regression</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_19_part_2_Multiple_Regression_v2-SG.html">Topic 19 Part 2: Feature Selection &amp; Model Validation</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_20_extensions_linear_models/topic_20_extensions_to_linear_models_SG.html">Topic 20: Extensions to Linear Models</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 3 - Machine Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_21_OOP/topic_21_OOP_playing_cards_SG.html">Topic 21: Object-Oriented Programming</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_22_linear_algebra/topic_22_linear_algebra_SG.html">Topic 22: Linear Algebra</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_23_calculus_gradient_descent/topic_23_gradient_descent_SG.html">Topic 23: Cost Functions and Gradient Descent</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_24_regularization/topic_24_Regularization_Ridge_Lasso_v2_SG.html">Topic 24: Feature Selection &amp; Regularization (Ridge and Lasso Regression)</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_25_logistic_regression/topic_25_pt1_LogisticRegression_titanic-v2-SG.html">Topic 25-Pt 1: Intro to Logistic Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_25_logistic_regression/topic_25_pt2_LogisticRegression_titanic-v2-SG.html">Topic 25-Part 2: Evaluating Classifiers, Dealing with Class Imbalance, and <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code></a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_27_KNN/Topic_27_KNN_with_pipelines_with_lab_v3_SG.html">Topic 27: K-Nearest Neighbors<br/> +Topic 32: Pipelines</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_29_decision_trees/topic_29_decision_trees_v2_titanic-SG.html">Topic 29: Decision Trees</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_30_ensemble_methods/topic_30_ensemble_methods-SG.html">Topic 30: Ensemble Methods</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_31_support_vector_machines/topic_31_SupportVectorMachines_SG.html">Topic 31: Support Vector Machines</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 4 - Advanced ML &amp; Time Series</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_33_pca/topic_33_PCA_SG.html">Topic 33: Principal Component Analysis</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_34_clustering/topic_34_Kmeans_clustering_v3_SG.html">Topic 34: Clustering</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_35-36_using_databricks_for_pyspark/using_databricks_for_pyspark.html">How to Use Databricks for PySpark Canvas Material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_36_recommendation_systems/topic_36_Recommendation_Systems_with_Surprise.html">Topic 36: Recommendation Systems</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_37_intro_to_time_series/topic_37_intro_to_time_series_crime_v3-SG.html">Topic 37: Intro to Time Series</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_38_time_series_models/topic_38-time_series_models_v3_SG.html">Topic 38: Time Series Models</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_39_NLP/topic_39_NLP_finding_trump_v3_SG.html">Topic 39: Natural Language Processing + Topic 28: Bayesian Classification</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_40-41_neural_networks/topic_40-41_Artificial_Neural_Networks_v1_SG.html">Topic 40-41: Artificial Neural Networks</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_42_tuning_neural_networks/topic_42_tuning_ANNs_with_deep_NLP_v1_SG.html">Topic 42 - Tuning Neural Networks + Deep NLP</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_43_AWS/topic_43_operationalizing_code_AWS_SG.html">Topic 43: Operationalizing Code &amp; AWS</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 5 - Capstone &amp; Bonus Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/Capstone_Kickoff.html">Capstone Kickoff!</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/APIs/working_with_apis.html">Working with APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/developing_app_functions/developing-streamlit-app-functions_SG.html">Developing Streamlit App Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/tableau/tableau_fundamentals_2021-SG.html">Tableau Fundamentals</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/Bonus%20Notebooks/plotly_visuals.html">Plotly Question</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/master?urlpath=tree/Phase_2/topic_19_part2_model_validation/ds-feature_selection_and_feature_engineering/feature_selection_and_feature_engineering-022221FT.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/blob/master/Phase_2/topic_19_part2_model_validation/ds-feature_selection_and_feature_engineering/feature_selection_and_feature_engineering-022221FT.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/issues/new?title=Issue%20on%20page%20%2FPhase_2/topic_19_part2_model_validation/ds-feature_selection_and_feature_engineering/feature_selection_and_feature_engineering-022221FT.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/Phase_2/topic_19_part2_model_validation/ds-feature_selection_and_feature_engineering/feature_selection_and_feature_engineering-022221FT.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Feature Selection and Feature Engineering</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#agenda">Agenda</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ft-model-selection"><code class="docutils literal notranslate"><span class="pre">[022221FT]</span></code> Model Selection</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#correlation">Correlation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ft-multicollinearity"><code class="docutils literal notranslate"><span class="pre">[022221FT]</span></code> Multicollinearity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ft-recursive-feature-elimination"><code class="docutils literal notranslate"><span class="pre">[022221FT]</span></code> Recursive Feature Elimination</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recursive-feature-elimination-in-scikit-learn">Recursive Feature Elimination in Scikit-Learn</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ft-feature-engineering"><code class="docutils literal notranslate"><span class="pre">[022221FT]</span></code> Feature Engineering</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eda">EDA</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#chlorides">Chlorides</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bf-so-2"><span class="math notranslate nohighlight">\(\bf{SO_2}\)</span></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#products-of-features">Products of Features</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#polynomialfeatures">PolynomialFeatures</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise">Exercise</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="feature-selection-and-feature-engineering">
+<h1>Feature Selection and Feature Engineering<a class="headerlink" href="#feature-selection-and-feature-engineering" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.feature_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">RFE</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">PolynomialFeatures</span><span class="p">,</span> <span class="n">StandardScaler</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="agenda">
+<h2>Agenda<a class="headerlink" href="#agenda" title="Permalink to this heading">#</a></h2>
+<p>SWBAT:</p>
+<ul class="simple">
+<li><p>Use correlations and other algorithms to inform feature selection;</p></li>
+<li><p>Address the problem of multicollinearity in regression problems;</p></li>
+<li><p>Create new features for use in modeling;</p>
+<ul>
+<li><p>Use PolynomialFeatures to build compound features</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="ft-model-selection">
+<h2><code class="docutils literal notranslate"><span class="pre">[022221FT]</span></code> Model Selection<a class="headerlink" href="#ft-model-selection" title="Permalink to this heading">#</a></h2>
+<p>Let’s imagine that I’m going to try to predict wine quality based on the other features.</p>
+<p>Now: Which columns (predictors) should I choose? There are 12 predictors I could choose from. For each of these predictors, I could either use it or not use it in my model, which means that there are 2^12 = 4096 different models I could construct! Well, okay, one of these is the “empty model” with no predictors in it. But there are still 4095 models from which I can choose.</p>
+<p>How can I decide which predictors to use in my model?</p>
+<p>We’ll explore a few methods here.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/wine.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fixed acidity</th>
+      <th>volatile acidity</th>
+      <th>citric acid</th>
+      <th>residual sugar</th>
+      <th>chlorides</th>
+      <th>free sulfur dioxide</th>
+      <th>total sulfur dioxide</th>
+      <th>density</th>
+      <th>pH</th>
+      <th>sulphates</th>
+      <th>alcohol</th>
+      <th>quality</th>
+      <th>red_wine</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>7.4</td>
+      <td>0.70</td>
+      <td>0.00</td>
+      <td>1.9</td>
+      <td>0.076</td>
+      <td>11.0</td>
+      <td>34.0</td>
+      <td>0.9978</td>
+      <td>3.51</td>
+      <td>0.56</td>
+      <td>9.4</td>
+      <td>5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>7.8</td>
+      <td>0.88</td>
+      <td>0.00</td>
+      <td>2.6</td>
+      <td>0.098</td>
+      <td>25.0</td>
+      <td>67.0</td>
+      <td>0.9968</td>
+      <td>3.20</td>
+      <td>0.68</td>
+      <td>9.8</td>
+      <td>5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>7.8</td>
+      <td>0.76</td>
+      <td>0.04</td>
+      <td>2.3</td>
+      <td>0.092</td>
+      <td>15.0</td>
+      <td>54.0</td>
+      <td>0.9970</td>
+      <td>3.26</td>
+      <td>0.65</td>
+      <td>9.8</td>
+      <td>5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>11.2</td>
+      <td>0.28</td>
+      <td>0.56</td>
+      <td>1.9</td>
+      <td>0.075</td>
+      <td>17.0</td>
+      <td>60.0</td>
+      <td>0.9980</td>
+      <td>3.16</td>
+      <td>0.58</td>
+      <td>9.8</td>
+      <td>6</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>7.4</td>
+      <td>0.70</td>
+      <td>0.00</td>
+      <td>1.9</td>
+      <td>0.076</td>
+      <td>11.0</td>
+      <td>34.0</td>
+      <td>0.9978</td>
+      <td>3.51</td>
+      <td>0.56</td>
+      <td>9.4</td>
+      <td>5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>7.4</td>
+      <td>0.66</td>
+      <td>0.00</td>
+      <td>1.8</td>
+      <td>0.075</td>
+      <td>13.0</td>
+      <td>40.0</td>
+      <td>0.9978</td>
+      <td>3.51</td>
+      <td>0.56</td>
+      <td>9.4</td>
+      <td>5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>7.9</td>
+      <td>0.60</td>
+      <td>0.06</td>
+      <td>1.6</td>
+      <td>0.069</td>
+      <td>15.0</td>
+      <td>59.0</td>
+      <td>0.9964</td>
+      <td>3.30</td>
+      <td>0.46</td>
+      <td>9.4</td>
+      <td>5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>7.3</td>
+      <td>0.65</td>
+      <td>0.00</td>
+      <td>1.2</td>
+      <td>0.065</td>
+      <td>15.0</td>
+      <td>21.0</td>
+      <td>0.9946</td>
+      <td>3.39</td>
+      <td>0.47</td>
+      <td>10.0</td>
+      <td>7</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>7.8</td>
+      <td>0.58</td>
+      <td>0.02</td>
+      <td>2.0</td>
+      <td>0.073</td>
+      <td>9.0</td>
+      <td>18.0</td>
+      <td>0.9968</td>
+      <td>3.36</td>
+      <td>0.57</td>
+      <td>9.5</td>
+      <td>7</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>7.5</td>
+      <td>0.50</td>
+      <td>0.36</td>
+      <td>6.1</td>
+      <td>0.071</td>
+      <td>17.0</td>
+      <td>102.0</td>
+      <td>0.9978</td>
+      <td>3.35</td>
+      <td>0.80</td>
+      <td>10.5</td>
+      <td>5</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<section id="correlation">
+<h3>Correlation<a class="headerlink" href="#correlation" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use the .corr() DataFrame method to find out about the</span>
+<span class="c1"># correlation values between all pairs of variables!</span>
+
+<span class="n">wine</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fixed acidity</th>
+      <th>volatile acidity</th>
+      <th>citric acid</th>
+      <th>residual sugar</th>
+      <th>chlorides</th>
+      <th>free sulfur dioxide</th>
+      <th>total sulfur dioxide</th>
+      <th>density</th>
+      <th>pH</th>
+      <th>sulphates</th>
+      <th>alcohol</th>
+      <th>quality</th>
+      <th>red_wine</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>fixed acidity</th>
+      <td>1.000000</td>
+      <td>0.219008</td>
+      <td>0.324436</td>
+      <td>-0.111981</td>
+      <td>0.298195</td>
+      <td>-0.282735</td>
+      <td>-0.329054</td>
+      <td>0.458910</td>
+      <td>-0.252700</td>
+      <td>0.299568</td>
+      <td>-0.095452</td>
+      <td>-0.076743</td>
+      <td>0.486740</td>
+    </tr>
+    <tr>
+      <th>volatile acidity</th>
+      <td>0.219008</td>
+      <td>1.000000</td>
+      <td>-0.377981</td>
+      <td>-0.196011</td>
+      <td>0.377124</td>
+      <td>-0.352557</td>
+      <td>-0.414476</td>
+      <td>0.271296</td>
+      <td>0.261454</td>
+      <td>0.225984</td>
+      <td>-0.037640</td>
+      <td>-0.265699</td>
+      <td>0.653036</td>
+    </tr>
+    <tr>
+      <th>citric acid</th>
+      <td>0.324436</td>
+      <td>-0.377981</td>
+      <td>1.000000</td>
+      <td>0.142451</td>
+      <td>0.038998</td>
+      <td>0.133126</td>
+      <td>0.195242</td>
+      <td>0.096154</td>
+      <td>-0.329808</td>
+      <td>0.056197</td>
+      <td>-0.010493</td>
+      <td>0.085532</td>
+      <td>-0.187397</td>
+    </tr>
+    <tr>
+      <th>residual sugar</th>
+      <td>-0.111981</td>
+      <td>-0.196011</td>
+      <td>0.142451</td>
+      <td>1.000000</td>
+      <td>-0.128940</td>
+      <td>0.402871</td>
+      <td>0.495482</td>
+      <td>0.552517</td>
+      <td>-0.267320</td>
+      <td>-0.185927</td>
+      <td>-0.359415</td>
+      <td>-0.036980</td>
+      <td>-0.348821</td>
+    </tr>
+    <tr>
+      <th>chlorides</th>
+      <td>0.298195</td>
+      <td>0.377124</td>
+      <td>0.038998</td>
+      <td>-0.128940</td>
+      <td>1.000000</td>
+      <td>-0.195045</td>
+      <td>-0.279630</td>
+      <td>0.362615</td>
+      <td>0.044708</td>
+      <td>0.395593</td>
+      <td>-0.256916</td>
+      <td>-0.200666</td>
+      <td>0.512678</td>
+    </tr>
+    <tr>
+      <th>free sulfur dioxide</th>
+      <td>-0.282735</td>
+      <td>-0.352557</td>
+      <td>0.133126</td>
+      <td>0.402871</td>
+      <td>-0.195045</td>
+      <td>1.000000</td>
+      <td>0.720934</td>
+      <td>0.025717</td>
+      <td>-0.145854</td>
+      <td>-0.188457</td>
+      <td>-0.179838</td>
+      <td>0.055463</td>
+      <td>-0.471644</td>
+    </tr>
+    <tr>
+      <th>total sulfur dioxide</th>
+      <td>-0.329054</td>
+      <td>-0.414476</td>
+      <td>0.195242</td>
+      <td>0.495482</td>
+      <td>-0.279630</td>
+      <td>0.720934</td>
+      <td>1.000000</td>
+      <td>0.032395</td>
+      <td>-0.238413</td>
+      <td>-0.275727</td>
+      <td>-0.265740</td>
+      <td>-0.041385</td>
+      <td>-0.700357</td>
+    </tr>
+    <tr>
+      <th>density</th>
+      <td>0.458910</td>
+      <td>0.271296</td>
+      <td>0.096154</td>
+      <td>0.552517</td>
+      <td>0.362615</td>
+      <td>0.025717</td>
+      <td>0.032395</td>
+      <td>1.000000</td>
+      <td>0.011686</td>
+      <td>0.259478</td>
+      <td>-0.686745</td>
+      <td>-0.305858</td>
+      <td>0.390645</td>
+    </tr>
+    <tr>
+      <th>pH</th>
+      <td>-0.252700</td>
+      <td>0.261454</td>
+      <td>-0.329808</td>
+      <td>-0.267320</td>
+      <td>0.044708</td>
+      <td>-0.145854</td>
+      <td>-0.238413</td>
+      <td>0.011686</td>
+      <td>1.000000</td>
+      <td>0.192123</td>
+      <td>0.121248</td>
+      <td>0.019506</td>
+      <td>0.329129</td>
+    </tr>
+    <tr>
+      <th>sulphates</th>
+      <td>0.299568</td>
+      <td>0.225984</td>
+      <td>0.056197</td>
+      <td>-0.185927</td>
+      <td>0.395593</td>
+      <td>-0.188457</td>
+      <td>-0.275727</td>
+      <td>0.259478</td>
+      <td>0.192123</td>
+      <td>1.000000</td>
+      <td>-0.003029</td>
+      <td>0.038485</td>
+      <td>0.487218</td>
+    </tr>
+    <tr>
+      <th>alcohol</th>
+      <td>-0.095452</td>
+      <td>-0.037640</td>
+      <td>-0.010493</td>
+      <td>-0.359415</td>
+      <td>-0.256916</td>
+      <td>-0.179838</td>
+      <td>-0.265740</td>
+      <td>-0.686745</td>
+      <td>0.121248</td>
+      <td>-0.003029</td>
+      <td>1.000000</td>
+      <td>0.444319</td>
+      <td>-0.032970</td>
+    </tr>
+    <tr>
+      <th>quality</th>
+      <td>-0.076743</td>
+      <td>-0.265699</td>
+      <td>0.085532</td>
+      <td>-0.036980</td>
+      <td>-0.200666</td>
+      <td>0.055463</td>
+      <td>-0.041385</td>
+      <td>-0.305858</td>
+      <td>0.019506</td>
+      <td>0.038485</td>
+      <td>0.444319</td>
+      <td>1.000000</td>
+      <td>-0.119323</td>
+    </tr>
+    <tr>
+      <th>red_wine</th>
+      <td>0.486740</td>
+      <td>0.653036</td>
+      <td>-0.187397</td>
+      <td>-0.348821</td>
+      <td>0.512678</td>
+      <td>-0.471644</td>
+      <td>-0.700357</td>
+      <td>0.390645</td>
+      <td>0.329129</td>
+      <td>0.487218</td>
+      <td>-0.032970</td>
+      <td>-0.119323</td>
+      <td>1.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">rc</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">:(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">)})</span>
+
+<span class="c1"># Use the .heatmap method to depict the relationships visually!</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">wine</span><span class="o">.</span><span class="n">corr</span><span class="p">());</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/57f8920d4436ea2889d7f1c48ff9cc4241015e5e00d511540a307c5f0a50fb71.png" src="../../../_images/57f8920d4436ea2889d7f1c48ff9cc4241015e5e00d511540a307c5f0a50fb71.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Let&#39;s look at the correlations with &#39;quality&#39;</span>
+<span class="c1"># (our dependent variable) in particular.</span>
+
+<span class="n">wine_corrs</span> <span class="o">=</span> <span class="n">wine</span><span class="o">.</span><span class="n">corr</span><span class="p">()[</span><span class="s1">&#39;quality&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="nb">abs</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">wine_corrs</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>quality                 1.000000
+alcohol                 0.444319
+density                 0.305858
+volatile acidity        0.265699
+chlorides               0.200666
+red_wine                0.119323
+citric acid             0.085532
+fixed acidity           0.076743
+free sulfur dioxide     0.055463
+total sulfur dioxide    0.041385
+sulphates               0.038485
+residual sugar          0.036980
+pH                      0.019506
+Name: quality, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Let&#39;s choose &#39;alcohol&#39; and &#39;density&#39;.</span>
+
+<span class="n">wine_preds</span> <span class="o">=</span> <span class="n">wine</span><span class="p">[[</span><span class="s1">&#39;alcohol&#39;</span><span class="p">,</span> <span class="s1">&#39;density&#39;</span><span class="p">]]</span>
+<span class="n">wine_target</span> <span class="o">=</span> <span class="n">wine</span><span class="p">[</span><span class="s1">&#39;quality&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lr</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">wine_preds</span><span class="p">,</span> <span class="n">wine_target</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LinearRegression()
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lr</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">wine_preds</span><span class="p">,</span> <span class="n">wine_target</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.19741993980311323
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="ft-multicollinearity">
+<h2><code class="docutils literal notranslate"><span class="pre">[022221FT]</span></code> Multicollinearity<a class="headerlink" href="#ft-multicollinearity" title="Permalink to this heading">#</a></h2>
+<p>Multicollinearity describes the correlation between distinct predictors. Why might high multicollinearity be a problem for interpreting a linear regression model?</p>
+<p>It’s problematic for statistics in an inferential mode because, if <span class="math notranslate nohighlight">\(x_1\)</span> and <span class="math notranslate nohighlight">\(x_2\)</span> are highly correlated with <span class="math notranslate nohighlight">\(y\)</span> but also <em>with each other</em>, then it will be very difficult to tease apart the effects of <span class="math notranslate nohighlight">\(x_1\)</span> on <span class="math notranslate nohighlight">\(y\)</span> and the effects of <span class="math notranslate nohighlight">\(x_2\)</span> on <span class="math notranslate nohighlight">\(y\)</span>. If I really want to have a good sense of the effect of <span class="math notranslate nohighlight">\(x_1\)</span> on <span class="math notranslate nohighlight">\(y\)</span>, then I’d like to vary <span class="math notranslate nohighlight">\(x_1\)</span> while keeping the other features constant. But if <span class="math notranslate nohighlight">\(x_1\)</span> is highly correlated with <span class="math notranslate nohighlight">\(x_2\)</span> then this will be a practically impossible exercise!</p>
+<p>We will return to this topic again. For more, see <a class="reference external" href="https://towardsdatascience.com/https-towardsdatascience-com-multicollinearity-how-does-it-create-a-problem-72956a49058">this post</a>.</p>
+<p><strong>A further assumption for multiple linear regression is</strong>:</p>
+<p><strong>5. The predictors are independent.</strong></p>
+<p><strong>How can I check for this?</strong></p>
+<ul class="simple">
+<li><p>Check the model Condition Number.</p></li>
+<li><p>Check the correlation values.</p></li>
+<li><p>Compute Variance Inflation Factors (<a class="reference external" href="https://www.statsmodels.org/devel/generated/statsmodels.stats.outliers_influence.variance_inflation_factor.html">VIFs</a>).</p></li>
+</ul>
+<p><strong>What can I do if it looks like I’m violating this assumption?</strong></p>
+<ul class="simple">
+<li><p>Consider dropping offending predictors.</p></li>
+<li><p>We’ll have much more to say about this topic in future lessons!</p></li>
+</ul>
+</section>
+<section id="ft-recursive-feature-elimination">
+<h2><code class="docutils literal notranslate"><span class="pre">[022221FT]</span></code> Recursive Feature Elimination<a class="headerlink" href="#ft-recursive-feature-elimination" title="Permalink to this heading">#</a></h2>
+<p>The idea behind recursive feature elimination is to start with all predictive features and then build down to a small set of features slowly, by eliminating the features with the lowest coefficients.</p>
+<p>That is:</p>
+<ol class="arabic simple">
+<li><p>Start with a model with <em>all</em> <span class="math notranslate nohighlight">\(n\)</span> predictors;</p></li>
+<li><p>find the predictor with the smallest coefficient;</p></li>
+<li><p>throw that predictor out and build a model with the remaining <span class="math notranslate nohighlight">\(n-1\)</span> predictors;</p></li>
+<li><p>set <span class="math notranslate nohighlight">\(n = n-1\)</span> and repeat until <span class="math notranslate nohighlight">\(n-1\)</span> has the value you want!</p></li>
+</ol>
+<section id="recursive-feature-elimination-in-scikit-learn">
+<h3>Recursive Feature Elimination in Scikit-Learn<a class="headerlink" href="#recursive-feature-elimination-in-scikit-learn" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lr_rfe</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">select</span> <span class="o">=</span> <span class="n">RFE</span><span class="p">(</span><span class="n">lr_rfe</span><span class="p">,</span> <span class="n">n_features_to_select</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ss</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">ss</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">wine</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;quality&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="n">wine_scaled</span> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">wine</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;quality&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">select</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">wine_scaled</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">wine</span><span class="p">[</span><span class="s1">&#39;quality&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>RFE(estimator=LinearRegression(), n_features_to_select=3)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">select</span><span class="o">.</span><span class="n">support_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([False,  True, False, False, False, False, False, False, False,
+       False,  True,  True])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fixed acidity</th>
+      <th>volatile acidity</th>
+      <th>citric acid</th>
+      <th>residual sugar</th>
+      <th>chlorides</th>
+      <th>free sulfur dioxide</th>
+      <th>total sulfur dioxide</th>
+      <th>density</th>
+      <th>pH</th>
+      <th>sulphates</th>
+      <th>alcohol</th>
+      <th>quality</th>
+      <th>red_wine</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>7.4</td>
+      <td>0.70</td>
+      <td>0.00</td>
+      <td>1.9</td>
+      <td>0.076</td>
+      <td>11.0</td>
+      <td>34.0</td>
+      <td>0.9978</td>
+      <td>3.51</td>
+      <td>0.56</td>
+      <td>9.4</td>
+      <td>5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>7.8</td>
+      <td>0.88</td>
+      <td>0.00</td>
+      <td>2.6</td>
+      <td>0.098</td>
+      <td>25.0</td>
+      <td>67.0</td>
+      <td>0.9968</td>
+      <td>3.20</td>
+      <td>0.68</td>
+      <td>9.8</td>
+      <td>5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>7.8</td>
+      <td>0.76</td>
+      <td>0.04</td>
+      <td>2.3</td>
+      <td>0.092</td>
+      <td>15.0</td>
+      <td>54.0</td>
+      <td>0.9970</td>
+      <td>3.26</td>
+      <td>0.65</td>
+      <td>9.8</td>
+      <td>5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>11.2</td>
+      <td>0.28</td>
+      <td>0.56</td>
+      <td>1.9</td>
+      <td>0.075</td>
+      <td>17.0</td>
+      <td>60.0</td>
+      <td>0.9980</td>
+      <td>3.16</td>
+      <td>0.58</td>
+      <td>9.8</td>
+      <td>6</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>7.4</td>
+      <td>0.70</td>
+      <td>0.00</td>
+      <td>1.9</td>
+      <td>0.076</td>
+      <td>11.0</td>
+      <td>34.0</td>
+      <td>0.9978</td>
+      <td>3.51</td>
+      <td>0.56</td>
+      <td>9.4</td>
+      <td>5</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">select</span><span class="o">.</span><span class="n">ranking_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 5,  1, 10,  2,  9,  7,  8,  3,  6,  4,  1,  1])
+</pre></div>
+</div>
+</div>
+</div>
+<p>These features are volatile acidity, alcohol, and red_wine.</p>
+<p>Caution: RFE is probably not a good strategy if your initial dataset has many predictors. It will likely be easier to start with a <em>simple</em> model and then slowly increase its complexity. This is also good advice for when you’re first getting your feet wet with <code class="docutils literal notranslate"><span class="pre">sklearn</span></code>!</p>
+<p>For more on feature selection, see <a class="reference external" href="https://towardsdatascience.com/the-5-feature-selection-algorithms-every-data-scientist-need-to-know-3a6b566efd2">this post</a>.</p>
+</section>
+</section>
+<section id="ft-feature-engineering">
+<h2><code class="docutils literal notranslate"><span class="pre">[022221FT]</span></code> Feature Engineering<a class="headerlink" href="#ft-feature-engineering" title="Permalink to this heading">#</a></h2>
+<p>Domain knowledge can be helpful here! Since I don’t know much about wine, I’m really just guessing.</p>
+<p>In practice this aspect of data preparation can constitute a huge part of the data scientist’s work. As we move into data modeling, much of the goal will be a matter of finding––<strong>or creating</strong>––features that are predictive of the targets we are trying to model. There are infinitely many ways of transforming and combining a starting set of features. Good data scientists will have a nose for which engineering operations will be likely to yield fruit and for which operations won’t. And part of the game here may be getting someone else on your team who understands what the data represent better than you!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fixed acidity</th>
+      <th>volatile acidity</th>
+      <th>citric acid</th>
+      <th>residual sugar</th>
+      <th>chlorides</th>
+      <th>free sulfur dioxide</th>
+      <th>total sulfur dioxide</th>
+      <th>density</th>
+      <th>pH</th>
+      <th>sulphates</th>
+      <th>alcohol</th>
+      <th>quality</th>
+      <th>red_wine</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>7.4</td>
+      <td>0.70</td>
+      <td>0.00</td>
+      <td>1.9</td>
+      <td>0.076</td>
+      <td>11.0</td>
+      <td>34.0</td>
+      <td>0.9978</td>
+      <td>3.51</td>
+      <td>0.56</td>
+      <td>9.4</td>
+      <td>5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>7.8</td>
+      <td>0.88</td>
+      <td>0.00</td>
+      <td>2.6</td>
+      <td>0.098</td>
+      <td>25.0</td>
+      <td>67.0</td>
+      <td>0.9968</td>
+      <td>3.20</td>
+      <td>0.68</td>
+      <td>9.8</td>
+      <td>5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>7.8</td>
+      <td>0.76</td>
+      <td>0.04</td>
+      <td>2.3</td>
+      <td>0.092</td>
+      <td>15.0</td>
+      <td>54.0</td>
+      <td>0.9970</td>
+      <td>3.26</td>
+      <td>0.65</td>
+      <td>9.8</td>
+      <td>5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>11.2</td>
+      <td>0.28</td>
+      <td>0.56</td>
+      <td>1.9</td>
+      <td>0.075</td>
+      <td>17.0</td>
+      <td>60.0</td>
+      <td>0.9980</td>
+      <td>3.16</td>
+      <td>0.58</td>
+      <td>9.8</td>
+      <td>6</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>7.4</td>
+      <td>0.70</td>
+      <td>0.00</td>
+      <td>1.9</td>
+      <td>0.076</td>
+      <td>11.0</td>
+      <td>34.0</td>
+      <td>0.9978</td>
+      <td>3.51</td>
+      <td>0.56</td>
+      <td>9.4</td>
+      <td>5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>7.4</td>
+      <td>0.66</td>
+      <td>0.00</td>
+      <td>1.8</td>
+      <td>0.075</td>
+      <td>13.0</td>
+      <td>40.0</td>
+      <td>0.9978</td>
+      <td>3.51</td>
+      <td>0.56</td>
+      <td>9.4</td>
+      <td>5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>7.9</td>
+      <td>0.60</td>
+      <td>0.06</td>
+      <td>1.6</td>
+      <td>0.069</td>
+      <td>15.0</td>
+      <td>59.0</td>
+      <td>0.9964</td>
+      <td>3.30</td>
+      <td>0.46</td>
+      <td>9.4</td>
+      <td>5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>7.3</td>
+      <td>0.65</td>
+      <td>0.00</td>
+      <td>1.2</td>
+      <td>0.065</td>
+      <td>15.0</td>
+      <td>21.0</td>
+      <td>0.9946</td>
+      <td>3.39</td>
+      <td>0.47</td>
+      <td>10.0</td>
+      <td>7</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>7.8</td>
+      <td>0.58</td>
+      <td>0.02</td>
+      <td>2.0</td>
+      <td>0.073</td>
+      <td>9.0</td>
+      <td>18.0</td>
+      <td>0.9968</td>
+      <td>3.36</td>
+      <td>0.57</td>
+      <td>9.5</td>
+      <td>7</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>7.5</td>
+      <td>0.50</td>
+      <td>0.36</td>
+      <td>6.1</td>
+      <td>0.071</td>
+      <td>17.0</td>
+      <td>102.0</td>
+      <td>0.9978</td>
+      <td>3.35</td>
+      <td>0.80</td>
+      <td>10.5</td>
+      <td>5</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<section id="eda">
+<h3>EDA<a class="headerlink" href="#eda" title="Permalink to this heading">#</a></h3>
+<section id="chlorides">
+<h4>Chlorides<a class="headerlink" href="#chlorides" title="Permalink to this heading">#</a></h4>
+<p>Let’s look at the distribution of the chlorides feature:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span><span class="p">[</span><span class="s1">&#39;chlorides&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/7eab9ac0790882d3ff48874c54b03970cfdfdb97fbf8461b6722206ce1bb5624.png" src="../../../_images/7eab9ac0790882d3ff48874c54b03970cfdfdb97fbf8461b6722206ce1bb5624.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fixed acidity</th>
+      <th>volatile acidity</th>
+      <th>citric acid</th>
+      <th>residual sugar</th>
+      <th>chlorides</th>
+      <th>free sulfur dioxide</th>
+      <th>total sulfur dioxide</th>
+      <th>density</th>
+      <th>pH</th>
+      <th>sulphates</th>
+      <th>alcohol</th>
+      <th>quality</th>
+      <th>red_wine</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>6497.000000</td>
+      <td>6497.000000</td>
+      <td>6497.000000</td>
+      <td>6497.000000</td>
+      <td>6497.000000</td>
+      <td>6497.000000</td>
+      <td>6497.000000</td>
+      <td>6497.000000</td>
+      <td>6497.000000</td>
+      <td>6497.000000</td>
+      <td>6497.000000</td>
+      <td>6497.000000</td>
+      <td>6497.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>7.215307</td>
+      <td>0.339666</td>
+      <td>0.318633</td>
+      <td>5.443235</td>
+      <td>0.056034</td>
+      <td>30.525319</td>
+      <td>115.744574</td>
+      <td>0.994697</td>
+      <td>3.218501</td>
+      <td>0.531268</td>
+      <td>10.491801</td>
+      <td>5.818378</td>
+      <td>0.246114</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>1.296434</td>
+      <td>0.164636</td>
+      <td>0.145318</td>
+      <td>4.757804</td>
+      <td>0.035034</td>
+      <td>17.749400</td>
+      <td>56.521855</td>
+      <td>0.002999</td>
+      <td>0.160787</td>
+      <td>0.148806</td>
+      <td>1.192712</td>
+      <td>0.873255</td>
+      <td>0.430779</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>3.800000</td>
+      <td>0.080000</td>
+      <td>0.000000</td>
+      <td>0.600000</td>
+      <td>0.009000</td>
+      <td>1.000000</td>
+      <td>6.000000</td>
+      <td>0.987110</td>
+      <td>2.720000</td>
+      <td>0.220000</td>
+      <td>8.000000</td>
+      <td>3.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>6.400000</td>
+      <td>0.230000</td>
+      <td>0.250000</td>
+      <td>1.800000</td>
+      <td>0.038000</td>
+      <td>17.000000</td>
+      <td>77.000000</td>
+      <td>0.992340</td>
+      <td>3.110000</td>
+      <td>0.430000</td>
+      <td>9.500000</td>
+      <td>5.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>7.000000</td>
+      <td>0.290000</td>
+      <td>0.310000</td>
+      <td>3.000000</td>
+      <td>0.047000</td>
+      <td>29.000000</td>
+      <td>118.000000</td>
+      <td>0.994890</td>
+      <td>3.210000</td>
+      <td>0.510000</td>
+      <td>10.300000</td>
+      <td>6.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>7.700000</td>
+      <td>0.400000</td>
+      <td>0.390000</td>
+      <td>8.100000</td>
+      <td>0.065000</td>
+      <td>41.000000</td>
+      <td>156.000000</td>
+      <td>0.996990</td>
+      <td>3.320000</td>
+      <td>0.600000</td>
+      <td>11.300000</td>
+      <td>6.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>15.900000</td>
+      <td>1.580000</td>
+      <td>1.660000</td>
+      <td>65.800000</td>
+      <td>0.611000</td>
+      <td>289.000000</td>
+      <td>440.000000</td>
+      <td>1.038980</td>
+      <td>4.010000</td>
+      <td>2.000000</td>
+      <td>14.900000</td>
+      <td>9.000000</td>
+      <td>1.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We’ll try building a feature that records whether the level of chlorides is greater than 0.065:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span><span class="p">[</span><span class="s1">&#39;high_chlorides&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">wine</span><span class="p">[</span><span class="s1">&#39;chlorides&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.065</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can check the correlation of this new feature with the target:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span><span class="o">.</span><span class="n">corr</span><span class="p">()[</span><span class="s1">&#39;quality&#39;</span><span class="p">][</span><span class="s1">&#39;high_chlorides&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.18185264331647868
+</pre></div>
+</div>
+</div>
+</div>
+<p>Not bad! We don’t seem to have stumbled onto a huge connection here, but this correlation value suggests that this new feature may be helpful in a final model.</p>
+</section>
+<section id="bf-so-2">
+<h4><span class="math notranslate nohighlight">\(\bf{SO_2}\)</span><a class="headerlink" href="#bf-so-2" title="Permalink to this heading">#</a></h4>
+<p>Next we’ll take a look at distribution of the sulfur dioxide feature:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span><span class="p">[</span><span class="s1">&#39;total sulfur dioxide&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">25</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/7020b773d5efacd71eb9a446d5fd16da97e6e1e53472f229d1f66cff639183c8.png" src="../../../_images/7020b773d5efacd71eb9a446d5fd16da97e6e1e53472f229d1f66cff639183c8.png" />
+</div>
+</div>
+<p>Let’s try separating our wines into those with sulfur dioxide higher than 80 and those with less:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span><span class="p">[</span><span class="s1">&#39;high_so2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">wine</span><span class="p">[</span><span class="s1">&#39;total sulfur dioxide&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">80</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span><span class="o">.</span><span class="n">corr</span><span class="p">()[</span><span class="s1">&#39;quality&#39;</span><span class="p">][</span><span class="s1">&#39;high_so2&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.08074521567591902
+</pre></div>
+</div>
+</div>
+</div>
+<p>Not great. Perhaps this is a modeling dead end.</p>
+</section>
+</section>
+<section id="products-of-features">
+<h3>Products of Features<a class="headerlink" href="#products-of-features" title="Permalink to this heading">#</a></h3>
+<p>Another engineering strategy we might try is <strong>multiplying features together</strong>.</p>
+<p>Earlier we found that <code class="docutils literal notranslate"><span class="pre">alcohol</span></code> and <code class="docutils literal notranslate"><span class="pre">density</span></code> had pretty high correlations with <code class="docutils literal notranslate"><span class="pre">quality</span></code>. Let’s try multiplying those features together:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span><span class="p">[</span><span class="s1">&#39;a+d&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">wine</span><span class="p">[</span><span class="s1">&#39;alcohol&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">wine</span><span class="p">[</span><span class="s1">&#39;density&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span><span class="o">.</span><span class="n">corr</span><span class="p">()[</span><span class="s1">&#39;quality&#39;</span><span class="p">][</span><span class="s1">&#39;a+d&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.44395789380060696
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine</span><span class="o">.</span><span class="n">corr</span><span class="p">()[</span><span class="s1">&#39;quality&#39;</span><span class="p">][</span><span class="s1">&#39;alcohol&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.4443185200076653
+</pre></div>
+</div>
+</div>
+</div>
+<p>In this case the product is only as good as one of the factors individually. But in other contexts this can be a highly effective strategy.</p>
+</section>
+</section>
+<section id="polynomialfeatures">
+<h2>PolynomialFeatures<a class="headerlink" href="#polynomialfeatures" title="Permalink to this heading">#</a></h2>
+<p>Instead of just multiplying features at random, we might consider trying <strong>every possible product of features</strong>. That’s what PolynomialFeatures does:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pf</span> <span class="o">=</span> <span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">wine</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;quality&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">wine</span><span class="p">[</span><span class="s1">&#39;quality&#39;</span><span class="p">]</span>
+
+<span class="c1"># Fitting the PolynomialFeatures object</span>
+<span class="n">pf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>PolynomialFeatures(degree=3)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pdf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">pf</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="n">pf</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">())</span>
+<span class="n">pdf</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>1</th>
+      <th>x0</th>
+      <th>x1</th>
+      <th>x2</th>
+      <th>x3</th>
+      <th>x4</th>
+      <th>x5</th>
+      <th>x6</th>
+      <th>x7</th>
+      <th>x8</th>
+      <th>...</th>
+      <th>x12^3</th>
+      <th>x12^2 x13</th>
+      <th>x12^2 x14</th>
+      <th>x12 x13^2</th>
+      <th>x12 x13 x14</th>
+      <th>x12 x14^2</th>
+      <th>x13^3</th>
+      <th>x13^2 x14</th>
+      <th>x13 x14^2</th>
+      <th>x14^3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1.0</td>
+      <td>7.4</td>
+      <td>0.70</td>
+      <td>0.00</td>
+      <td>1.9</td>
+      <td>0.076</td>
+      <td>11.0</td>
+      <td>34.0</td>
+      <td>0.99780</td>
+      <td>3.51</td>
+      <td>...</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>9.37932</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>87.971644</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>825.114197</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.0</td>
+      <td>7.8</td>
+      <td>0.88</td>
+      <td>0.00</td>
+      <td>2.6</td>
+      <td>0.098</td>
+      <td>25.0</td>
+      <td>67.0</td>
+      <td>0.99680</td>
+      <td>3.20</td>
+      <td>...</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>9.76864</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>95.426327</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>932.185439</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1.0</td>
+      <td>7.8</td>
+      <td>0.76</td>
+      <td>0.04</td>
+      <td>2.3</td>
+      <td>0.092</td>
+      <td>15.0</td>
+      <td>54.0</td>
+      <td>0.99700</td>
+      <td>3.26</td>
+      <td>...</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>9.77060</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>95.464624</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>932.746659</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1.0</td>
+      <td>11.2</td>
+      <td>0.28</td>
+      <td>0.56</td>
+      <td>1.9</td>
+      <td>0.075</td>
+      <td>17.0</td>
+      <td>60.0</td>
+      <td>0.99800</td>
+      <td>3.16</td>
+      <td>...</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>9.78040</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>95.656224</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>935.556135</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1.0</td>
+      <td>7.4</td>
+      <td>0.70</td>
+      <td>0.00</td>
+      <td>1.9</td>
+      <td>0.076</td>
+      <td>11.0</td>
+      <td>34.0</td>
+      <td>0.99780</td>
+      <td>3.51</td>
+      <td>...</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>9.37932</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>87.971644</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>825.114197</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>6492</th>
+      <td>1.0</td>
+      <td>6.2</td>
+      <td>0.21</td>
+      <td>0.29</td>
+      <td>1.6</td>
+      <td>0.039</td>
+      <td>24.0</td>
+      <td>92.0</td>
+      <td>0.99114</td>
+      <td>3.27</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.00000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>1.0</td>
+      <td>11.100768</td>
+      <td>123.227050</td>
+      <td>1367.914895</td>
+    </tr>
+    <tr>
+      <th>6493</th>
+      <td>1.0</td>
+      <td>6.6</td>
+      <td>0.32</td>
+      <td>0.36</td>
+      <td>8.0</td>
+      <td>0.047</td>
+      <td>57.0</td>
+      <td>168.0</td>
+      <td>0.99490</td>
+      <td>3.15</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.00000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>1.0</td>
+      <td>9.551040</td>
+      <td>91.222365</td>
+      <td>871.268458</td>
+    </tr>
+    <tr>
+      <th>6494</th>
+      <td>1.0</td>
+      <td>6.5</td>
+      <td>0.24</td>
+      <td>0.19</td>
+      <td>1.2</td>
+      <td>0.041</td>
+      <td>30.0</td>
+      <td>111.0</td>
+      <td>0.99254</td>
+      <td>2.99</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.00000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>1.0</td>
+      <td>9.329876</td>
+      <td>87.046586</td>
+      <td>812.133855</td>
+    </tr>
+    <tr>
+      <th>6495</th>
+      <td>1.0</td>
+      <td>5.5</td>
+      <td>0.29</td>
+      <td>0.30</td>
+      <td>1.1</td>
+      <td>0.022</td>
+      <td>20.0</td>
+      <td>110.0</td>
+      <td>0.98869</td>
+      <td>3.34</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.00000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>1.0</td>
+      <td>12.655232</td>
+      <td>160.154897</td>
+      <td>2026.797377</td>
+    </tr>
+    <tr>
+      <th>6496</th>
+      <td>1.0</td>
+      <td>6.0</td>
+      <td>0.21</td>
+      <td>0.38</td>
+      <td>0.8</td>
+      <td>0.020</td>
+      <td>22.0</td>
+      <td>98.0</td>
+      <td>0.98941</td>
+      <td>3.26</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.00000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>1.0</td>
+      <td>11.675038</td>
+      <td>136.306512</td>
+      <td>1591.383711</td>
+    </tr>
+  </tbody>
+</table>
+<p>6497 rows × 816 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pdf</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(6497, 816)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lr</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+
+<span class="n">lr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">pdf</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LinearRegression()
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lr</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">pdf</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.51300498197342
+</pre></div>
+</div>
+</div>
+</div>
+<p>So: Is this a good idea? What are the potential dangers here?</p>
+</section>
+<section id="exercise">
+<h2>Exercise<a class="headerlink" href="#exercise" title="Permalink to this heading">#</a></h2>
+<p>Consider the following dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/Advertising.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">sales</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>TV</th>
+      <th>radio</th>
+      <th>newspaper</th>
+      <th>sales</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>230.1</td>
+      <td>37.8</td>
+      <td>69.2</td>
+      <td>22.1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>44.5</td>
+      <td>39.3</td>
+      <td>45.1</td>
+      <td>10.4</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>17.2</td>
+      <td>45.9</td>
+      <td>69.3</td>
+      <td>9.3</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>151.5</td>
+      <td>41.3</td>
+      <td>58.5</td>
+      <td>18.5</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>180.8</td>
+      <td>10.8</td>
+      <td>58.4</td>
+      <td>12.9</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We’d like to try to understand sales as a function of spending on various media (TV, radio, newspaper).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sales</span><span class="o">.</span><span class="n">corr</span><span class="p">()[</span><span class="s1">&#39;sales&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TV           0.782224
+radio        0.576223
+newspaper    0.228299
+sales        1.000000
+Name: sales, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Try to find the best multiplicative combination of features.</strong></p>
+<p>You may use <code class="docutils literal notranslate"><span class="pre">PolynomialFeatures</span></code> or just multiply by hand.</p>
+<p>In practice, it’s not easy to tell when such products of features will be so fruitful. Moreover, there is room for concern about violating regression’s demand for feature independence. At the very least, we would probably not want to include a product <em>and the individual features themselves</em> in a final model, not if our goal is to understand what’s really responsible for fluctuations in our target variable.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Phase_2/topic_19_part2_model_validation/ds-feature_selection_and_feature_engineering"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#agenda">Agenda</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ft-model-selection"><code class="docutils literal notranslate"><span class="pre">[022221FT]</span></code> Model Selection</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#correlation">Correlation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ft-multicollinearity"><code class="docutils literal notranslate"><span class="pre">[022221FT]</span></code> Multicollinearity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ft-recursive-feature-elimination"><code class="docutils literal notranslate"><span class="pre">[022221FT]</span></code> Recursive Feature Elimination</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recursive-feature-elimination-in-scikit-learn">Recursive Feature Elimination in Scikit-Learn</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ft-feature-engineering"><code class="docutils literal notranslate"><span class="pre">[022221FT]</span></code> Feature Engineering</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eda">EDA</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#chlorides">Chlorides</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bf-so-2"><span class="math notranslate nohighlight">\(\bf{SO_2}\)</span></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#products-of-features">Products of Features</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#polynomialfeatures">PolynomialFeatures</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise">Exercise</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By James Irving, PhD
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

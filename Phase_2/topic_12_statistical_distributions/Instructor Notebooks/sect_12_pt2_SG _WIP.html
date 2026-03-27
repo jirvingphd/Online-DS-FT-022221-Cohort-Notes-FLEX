@@ -1,0 +1,1920 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Section 18- Pt2: Statistical Distributions &#8212; Data Science Curriculum</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Phase_2/topic_12_statistical_distributions/Instructor Notebooks/sect_12_pt2_SG _WIP';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/flatironschool_banner.jpg" class="logo__image only-light" alt="Data Science Curriculum - Home"/>
+    <script>document.write(`<img src="../../../_static/flatironschool_banner.jpg" class="logo__image only-dark" alt="Data Science Curriculum - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../intro.html">
+                    Data Science Curriculum
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 1 - Python &amp; Data Fundamentals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_01_getting_started/topic_01_getting_started.html">Topic 1: Getting Started with Data Science</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_02_bash_git/topic_02_bash_and_git.html">Topic 02:  Bash and Git</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_03_control_flow_functions/topic_03_control_flow_and_functions.html">Topic 03: Control Flow, Functions, and Statistics</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_04_python_libraries/topic_04_intro_to_libraries_numpy_SG.html">Topic 04-Part 1: Python Libraries &amp; NumPy</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_04_python_libraries/topic_04_pt-2_brief_intro_to_pandas-SG.html">Topic 04-Part 2: Brief Intro to Pandas with Doctor Who</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_05_data_cleaning_in_pandas/topic_05_Data_Cleaning_in_Pandas.html">Topic 05: Data Cleaning in Pandas</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_06_data_visualization/topic_06_visualizations_heroes_project_SG.html">Topic 06:  Data Visualizations</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_07_SQL_and_relational_databases/topic_07_SQL_and_relational_databases_SG.html">TOPIC 07: SQL DATABASES</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_08_noSQL_databases/topic_08_mongodb-SG.html">Topic 08: NoSQL Databases</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_09_json_and_apis/topic_09_json-api-SG.html">Topic 09: Using APIs and JSON Data</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_10_webscraping/topic_10_SG_HTML_CSS_web_scraping.html">Topic 10: HTML, CSS, &amp; Web Scraping</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 2 - Statistics &amp; Regression</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../topic_11_probability_and_combinatorics/topic_11_playlist_probabilities-SG.html">Topic 11 - Intro to Combinatorics &amp; Probability</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic-12-distributions-with-movies-sg.html">Exploring Distributions with Movies Data</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_13_central_limit_theorem/topic_13_central_limit_theorem_SG.html">Topic 13: Central Limit Theorem</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_14_hypothesis_testing/topic_14_hypothesis_testing-SG.html">Topic 14: Hypothesis Testing -  T-Tests</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_15_ANOVA/topic_15_ANOVA_with_neuro_data-SG.html">Topic 15: ANOVAs &amp; Statistical Power with  Neuro Data</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_16_AB_testing/topic_16_AB_testing_with_movies-SG.html">Topic 16: Practicing AB Testing with Movies</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_17_bayesian_statistics/topic_17_bayesian_statistics-SG.html">Topic 17: Bayesian Statistics</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_18_linear_regression/topic_18_intro_to_linear_regression_SG.html">Topic 18: Intro to Linear Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_19_part1_multiple_regression/topic_19_Multiple_Regression_v2-SG.html">Topic 19: Multiple Linear Regression</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_19_part2_model_validation/topic_19_part_2_Multiple_Regression_v2-SG.html">Topic 19 Part 2: Feature Selection &amp; Model Validation</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_20_extensions_linear_models/topic_20_extensions_to_linear_models_SG.html">Topic 20: Extensions to Linear Models</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 3 - Machine Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_21_OOP/topic_21_OOP_playing_cards_SG.html">Topic 21: Object-Oriented Programming</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_22_linear_algebra/topic_22_linear_algebra_SG.html">Topic 22: Linear Algebra</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_23_calculus_gradient_descent/topic_23_gradient_descent_SG.html">Topic 23: Cost Functions and Gradient Descent</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_24_regularization/topic_24_Regularization_Ridge_Lasso_v2_SG.html">Topic 24: Feature Selection &amp; Regularization (Ridge and Lasso Regression)</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_25_logistic_regression/topic_25_pt1_LogisticRegression_titanic-v2-SG.html">Topic 25-Pt 1: Intro to Logistic Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_25_logistic_regression/topic_25_pt2_LogisticRegression_titanic-v2-SG.html">Topic 25-Part 2: Evaluating Classifiers, Dealing with Class Imbalance, and <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code></a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_27_KNN/Topic_27_KNN_with_pipelines_with_lab_v3_SG.html">Topic 27: K-Nearest Neighbors<br/> +Topic 32: Pipelines</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_29_decision_trees/topic_29_decision_trees_v2_titanic-SG.html">Topic 29: Decision Trees</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_30_ensemble_methods/topic_30_ensemble_methods-SG.html">Topic 30: Ensemble Methods</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_31_support_vector_machines/topic_31_SupportVectorMachines_SG.html">Topic 31: Support Vector Machines</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 4 - Advanced ML &amp; Time Series</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_33_pca/topic_33_PCA_SG.html">Topic 33: Principal Component Analysis</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_34_clustering/topic_34_Kmeans_clustering_v3_SG.html">Topic 34: Clustering</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_35-36_using_databricks_for_pyspark/using_databricks_for_pyspark.html">How to Use Databricks for PySpark Canvas Material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_36_recommendation_systems/topic_36_Recommendation_Systems_with_Surprise.html">Topic 36: Recommendation Systems</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_37_intro_to_time_series/topic_37_intro_to_time_series_crime_v3-SG.html">Topic 37: Intro to Time Series</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_38_time_series_models/topic_38-time_series_models_v3_SG.html">Topic 38: Time Series Models</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_39_NLP/topic_39_NLP_finding_trump_v3_SG.html">Topic 39: Natural Language Processing + Topic 28: Bayesian Classification</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_40-41_neural_networks/topic_40-41_Artificial_Neural_Networks_v1_SG.html">Topic 40-41: Artificial Neural Networks</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_42_tuning_neural_networks/topic_42_tuning_ANNs_with_deep_NLP_v1_SG.html">Topic 42 - Tuning Neural Networks + Deep NLP</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_43_AWS/topic_43_operationalizing_code_AWS_SG.html">Topic 43: Operationalizing Code &amp; AWS</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 5 - Capstone &amp; Bonus Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/Capstone_Kickoff.html">Capstone Kickoff!</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/APIs/working_with_apis.html">Working with APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/developing_app_functions/developing-streamlit-app-functions_SG.html">Developing Streamlit App Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/tableau/tableau_fundamentals_2021-SG.html">Tableau Fundamentals</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/Bonus%20Notebooks/plotly_visuals.html">Plotly Question</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/master?urlpath=tree/Phase_2/topic_12_statistical_distributions/Instructor Notebooks/sect_12_pt2_SG _WIP.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/blob/master/Phase_2/topic_12_statistical_distributions/Instructor Notebooks/sect_12_pt2_SG _WIP.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/issues/new?title=Issue%20on%20page%20%2FPhase_2/topic_12_statistical_distributions/Instructor Notebooks/sect_12_pt2_SG _WIP.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/Phase_2/topic_12_statistical_distributions/Instructor Notebooks/sect_12_pt2_SG _WIP.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Section 18- Pt2: Statistical Distributions</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Section 18- Pt2: Statistical Distributions</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#questions">Questions:</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#probability-functions-pmf-vs-pdf-vs-cdf">Probability Functions: PMF vs PDF vs CDF</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#probability-mass-function">Probability Mass Function</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expected-value-and-variance-of-pmfs">Expected Value and Variance of PMFs</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#probability-density-function">Probability Density Function</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expected-value-and-variance-of-pdfs">Expected Value and Variance of PDFs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#density-estimation-and-plotting">Density Estimation and Plotting</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cumulative-distribution-function">Cumulative Distribution Function</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#kernel-density-estimation">Kernel Density Estimation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-distributions">Types of Distributions</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distributions-discrete-vs-continuous">Distributions: Discrete vs Continuous</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribution-descriptions-in-words">Distribution descriptions  in words</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#discrete-distributions">Discrete Distributions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bernoulli-trials-and-binomial-distribution">Bernoulli Trials and Binomial Distribution</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#experiment-vocab">Experiment  Vocab</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bernoulli-distribution-trials">Bernoulli Distribution/Trials</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#binomial-distributions">Binomial Distributions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#poisson">Poisson</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#poisson-probability-distribution-p-x-frac-lambda-xe-lambda-x">Poisson Probability Distribution: $<span class="math notranslate nohighlight">\(p(x) = \frac{\lambda^xe^{-\lambda}}{x!}\)</span>$</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#uniform">Uniform</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exponential-distribution">Exponential Distribution</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#saved-for-next-class">SAVED FOR NEXT CLASS</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#continuous-distributions">Continuous Distributions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#normal-distribution">Normal Distribution</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#normal-density-function">Normal Density Function</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standardized-normal-distribution">Standardized Normal Distribution</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#z-score">Z-score</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribution-characteristics">Distribution Characteristics</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skewness">Skewness</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kurtosis">Kurtosis</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#section-18-pt2l-statistical-testing">🗓Section 18 Pt2L Statistical Testing</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-testing-with-z-scores-and-p-values">Statistical Testing with Z-scores and p-values</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#population-vs-sample">Population vs Sample</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#one-sample-z-test">One-Sample <span class="math notranslate nohighlight">\(z\)</span>-test</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="section-18-pt2-statistical-distributions">
+<h1>Section 18- Pt2: Statistical Distributions<a class="headerlink" href="#section-18-pt2-statistical-distributions" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p>For online-ds-pt-100719</p></li>
+<li><p>study group: 01/16/20</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="learning-objectives">
+<h1>Learning Objectives<a class="headerlink" href="#learning-objectives" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p>PMF / PDF / CDF</p></li>
+<li><p>Discuss the different types of distributions and their use cases</p></li>
+<li><p>Practice turning math equations into functions</p></li>
+<li><p>Normal Distribution -&gt; Standardized Normal Distribution</p></li>
+</ul>
+<section id="questions">
+<h2>Questions:<a class="headerlink" href="#questions" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>knowing when to use PMF/PDF/CDF</p></li>
+<li><p>When to use which distributions?</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-U<span class="w"> </span>fsds_100719
+<span class="kn">from</span><span class="w"> </span><span class="nn">fsds_100719.imports</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>fsds_1007219  v0.6.5 loaded.  Read the docs: https://fsds.readthedocs.io/en/latest/ 
+</pre></div>
+</div>
+<div class="output text_html"><style  type="text/css" >
+</style><table id="T_24ae438a_389f_11ea_bb59_acde48001122" ><caption>Loaded Packages and Handles</caption><thead>    <tr>        <th class="col_heading level0 col0" >Handle</th>        <th class="col_heading level0 col1" >Package</th>        <th class="col_heading level0 col2" >Description</th>    </tr></thead><tbody>
+                <tr>
+                                <td id="T_24ae438a_389f_11ea_bb59_acde48001122row0_col0" class="data row0 col0" >dp</td>
+                        <td id="T_24ae438a_389f_11ea_bb59_acde48001122row0_col1" class="data row0 col1" >IPython.display</td>
+                        <td id="T_24ae438a_389f_11ea_bb59_acde48001122row0_col2" class="data row0 col2" >Display modules with helpful display and clearing commands.</td>
+            </tr>
+            <tr>
+                                <td id="T_24ae438a_389f_11ea_bb59_acde48001122row1_col0" class="data row1 col0" >fs</td>
+                        <td id="T_24ae438a_389f_11ea_bb59_acde48001122row1_col1" class="data row1 col1" >fsds_100719</td>
+                        <td id="T_24ae438a_389f_11ea_bb59_acde48001122row1_col2" class="data row1 col2" >Custom data science bootcamp student package</td>
+            </tr>
+            <tr>
+                                <td id="T_24ae438a_389f_11ea_bb59_acde48001122row2_col0" class="data row2 col0" >mpl</td>
+                        <td id="T_24ae438a_389f_11ea_bb59_acde48001122row2_col1" class="data row2 col1" >matplotlib</td>
+                        <td id="T_24ae438a_389f_11ea_bb59_acde48001122row2_col2" class="data row2 col2" >Matplotlib's base OOP module with formatting artists</td>
+            </tr>
+            <tr>
+                                <td id="T_24ae438a_389f_11ea_bb59_acde48001122row3_col0" class="data row3 col0" >plt</td>
+                        <td id="T_24ae438a_389f_11ea_bb59_acde48001122row3_col1" class="data row3 col1" >matplotlib.pyplot</td>
+                        <td id="T_24ae438a_389f_11ea_bb59_acde48001122row3_col2" class="data row3 col2" >Matplotlib's matlab-like plotting module</td>
+            </tr>
+            <tr>
+                                <td id="T_24ae438a_389f_11ea_bb59_acde48001122row4_col0" class="data row4 col0" >np</td>
+                        <td id="T_24ae438a_389f_11ea_bb59_acde48001122row4_col1" class="data row4 col1" >numpy</td>
+                        <td id="T_24ae438a_389f_11ea_bb59_acde48001122row4_col2" class="data row4 col2" >scientific computing with Python</td>
+            </tr>
+            <tr>
+                                <td id="T_24ae438a_389f_11ea_bb59_acde48001122row5_col0" class="data row5 col0" >pd</td>
+                        <td id="T_24ae438a_389f_11ea_bb59_acde48001122row5_col1" class="data row5 col1" >pandas</td>
+                        <td id="T_24ae438a_389f_11ea_bb59_acde48001122row5_col2" class="data row5 col2" >High performance data structures and tools</td>
+            </tr>
+            <tr>
+                                <td id="T_24ae438a_389f_11ea_bb59_acde48001122row6_col0" class="data row6 col0" >sns</td>
+                        <td id="T_24ae438a_389f_11ea_bb59_acde48001122row6_col1" class="data row6 col1" >seaborn</td>
+                        <td id="T_24ae438a_389f_11ea_bb59_acde48001122row6_col2" class="data row6 col2" >High-level data visualization library based on matplotlib</td>
+            </tr>
+    </tbody></table></div></div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="probability-functions-pmf-vs-pdf-vs-cdf">
+<h1>Probability Functions: PMF vs PDF vs CDF<a class="headerlink" href="#probability-functions-pmf-vs-pdf-vs-cdf" title="Permalink to this heading">#</a></h1>
+<section id="probability-mass-function">
+<h2>Probability Mass Function<a class="headerlink" href="#probability-mass-function" title="Permalink to this heading">#</a></h2>
+<img src="https://raw.githubusercontent.com/jirvingphd/fsds_100719_cohort_notes/master/Flashcards/Probability_Mass_Function_web.png"><ul class="simple">
+<li><p>Converts counts to probability of a <strong>discrete</strong> function by normalizing so that the sum of all outcomes == 1.</p></li>
+<li><p>Can test what is the probability that <span class="math notranslate nohighlight">\(x\)</span> takes on a particular value <span class="math notranslate nohighlight">\(k\)</span></p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(P(X=k)\)</span></p></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<div><p>“If we have x outcomes, what is the probability of getting k (our value of interest) from x?”</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">fsds_100719.imports</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>fsds_1007219  v0.6.5 loaded.  Read the docs: https://fsds.readthedocs.io/en/latest/ 
+</pre></div>
+</div>
+<div class="output text_html"><style  type="text/css" >
+</style><table id="T_0dd22946_38b6_11ea_8d6f_acde48001122" ><caption>Loaded Packages and Handles</caption><thead>    <tr>        <th class="col_heading level0 col0" >Handle</th>        <th class="col_heading level0 col1" >Package</th>        <th class="col_heading level0 col2" >Description</th>    </tr></thead><tbody>
+                <tr>
+                                <td id="T_0dd22946_38b6_11ea_8d6f_acde48001122row0_col0" class="data row0 col0" >dp</td>
+                        <td id="T_0dd22946_38b6_11ea_8d6f_acde48001122row0_col1" class="data row0 col1" >IPython.display</td>
+                        <td id="T_0dd22946_38b6_11ea_8d6f_acde48001122row0_col2" class="data row0 col2" >Display modules with helpful display and clearing commands.</td>
+            </tr>
+            <tr>
+                                <td id="T_0dd22946_38b6_11ea_8d6f_acde48001122row1_col0" class="data row1 col0" >fs</td>
+                        <td id="T_0dd22946_38b6_11ea_8d6f_acde48001122row1_col1" class="data row1 col1" >fsds_100719</td>
+                        <td id="T_0dd22946_38b6_11ea_8d6f_acde48001122row1_col2" class="data row1 col2" >Custom data science bootcamp student package</td>
+            </tr>
+            <tr>
+                                <td id="T_0dd22946_38b6_11ea_8d6f_acde48001122row2_col0" class="data row2 col0" >mpl</td>
+                        <td id="T_0dd22946_38b6_11ea_8d6f_acde48001122row2_col1" class="data row2 col1" >matplotlib</td>
+                        <td id="T_0dd22946_38b6_11ea_8d6f_acde48001122row2_col2" class="data row2 col2" >Matplotlib's base OOP module with formatting artists</td>
+            </tr>
+            <tr>
+                                <td id="T_0dd22946_38b6_11ea_8d6f_acde48001122row3_col0" class="data row3 col0" >plt</td>
+                        <td id="T_0dd22946_38b6_11ea_8d6f_acde48001122row3_col1" class="data row3 col1" >matplotlib.pyplot</td>
+                        <td id="T_0dd22946_38b6_11ea_8d6f_acde48001122row3_col2" class="data row3 col2" >Matplotlib's matlab-like plotting module</td>
+            </tr>
+            <tr>
+                                <td id="T_0dd22946_38b6_11ea_8d6f_acde48001122row4_col0" class="data row4 col0" >np</td>
+                        <td id="T_0dd22946_38b6_11ea_8d6f_acde48001122row4_col1" class="data row4 col1" >numpy</td>
+                        <td id="T_0dd22946_38b6_11ea_8d6f_acde48001122row4_col2" class="data row4 col2" >scientific computing with Python</td>
+            </tr>
+            <tr>
+                                <td id="T_0dd22946_38b6_11ea_8d6f_acde48001122row5_col0" class="data row5 col0" >pd</td>
+                        <td id="T_0dd22946_38b6_11ea_8d6f_acde48001122row5_col1" class="data row5 col1" >pandas</td>
+                        <td id="T_0dd22946_38b6_11ea_8d6f_acde48001122row5_col2" class="data row5 col2" >High performance data structures and tools</td>
+            </tr>
+            <tr>
+                                <td id="T_0dd22946_38b6_11ea_8d6f_acde48001122row6_col0" class="data row6 col0" >sns</td>
+                        <td id="T_0dd22946_38b6_11ea_8d6f_acde48001122row6_col1" class="data row6 col1" >seaborn</td>
+                        <td id="T_0dd22946_38b6_11ea_8d6f_acde48001122row6_col2" class="data row6 col2" >High-level data visualization library based on matplotlib</td>
+            </tr>
+    </tbody></table></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">collections</span>
+<span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+
+<span class="n">counter</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="c1">#df[&#39;Pclass&#39;])</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span><span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="c1"># Convert frequency to probability - divide each frequency value by total number of values</span>
+<span class="n">pmf</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">val</span> <span class="ow">in</span> <span class="n">counter</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">pmf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">val</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="mi">2</span><span class="p">))</span>
+    
+<span class="c1"># print(counter.keys(), pmf)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">counter</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">pmf</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;A Probability Mass Function&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/703ca61d3fe9697085f460d7acbf87ce1f2e953748422a1f377484607137836c.png" src="../../../_images/703ca61d3fe9697085f460d7acbf87ce1f2e953748422a1f377484607137836c.png" />
+</div>
+</div>
+<section id="expected-value-and-variance-of-pmfs">
+<h3>Expected Value and Variance of PMFs<a class="headerlink" href="#expected-value-and-variance-of-pmfs" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>We can use PMFs to calculate the expected values/outcomes/probability</p></li>
+<li><p><strong>the expected value of your discrete random value X is given by:</strong></p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ E(X) = \mu = \sum_i p(x_i)x_i\]</div>
+<ul class="simple">
+<li><p><strong>The variance is given by:</strong></p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ E((X-\mu)^2) = \sigma^2 = \sum_i p(x_i)(x_i-\mu)^2\]</div>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Class size</p></th>
+<th class="head"><p>Class count</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>15-19</p></td>
+<td><p>10</p></td>
+</tr>
+<tr class="row-odd"><td><p>20-24</p></td>
+<td><p>10</p></td>
+</tr>
+<tr class="row-even"><td><p>25-29</p></td>
+<td><p>18</p></td>
+</tr>
+<tr class="row-odd"><td><p>30-34</p></td>
+<td><p>6</p></td>
+</tr>
+<tr class="row-even"><td><p>35-39</p></td>
+<td><p>8</p></td>
+</tr>
+<tr class="row-odd"><td><p>40-44</p></td>
+<td><p>10</p></td>
+</tr>
+<tr class="row-even"><td><p>45-49</p></td>
+<td><p>5</p></td>
+</tr>
+<tr class="row-odd"><td><p>50-54</p></td>
+<td><p>3</p></td>
+</tr>
+<tr class="row-even"><td><p>55-59</p></td>
+<td><p>4</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">size_and_count</span> <span class="o">=</span> <span class="p">{</span><span class="mi">17</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">22</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">27</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">32</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">37</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">42</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">47</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">52</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">57</span><span class="p">:</span> <span class="mi">4</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># del size_and_count</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">collections</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">calc_pmf_expected_values</span><span class="p">(</span><span class="n">size_and_count</span><span class="p">,</span><span class="n">biased</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Calculate pmf from list or counter. If biased=True,</span>
+<span class="sd">    pmf is biased pmf which weights categories by # of observations.</span>
+<span class="sd">    </span>
+<span class="sd">    mu: E(X) = sum(prob(xi)*xi)</span>
+<span class="sd">    sigma: E((X-mu)**2) = sum(prob(xi)*(xi-mu)**2)</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        counter (list or Counter): counter/list of observations to use</span>
+<span class="sd">        biased (bool): Calculate biased pmf. Default is False.</span>
+<span class="sd">        </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: results include pmf, mu, classes, and counts.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Counter</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">size_and_count</span><span class="p">,</span><span class="n">Counter</span><span class="p">)</span><span class="o">==</span><span class="kc">False</span><span class="p">:</span>
+        <span class="n">size_and_count</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">size_and_count</span><span class="p">)</span>
+        
+    <span class="n">counter</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span><span class="n">size_and_count</span><span class="p">)</span>
+    <span class="n">sizes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">counter</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+    <span class="n">sum_class</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">counter</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    <span class="n">pmf</span> <span class="o">=</span> <span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="n">value</span><span class="o">/</span><span class="n">sum_class</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">counter</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+   
+    <span class="c1">## Biased by number of people reporting for that size</span>
+    <span class="k">if</span> <span class="n">biased</span><span class="p">:</span>
+        <span class="n">biased_pmf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">sizes</span><span class="p">,</span> <span class="n">pmf</span><span class="p">)</span>
+        <span class="n">biased_sum</span> <span class="o">=</span> <span class="n">biased_pmf</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="n">pmf</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">b</span><span class="o">/</span><span class="n">biased_sum</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">biased_pmf</span><span class="p">]</span>
+
+
+    <span class="c1">## GET MU</span>
+    <span class="n">mu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">pmf</span><span class="p">,</span><span class="n">sizes</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    
+
+    <span class="n">sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">pmf</span><span class="p">,[(</span><span class="n">xi</span><span class="o">-</span><span class="n">mu</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">xi</span> <span class="ow">in</span> <span class="n">sizes</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    
+    
+
+    <span class="k">return</span> <span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span>
+
+<span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="n">calc_pmf_expected_values</span><span class="p">(</span><span class="n">size_and_count</span><span class="p">)</span>
+<span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(32.49, 131.35989999999998)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mu_b</span><span class="p">,</span> <span class="n">sigma_b</span> <span class="o">=</span> <span class="n">calc_pmf_expected_values</span><span class="p">(</span><span class="n">size_and_count</span><span class="p">,</span><span class="n">biased</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">mu_b</span> <span class="p">,</span> <span class="n">sigma_b</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(36.577, 137.88994792900002)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="probability-density-function">
+<h2>Probability Density Function<a class="headerlink" href="#probability-density-function" title="Permalink to this heading">#</a></h2>
+<blockquote>
+<div><p>The PDF is the continuous analog to the PMF</p>
+</div></blockquote>
+<img src="https://raw.githubusercontent.com/jirvingphd/dsc-probability-density-function-online-ds-ft-100719/master/images/weather_NYC_21_red.png" width ="400">
+<img src="https://raw.githubusercontent.com/jirvingphd/fsds_100719_cohort_notes/master/Flashcards/Probability_Density_Function_web.png"><section id="expected-value-and-variance-of-pdfs">
+<h3>Expected Value and Variance of PDFs<a class="headerlink" href="#expected-value-and-variance-of-pdfs" title="Permalink to this heading">#</a></h3>
+<div class="math notranslate nohighlight">
+\[ E(X) = \mu = \int_{- \infty}^{+ \infty} p(x)x dx\]</div>
+<div class="math notranslate nohighlight">
+\[ E((X-\mu)^2) = \sigma^2  = \int_{- \infty}^{+ \infty} p(x)(x-\mu)^2 dx\]</div>
+<p>The main takeaway here is that you simply can’t use the same summation expression because <span class="math notranslate nohighlight">\(P(X=x_i) = 0\)</span> for any <span class="math notranslate nohighlight">\(x_i\)</span>.</p>
+<img src="https://raw.githubusercontent.com/jirvingphd/dsc-probability-density-function-online-ds-ft-100719/master/images/pdf2.jpg">
+<p>The formal mathematical representation for calculating an area under the curve is given by:</p>
+<div class="math notranslate nohighlight">
+\[ \large P(a \leq x \leq b) = \int_a^b f(x) dx \geq 0 \]</div>
+<blockquote>
+<div><p>To obtain a probability of observing a value in an interval <span class="math notranslate nohighlight">\([a,b]\)</span>, you can use an integral (which gives you the area under the curve) from a to b using your PDF <span class="math notranslate nohighlight">\(f(x)\)</span></p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+
+<span class="n">n</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">bins</span><span class="p">)</span>
+
+<span class="n">bins</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1. , 1.4, 1.8, 2.2, 2.6, 3. , 3.4, 3.8, 4.2, 4.6, 5. ])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">density</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+    
+    <span class="n">n</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">bins</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="c1"># Initialize numpy arrays with zeros to store interpolated values</span>
+    <span class="n">pdfx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+    <span class="n">pdfy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+
+    <span class="c1"># Interpolate through histogram bins </span>
+    <span class="c1"># identify middle point between two neighbouring bins, in terms of x and y coords</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">size</span><span class="p">):</span>
+        <span class="n">pdfx</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">bins</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">+</span><span class="n">bins</span><span class="p">[</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="mi">2</span>
+        <span class="n">pdfy</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">n</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+
+    <span class="c1"># plot the calculated curve</span>
+    <span class="k">return</span> <span class="n">pdfx</span><span class="p">,</span> <span class="n">pdfy</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">load_height_weight</span><span class="p">()</span><span class="c1">#pd.read_csv(&#39;weight-height.csv&#39;)</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Gender</th>
+      <th>Height</th>
+      <th>Weight</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>Male</td>
+      <td>73.847017</td>
+      <td>241.893563</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>Male</td>
+      <td>68.781904</td>
+      <td>162.310473</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Male</td>
+      <td>74.110105</td>
+      <td>212.740856</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Male</td>
+      <td>71.730978</td>
+      <td>220.042470</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Male</td>
+      <td>69.881796</td>
+      <td>206.349801</td>
+    </tr>
+    <tr>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <td>9995</td>
+      <td>Female</td>
+      <td>66.172652</td>
+      <td>136.777454</td>
+    </tr>
+    <tr>
+      <td>9996</td>
+      <td>Female</td>
+      <td>67.067155</td>
+      <td>170.867906</td>
+    </tr>
+    <tr>
+      <td>9997</td>
+      <td>Female</td>
+      <td>63.867992</td>
+      <td>128.475319</td>
+    </tr>
+    <tr>
+      <td>9998</td>
+      <td>Female</td>
+      <td>69.034243</td>
+      <td>163.852461</td>
+    </tr>
+    <tr>
+      <td>9999</td>
+      <td>Female</td>
+      <td>61.944246</td>
+      <td>113.649103</td>
+    </tr>
+  </tbody>
+</table>
+<p>10000 rows × 3 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">male_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Gender&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="s1">&#39;Male&#39;</span><span class="p">)</span>
+<span class="n">female_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Gender&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="s1">&#39;Female&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span><span class="n">male_df</span><span class="p">[</span><span class="s1">&#39;Height&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="o">=</span> <span class="n">density</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Males&#39;</span><span class="p">)</span>
+
+<span class="n">s</span> <span class="o">=</span><span class="n">female_df</span><span class="p">[</span><span class="s1">&#39;Height&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="o">=</span> <span class="n">density</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Females&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x1a1fb449b0&gt;]
+</pre></div>
+</div>
+<img alt="../../../_images/76d783517c8d62a1a2c0d7c661ac8a4160618a2cd2ba896680efcf6da496c350.png" src="../../../_images/76d783517c8d62a1a2c0d7c661ac8a4160618a2cd2ba896680efcf6da496c350.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import matplotlib.pyplot as plt</span>
+<span class="c1"># plt.style.use(&#39;ggplot&#39;)</span>
+<span class="c1"># import pandas as pd </span>
+<span class="c1"># # url=&#39;https://raw.githubusercontent.com/jirvingphd/dsc-probability-density-function-online-ds-ft-100719/master/weight-height.csv&#39;</span>
+<span class="c1"># # df = pd.read_csv(url)</span>
+<span class="c1"># # display(df.head())</span>
+<span class="c1"># # df.describe()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">kde_boxplot</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">stats</span>
+    <span class="c1"># Create two vertical subplots sharing 15% and 85% of plot space</span>
+    <span class="c1"># sharex allows sharing of axes i.e. building multiple plots on same axes</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                  <span class="n">gridspec_kw</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;height_ratios&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mf">.15</span><span class="p">,</span> <span class="mf">.85</span><span class="p">)},</span>
+                                  <span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span> <span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">distplot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> 
+                <span class="n">hist</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">hist_kws</span><span class="o">=</span><span class="p">{</span>
+                                    <span class="s2">&quot;linewidth&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                                    <span class="s2">&quot;edgecolor&quot;</span> <span class="p">:</span><span class="s1">&#39;red&#39;</span><span class="p">,</span>
+                                    <span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="mf">0.4</span><span class="p">,</span> 
+                                    <span class="s2">&quot;color&quot;</span><span class="p">:</span>  <span class="s2">&quot;w&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Histogram&quot;</span><span class="p">,</span>
+                                    <span class="p">},</span>
+                <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">kde_kws</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;linewidth&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                                    <span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="s2">&quot;blue&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="mf">0.7</span><span class="p">,</span>
+                                    <span class="s1">&#39;label&#39;</span><span class="p">:</span><span class="s1">&#39;Kernel Density Estimation Plot&#39;</span>
+                                    <span class="p">},</span>
+                <span class="n">fit</span><span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="p">,</span> <span class="n">fit_kws</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;color&#39;</span> <span class="p">:</span> <span class="s1">&#39;green&#39;</span><span class="p">,</span>
+                                            <span class="s1">&#39;label&#39;</span> <span class="p">:</span> <span class="s1">&#39;parametric fit&#39;</span><span class="p">,</span>
+                                            <span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="mf">0.7</span><span class="p">,</span>
+                                            <span class="s1">&#39;linewidth&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">},</span>
+                <span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">)</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Density Estimations&#39;</span><span class="p">)</span>
+
+    <span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">ax</span><span class="p">,</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;red&#39;</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Box and Whiskers Plot&#39;</span><span class="p">)</span>
+    <span class="c1"># ax2.set(ylim=(0, .08))</span>
+    <span class="c1"># plt.ylim(0,0.11)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+
+<span class="n">kde_boxplot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Height&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/6039bc180a082d5ee5ee2aa424046313b22d70fdac74715bb0ce40f47ef3ba79.png" src="../../../_images/6039bc180a082d5ee5ee2aa424046313b22d70fdac74715bb0ce40f47ef3ba79.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># dfh=fs.datasets.load_mod1_proj()</span>
+<span class="c1"># dfh.dropna(subset=[&#39;price&#39;],inplace=True)</span>
+<span class="c1"># kde_boxplot(np.log(dfh[&#39;price&#39;]))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="density-estimation-and-plotting">
+<h3>Density Estimation and Plotting<a class="headerlink" href="#density-estimation-and-plotting" title="Permalink to this heading">#</a></h3>
+<p><strong>Kernel density estimation</strong> or KDE is a common non-parametric estimation technique to plot a curve (the kernel) at every individual data point. These curves are then added to plot a smooth density estimation. The kernel most often used is a Gaussian (which produces a bell curve at each data point). Other kernels can be used in special cases when the underlying distribution is not normal.</p>
+<p>In the image above, the histogram (left) and kernel density estimate (right) are constructed using the same data.</p>
+</section>
+<section id="cumulative-distribution-function">
+<h3>Cumulative Distribution Function<a class="headerlink" href="#cumulative-distribution-function" title="Permalink to this heading">#</a></h3>
+<img src="https://raw.githubusercontent.com/jirvingphd/fsds_100719_cohort_notes/master/Flashcards/Cumulative_Distribution_Function_web.png">
+<div class="math notranslate nohighlight">
+\[\large F(x) = P(X \leq x)\]</div>
+<p>To calculate the <span class="math notranslate nohighlight">\(CDF(x)\)</span> for any value of <span class="math notranslate nohighlight">\(x\)</span>, we compute the proportion of values in the distribution less than or equal to <span class="math notranslate nohighlight">\(x\)</span> as follows:</p>
+<blockquote>
+<div><p>The Cumulative Distribution Function, CDF, gives the probability that the variable <span class="math notranslate nohighlight">\(X\)</span> is less than or equal to a certain possible value <span class="math notranslate nohighlight">\(x\)</span>.</p>
+</div></blockquote>
+<img src="https://raw.githubusercontent.com/jirvingphd/dsc-cumulative-distribution-function-online-ds-ft-100719/master/images/cdfs_dice_nyc_2.png"><section id="kernel-density-estimation">
+<h4>Kernel Density Estimation<a class="headerlink" href="#kernel-density-estimation" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Non-parametric estimation to plot a curve at every individual data point (kernels)</p></li>
+<li><p>Added together to plot smooth density estimation ( most common kernel is Gaussian)</p></li>
+<li><p>Below example histogram and kde are from the same data
+<img src="https://www.dropbox.com/s/vrgcphxmry5148l/Comparison_of_1D_histogram_and_KDE.png?raw=1" width=400></p></li>
+</ul>
+</section>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="types-of-distributions">
+<h1>Types of Distributions<a class="headerlink" href="#types-of-distributions" title="Permalink to this heading">#</a></h1>
+<img src="https://raw.githubusercontent.com/jirvingphd/dsc-stat-distributions-use-cases-online-ds-ft-100719/master/images/dists.png" width=700><section id="distributions-discrete-vs-continuous">
+<h2>Distributions: Discrete vs Continuous<a class="headerlink" href="#distributions-discrete-vs-continuous" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Continuous vs Discrete Distributions &amp; their probability functions</strong>
+<img src="https://www.dropbox.com/s/7qooiy76s3jvcr1/pmf_pdf.png?raw=1" width=400>
+<img src="https://www.dropbox.com/s/ovrzewnefk2qc97/exp-var.png?raw=1" width=400></p></li>
+<li><p>Discrete:</p>
+<ul>
+<li><p>Binomial</p></li>
+<li><p>Geometric</p></li>
+<li><p>Poisson</p></li>
+</ul>
+</li>
+<li><p>Continuous:</p>
+<ul>
+<li><p>Uniform</p></li>
+<li><p>Normal</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="distribution-descriptions-in-words">
+<h2>Distribution descriptions  in words<a class="headerlink" href="#distribution-descriptions-in-words" title="Permalink to this heading">#</a></h2>
+<p><strong><em>Binomial Distribution</em></strong>: “I flip a fair coin 5 times. What are the chances that I get heads 0 times? 1 time? 2 times? Etc…”</p>
+<!---
+**_Negative Binomial Distribution_**: I flip a fair coin 5 times. What are the chances it takes me two flips to get heads twice? How about 3 flips to get heads twice? 4 Flips? Etc...--->
+<p>The <strong><em>Exponential Distribution</em></strong> describes the probability distribution of the amount of time it may take before an event occurs.  In a way, it solves the inverse of the problem solves by the Poisson Distribution.</p>
+<p>The <strong><em>Poisson Distribution</em></strong> lets us ask how likely any given number of events are over a set interval of time.</p>
+<!---
+The **_Exponential Distribution_** lets us ask how likely the _length of an interval of time_ is before an event occurs exactly once. 
+
+Another way to think of the Exponential Distribution is as the continuous analogue of the **_Geometric Distribution_**
+---></section>
+<section id="discrete-distributions">
+<h2>Discrete Distributions<a class="headerlink" href="#discrete-distributions" title="Permalink to this heading">#</a></h2>
+<section id="bernoulli-trials-and-binomial-distribution">
+<h3>Bernoulli Trials and Binomial Distribution<a class="headerlink" href="#bernoulli-trials-and-binomial-distribution" title="Permalink to this heading">#</a></h3>
+</section>
+</section>
+<section id="experiment-vocab">
+<h2>Experiment  Vocab<a class="headerlink" href="#experiment-vocab" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Experiments</p></li>
+<li><p>Trials: repeated event</p></li>
+<li><p>Outcomes: whats happens each trial</p></li>
+</ul>
+<section id="bernoulli-distribution-trials">
+<h3>Bernoulli Distribution/Trials<a class="headerlink" href="#bernoulli-distribution-trials" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Probability of <span class="math notranslate nohighlight">\(x\)</span> successes in <span class="math notranslate nohighlight">\(n\)</span> trials for Bernoulli/binomial variable (binary outcome)</p>
+<ul>
+<li><p>Described by only one parameter <span class="math notranslate nohighlight">\(p\)</span></p></li>
+</ul>
+</li>
+<li><p>For binomial <em>trial</em>:
+$<span class="math notranslate nohighlight">\(Y = Bernoulli(p)\)</span><span class="math notranslate nohighlight">\( and \)</span>p=P(Y=1)=0.8$</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># def calc_pmf_from_prob(p_success=0.8,success=1,</span>
+<span class="c1">#                       calc_pmf_kws={}):</span>
+    
+<span class="c1">#     num_success = int(100*p_success)</span>
+<span class="c1">#     num_failure = 100-num_success</span>
+<span class="c1">#     x = np.zeros(num_success)</span>
+<span class="c1">#     x = np.append(x,[success for i in range(num_failure)])</span>
+    
+<span class="c1">#     pmf_d = calc_pmf_dict(x,**calc_pmf_kws)</span>
+<span class="c1">#     pmf_d[&#39;data&#39;]=x</span>
+<span class="c1">#     return pmf_d</span>
+
+<span class="c1"># calc_pmf_from_prob(p_success=0.5)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="binomial-distributions">
+<h3>Binomial Distributions<a class="headerlink" href="#binomial-distributions" title="Permalink to this heading">#</a></h3>
+<p><strong><em>Binomial Distribution</em></strong>: “I flip a fair coin 5 times. What are the chances that I get heads 0 times? 1 time? 2 times? Etc…”</p>
+<ul class="simple">
+<li><p>For binomial <em>distribution</em>, events are independent.
+$<span class="math notranslate nohighlight">\( P(Y=k)= \binom{n}{k} p^k(1-p)^{(n-k)}\)</span>$</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">factorial</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">combination</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">k</span><span class="p">):</span>
+    <span class="n">combin</span> <span class="o">=</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="n">k</span><span class="p">)</span><span class="o">*</span><span class="n">factorial</span><span class="p">(</span><span class="n">k</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">combin</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">permutation</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">k</span><span class="p">):</span>
+    <span class="n">permut</span> <span class="o">=</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">/</span><span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="n">k</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">permut</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">binomial_P_k_success</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">p</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates P(x=k) for a binomial distrubtions.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        n (int): number total options</span>
+<span class="sd">        k (int): number to select</span>
+<span class="sd">        p (int): prob of success for binary outcome</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        pk(float): prob that x=k</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">combs</span> <span class="o">=</span> <span class="n">combination</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">k</span><span class="p">)</span>
+    <span class="n">pk</span> <span class="o">=</span> <span class="n">combs</span><span class="o">*</span><span class="p">(</span><span class="n">p</span><span class="o">**</span><span class="n">k</span><span class="p">)</span><span class="o">*</span><span class="p">((</span><span class="mi">1</span><span class="o">-</span><span class="n">p</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="n">k</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">pk</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Flip a coin 10 times, what the chacnce of getting 7 heads?</span>
+<span class="n">binomial_P_k_success</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mf">0.5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.1171875
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<!---### Geometric Distribution
+- Geometric = Repeated trials, but examines the probability that the first success will occur on trial n.---></section>
+<section id="poisson">
+<h3>Poisson<a class="headerlink" href="#poisson" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Represents the probability of <span class="math notranslate nohighlight">\(n\)</span> events in a given time period when the rate of occurrence is constant</p></li>
+</ul>
+<section id="poisson-probability-distribution-p-x-frac-lambda-xe-lambda-x">
+<h4>Poisson Probability Distribution: $<span class="math notranslate nohighlight">\(p(x) = \frac{\lambda^xe^{-\lambda}}{x!}\)</span>$<a class="headerlink" href="#poisson-probability-distribution-p-x-frac-lambda-xe-lambda-x" title="Permalink to this heading">#</a></h4>
+<p>Also note that lambda <span class="math notranslate nohighlight">\(\lambda\)</span> is the now the average number of successes that we anticipate in a given interval: the probability <span class="math notranslate nohighlight">\(p\)</span> of success, times the number of intervals <span class="math notranslate nohighlight">\(n\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">poisson_probability</span><span class="p">(</span><span class="n">lambd</span><span class="p">,</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">(</span><span class="n">lambd</span><span class="o">**</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">lambd</span><span class="p">))</span> <span class="o">/</span> <span class="n">factorial</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Question 1
+A fireman fights, on average, 4 fires per month. What is the probability that a fireman is called to two different fires this week?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## lambd = 4/4</span>
+
+<span class="n">poisson_probability</span><span class="p">(</span><span class="n">lambd</span><span class="p">,</span><span class="mi">2</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.18393972058572117
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="uniform">
+<h4>Uniform<a class="headerlink" href="#uniform" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p>All outcomes are equally likely.</p></li>
+<li><p>BOTH continuous AND discrete</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="exponential-distribution">
+<h2>Exponential Distribution<a class="headerlink" href="#exponential-distribution" title="Permalink to this heading">#</a></h2>
+<p>The <strong><em>Exponential Distribution</em></strong> describes the probability distribution of the amount of time it may take before an event occurs.  In a way, it solves the inverse of the problem solves by the Poisson Distribution.</p>
+<div class="math notranslate nohighlight">
+\[\lambda = \frac{1}{\mu}\]</div>
+<p>Once we know the decay rate, we can use the <strong>Probability Density Function</strong> to tell us the exact point probability for any length <span class="math notranslate nohighlight">\(x\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[PDF(x) = \lambda e^{-\lambda x}\]</div>
+<p>The <strong>Probability Density Function</strong> allows us to answer questions such as “What is the probability that it takes <em>exactly</em> 4 minutes to ring up this customer?”</p>
+<p>Since we are talking about a continuously-valued function, we’ll also often want to make use of the <strong>Cumulative Distribution Function</strong>.  This allows us to answer questions such as “what is the probability that it will take less than 4 minutes to ring up this customer?”</p>
+<div class="math notranslate nohighlight">
+\[CDF(x) = 1 - e^{-\lambda x}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">exp_pdf</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">decay_rate</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">mu</span>
+    <span class="n">pdf</span><span class="o">=</span> <span class="n">decay_rate</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">decay_rate</span><span class="o">*</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pdf</span>
+    
+    
+<span class="k">def</span><span class="w"> </span><span class="nf">exp_cdf</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">decay_rate</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">mu</span>
+    <span class="k">return</span> <span class="mi">1</span><span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">decay_rate</span><span class="o">*</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Steven is picking up a friend at the airport and their plane is late. The late flight is 22 minutes behind schedule. What is the probability that Steven will wait 30 minutes or less for his friend’s flight to land?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">exp_cdf</span><span class="p">(</span><span class="mi">22</span><span class="p">,</span><span class="mi">30</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.7442708400868994
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="saved-for-next-class">
+<h1>SAVED FOR NEXT CLASS<a class="headerlink" href="#saved-for-next-class" title="Permalink to this heading">#</a></h1>
+<section id="continuous-distributions">
+<h2>Continuous Distributions<a class="headerlink" href="#continuous-distributions" title="Permalink to this heading">#</a></h2>
+<section id="normal-distribution">
+<h3>Normal Distribution<a class="headerlink" href="#normal-distribution" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Key characteristics of the normal distribution:</p>
+<ul>
+<li><p>Normal distributions are symmetric around their mean.</p></li>
+<li><p>mean = median = and mode of a normal</p></li>
+<li><p>area under curve is equal to 1.0</p></li>
+<li><p>denser in the center and less dense in the tails</p></li>
+<li><p>defined by two parameters, the mean (<span class="math notranslate nohighlight">\(\mu\)</span>) and the standard deviation (<span class="math notranslate nohighlight">\(\sigma\)</span>).</p></li>
+</ul>
+</li>
+</ul>
+<center><img src="https://raw.githubusercontent.com/jirvingphd/dsc-normal-distribution-online-ds-ft-100719/master/images/normal_sd_new.png" width=600></center>
+<ul class="simple">
+<li><p>Around 68% of the area of a normal distribution is within <em>one standard deviation</em> of the mean
+(<span class="math notranslate nohighlight">\((\mu-\sigma)\)</span> to <span class="math notranslate nohighlight">\((\mu + \sigma)\)</span>)</p></li>
+<li><p>Approximately 95% of the area of a normal distribution is within two standard deviations of the mean (<span class="math notranslate nohighlight">\((\mu-2\sigma)\)</span> to <span class="math notranslate nohighlight">\((\mu + 2\sigma)\)</span>).</p></li>
+</ul>
+<section id="normal-density-function">
+<h4>Normal Density Function<a class="headerlink" href="#normal-density-function" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Density of normal distribution for given value of x</p></li>
+<li><p>Can describe from its center and spread
+$<span class="math notranslate nohighlight">\(y = \frac{1}{\sigma \sqrt{2}{2\pi}}e^{\frac{{(x -\mu)}{^2}}{2 \sigma ^{2}}}\)</span>$</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mu\)</span> = mean</p></li>
+<li><p><span class="math notranslate nohighlight">\(\sigma\)</span> = standard deviation</p></li>
+<li><p><span class="math notranslate nohighlight">\(\pi \approx 3.14159\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(e \approx 2.71828\)</span></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+
+<span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.1</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">distplot</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="standardized-normal-distribution">
+<h3>Standardized Normal Distribution<a class="headerlink" href="#standardized-normal-distribution" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="z-score">
+<h3>Z-score<a class="headerlink" href="#z-score" title="Permalink to this heading">#</a></h3>
+<p>The standard score (more commonly referred to as a <span class="math notranslate nohighlight">\(z\)</span>-score) is a very useful statistic because it allows us to:</p>
+<ol class="arabic simple">
+<li><p>Calculate the probability of a certain score occurring within a given normal distribution and</p></li>
+<li><p>Compare two scores that are from different normal distributions.</p></li>
+</ol>
+<p>Any normal distribution can be converted to a standard normal distribution and vice versa using this
+equation:</p>
+<div class="math notranslate nohighlight">
+\[\Large z=\dfrac{x-\mu}{\sigma}\]</div>
+<ul class="simple">
+<li><p>where <span class="math notranslate nohighlight">\(x\)</span> is an individual data point</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mu\)</span> is the mean</p></li>
+<li><p><span class="math notranslate nohighlight">\(\sigma\)</span> is the standard deviation</p></li>
+</ul>
+<center><img src="https://raw.githubusercontent.com/jirvingphd/dsc-standard-normal-distribution-online-ds-ft-100719/master/images/snorm.png" width=500></center>
+<center><img src="https://raw.githubusercontent.com/jirvingphd/dsc-standard-normal-distribution-online-ds-ft-100719/master/images/cdf_stnormal.png" width=500></center><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+
+<span class="n">fig</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">mean1</span><span class="p">,</span> <span class="n">sd1</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">3</span> <span class="c1"># dist 1 </span>
+<span class="n">mean2</span><span class="p">,</span> <span class="n">sd2</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">2</span> <span class="c1"># dist 2 </span>
+<span class="n">d1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">mean1</span><span class="p">,</span> <span class="n">sd1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">d2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">mean2</span><span class="p">,</span> <span class="n">sd2</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Raw&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">distplot</span><span class="p">(</span><span class="n">d1</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">distplot</span><span class="p">(</span><span class="n">d2</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Standardized&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">distplot</span><span class="p">([(</span><span class="n">x</span> <span class="o">-</span> <span class="n">d1</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span><span class="o">/</span><span class="n">d1</span><span class="o">.</span><span class="n">std</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">d1</span><span class="p">],</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">distplot</span><span class="p">([(</span><span class="n">x</span> <span class="o">-</span> <span class="n">d2</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span><span class="o">/</span><span class="n">d2</span><span class="o">.</span><span class="n">std</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">d2</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="distribution-characteristics">
+<h2>Distribution Characteristics<a class="headerlink" href="#distribution-characteristics" title="Permalink to this heading">#</a></h2>
+<section id="skewness">
+<h3>Skewness<a class="headerlink" href="#skewness" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Symmetrical distribution: skewness = 0</p></li>
+<li><p><strong>Fisher-Pearson Coefficient of skewess:</strong>
+$<span class="math notranslate nohighlight">\(∑ N_{i=1} \frac{{(Yi−\bar{Y})}^3}{N} / {\sigma^3}\)</span>$</p></li>
+<li><p>Rules of thumb</p>
+<ul>
+<li><p>Symmetrical-ish: -0.5 to +.05</p></li>
+<li><p>Moderate Skew:</p>
+<ul>
+<li><p>Negative skew: -1 to -0.5</p></li>
+<li><p>Positive skew: +0.5 to +1</p></li>
+</ul>
+</li>
+<li><p>Highly skewed:</p>
+<ul>
+<li><p>Less than -1</p></li>
+<li><p>Greater than +1</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<img src="https://www.dropbox.com/s/mqr3kux0caa64nk/skew1.jpeg?raw=1">
+</section>
+<section id="kurtosis">
+<h3>Kurtosis<a class="headerlink" href="#kurtosis" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Lengths of tails of distribution to describe extreme values (outliers)</p></li>
+<li><p>Univariate kurtosis:
+$<span class="math notranslate nohighlight">\(\Sigma N_{i=1} \frac{{(Yi−\bar{Y})}^4}{N} / {\sigma^4}\)</span>$</p></li>
+<li><p><strong>Mesokurtic:</strong></p>
+<ul>
+<li><p>Kurtosis similar to standard normal distribution</p></li>
+</ul>
+</li>
+<li><p><strong>Leptokurtic (Kurtosis &gt;3)</strong></p>
+<ul>
+<li><p>Tails are fatter, peak is higher sharper</p></li>
+<li><p>Data are heavy-tailed or many outliers</p></li>
+</ul>
+</li>
+<li><p><strong>Platykurtic: (Kurtosis &lt; 3)</strong></p>
+<ul>
+<li><p>Shorter peak, tails are thinner than the normal distribution.</p></li>
+<li><p>Data are light-tailed or lack of outliers vs normal dist
+<img src="https://www.dropbox.com/s/5ynsy7vkb196ilb/kurt2.jpg?raw=1" width=300></p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="section-18-pt2l-statistical-testing">
+<h1>🗓Section 18 Pt2L Statistical Testing<a class="headerlink" href="#section-18-pt2l-statistical-testing" title="Permalink to this heading">#</a></h1>
+<section id="statistical-testing-with-z-scores-and-p-values">
+<h2>Statistical Testing with Z-scores and p-values<a class="headerlink" href="#statistical-testing-with-z-scores-and-p-values" title="Permalink to this heading">#</a></h2>
+<section id="population-vs-sample">
+<h3>Population vs Sample<a class="headerlink" href="#population-vs-sample" title="Permalink to this heading">#</a></h3>
+<img src="https://raw.githubusercontent.com/jirvingphd/dsc-z-score-p-value-online-ds-ft-100719/master/images/sample.png" width=400>
+<blockquote>
+<div><p>A <strong>population</strong> is the collection of <strong>all the items of interest in a study</strong>. The numbers you obtain when using a population are called <strong>parameters</strong>.</p>
+</div></blockquote>
+<blockquote>
+<div><p>A <strong>sample</strong> is a <strong>subset of the population</strong>. The numbers you obtain when working with a sample are called <strong>statistics</strong>.</p>
+</div></blockquote>
+<img src="https://raw.githubusercontent.com/jirvingphd/dsc-z-score-p-value-online-ds-ft-100719/master/images/rep_sample.png" width=600></section>
+<section id="one-sample-z-test">
+<h3>One-Sample <span class="math notranslate nohighlight">\(z\)</span>-test<a class="headerlink" href="#one-sample-z-test" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p><strong>The one-sample <span class="math notranslate nohighlight">\(z\)</span>-test is used only for tests related to the sample mean.</strong></p>
+</div></blockquote>
+<img src="https://raw.githubusercontent.com/jirvingphd/dsc-z-score-p-value-online-ds-ft-100719/master/images/cumprob2.png" width=400><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Z-table in Python </span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">stats</span>
+
+<span class="c1"># Probabilities up reto z-score of 1.5</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="mf">1.5</span><span class="p">))</span>
+
+<span class="c1"># Probabilities greater than z-score of 1.34</span>
+<span class="nb">print</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="mf">1.34</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9331927987311419
+0.09012267246445238
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Phase_2/topic_12_statistical_distributions/Instructor Notebooks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Section 18- Pt2: Statistical Distributions</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#questions">Questions:</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#probability-functions-pmf-vs-pdf-vs-cdf">Probability Functions: PMF vs PDF vs CDF</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#probability-mass-function">Probability Mass Function</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expected-value-and-variance-of-pmfs">Expected Value and Variance of PMFs</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#probability-density-function">Probability Density Function</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expected-value-and-variance-of-pdfs">Expected Value and Variance of PDFs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#density-estimation-and-plotting">Density Estimation and Plotting</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cumulative-distribution-function">Cumulative Distribution Function</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#kernel-density-estimation">Kernel Density Estimation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-distributions">Types of Distributions</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distributions-discrete-vs-continuous">Distributions: Discrete vs Continuous</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribution-descriptions-in-words">Distribution descriptions  in words</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#discrete-distributions">Discrete Distributions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bernoulli-trials-and-binomial-distribution">Bernoulli Trials and Binomial Distribution</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#experiment-vocab">Experiment  Vocab</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bernoulli-distribution-trials">Bernoulli Distribution/Trials</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#binomial-distributions">Binomial Distributions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#poisson">Poisson</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#poisson-probability-distribution-p-x-frac-lambda-xe-lambda-x">Poisson Probability Distribution: $<span class="math notranslate nohighlight">\(p(x) = \frac{\lambda^xe^{-\lambda}}{x!}\)</span>$</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#uniform">Uniform</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exponential-distribution">Exponential Distribution</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#saved-for-next-class">SAVED FOR NEXT CLASS</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#continuous-distributions">Continuous Distributions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#normal-distribution">Normal Distribution</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#normal-density-function">Normal Density Function</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standardized-normal-distribution">Standardized Normal Distribution</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#z-score">Z-score</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribution-characteristics">Distribution Characteristics</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skewness">Skewness</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kurtosis">Kurtosis</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#section-18-pt2l-statistical-testing">🗓Section 18 Pt2L Statistical Testing</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-testing-with-z-scores-and-p-values">Statistical Testing with Z-scores and p-values</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#population-vs-sample">Population vs Sample</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#one-sample-z-test">One-Sample <span class="math notranslate nohighlight">\(z\)</span>-test</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By James Irving, PhD
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

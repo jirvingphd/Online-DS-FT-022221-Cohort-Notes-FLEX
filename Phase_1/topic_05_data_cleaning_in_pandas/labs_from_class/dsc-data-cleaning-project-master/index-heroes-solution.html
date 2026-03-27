@@ -1,0 +1,1996 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Project - Data Cleaning &#8212; Data Science Curriculum</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/clipboard.min.js"></script>
+    <script src="../../../../_static/copybutton.js"></script>
+    <script src="../../../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Phase_1/topic_05_data_cleaning_in_pandas/labs_from_class/dsc-data-cleaning-project-master/index-heroes-solution';</script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../_static/flatironschool_banner.jpg" class="logo__image only-light" alt="Data Science Curriculum - Home"/>
+    <script>document.write(`<img src="../../../../_static/flatironschool_banner.jpg" class="logo__image only-dark" alt="Data Science Curriculum - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../intro.html">
+                    Data Science Curriculum
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 1 - Python &amp; Data Fundamentals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_01_getting_started/topic_01_getting_started.html">Topic 1: Getting Started with Data Science</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_02_bash_git/topic_02_bash_and_git.html">Topic 02:  Bash and Git</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_03_control_flow_functions/topic_03_control_flow_and_functions.html">Topic 03: Control Flow, Functions, and Statistics</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_04_python_libraries/topic_04_intro_to_libraries_numpy_SG.html">Topic 04-Part 1: Python Libraries &amp; NumPy</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_04_python_libraries/topic_04_pt-2_brief_intro_to_pandas-SG.html">Topic 04-Part 2: Brief Intro to Pandas with Doctor Who</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../topic_05_Data_Cleaning_in_Pandas.html">Topic 05: Data Cleaning in Pandas</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_06_data_visualization/topic_06_visualizations_heroes_project_SG.html">Topic 06:  Data Visualizations</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_07_SQL_and_relational_databases/topic_07_SQL_and_relational_databases_SG.html">TOPIC 07: SQL DATABASES</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_08_noSQL_databases/topic_08_mongodb-SG.html">Topic 08: NoSQL Databases</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_09_json_and_apis/topic_09_json-api-SG.html">Topic 09: Using APIs and JSON Data</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_10_webscraping/topic_10_SG_HTML_CSS_web_scraping.html">Topic 10: HTML, CSS, &amp; Web Scraping</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 2 - Statistics &amp; Regression</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_11_probability_and_combinatorics/topic_11_playlist_probabilities-SG.html">Topic 11 - Intro to Combinatorics &amp; Probability</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_12_statistical_distributions/topic-12-distributions-with-movies-sg.html">Exploring Distributions with Movies Data</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_13_central_limit_theorem/topic_13_central_limit_theorem_SG.html">Topic 13: Central Limit Theorem</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_14_hypothesis_testing/topic_14_hypothesis_testing-SG.html">Topic 14: Hypothesis Testing -  T-Tests</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_15_ANOVA/topic_15_ANOVA_with_neuro_data-SG.html">Topic 15: ANOVAs &amp; Statistical Power with  Neuro Data</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_16_AB_testing/topic_16_AB_testing_with_movies-SG.html">Topic 16: Practicing AB Testing with Movies</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_17_bayesian_statistics/topic_17_bayesian_statistics-SG.html">Topic 17: Bayesian Statistics</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_18_linear_regression/topic_18_intro_to_linear_regression_SG.html">Topic 18: Intro to Linear Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_19_part1_multiple_regression/topic_19_Multiple_Regression_v2-SG.html">Topic 19: Multiple Linear Regression</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_19_part2_model_validation/topic_19_part_2_Multiple_Regression_v2-SG.html">Topic 19 Part 2: Feature Selection &amp; Model Validation</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_20_extensions_linear_models/topic_20_extensions_to_linear_models_SG.html">Topic 20: Extensions to Linear Models</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 3 - Machine Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_21_OOP/topic_21_OOP_playing_cards_SG.html">Topic 21: Object-Oriented Programming</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_22_linear_algebra/topic_22_linear_algebra_SG.html">Topic 22: Linear Algebra</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_23_calculus_gradient_descent/topic_23_gradient_descent_SG.html">Topic 23: Cost Functions and Gradient Descent</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_24_regularization/topic_24_Regularization_Ridge_Lasso_v2_SG.html">Topic 24: Feature Selection &amp; Regularization (Ridge and Lasso Regression)</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_25_logistic_regression/topic_25_pt1_LogisticRegression_titanic-v2-SG.html">Topic 25-Pt 1: Intro to Logistic Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_25_logistic_regression/topic_25_pt2_LogisticRegression_titanic-v2-SG.html">Topic 25-Part 2: Evaluating Classifiers, Dealing with Class Imbalance, and <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code></a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_27_KNN/Topic_27_KNN_with_pipelines_with_lab_v3_SG.html">Topic 27: K-Nearest Neighbors<br/> +Topic 32: Pipelines</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_29_decision_trees/topic_29_decision_trees_v2_titanic-SG.html">Topic 29: Decision Trees</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_30_ensemble_methods/topic_30_ensemble_methods-SG.html">Topic 30: Ensemble Methods</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_31_support_vector_machines/topic_31_SupportVectorMachines_SG.html">Topic 31: Support Vector Machines</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 4 - Advanced ML &amp; Time Series</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_4/topic_33_pca/topic_33_PCA_SG.html">Topic 33: Principal Component Analysis</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_4/topic_34_clustering/topic_34_Kmeans_clustering_v3_SG.html">Topic 34: Clustering</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_4/topic_35-36_using_databricks_for_pyspark/using_databricks_for_pyspark.html">How to Use Databricks for PySpark Canvas Material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_4/topic_36_recommendation_systems/topic_36_Recommendation_Systems_with_Surprise.html">Topic 36: Recommendation Systems</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_4/topic_37_intro_to_time_series/topic_37_intro_to_time_series_crime_v3-SG.html">Topic 37: Intro to Time Series</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_4/topic_38_time_series_models/topic_38-time_series_models_v3_SG.html">Topic 38: Time Series Models</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_4/topic_39_NLP/topic_39_NLP_finding_trump_v3_SG.html">Topic 39: Natural Language Processing + Topic 28: Bayesian Classification</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_4/topic_40-41_neural_networks/topic_40-41_Artificial_Neural_Networks_v1_SG.html">Topic 40-41: Artificial Neural Networks</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_4/topic_42_tuning_neural_networks/topic_42_tuning_ANNs_with_deep_NLP_v1_SG.html">Topic 42 - Tuning Neural Networks + Deep NLP</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_4/topic_43_AWS/topic_43_operationalizing_code_AWS_SG.html">Topic 43: Operationalizing Code &amp; AWS</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 5 - Capstone &amp; Bonus Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_5/Capstone_Kickoff.html">Capstone Kickoff!</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_5/APIs/working_with_apis.html">Working with APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_5/developing_app_functions/developing-streamlit-app-functions_SG.html">Developing Streamlit App Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_5/tableau/tableau_fundamentals_2021-SG.html">Tableau Fundamentals</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_5/Bonus%20Notebooks/plotly_visuals.html">Plotly Question</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/master?urlpath=tree/Phase_1/topic_05_data_cleaning_in_pandas/labs_from_class/dsc-data-cleaning-project-master/index-heroes-solution.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/blob/master/Phase_1/topic_05_data_cleaning_in_pandas/labs_from_class/dsc-data-cleaning-project-master/index-heroes-solution.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/issues/new?title=Issue%20on%20page%20%2FPhase_1/topic_05_data_cleaning_in_pandas/labs_from_class/dsc-data-cleaning-project-master/index-heroes-solution.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../_sources/Phase_1/topic_05_data_cleaning_in_pandas/labs_from_class/dsc-data-cleaning-project-master/index-heroes-solution.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Project - Data Cleaning</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objectives">Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-dataset">The dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-started">Getting Started</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#familiarize-yourself-with-the-dataset">Familiarize yourself with the dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dealing-with-missing-values">Dealing with missing values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#joining-grouping-and-aggregating">Joining, Grouping, and Aggregating</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#some-initial-investigation">Some Initial Investigation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sample-question-most-common-powers">Sample Question: Most Common Powers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#your-own-investigation">Your Own Investigation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="project-data-cleaning">
+<h1>Project - Data Cleaning<a class="headerlink" href="#project-data-cleaning" title="Permalink to this heading">#</a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
+<p>In this lab, we’ll make use of everything we’ve learned about pandas, data cleaning, and exploratory data analysis. In order to complete this lab, you’ll have to import, clean, combine, reshape, and visualize data to answer questions provided, as well as your own questions!</p>
+</section>
+<section id="objectives">
+<h2>Objectives<a class="headerlink" href="#objectives" title="Permalink to this heading">#</a></h2>
+<p>You will be able to:</p>
+<ul class="simple">
+<li><p>Use different types of joins to merge DataFrames</p></li>
+<li><p>Identify missing values in a dataframe using built-in methods</p></li>
+<li><p>Evaluate and execute the best strategy for dealing with missing, duplicate, and erroneous values for a given dataset</p></li>
+<li><p>Inspect data for duplicates or extraneous values and remove them</p></li>
+</ul>
+</section>
+<section id="the-dataset">
+<h2>The dataset<a class="headerlink" href="#the-dataset" title="Permalink to this heading">#</a></h2>
+<p>In this lab, we’ll work with the comprehensive <a class="reference external" href="https://www.kaggle.com/claudiodavi/superhero-set/data">Super Heroes Dataset</a>, which can be found on Kaggle!</p>
+</section>
+<section id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this heading">#</a></h2>
+<p>In the cell below:</p>
+<ul class="simple">
+<li><p>Import and alias pandas as <code class="docutils literal notranslate"><span class="pre">pd</span></code></p></li>
+<li><p>Import and alias numpy as <code class="docutils literal notranslate"><span class="pre">np</span></code></p></li>
+<li><p>Import and alias seaborn as <code class="docutils literal notranslate"><span class="pre">sns</span></code></p></li>
+<li><p>Import and alias matplotlib.pyplot as <code class="docutils literal notranslate"><span class="pre">plt</span></code></p></li>
+<li><p>Set matplotlib visualizations to display inline in the notebook</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+</pre></div>
+</div>
+</div>
+</div>
+<p>For this lab, our dataset is split among two different sources – <code class="docutils literal notranslate"><span class="pre">'heroes_information.csv'</span></code> and <code class="docutils literal notranslate"><span class="pre">'super_hero_powers.csv'</span></code>.</p>
+<p>Use pandas to read in each file and store them in DataFrames in the appropriate variables below. Then, display the <code class="docutils literal notranslate"><span class="pre">.head()</span></code> of each to ensure that everything loaded correctly.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">heroes_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;heroes_information.csv&#39;</span><span class="p">)</span>
+<span class="n">powers_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;super_hero_powers.csv&#39;</span><span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">heroes_df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="n">powers_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Unnamed: 0</th>
+      <th>name</th>
+      <th>Gender</th>
+      <th>Eye color</th>
+      <th>Race</th>
+      <th>Hair color</th>
+      <th>Height</th>
+      <th>Publisher</th>
+      <th>Skin color</th>
+      <th>Alignment</th>
+      <th>Weight</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>A-Bomb</td>
+      <td>Male</td>
+      <td>yellow</td>
+      <td>Human</td>
+      <td>No Hair</td>
+      <td>203.0</td>
+      <td>Marvel Comics</td>
+      <td>-</td>
+      <td>good</td>
+      <td>441.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>Abe Sapien</td>
+      <td>Male</td>
+      <td>blue</td>
+      <td>Icthyo Sapien</td>
+      <td>No Hair</td>
+      <td>191.0</td>
+      <td>Dark Horse Comics</td>
+      <td>blue</td>
+      <td>good</td>
+      <td>65.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>Abin Sur</td>
+      <td>Male</td>
+      <td>blue</td>
+      <td>Ungaran</td>
+      <td>No Hair</td>
+      <td>185.0</td>
+      <td>DC Comics</td>
+      <td>red</td>
+      <td>good</td>
+      <td>90.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>Abomination</td>
+      <td>Male</td>
+      <td>green</td>
+      <td>Human / Radiation</td>
+      <td>No Hair</td>
+      <td>203.0</td>
+      <td>Marvel Comics</td>
+      <td>-</td>
+      <td>bad</td>
+      <td>441.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>Abraxas</td>
+      <td>Male</td>
+      <td>blue</td>
+      <td>Cosmic Entity</td>
+      <td>Black</td>
+      <td>-99.0</td>
+      <td>Marvel Comics</td>
+      <td>-</td>
+      <td>bad</td>
+      <td>-99.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>hero_names</th>
+      <th>Agility</th>
+      <th>Accelerated Healing</th>
+      <th>Lantern Power Ring</th>
+      <th>Dimensional Awareness</th>
+      <th>Cold Resistance</th>
+      <th>Durability</th>
+      <th>Stealth</th>
+      <th>Energy Absorption</th>
+      <th>Flight</th>
+      <th>...</th>
+      <th>Web Creation</th>
+      <th>Reality Warping</th>
+      <th>Odin Force</th>
+      <th>Symbiote Costume</th>
+      <th>Speed Force</th>
+      <th>Phoenix Force</th>
+      <th>Molecular Dissipation</th>
+      <th>Vision - Cryo</th>
+      <th>Omnipresent</th>
+      <th>Omniscient</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3-D Man</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>A-Bomb</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Abe Sapien</td>
+      <td>True</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Abin Sur</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Abomination</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 168 columns</p>
+</div></div></div>
+</div>
+<p>It looks as if the heroes information dataset contained an index column.  We did not specify that this dataset contained an index column, because we hadn’t seen it yet. Pandas does not know how to tell apart an index column from any other data, so it stored it with the column name <code class="docutils literal notranslate"><span class="pre">Unnamed:</span> <span class="pre">0</span></code>.</p>
+<p>Our DataFrame provided row indices by default, so this column is not needed.  Drop it from the DataFrame in place in the cell below, and then display the head of <code class="docutils literal notranslate"><span class="pre">heroes_df</span></code> to ensure that it worked properly.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">heroes_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Unnamed: 0&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">heroes_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>Gender</th>
+      <th>Eye color</th>
+      <th>Race</th>
+      <th>Hair color</th>
+      <th>Height</th>
+      <th>Publisher</th>
+      <th>Skin color</th>
+      <th>Alignment</th>
+      <th>Weight</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>A-Bomb</td>
+      <td>Male</td>
+      <td>yellow</td>
+      <td>Human</td>
+      <td>No Hair</td>
+      <td>203.0</td>
+      <td>Marvel Comics</td>
+      <td>-</td>
+      <td>good</td>
+      <td>441.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Abe Sapien</td>
+      <td>Male</td>
+      <td>blue</td>
+      <td>Icthyo Sapien</td>
+      <td>No Hair</td>
+      <td>191.0</td>
+      <td>Dark Horse Comics</td>
+      <td>blue</td>
+      <td>good</td>
+      <td>65.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Abin Sur</td>
+      <td>Male</td>
+      <td>blue</td>
+      <td>Ungaran</td>
+      <td>No Hair</td>
+      <td>185.0</td>
+      <td>DC Comics</td>
+      <td>red</td>
+      <td>good</td>
+      <td>90.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Abomination</td>
+      <td>Male</td>
+      <td>green</td>
+      <td>Human / Radiation</td>
+      <td>No Hair</td>
+      <td>203.0</td>
+      <td>Marvel Comics</td>
+      <td>-</td>
+      <td>bad</td>
+      <td>441.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Abraxas</td>
+      <td>Male</td>
+      <td>blue</td>
+      <td>Cosmic Entity</td>
+      <td>Black</td>
+      <td>-99.0</td>
+      <td>Marvel Comics</td>
+      <td>-</td>
+      <td>bad</td>
+      <td>-99.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="familiarize-yourself-with-the-dataset">
+<h2>Familiarize yourself with the dataset<a class="headerlink" href="#familiarize-yourself-with-the-dataset" title="Permalink to this heading">#</a></h2>
+<p>The first step in our Exploratory Data Analysis will be to get familiar with the data.  This step includes:</p>
+<ul class="simple">
+<li><p>Understanding the dimensionality of your dataset</p></li>
+<li><p>Investigating what type of data it contains, and the data types used to store it</p></li>
+<li><p>Discovering how missing values are encoded, and how many there are</p></li>
+<li><p>Getting a feel for what information it does and doesn’t contain</p></li>
+</ul>
+<p>In the cell below, get the descriptive statistics of each DataFrame.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">heroes_df</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+<span class="n">powers_df</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Height</th>
+      <th>Weight</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>734.000000</td>
+      <td>732.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>102.254087</td>
+      <td>43.855191</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>139.624543</td>
+      <td>130.823733</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>-99.000000</td>
+      <td>-99.000000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>-99.000000</td>
+      <td>-99.000000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>175.000000</td>
+      <td>62.000000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>185.000000</td>
+      <td>90.000000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>975.000000</td>
+      <td>900.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>hero_names</th>
+      <th>Agility</th>
+      <th>Accelerated Healing</th>
+      <th>Lantern Power Ring</th>
+      <th>Dimensional Awareness</th>
+      <th>Cold Resistance</th>
+      <th>Durability</th>
+      <th>Stealth</th>
+      <th>Energy Absorption</th>
+      <th>Flight</th>
+      <th>...</th>
+      <th>Web Creation</th>
+      <th>Reality Warping</th>
+      <th>Odin Force</th>
+      <th>Symbiote Costume</th>
+      <th>Speed Force</th>
+      <th>Phoenix Force</th>
+      <th>Molecular Dissipation</th>
+      <th>Vision - Cryo</th>
+      <th>Omnipresent</th>
+      <th>Omniscient</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>667</td>
+      <td>667</td>
+      <td>667</td>
+      <td>667</td>
+      <td>667</td>
+      <td>667</td>
+      <td>667</td>
+      <td>667</td>
+      <td>667</td>
+      <td>667</td>
+      <td>...</td>
+      <td>667</td>
+      <td>667</td>
+      <td>667</td>
+      <td>667</td>
+      <td>667</td>
+      <td>667</td>
+      <td>667</td>
+      <td>667</td>
+      <td>667</td>
+      <td>667</td>
+    </tr>
+    <tr>
+      <th>unique</th>
+      <td>667</td>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+      <td>...</td>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>top</th>
+      <td>Skaar</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>freq</th>
+      <td>1</td>
+      <td>425</td>
+      <td>489</td>
+      <td>656</td>
+      <td>642</td>
+      <td>620</td>
+      <td>410</td>
+      <td>541</td>
+      <td>590</td>
+      <td>455</td>
+      <td>...</td>
+      <td>653</td>
+      <td>651</td>
+      <td>665</td>
+      <td>658</td>
+      <td>666</td>
+      <td>666</td>
+      <td>666</td>
+      <td>665</td>
+      <td>665</td>
+      <td>665</td>
+    </tr>
+  </tbody>
+</table>
+<p>4 rows × 168 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="dealing-with-missing-values">
+<h2>Dealing with missing values<a class="headerlink" href="#dealing-with-missing-values" title="Permalink to this heading">#</a></h2>
+<p>Starting in the cell below, detect and deal with any missing values in either DataFrame. Then, explain your methodology for detecting and dealing with outliers in the markdown section below. Be sure to explain your strategy for dealing with missing values in numeric columns, as well as your strategy for dealing with missing values in non-numeric columns.</p>
+<p>Note that if you need to add more cells to write code in, you can do this by:</p>
+<p><strong>1.</strong> Highlighting a cell and then pressing <code class="docutils literal notranslate"><span class="pre">ESC</span></code> to enter command mode.<br />
+<strong>2.</strong> Press <code class="docutils literal notranslate"><span class="pre">A</span></code> to add a cell above the highlighted cell, or <code class="docutils literal notranslate"><span class="pre">B</span></code> to add a cell below the highlighted cell.</p>
+<p>Describe your strategy below this line:</p>
+<hr class="docutils" />
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">heroes_df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>name          False
+Gender        False
+Eye color     False
+Race          False
+Hair color    False
+Height        False
+Publisher      True
+Skin color    False
+Alignment     False
+Weight         True
+dtype: bool
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">heroes_df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>name           0
+Gender         0
+Eye color      0
+Race           0
+Hair color     0
+Height         0
+Publisher     15
+Skin color     0
+Alignment      0
+Weight         2
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mean_weight</span> <span class="o">=</span> <span class="n">heroes_df</span><span class="p">[</span><span class="s1">&#39;Weight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">heroes_df</span><span class="p">[</span><span class="s1">&#39;Weight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">mean_weight</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">heroes_df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>name           0
+Gender         0
+Eye color      0
+Race           0
+Hair color     0
+Height         0
+Publisher     15
+Skin color     0
+Alignment      0
+Weight         0
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="joining-grouping-and-aggregating">
+<h2>Joining, Grouping, and Aggregating<a class="headerlink" href="#joining-grouping-and-aggregating" title="Permalink to this heading">#</a></h2>
+<p>In the cell below, join the two DataFrames.  Think about which sort of join you should use, as well as which columns you should join on.  Rename columns and manipulate as needed.</p>
+<p><strong><em>HINT:</em></strong> Consider the possibility that the columns you choose to join on contain duplicate entries. If that is the case, devise a strategy to deal with the duplicates.</p>
+<p><strong><em>HINT:</em></strong> If the join throws an error message, consider setting the column you want to join on as the index for each DataFrame.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">powers_df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>hero_names               False
+Agility                  False
+Accelerated Healing      False
+Lantern Power Ring       False
+Dimensional Awareness    False
+Cold Resistance          False
+Durability               False
+Stealth                  False
+Energy Absorption        False
+Flight                   False
+Danger Sense             False
+Underwater breathing     False
+Marksmanship             False
+Weapons Master           False
+Power Augmentation       False
+Animal Attributes        False
+Longevity                False
+Intelligence             False
+Super Strength           False
+Cryokinesis              False
+Telepathy                False
+Energy Armor             False
+Energy Blasts            False
+Duplication              False
+Size Changing            False
+Density Control          False
+Stamina                  False
+Astral Travel            False
+Audio Control            False
+Dexterity                False
+                         ...  
+Intuitive aptitude       False
+Vision - Microscopic     False
+Melting                  False
+Wind Control             False
+Super Breath             False
+Wallcrawling             False
+Vision - Night           False
+Vision - Infrared        False
+Grim Reaping             False
+Matter Absorption        False
+The Force                False
+Resurrection             False
+Terrakinesis             False
+Vision - Heat            False
+Vitakinesis              False
+Radar Sense              False
+Qwardian Power Ring      False
+Weather Control          False
+Vision - X-Ray           False
+Vision - Thermal         False
+Web Creation             False
+Reality Warping          False
+Odin Force               False
+Symbiote Costume         False
+Speed Force              False
+Phoenix Force            False
+Molecular Dissipation    False
+Vision - Cryo            False
+Omnipresent              False
+Omniscient               False
+Length: 168, dtype: bool
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Let&#39;s check if any of these are True, rather than reading them all, by </span>
+<span class="c1"># just chaining another call to .any()</span>
+<span class="n">powers_df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>False
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Drop duplicate names</span>
+<span class="n">heroes_df</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1"># Reset index values</span>
+<span class="n">heroes_df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In the cell below, subset male and female heroes into different dataframes.  Create a scatterplot of the height and weight of each hero, with weight as the y-axis.  Plot both the male and female heroes subset into each dataframe, and make the color for each point in the scatterplot correspond to the gender of the superhero.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">powers_df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;hero_names&#39;</span><span class="p">:</span><span class="s1">&#39;name&#39;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">powers_df</span>  <span class="o">=</span> <span class="n">powers_df</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;str&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">heroes_and_powers_df</span> <span class="o">=</span> <span class="n">powers_df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">heroes_df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">),</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;inner&#39;</span><span class="p">)</span>
+<span class="n">heroes_and_powers_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="some-initial-investigation">
+<h2>Some Initial Investigation<a class="headerlink" href="#some-initial-investigation" title="Permalink to this heading">#</a></h2>
+<p>Next, slice the DataFrame as needed and visualize the distribution of heights and weights by gender.  You should have 4 total plots.</p>
+<p>In the cell below:</p>
+<ul class="simple">
+<li><p>Slice the DataFrame into separate DataFrames by gender</p></li>
+<li><p>Complete the <code class="docutils literal notranslate"><span class="pre">show_distplot()</span></code> function.  This helper function should take in a DataFrame, a string containing the gender we want to visualize, and the column name we want to visualize by gender. The function should display a distplot visualization from seaborn of the column/gender combination.</p></li>
+</ul>
+<p>Hint: Don’t forget to check the <a class="reference external" href="https://seaborn.pydata.org/generated/seaborn.distplot.html">seaborn documentation for distplot</a> if you have questions about how to use it correctly!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">male_heroes_df</span> <span class="o">=</span> <span class="n">heroes_df</span><span class="p">[</span><span class="n">heroes_df</span><span class="p">[</span><span class="s1">&#39;Gender&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Male&#39;</span><span class="p">]</span>
+<span class="n">female_heroes_df</span> <span class="o">=</span> <span class="n">heroes_df</span><span class="p">[</span><span class="n">heroes_df</span><span class="p">[</span><span class="s1">&#39;Gender&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Female&#39;</span><span class="p">]</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">male_heroes_df</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;Height&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Weight&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Male&#39;</span><span class="p">)</span>
+<span class="n">female_heroes_df</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;Height&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Weight&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Female&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.axes._subplots.AxesSubplot at 0x1a1a161358&gt;
+</pre></div>
+</div>
+<img alt="../../../../_images/47f7d96482aefcbc58d90a3833d479e3df76959901668179ee4dae4d9078b11e.png" src="../../../../_images/47f7d96482aefcbc58d90a3833d479e3df76959901668179ee4dae4d9078b11e.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">male_heroes_df</span> <span class="o">=</span> <span class="n">heroes_df</span><span class="p">[</span><span class="n">heroes_df</span><span class="p">[</span><span class="s1">&#39;Gender&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Male&#39;</span><span class="p">]</span>
+<span class="n">female_heroes_df</span> <span class="o">=</span> <span class="n">heroes_df</span><span class="p">[</span><span class="n">heroes_df</span><span class="p">[</span><span class="s1">&#39;Gender&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Female&#39;</span><span class="p">]</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">show_distplot</span><span class="p">(</span><span class="n">dataframe</span><span class="p">,</span> <span class="n">gender</span><span class="p">,</span> <span class="n">column_name</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+    <span class="n">dataframe</span><span class="p">[</span><span class="n">column_name</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Distribution of </span><span class="si">{}</span><span class="s1"> for </span><span class="si">{}</span><span class="s1"> heroes&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">column_name</span><span class="p">,</span> <span class="n">gender</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="n">column_name</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Probability Density&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Male Height</span>
+<span class="n">show_distplot</span><span class="p">(</span><span class="n">male_heroes_df</span><span class="p">,</span> <span class="s1">&#39;Male&#39;</span><span class="p">,</span> <span class="s1">&#39;Height&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mean height for male heroes: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">male_heroes_df</span><span class="o">.</span><span class="n">Height</span><span class="o">.</span><span class="n">mean</span><span class="p">()))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Median height for male heroes: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">male_heroes_df</span><span class="o">.</span><span class="n">Height</span><span class="o">.</span><span class="n">median</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../../_images/5f3fbe3e76835c000226735ec6f6e6739d28960326939d162ca23d0b0c13f67c.png" src="../../../../_images/5f3fbe3e76835c000226735ec6f6e6739d28960326939d162ca23d0b0c13f67c.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean height for male heroes: 109.11201629327903
+Median height for male heroes: 180.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>Discuss your findings from the plots above, with respect to the distribution of height and weight by gender.  Your explanation should include a discussion of any relevant summary statistics, including mean, median, mode, and the overall shape of each distribution.</p>
+<p>Write your answer below this line:</p>
+<hr class="docutils" />
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Male Weight</span>
+<span class="n">show_distplot</span><span class="p">(</span><span class="n">male_heroes_df</span><span class="p">,</span> <span class="s1">&#39;Male&#39;</span><span class="p">,</span> <span class="s1">&#39;Weight&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mean weight for male heroes: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">male_heroes_df</span><span class="o">.</span><span class="n">Weight</span><span class="o">.</span><span class="n">mean</span><span class="p">()))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Median weight for male heroes: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">male_heroes_df</span><span class="o">.</span><span class="n">Weight</span><span class="o">.</span><span class="n">median</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../../_images/864302f9b56d77eafa433cf759d220e58f4b9e0ee1600c7a0920cb76b10ab47e.png" src="../../../../_images/864302f9b56d77eafa433cf759d220e58f4b9e0ee1600c7a0920cb76b10ab47e.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean weight for male heroes: 53.519053342681936
+Median weight for male heroes: 79.0
+</pre></div>
+</div>
+</div>
+</div>
+<section id="sample-question-most-common-powers">
+<h3>Sample Question: Most Common Powers<a class="headerlink" href="#sample-question-most-common-powers" title="Permalink to this heading">#</a></h3>
+<p>The rest of this notebook will be left to you to investigate the dataset by formulating your own questions, and then seeking answers using pandas and numpy.  Every answer should include some sort of visualization, when appropriate. Before moving on to formulating your own questions, use the dataset to answer the following questions about superhero powers:</p>
+<ul class="simple">
+<li><p>What are the 5 most common powers overall?</p></li>
+<li><p>What are the 5 most common powers in the Marvel Universe?</p></li>
+<li><p>What are the 5 most common powers in the DC Universe?</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Female Height</span>
+<span class="n">show_distplot</span><span class="p">(</span><span class="n">female_heroes_df</span><span class="p">,</span> <span class="s1">&#39;Female&#39;</span><span class="p">,</span> <span class="s1">&#39;Height&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mean height for female heroes: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">female_heroes_df</span><span class="o">.</span><span class="n">Height</span><span class="o">.</span><span class="n">mean</span><span class="p">()))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Median height for female heroes: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">female_heroes_df</span><span class="o">.</span><span class="n">Height</span><span class="o">.</span><span class="n">median</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../../_images/c812ca7984bc1c90f2feb99b96bc2bb4546e677e1a9b3505d8ee19f22d2d1b9b.png" src="../../../../_images/c812ca7984bc1c90f2feb99b96bc2bb4546e677e1a9b3505d8ee19f22d2d1b9b.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean height for female heroes: 97.99234693877551
+Median height for female heroes: 168.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Female Weight</span>
+<span class="n">show_distplot</span><span class="p">(</span><span class="n">female_heroes_df</span><span class="p">,</span> <span class="s1">&#39;Female&#39;</span><span class="p">,</span> <span class="s1">&#39;Weight&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mean weight for female heroes: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">female_heroes_df</span><span class="o">.</span><span class="n">Weight</span><span class="o">.</span><span class="n">mean</span><span class="p">()))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Median weight for female heroes: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">male_heroes_df</span><span class="o">.</span><span class="n">Weight</span><span class="o">.</span><span class="n">median</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../../_images/1d179e2b6e813795a0c8e49c5828171b80a1ff98d0b7060dfe592ec0431aed52.png" src="../../../../_images/1d179e2b6e813795a0c8e49c5828171b80a1ff98d0b7060dfe592ec0431aed52.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean weight for female heroes: 27.433673469387756
+Median weight for female heroes: 79.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Top Negative Heights:&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">heroes_df</span><span class="p">[</span><span class="n">heroes_df</span><span class="o">.</span><span class="n">Height</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">Height</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Top Negative Weights:&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">heroes_df</span><span class="p">[</span><span class="n">heroes_df</span><span class="o">.</span><span class="n">Weight</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">Weight</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Top Negative Heights:
+-99.0    209
+Name: Height, dtype: int64
+Top Negative Weights:
+-99.0    229
+Name: Weight, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;Height&#39;</span><span class="p">,</span> <span class="s1">&#39;Weight&#39;</span><span class="p">]:</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">heroes_and_powers_df</span><span class="p">[</span><span class="n">heroes_and_powers_df</span><span class="p">[</span><span class="n">feat</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">]</span> <span class="c1">#Temporarily remove negatives</span>
+    <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;Male&#39;</span><span class="p">,</span> <span class="s1">&#39;Female&#39;</span><span class="p">]:</span>
+        <span class="n">show_distplot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Gender&#39;</span><span class="p">]</span><span class="o">==</span><span class="n">group</span><span class="p">],</span> <span class="n">group</span><span class="p">,</span> <span class="n">feat</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mean </span><span class="si">{}</span><span class="s1"> for </span><span class="si">{}</span><span class="s1"> heroes: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">feat</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Gender&#39;</span><span class="p">]</span><span class="o">==</span><span class="n">group</span><span class="p">][</span><span class="n">feat</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Median </span><span class="si">{}</span><span class="s1"> for </span><span class="si">{}</span><span class="s1"> heroes: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">feat</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Gender&#39;</span><span class="p">]</span><span class="o">==</span><span class="n">group</span><span class="p">][</span><span class="n">feat</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../../_images/d5c5767ef2dba1853ac58210c6080654ae6db9af05b769d367b6c34ad8be2622.png" src="../../../../_images/d5c5767ef2dba1853ac58210c6080654ae6db9af05b769d367b6c34ad8be2622.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean Height for Male heroes: 192.62314540059347
+Median Height for Male heroes: 185.0
+</pre></div>
+</div>
+<img alt="../../../../_images/788b4025c71fb485559823336712edf254578afdfb5f101058614937770363c2.png" src="../../../../_images/788b4025c71fb485559823336712edf254578afdfb5f101058614937770363c2.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean Height for Female heroes: 174.90671641791045
+Median Height for Female heroes: 170.0
+</pre></div>
+</div>
+<img alt="../../../../_images/133be9d1bf3fc43665f965e383dff93de8ffb3dc5a3c5047a2bda91e9a0a71bb.png" src="../../../../_images/133be9d1bf3fc43665f965e383dff93de8ffb3dc5a3c5047a2bda91e9a0a71bb.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean Weight for Male heroes: 126.84594103842267
+Median Weight for Male heroes: 90.0
+</pre></div>
+</div>
+<img alt="../../../../_images/2cb923de4a11ddab33868d7edab94f72563eff2dd29c710ac25c7bb066e43513.png" src="../../../../_images/2cb923de4a11ddab33868d7edab94f72563eff2dd29c710ac25c7bb066e43513.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean Weight for Female heroes: 80.34848484848484
+Median Weight for Female heroes: 57.5
+</pre></div>
+</div>
+</div>
+</div>
+<p>Analyze the results you found above to answer the following question:</p>
+<p>How do the top 5 powers in the Marvel and DC universes compare?  Are they similar, or are there significant differences? How do they compare to the overall trends in the entire Superheroes dataset?</p>
+<p>Write your answer below this line:</p>
+</section>
+<hr class="docutils" />
+<section id="your-own-investigation">
+<h3>Your Own Investigation<a class="headerlink" href="#your-own-investigation" title="Permalink to this heading">#</a></h3>
+<p>For the remainder of this lab, you’ll be focusing on coming up with and answering your own question, just like we did above.  Your question should not be overly simple, and should require both descriptive statistics and data visualization to answer.  In case you’re unsure of what questions to ask, some sample questions have been provided below.</p>
+<p>Pick one of the following questions to investigate and answer, or come up with one of your own!</p>
+<ul class="simple">
+<li><p>Which powers have the highest chance of co-occurring in a hero (e.g. super strength and flight), and does this differ by gender?</p></li>
+<li><p>Is there a relationship between a hero’s height and weight and their powerset?</p></li>
+<li><p>What is the distribution of skin colors amongst alien heroes?</p></li>
+</ul>
+<p>Explain your question below this line:</p>
+<hr class="docutils" />
+<p>Some sample cells have been provided to give you room to work. If you need to create more cells, you can do this easily by:</p>
+<ol class="arabic simple">
+<li><p>Highlighting a cell and then pressing <code class="docutils literal notranslate"><span class="pre">esc</span></code> to enter command mode.</p></li>
+<li><p>Pressing <code class="docutils literal notranslate"><span class="pre">b</span></code> to add a cell below the currently highlighted cell, or <code class="docutils literal notranslate"><span class="pre">a</span></code> to add one above it.</p></li>
+</ol>
+<p>Be sure to include thoughtful, well-labeled visualizations to back up your analysis!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">top_5_powers</span><span class="p">(</span><span class="n">dataframe</span><span class="p">):</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">heroes_df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">columns</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">columns</span><span class="p">:</span>
+        <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="s1">&#39;True&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;False&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">})</span>
+        
+    <span class="n">power_counts_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+    
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">power_counts_dict</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)[:</span><span class="mi">5</span><span class="p">]</span> 
+    
+<span class="n">overall_top_5</span> <span class="o">=</span> <span class="n">top_5_powers</span><span class="p">(</span><span class="n">heroes_and_powers_df</span><span class="p">)</span>
+<span class="n">marvel_df</span> <span class="o">=</span> <span class="n">heroes_and_powers_df</span><span class="p">[</span><span class="n">heroes_and_powers_df</span><span class="p">[</span><span class="s1">&#39;Publisher&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Marvel Comics&#39;</span><span class="p">]</span>
+<span class="n">dc_df</span> <span class="o">=</span> <span class="n">heroes_and_powers_df</span><span class="p">[</span><span class="n">heroes_and_powers_df</span><span class="p">[</span><span class="s1">&#39;Publisher&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;DC Comics&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">overall_top_5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(&#39;Super Strength&#39;, 350), (&#39;Stamina&#39;, 281), (&#39;Durability&#39;, 251), (&#39;Super Speed&#39;, 241), (&#39;Agility&#39;, 235)]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">marvel_top_5</span> <span class="o">=</span> <span class="n">top_5_powers</span><span class="p">(</span><span class="n">marvel_df</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">marvel_top_5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(&#39;Super Strength&#39;, 199), (&#39;Durability&#39;, 148), (&#39;Stamina&#39;, 145), (&#39;Super Speed&#39;, 132), (&#39;Agility&#39;, 121)]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dc_top_5</span> <span class="o">=</span> <span class="n">top_5_powers</span><span class="p">(</span><span class="n">dc_df</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dc_top_5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(&#39;Super Strength&#39;, 103), (&#39;Flight&#39;, 83), (&#39;Stamina&#39;, 83), (&#39;Super Speed&#39;, 75), (&#39;Agility&#39;, 68)]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">top_5_bar_chart</span><span class="p">(</span><span class="n">top_5_list</span><span class="p">,</span> <span class="n">publisher</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">marvel_powers</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">top_5_list</span><span class="p">]</span>
+    <span class="n">marvel_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">top_5_list</span><span class="p">]</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">clf</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+    <span class="n">bar_positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">marvel_powers</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">bar_positions</span><span class="p">,</span> <span class="n">marvel_values</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">bar_positions</span><span class="p">,</span> <span class="n">marvel_powers</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">publisher</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Top 5 Powers in </span><span class="si">{}</span><span class="s1"> Universe&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">publisher</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Top 5 Powers in Superheroes Dataset&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">top_5_bar_chart</span><span class="p">(</span><span class="n">overall_top_5</span><span class="p">))</span>
+<span class="n">display</span><span class="p">(</span><span class="n">top_5_bar_chart</span><span class="p">(</span><span class="n">dc_top_5</span><span class="p">,</span> <span class="n">publisher</span><span class="o">=</span><span class="s1">&#39;DC Comics&#39;</span><span class="p">))</span>
+<span class="n">top_5_bar_chart</span><span class="p">(</span><span class="n">marvel_top_5</span><span class="p">,</span> <span class="n">publisher</span><span class="o">=</span><span class="s1">&#39;Marvel Comics&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 432x288 with 0 Axes&gt;
+</pre></div>
+</div>
+<img alt="../../../../_images/8b026f331a00d0ea5f4896e74e8bbb9feeff783f535757b13e4abb9f84a21d22.png" src="../../../../_images/8b026f331a00d0ea5f4896e74e8bbb9feeff783f535757b13e4abb9f84a21d22.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>None
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 432x288 with 0 Axes&gt;
+</pre></div>
+</div>
+<img alt="../../../../_images/3565be002fb231ee834336346b49f4581f3a6c6ee21d29e3474129b239ef5e56.png" src="../../../../_images/3565be002fb231ee834336346b49f4581f3a6c6ee21d29e3474129b239ef5e56.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>None
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 432x288 with 0 Axes&gt;
+</pre></div>
+</div>
+<img alt="../../../../_images/30b0370bdbb5d831db39182ad53d5530eabadf866dbfd734e91f4426c3324ffa.png" src="../../../../_images/30b0370bdbb5d831db39182ad53d5530eabadf866dbfd734e91f4426c3324ffa.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">#</a></h2>
+<p>In this lab, we demonstrated our mastery of:</p>
+<ul class="simple">
+<li><p>Using all of our Pandas knowledge to date to clean the dataset and deal with null values</p></li>
+<li><p>Using Queries and aggregations to group the data into interesting subsets as needed</p></li>
+<li><p>Using descriptive statistics and data visualization to find answers to questions we may have about the data</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Phase_1/topic_05_data_cleaning_in_pandas/labs_from_class/dsc-data-cleaning-project-master"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objectives">Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-dataset">The dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-started">Getting Started</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#familiarize-yourself-with-the-dataset">Familiarize yourself with the dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dealing-with-missing-values">Dealing with missing values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#joining-grouping-and-aggregating">Joining, Grouping, and Aggregating</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#some-initial-investigation">Some Initial Investigation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sample-question-most-common-powers">Sample Question: Most Common Powers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#your-own-investigation">Your Own Investigation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By James Irving, PhD
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

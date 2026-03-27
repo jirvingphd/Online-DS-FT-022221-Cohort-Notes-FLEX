@@ -1,0 +1,3788 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Topic 20: Extensions to Linear Models &#8212; Data Science Curriculum</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Phase_2/topic_20_extensions_linear_models/topic_20_extensions_to_linear_models_SG';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Topic 21: Object-Oriented Programming" href="../../Phase_3/topic_21_OOP/topic_21_OOP_playing_cards_SG.html" />
+    <link rel="prev" title="Topic 19 Part 2: Feature Selection &amp; Model Validation" href="../topic_19_part2_model_validation/topic_19_part_2_Multiple_Regression_v2-SG.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/flatironschool_banner.jpg" class="logo__image only-light" alt="Data Science Curriculum - Home"/>
+    <script>document.write(`<img src="../../_static/flatironschool_banner.jpg" class="logo__image only-dark" alt="Data Science Curriculum - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Data Science Curriculum
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 1 - Python &amp; Data Fundamentals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_01_getting_started/topic_01_getting_started.html">Topic 1: Getting Started with Data Science</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_02_bash_git/topic_02_bash_and_git.html">Topic 02:  Bash and Git</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_03_control_flow_functions/topic_03_control_flow_and_functions.html">Topic 03: Control Flow, Functions, and Statistics</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_04_python_libraries/topic_04_intro_to_libraries_numpy_SG.html">Topic 04-Part 1: Python Libraries &amp; NumPy</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_04_python_libraries/topic_04_pt-2_brief_intro_to_pandas-SG.html">Topic 04-Part 2: Brief Intro to Pandas with Doctor Who</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_05_data_cleaning_in_pandas/topic_05_Data_Cleaning_in_Pandas.html">Topic 05: Data Cleaning in Pandas</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_06_data_visualization/topic_06_visualizations_heroes_project_SG.html">Topic 06:  Data Visualizations</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_07_SQL_and_relational_databases/topic_07_SQL_and_relational_databases_SG.html">TOPIC 07: SQL DATABASES</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_08_noSQL_databases/topic_08_mongodb-SG.html">Topic 08: NoSQL Databases</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_09_json_and_apis/topic_09_json-api-SG.html">Topic 09: Using APIs and JSON Data</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_10_webscraping/topic_10_SG_HTML_CSS_web_scraping.html">Topic 10: HTML, CSS, &amp; Web Scraping</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 2 - Statistics &amp; Regression</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../topic_11_probability_and_combinatorics/topic_11_playlist_probabilities-SG.html">Topic 11 - Intro to Combinatorics &amp; Probability</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_12_statistical_distributions/topic-12-distributions-with-movies-sg.html">Exploring Distributions with Movies Data</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_13_central_limit_theorem/topic_13_central_limit_theorem_SG.html">Topic 13: Central Limit Theorem</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_14_hypothesis_testing/topic_14_hypothesis_testing-SG.html">Topic 14: Hypothesis Testing -  T-Tests</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_15_ANOVA/topic_15_ANOVA_with_neuro_data-SG.html">Topic 15: ANOVAs &amp; Statistical Power with  Neuro Data</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_16_AB_testing/topic_16_AB_testing_with_movies-SG.html">Topic 16: Practicing AB Testing with Movies</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_17_bayesian_statistics/topic_17_bayesian_statistics-SG.html">Topic 17: Bayesian Statistics</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_18_linear_regression/topic_18_intro_to_linear_regression_SG.html">Topic 18: Intro to Linear Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_19_part1_multiple_regression/topic_19_Multiple_Regression_v2-SG.html">Topic 19: Multiple Linear Regression</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_19_part2_model_validation/topic_19_part_2_Multiple_Regression_v2-SG.html">Topic 19 Part 2: Feature Selection &amp; Model Validation</a></li>
+
+
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Topic 20: Extensions to Linear Models</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 3 - Machine Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_21_OOP/topic_21_OOP_playing_cards_SG.html">Topic 21: Object-Oriented Programming</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_22_linear_algebra/topic_22_linear_algebra_SG.html">Topic 22: Linear Algebra</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_23_calculus_gradient_descent/topic_23_gradient_descent_SG.html">Topic 23: Cost Functions and Gradient Descent</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_24_regularization/topic_24_Regularization_Ridge_Lasso_v2_SG.html">Topic 24: Feature Selection &amp; Regularization (Ridge and Lasso Regression)</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_25_logistic_regression/topic_25_pt1_LogisticRegression_titanic-v2-SG.html">Topic 25-Pt 1: Intro to Logistic Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_25_logistic_regression/topic_25_pt2_LogisticRegression_titanic-v2-SG.html">Topic 25-Part 2: Evaluating Classifiers, Dealing with Class Imbalance, and <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code></a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_27_KNN/Topic_27_KNN_with_pipelines_with_lab_v3_SG.html">Topic 27: K-Nearest Neighbors<br/> +Topic 32: Pipelines</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_29_decision_trees/topic_29_decision_trees_v2_titanic-SG.html">Topic 29: Decision Trees</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_30_ensemble_methods/topic_30_ensemble_methods-SG.html">Topic 30: Ensemble Methods</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_31_support_vector_machines/topic_31_SupportVectorMachines_SG.html">Topic 31: Support Vector Machines</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 4 - Advanced ML &amp; Time Series</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_33_pca/topic_33_PCA_SG.html">Topic 33: Principal Component Analysis</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_34_clustering/topic_34_Kmeans_clustering_v3_SG.html">Topic 34: Clustering</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_35-36_using_databricks_for_pyspark/using_databricks_for_pyspark.html">How to Use Databricks for PySpark Canvas Material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_36_recommendation_systems/topic_36_Recommendation_Systems_with_Surprise.html">Topic 36: Recommendation Systems</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_37_intro_to_time_series/topic_37_intro_to_time_series_crime_v3-SG.html">Topic 37: Intro to Time Series</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_38_time_series_models/topic_38-time_series_models_v3_SG.html">Topic 38: Time Series Models</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_39_NLP/topic_39_NLP_finding_trump_v3_SG.html">Topic 39: Natural Language Processing + Topic 28: Bayesian Classification</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_40-41_neural_networks/topic_40-41_Artificial_Neural_Networks_v1_SG.html">Topic 40-41: Artificial Neural Networks</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_42_tuning_neural_networks/topic_42_tuning_ANNs_with_deep_NLP_v1_SG.html">Topic 42 - Tuning Neural Networks + Deep NLP</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_43_AWS/topic_43_operationalizing_code_AWS_SG.html">Topic 43: Operationalizing Code &amp; AWS</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 5 - Capstone &amp; Bonus Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/Capstone_Kickoff.html">Capstone Kickoff!</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/APIs/working_with_apis.html">Working with APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/developing_app_functions/developing-streamlit-app-functions_SG.html">Developing Streamlit App Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/tableau/tableau_fundamentals_2021-SG.html">Tableau Fundamentals</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/Bonus%20Notebooks/plotly_visuals.html">Plotly Question</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/master?urlpath=tree/Phase_2/topic_20_extensions_linear_models/topic_20_extensions_to_linear_models_SG.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/blob/master/Phase_2/topic_20_extensions_linear_models/topic_20_extensions_to_linear_models_SG.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/issues/new?title=Issue%20on%20page%20%2FPhase_2/topic_20_extensions_linear_models/topic_20_extensions_to_linear_models_SG.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/Phase_2/topic_20_extensions_linear_models/topic_20_extensions_to_linear_models_SG.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Topic 20: Extensions to Linear Models</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Topic 20: Extensions to Linear Models</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objectives">Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#topics-covered-in-section-20">Topics Covered in Section 20</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#interactions">Interactions</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-an-interaction">What is an interaction?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#confounding-factor">Confounding factor</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-is-important-to-account-for-interactions">Why is important to account for interactions?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#when-should-we-use-interactions">When should we use interactions?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-seaborn-to-view-interactions">Using seaborn to view interactions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ex-interaction-not-very-different">Ex Interaction: Not very different</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-interaction-different">Example Interaction: different</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#making-a-baseline-model">Making a baseline model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interactions-effect-on-model">Interactions Effect On Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-interaction-terms">Adding interaction terms</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#polynomial-regressions">Polynomial Regressions</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#making-it-more-complex">Making it more complex!</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-quadratic-relationship">A quadratic relationship</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bias-variance-trade-off">Bias-Variance Trade Off</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#underfitting-and-overfitting">Underfitting and Overfitting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-bias-variance-trade-off">The Bias-Variance Trade Off</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bias">Bias</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variance">Variance</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calcualted-in-lab">Calcualted in Lab:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-do-we-know-if-our-model-is-overfitting-or-underfitting">How do we know if our model is overfitting or underfitting?</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bias-variance-examples-from-cl-model-validation-022221ft-ipynb">Bias/Variance Examples from CL “<code class="docutils literal notranslate"><span class="pre">model_validation-022221FT.ipynb</span></code>”</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="topic-20-extensions-to-linear-models">
+<h1>Topic 20: Extensions to Linear Models<a class="headerlink" href="#topic-20-extensions-to-linear-models" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p>onl01-dtsc-ft-022221</p></li>
+<li><p>04/13/21</p></li>
+</ul>
+<section id="objectives">
+<h2>Objectives<a class="headerlink" href="#objectives" title="Permalink to this heading">#</a></h2>
+<p><strong>DISCUSSION:</strong></p>
+<ul class="simple">
+<li><p>Discuss interactions between variables</p></li>
+<li><p>Discuss using dictionaries for scrubbing the whole df in a few lines of code.</p></li>
+<li><p>Discuss polynomial regressions.</p></li>
+<li><p>Discuss the Bias vs Variance trade-off.</p></li>
+</ul>
+<p><strong>APPLICATION:</strong></p>
+<ul class="simple">
+<li><p>Linear Regression with Boston Housing data set</p></li>
+</ul>
+</section>
+<section id="topics-covered-in-section-20">
+<h2>Topics Covered in Section 20<a class="headerlink" href="#topics-covered-in-section-20" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Interactions</p></li>
+<li><p>Polynomial Regression</p></li>
+<li><p>Bias-Variance Trade Off</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="interactions">
+<h1>Interactions<a class="headerlink" href="#interactions" title="Permalink to this heading">#</a></h1>
+<section id="what-is-an-interaction">
+<h2>What is an interaction?<a class="headerlink" href="#what-is-an-interaction" title="Permalink to this heading">#</a></h2>
+<p>When variables interact to <strong>cause an effect</strong> to another variable but is <strong>not the sum of their parts</strong></p>
+<blockquote>
+<div><p>“An interaction is a particular property of two or more variables where they interact in a non-additive manner when affecting a third variable” - <em>Section recap</em></p>
+</div></blockquote>
+<img src="https://raw.githubusercontent.com/jirvingphd/dsc-interaction-terms-online-ds-pt-100719/master/images/new_diet_image.png">
+<blockquote>
+<div><p>In our example, the interaction plot was composed out of categorical predictors (countries and diet type), but interactions can occur between categorical variables or between a mix of categorical variables and continuous variables!</p>
+</div></blockquote>
+<section id="confounding-factor">
+<h3>Confounding factor<a class="headerlink" href="#confounding-factor" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>This means that the “Country” and “Diet” affect weight loss in a non-additive matter. If we’re mostly interested in the effect of diet on weight loss (which seems to be plausible here), we say that “Country” is a <strong>confounding factor</strong> of the effect of “Diet” on weight loss.</p>
+</div></blockquote>
+<p><img alt="" src="Phase_2/topic_20_extensions_linear_models/images/diet_interaction.png" /></p>
+</section>
+<section id="why-is-important-to-account-for-interactions">
+<h3>Why is important to account for interactions?<a class="headerlink" href="#why-is-important-to-account-for-interactions" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><p>“Not accounting for them might lead to results that are wrong.”</p></li>
+</ul>
+</div></blockquote>
+<blockquote>
+<div><ul class="simple">
+<li><p>You’ll also notice that including them when they’re needed will increase your <span class="math notranslate nohighlight">\(R^2\)</span> value!</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Replacing 2 individual columns with their interaction column can reduce the overall number of features.</p></li>
+<li><p>One way of addessing multicollinearity is to replace 2 multicollinear columns with the interaction term.</p></li>
+</ul>
+</section>
+<section id="when-should-we-use-interactions">
+<h3>When should we use interactions?<a class="headerlink" href="#when-should-we-use-interactions" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Whenever it can help the model, but not required.</p></li>
+<li><p>Can use in hypothesis testing as well (for ANOVAs)</p></li>
+</ul>
+</section>
+</section>
+<section id="using-seaborn-to-view-interactions">
+<h2>Using seaborn to view interactions<a class="headerlink" href="#using-seaborn-to-view-interactions" title="Permalink to this heading">#</a></h2>
+<p><a class="reference external" href="https://blog.insightdatascience.com/data-visualization-in-python-advanced-functionality-in-seaborn-20d217f1a9a6">https://blog.insightdatascience.com/data-visualization-in-python-advanced-functionality-in-seaborn-20d217f1a9a6</a></p>
+<ul class="simple">
+<li><p>~~<code class="docutils literal notranslate"><span class="pre">sns.factorplot</span></code>~~</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sns.catplot</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sns.FacetGrid</span></code></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># !pip install -U fsds</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">fsds.imports</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">stats</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sms</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.formula.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">smf</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.max_columns&#39;</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;seaborn-notebook&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>fsds v0.3.2 loaded.  Read the docs: https://fs-ds.readthedocs.io/en/latest/ 
+</pre></div>
+</div>
+<div class="output text_html"><style  type="text/css" >
+</style><table id="T_205f63f4_9c80_11eb_9450_acde48001122" ><caption>Loaded Packages and Handles</caption><thead>    <tr>        <th class="col_heading level0 col0" >Handle</th>        <th class="col_heading level0 col1" >Package</th>        <th class="col_heading level0 col2" >Description</th>    </tr></thead><tbody>
+                <tr>
+                                <td id="T_205f63f4_9c80_11eb_9450_acde48001122row0_col0" class="data row0 col0" >dp</td>
+                        <td id="T_205f63f4_9c80_11eb_9450_acde48001122row0_col1" class="data row0 col1" >IPython.display</td>
+                        <td id="T_205f63f4_9c80_11eb_9450_acde48001122row0_col2" class="data row0 col2" >Display modules with helpful display and clearing commands.</td>
+            </tr>
+            <tr>
+                                <td id="T_205f63f4_9c80_11eb_9450_acde48001122row1_col0" class="data row1 col0" >fs</td>
+                        <td id="T_205f63f4_9c80_11eb_9450_acde48001122row1_col1" class="data row1 col1" >fsds</td>
+                        <td id="T_205f63f4_9c80_11eb_9450_acde48001122row1_col2" class="data row1 col2" >Custom data science bootcamp student package</td>
+            </tr>
+            <tr>
+                                <td id="T_205f63f4_9c80_11eb_9450_acde48001122row2_col0" class="data row2 col0" >mpl</td>
+                        <td id="T_205f63f4_9c80_11eb_9450_acde48001122row2_col1" class="data row2 col1" >matplotlib</td>
+                        <td id="T_205f63f4_9c80_11eb_9450_acde48001122row2_col2" class="data row2 col2" >Matplotlib's base OOP module with formatting artists</td>
+            </tr>
+            <tr>
+                                <td id="T_205f63f4_9c80_11eb_9450_acde48001122row3_col0" class="data row3 col0" >plt</td>
+                        <td id="T_205f63f4_9c80_11eb_9450_acde48001122row3_col1" class="data row3 col1" >matplotlib.pyplot</td>
+                        <td id="T_205f63f4_9c80_11eb_9450_acde48001122row3_col2" class="data row3 col2" >Matplotlib's matlab-like plotting module</td>
+            </tr>
+            <tr>
+                                <td id="T_205f63f4_9c80_11eb_9450_acde48001122row4_col0" class="data row4 col0" >np</td>
+                        <td id="T_205f63f4_9c80_11eb_9450_acde48001122row4_col1" class="data row4 col1" >numpy</td>
+                        <td id="T_205f63f4_9c80_11eb_9450_acde48001122row4_col2" class="data row4 col2" >scientific computing with Python</td>
+            </tr>
+            <tr>
+                                <td id="T_205f63f4_9c80_11eb_9450_acde48001122row5_col0" class="data row5 col0" >pd</td>
+                        <td id="T_205f63f4_9c80_11eb_9450_acde48001122row5_col1" class="data row5 col1" >pandas</td>
+                        <td id="T_205f63f4_9c80_11eb_9450_acde48001122row5_col2" class="data row5 col2" >High performance data structures and tools</td>
+            </tr>
+            <tr>
+                                <td id="T_205f63f4_9c80_11eb_9450_acde48001122row6_col0" class="data row6 col0" >sns</td>
+                        <td id="T_205f63f4_9c80_11eb_9450_acde48001122row6_col1" class="data row6 col1" >seaborn</td>
+                        <td id="T_205f63f4_9c80_11eb_9450_acde48001122row6_col2" class="data row6 col2" >High-level data visualization library based on matplotlib</td>
+            </tr>
+    </tbody></table></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">load_boston</span><span class="p">()</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>CRIM</th>
+      <th>ZN</th>
+      <th>INDUS</th>
+      <th>CHAS</th>
+      <th>NOX</th>
+      <th>RM</th>
+      <th>AGE</th>
+      <th>DIS</th>
+      <th>RAD</th>
+      <th>TAX</th>
+      <th>PTRATIO</th>
+      <th>LSTAT</th>
+      <th>price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.00632</td>
+      <td>18.0</td>
+      <td>2.31</td>
+      <td>0.0</td>
+      <td>0.538</td>
+      <td>6.575</td>
+      <td>65.2</td>
+      <td>4.0900</td>
+      <td>1.0</td>
+      <td>296.0</td>
+      <td>15.3</td>
+      <td>4.98</td>
+      <td>24.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.02731</td>
+      <td>0.0</td>
+      <td>7.07</td>
+      <td>0.0</td>
+      <td>0.469</td>
+      <td>6.421</td>
+      <td>78.9</td>
+      <td>4.9671</td>
+      <td>2.0</td>
+      <td>242.0</td>
+      <td>17.8</td>
+      <td>9.14</td>
+      <td>21.6</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.02729</td>
+      <td>0.0</td>
+      <td>7.07</td>
+      <td>0.0</td>
+      <td>0.469</td>
+      <td>7.185</td>
+      <td>61.1</td>
+      <td>4.9671</td>
+      <td>2.0</td>
+      <td>242.0</td>
+      <td>17.8</td>
+      <td>4.03</td>
+      <td>34.7</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.03237</td>
+      <td>0.0</td>
+      <td>2.18</td>
+      <td>0.0</td>
+      <td>0.458</td>
+      <td>6.998</td>
+      <td>45.8</td>
+      <td>6.0622</td>
+      <td>3.0</td>
+      <td>222.0</td>
+      <td>18.7</td>
+      <td>2.94</td>
+      <td>33.4</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.06905</td>
+      <td>0.0</td>
+      <td>2.18</td>
+      <td>0.0</td>
+      <td>0.458</td>
+      <td>7.147</td>
+      <td>54.2</td>
+      <td>6.0622</td>
+      <td>3.0</td>
+      <td>222.0</td>
+      <td>18.7</td>
+      <td>5.33</td>
+      <td>36.2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<section id="ex-interaction-not-very-different">
+<h3>Ex Interaction: Not very different<a class="headerlink" href="#ex-interaction-not-very-different" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;AGE&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;price&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;CHAS&#39;</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/bbaad678d867fbec70316abbbfd62249d05fb18a1e0009dca4442a42f218f4cf.png" src="../../_images/bbaad678d867fbec70316abbbfd62249d05fb18a1e0009dca4442a42f218f4cf.png" />
+</div>
+</div>
+</section>
+<section id="example-interaction-different">
+<h3>Example Interaction: different<a class="headerlink" href="#example-interaction-different" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;TAX&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;price&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;CHAS&#39;</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/8661503ff8ce25049e35a45562abd75c292831ca546c8d824c002931b00f5c31.png" src="../../_images/8661503ff8ce25049e35a45562abd75c292831ca546c8d824c002931b00f5c31.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;PTRATIO&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;price&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;CHAS&#39;</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/04f3f0e1d6c650ccd6bc7ca076f29e62e37ac52ebb1daad8b8002035d4985695.png" src="../../_images/04f3f0e1d6c650ccd6bc7ca076f29e62e37ac52ebb1daad8b8002035d4985695.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Drop unneeded cols</span>
+<span class="n">drop_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;INDUS&#39;</span><span class="p">]</span>
+<span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">col</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">drop_cols</span> <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>CRIM</th>
+      <th>ZN</th>
+      <th>CHAS</th>
+      <th>NOX</th>
+      <th>RM</th>
+      <th>AGE</th>
+      <th>DIS</th>
+      <th>RAD</th>
+      <th>TAX</th>
+      <th>PTRATIO</th>
+      <th>LSTAT</th>
+      <th>price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.00632</td>
+      <td>18.0</td>
+      <td>0.0</td>
+      <td>0.538</td>
+      <td>6.575</td>
+      <td>65.2</td>
+      <td>4.0900</td>
+      <td>1.0</td>
+      <td>296.0</td>
+      <td>15.3</td>
+      <td>4.98</td>
+      <td>24.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.02731</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.469</td>
+      <td>6.421</td>
+      <td>78.9</td>
+      <td>4.9671</td>
+      <td>2.0</td>
+      <td>242.0</td>
+      <td>17.8</td>
+      <td>9.14</td>
+      <td>21.6</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.02729</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.469</td>
+      <td>7.185</td>
+      <td>61.1</td>
+      <td>4.9671</td>
+      <td>2.0</td>
+      <td>242.0</td>
+      <td>17.8</td>
+      <td>4.03</td>
+      <td>34.7</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.03237</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.458</td>
+      <td>6.998</td>
+      <td>45.8</td>
+      <td>6.0622</td>
+      <td>3.0</td>
+      <td>222.0</td>
+      <td>18.7</td>
+      <td>2.94</td>
+      <td>33.4</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.06905</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.458</td>
+      <td>7.147</td>
+      <td>54.2</td>
+      <td>6.0622</td>
+      <td>3.0</td>
+      <td>222.0</td>
+      <td>18.7</td>
+      <td>5.33</td>
+      <td>36.2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Recasting datatypes</span>
+<span class="n">df</span><span class="o">.</span><span class="n">dtypes</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CRIM       float64
+ZN         float64
+CHAS       float64
+NOX        float64
+RM         float64
+AGE        float64
+DIS        float64
+RAD        float64
+TAX        float64
+PTRATIO    float64
+LSTAT      float64
+price      float64
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">recast_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;CHAS&#39;</span><span class="p">:</span><span class="nb">int</span><span class="p">}</span>
+<span class="k">for</span> <span class="n">col</span><span class="p">,</span> <span class="n">dtype</span> <span class="ow">in</span> <span class="n">recast_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">dtypes</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CRIM       float64
+ZN         float64
+CHAS         int64
+NOX        float64
+RM         float64
+AGE        float64
+DIS        float64
+RAD        float64
+TAX        float64
+PTRATIO    float64
+LSTAT      float64
+price      float64
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>CRIM</th>
+      <th>ZN</th>
+      <th>CHAS</th>
+      <th>NOX</th>
+      <th>RM</th>
+      <th>AGE</th>
+      <th>DIS</th>
+      <th>RAD</th>
+      <th>TAX</th>
+      <th>PTRATIO</th>
+      <th>LSTAT</th>
+      <th>price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>506.000</td>
+      <td>506.000</td>
+      <td>506.000</td>
+      <td>506.000</td>
+      <td>506.000</td>
+      <td>506.000</td>
+      <td>506.000</td>
+      <td>506.000</td>
+      <td>506.000</td>
+      <td>506.000</td>
+      <td>506.000</td>
+      <td>506.000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>3.614</td>
+      <td>11.364</td>
+      <td>0.069</td>
+      <td>0.555</td>
+      <td>6.285</td>
+      <td>68.575</td>
+      <td>3.795</td>
+      <td>9.549</td>
+      <td>408.237</td>
+      <td>18.456</td>
+      <td>12.653</td>
+      <td>22.533</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>8.602</td>
+      <td>23.322</td>
+      <td>0.254</td>
+      <td>0.116</td>
+      <td>0.703</td>
+      <td>28.149</td>
+      <td>2.106</td>
+      <td>8.707</td>
+      <td>168.537</td>
+      <td>2.165</td>
+      <td>7.141</td>
+      <td>9.197</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>0.006</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.385</td>
+      <td>3.561</td>
+      <td>2.900</td>
+      <td>1.130</td>
+      <td>1.000</td>
+      <td>187.000</td>
+      <td>12.600</td>
+      <td>1.730</td>
+      <td>5.000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>0.082</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.449</td>
+      <td>5.886</td>
+      <td>45.025</td>
+      <td>2.100</td>
+      <td>4.000</td>
+      <td>279.000</td>
+      <td>17.400</td>
+      <td>6.950</td>
+      <td>17.025</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>0.257</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.538</td>
+      <td>6.208</td>
+      <td>77.500</td>
+      <td>3.207</td>
+      <td>5.000</td>
+      <td>330.000</td>
+      <td>19.050</td>
+      <td>11.360</td>
+      <td>21.200</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>3.677</td>
+      <td>12.500</td>
+      <td>0.000</td>
+      <td>0.624</td>
+      <td>6.624</td>
+      <td>94.075</td>
+      <td>5.188</td>
+      <td>24.000</td>
+      <td>666.000</td>
+      <td>20.200</td>
+      <td>16.955</td>
+      <td>25.000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>88.976</td>
+      <td>100.000</td>
+      <td>1.000</td>
+      <td>0.871</td>
+      <td>8.780</td>
+      <td>100.000</td>
+      <td>12.126</td>
+      <td>24.000</td>
+      <td>711.000</td>
+      <td>22.000</td>
+      <td>37.970</td>
+      <td>50.000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="s1">&#39;int&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;CHAS&#39;], dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;CHAS&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    471
+1     35
+Name: CHAS, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Get lists of categorical vs numeric columns</span>
+<span class="n">target</span> <span class="o">=</span> <span class="s1">&#39;price&#39;</span>
+
+<span class="c1">## Scale non-categorical columns</span>
+<span class="n">cat_cols</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="s1">&#39;int&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+<span class="n">num_cols</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target</span><span class="p">])</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;number&#39;</span><span class="p">],</span>
+                                                   <span class="n">exclude</span><span class="o">=</span> <span class="p">[</span><span class="s1">&#39;int&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+<span class="n">cat_cols</span><span class="p">,</span> <span class="n">num_cols</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>([&#39;CHAS&#39;],
+ [&#39;CRIM&#39;, &#39;ZN&#39;, &#39;NOX&#39;, &#39;RM&#39;, &#39;AGE&#39;, &#39;DIS&#39;, &#39;RAD&#39;, &#39;TAX&#39;, &#39;PTRATIO&#39;, &#39;LSTAT&#39;])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Scale data</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span>
+
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">df</span><span class="p">[</span><span class="n">num_cols</span><span class="p">]</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">num_cols</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>CRIM</th>
+      <th>ZN</th>
+      <th>CHAS</th>
+      <th>NOX</th>
+      <th>RM</th>
+      <th>AGE</th>
+      <th>DIS</th>
+      <th>RAD</th>
+      <th>TAX</th>
+      <th>PTRATIO</th>
+      <th>LSTAT</th>
+      <th>price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>506.000</td>
+      <td>506.000</td>
+      <td>506.000</td>
+      <td>506.000</td>
+      <td>506.000</td>
+      <td>506.000</td>
+      <td>506.000</td>
+      <td>506.000</td>
+      <td>506.000</td>
+      <td>506.000</td>
+      <td>506.000</td>
+      <td>506.000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>-0.000</td>
+      <td>0.000</td>
+      <td>0.069</td>
+      <td>-0.000</td>
+      <td>-0.000</td>
+      <td>-0.000</td>
+      <td>-0.000</td>
+      <td>-0.000</td>
+      <td>0.000</td>
+      <td>-0.000</td>
+      <td>-0.000</td>
+      <td>22.533</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>1.001</td>
+      <td>1.001</td>
+      <td>0.254</td>
+      <td>1.001</td>
+      <td>1.001</td>
+      <td>1.001</td>
+      <td>1.001</td>
+      <td>1.001</td>
+      <td>1.001</td>
+      <td>1.001</td>
+      <td>1.001</td>
+      <td>9.197</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>-0.420</td>
+      <td>-0.488</td>
+      <td>0.000</td>
+      <td>-1.466</td>
+      <td>-3.880</td>
+      <td>-2.335</td>
+      <td>-1.267</td>
+      <td>-0.983</td>
+      <td>-1.314</td>
+      <td>-2.707</td>
+      <td>-1.531</td>
+      <td>5.000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>-0.411</td>
+      <td>-0.488</td>
+      <td>0.000</td>
+      <td>-0.913</td>
+      <td>-0.569</td>
+      <td>-0.837</td>
+      <td>-0.806</td>
+      <td>-0.638</td>
+      <td>-0.768</td>
+      <td>-0.488</td>
+      <td>-0.799</td>
+      <td>17.025</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>-0.391</td>
+      <td>-0.488</td>
+      <td>0.000</td>
+      <td>-0.144</td>
+      <td>-0.108</td>
+      <td>0.317</td>
+      <td>-0.279</td>
+      <td>-0.523</td>
+      <td>-0.465</td>
+      <td>0.275</td>
+      <td>-0.181</td>
+      <td>21.200</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>0.007</td>
+      <td>0.049</td>
+      <td>0.000</td>
+      <td>0.599</td>
+      <td>0.483</td>
+      <td>0.907</td>
+      <td>0.662</td>
+      <td>1.661</td>
+      <td>1.531</td>
+      <td>0.807</td>
+      <td>0.603</td>
+      <td>25.000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>9.934</td>
+      <td>3.804</td>
+      <td>1.000</td>
+      <td>2.732</td>
+      <td>3.555</td>
+      <td>1.117</td>
+      <td>3.961</td>
+      <td>1.661</td>
+      <td>1.798</td>
+      <td>1.639</td>
+      <td>3.549</td>
+      <td>50.000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># deal with outliers in numeric non-target columns</span>
+<span class="n">idx_out</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">find_outliers_Z</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;CRIM&#39;</span><span class="p">])</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx_out</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>CRIM</th>
+      <th>ZN</th>
+      <th>CHAS</th>
+      <th>NOX</th>
+      <th>RM</th>
+      <th>AGE</th>
+      <th>DIS</th>
+      <th>RAD</th>
+      <th>TAX</th>
+      <th>PTRATIO</th>
+      <th>LSTAT</th>
+      <th>price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>380</th>
+      <td>9.933931</td>
+      <td>-0.487722</td>
+      <td>0</td>
+      <td>1.004680</td>
+      <td>0.973563</td>
+      <td>0.829454</td>
+      <td>-1.130686</td>
+      <td>1.661245</td>
+      <td>1.530926</td>
+      <td>0.806576</td>
+      <td>0.638763</td>
+      <td>10.4</td>
+    </tr>
+    <tr>
+      <th>398</th>
+      <td>4.042606</td>
+      <td>-0.487722</td>
+      <td>0</td>
+      <td>1.194724</td>
+      <td>-1.184795</td>
+      <td>1.117494</td>
+      <td>-1.095936</td>
+      <td>1.661245</td>
+      <td>1.530926</td>
+      <td>0.806576</td>
+      <td>2.514288</td>
+      <td>5.0</td>
+    </tr>
+    <tr>
+      <th>404</th>
+      <td>4.412370</td>
+      <td>-0.487722</td>
+      <td>0</td>
+      <td>1.194724</td>
+      <td>-1.073672</td>
+      <td>0.598310</td>
+      <td>-1.039938</td>
+      <td>1.661245</td>
+      <td>1.530926</td>
+      <td>0.806576</td>
+      <td>2.064330</td>
+      <td>8.5</td>
+    </tr>
+    <tr>
+      <th>405</th>
+      <td>7.483646</td>
+      <td>-0.487722</td>
+      <td>0</td>
+      <td>1.194724</td>
+      <td>-0.857124</td>
+      <td>1.117494</td>
+      <td>-1.126455</td>
+      <td>1.661245</td>
+      <td>1.530926</td>
+      <td>0.806576</td>
+      <td>1.447566</td>
+      <td>5.0</td>
+    </tr>
+    <tr>
+      <th>410</th>
+      <td>5.530321</td>
+      <td>-0.487722</td>
+      <td>0</td>
+      <td>0.365444</td>
+      <td>-0.751699</td>
+      <td>1.117494</td>
+      <td>-1.132350</td>
+      <td>1.661245</td>
+      <td>1.530926</td>
+      <td>0.806576</td>
+      <td>-0.356471</td>
+      <td>15.0</td>
+    </tr>
+    <tr>
+      <th>414</th>
+      <td>4.903104</td>
+      <td>-0.487722</td>
+      <td>0</td>
+      <td>1.194724</td>
+      <td>-2.515426</td>
+      <td>1.117494</td>
+      <td>-1.015789</td>
+      <td>1.661245</td>
+      <td>1.530926</td>
+      <td>0.806576</td>
+      <td>3.409999</td>
+      <td>7.0</td>
+    </tr>
+    <tr>
+      <th>418</th>
+      <td>8.136884</td>
+      <td>-0.487722</td>
+      <td>0</td>
+      <td>1.073787</td>
+      <td>-0.466767</td>
+      <td>1.117494</td>
+      <td>-0.947146</td>
+      <td>1.661245</td>
+      <td>1.530926</td>
+      <td>0.806576</td>
+      <td>1.116756</td>
+      <td>8.8</td>
+    </tr>
+    <tr>
+      <th>427</th>
+      <td>3.962320</td>
+      <td>-0.487722</td>
+      <td>0</td>
+      <td>1.073787</td>
+      <td>-0.117726</td>
+      <td>0.360054</td>
+      <td>-0.918481</td>
+      <td>1.661245</td>
+      <td>1.530926</td>
+      <td>0.806576</td>
+      <td>0.261696</td>
+      <td>10.9</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_outs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<span class="c1">## Find outliers</span>
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">num_cols</span><span class="p">:</span>
+    <span class="n">idx_outs</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">find_outliers_Z</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">])</span>
+    <span class="n">df_outs</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">=</span> <span class="n">idx_outs</span>
+<span class="c1">## Remove outliers</span>
+<span class="n">out_rows</span> <span class="o">=</span> <span class="n">df_outs</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">out_rows</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0      False
+1      False
+2      False
+3      False
+4      False
+       ...  
+501    False
+502    False
+503    False
+504    False
+505    False
+Length: 506, dtype: bool
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">out_rows</span><span class="p">]</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>CRIM</th>
+      <th>ZN</th>
+      <th>CHAS</th>
+      <th>NOX</th>
+      <th>RM</th>
+      <th>AGE</th>
+      <th>DIS</th>
+      <th>RAD</th>
+      <th>TAX</th>
+      <th>PTRATIO</th>
+      <th>LSTAT</th>
+      <th>price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-0.419782</td>
+      <td>0.284830</td>
+      <td>0</td>
+      <td>-0.144217</td>
+      <td>0.413672</td>
+      <td>-0.120013</td>
+      <td>0.140214</td>
+      <td>-0.982843</td>
+      <td>-0.666608</td>
+      <td>-1.459000</td>
+      <td>-1.075562</td>
+      <td>24.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-0.417339</td>
+      <td>-0.487722</td>
+      <td>0</td>
+      <td>-0.740262</td>
+      <td>0.194274</td>
+      <td>0.367166</td>
+      <td>0.557160</td>
+      <td>-0.867883</td>
+      <td>-0.987329</td>
+      <td>-0.303094</td>
+      <td>-0.492439</td>
+      <td>21.6</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-0.417342</td>
+      <td>-0.487722</td>
+      <td>0</td>
+      <td>-0.740262</td>
+      <td>1.282714</td>
+      <td>-0.265812</td>
+      <td>0.557160</td>
+      <td>-0.867883</td>
+      <td>-0.987329</td>
+      <td>-0.303094</td>
+      <td>-1.208727</td>
+      <td>34.7</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-0.416750</td>
+      <td>-0.487722</td>
+      <td>0</td>
+      <td>-0.835284</td>
+      <td>1.016303</td>
+      <td>-0.809889</td>
+      <td>1.077737</td>
+      <td>-0.752922</td>
+      <td>-1.106115</td>
+      <td>0.113032</td>
+      <td>-1.361517</td>
+      <td>33.4</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-0.412482</td>
+      <td>-0.487722</td>
+      <td>0</td>
+      <td>-0.835284</td>
+      <td>1.228577</td>
+      <td>-0.511180</td>
+      <td>1.077737</td>
+      <td>-0.752922</td>
+      <td>-1.106115</td>
+      <td>0.113032</td>
+      <td>-1.026501</td>
+      <td>36.2</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>501</th>
+      <td>-0.413229</td>
+      <td>-0.487722</td>
+      <td>0</td>
+      <td>0.158124</td>
+      <td>0.439316</td>
+      <td>0.018673</td>
+      <td>-0.625796</td>
+      <td>-0.982843</td>
+      <td>-0.803212</td>
+      <td>1.176466</td>
+      <td>-0.418147</td>
+      <td>22.4</td>
+    </tr>
+    <tr>
+      <th>502</th>
+      <td>-0.415249</td>
+      <td>-0.487722</td>
+      <td>0</td>
+      <td>0.158124</td>
+      <td>-0.234548</td>
+      <td>0.288933</td>
+      <td>-0.716639</td>
+      <td>-0.982843</td>
+      <td>-0.803212</td>
+      <td>1.176466</td>
+      <td>-0.500850</td>
+      <td>20.6</td>
+    </tr>
+    <tr>
+      <th>503</th>
+      <td>-0.413447</td>
+      <td>-0.487722</td>
+      <td>0</td>
+      <td>0.158124</td>
+      <td>0.984960</td>
+      <td>0.797449</td>
+      <td>-0.773684</td>
+      <td>-0.982843</td>
+      <td>-0.803212</td>
+      <td>1.176466</td>
+      <td>-0.983048</td>
+      <td>23.9</td>
+    </tr>
+    <tr>
+      <th>504</th>
+      <td>-0.407764</td>
+      <td>-0.487722</td>
+      <td>0</td>
+      <td>0.158124</td>
+      <td>0.725672</td>
+      <td>0.736996</td>
+      <td>-0.668437</td>
+      <td>-0.982843</td>
+      <td>-0.803212</td>
+      <td>1.176466</td>
+      <td>-0.865302</td>
+      <td>22.0</td>
+    </tr>
+    <tr>
+      <th>505</th>
+      <td>-0.415000</td>
+      <td>-0.487722</td>
+      <td>0</td>
+      <td>0.158124</td>
+      <td>-0.362767</td>
+      <td>0.434732</td>
+      <td>-0.613246</td>
+      <td>-0.982843</td>
+      <td>-0.803212</td>
+      <td>1.176466</td>
+      <td>-0.669058</td>
+      <td>11.9</td>
+    </tr>
+  </tbody>
+</table>
+<p>469 rows × 12 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>CRIM</th>
+      <th>ZN</th>
+      <th>CHAS</th>
+      <th>NOX</th>
+      <th>RM</th>
+      <th>AGE</th>
+      <th>DIS</th>
+      <th>RAD</th>
+      <th>TAX</th>
+      <th>PTRATIO</th>
+      <th>LSTAT</th>
+      <th>price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>469.000</td>
+      <td>469.000</td>
+      <td>469.000</td>
+      <td>469.000</td>
+      <td>469.000</td>
+      <td>469.000</td>
+      <td>469.000</td>
+      <td>469.000</td>
+      <td>469.000</td>
+      <td>469.000</td>
+      <td>469.000</td>
+      <td>469.000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>-0.101</td>
+      <td>-0.107</td>
+      <td>0.070</td>
+      <td>0.012</td>
+      <td>-0.007</td>
+      <td>0.020</td>
+      <td>-0.038</td>
+      <td>-0.022</td>
+      <td>-0.021</td>
+      <td>0.012</td>
+      <td>-0.003</td>
+      <td>22.287</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>0.582</td>
+      <td>0.812</td>
+      <td>0.256</td>
+      <td>0.991</td>
+      <td>0.876</td>
+      <td>0.978</td>
+      <td>0.912</td>
+      <td>0.985</td>
+      <td>0.990</td>
+      <td>0.982</td>
+      <td>0.937</td>
+      <td>8.622</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>-0.420</td>
+      <td>-0.488</td>
+      <td>0.000</td>
+      <td>-1.466</td>
+      <td>-2.731</td>
+      <td>-2.335</td>
+      <td>-1.267</td>
+      <td>-0.983</td>
+      <td>-1.308</td>
+      <td>-2.707</td>
+      <td>-1.531</td>
+      <td>5.600</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>-0.410</td>
+      <td>-0.488</td>
+      <td>0.000</td>
+      <td>-0.835</td>
+      <td>-0.561</td>
+      <td>-0.760</td>
+      <td>-0.795</td>
+      <td>-0.638</td>
+      <td>-0.768</td>
+      <td>-0.488</td>
+      <td>-0.741</td>
+      <td>17.100</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>-0.391</td>
+      <td>-0.488</td>
+      <td>0.000</td>
+      <td>-0.144</td>
+      <td>-0.109</td>
+      <td>0.310</td>
+      <td>-0.275</td>
+      <td>-0.523</td>
+      <td>-0.465</td>
+      <td>0.298</td>
+      <td>-0.142</td>
+      <td>21.100</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>-0.052</td>
+      <td>-0.488</td>
+      <td>0.000</td>
+      <td>0.599</td>
+      <td>0.439</td>
+      <td>0.901</td>
+      <td>0.557</td>
+      <td>-0.178</td>
+      <td>1.531</td>
+      <td>0.807</td>
+      <td>0.595</td>
+      <td>24.800</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>2.914</td>
+      <td>2.946</td>
+      <td>1.000</td>
+      <td>2.732</td>
+      <td>2.978</td>
+      <td>1.117</td>
+      <td>2.580</td>
+      <td>1.661</td>
+      <td>1.798</td>
+      <td>1.269</td>
+      <td>2.995</td>
+      <td>50.000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target</span><span class="o">=</span><span class="s1">&#39;price&#39;</span>
+<span class="n">col_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">target</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+<span class="n">col_list</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;CRIM&#39;,
+ &#39;ZN&#39;,
+ &#39;CHAS&#39;,
+ &#39;NOX&#39;,
+ &#39;RM&#39;,
+ &#39;AGE&#39;,
+ &#39;DIS&#39;,
+ &#39;RAD&#39;,
+ &#39;TAX&#39;,
+ &#39;PTRATIO&#39;,
+ &#39;LSTAT&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## MAKE FULL FORMULA</span>
+<span class="n">formula</span> <span class="o">=</span> <span class="n">target</span><span class="o">+</span><span class="s1">&#39;~&#39;</span><span class="o">+</span> <span class="s1">&#39; + &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">col_list</span><span class="p">)</span> <span class="c1">#target~predictors</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>OLS Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>          <td>price</td>      <th>  R-squared:         </th> <td>   0.735</td> 
+</tr>
+<tr>
+  <th>Model:</th>                   <td>OLS</td>       <th>  Adj. R-squared:    </th> <td>   0.729</td> 
+</tr>
+<tr>
+  <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th> <td>   115.2</td> 
+</tr>
+<tr>
+  <th>Date:</th>             <td>Tue, 13 Apr 2021</td> <th>  Prob (F-statistic):</th> <td>3.40e-124</td>
+</tr>
+<tr>
+  <th>Time:</th>                 <td>13:46:11</td>     <th>  Log-Likelihood:    </th> <td> -1363.9</td> 
+</tr>
+<tr>
+  <th>No. Observations:</th>      <td>   469</td>      <th>  AIC:               </th> <td>   2752.</td> 
+</tr>
+<tr>
+  <th>Df Residuals:</th>          <td>   457</td>      <th>  BIC:               </th> <td>   2802.</td> 
+</tr>
+<tr>
+  <th>Df Model:</th>              <td>    11</td>      <th>                     </th>     <td> </td>    
+</tr>
+<tr>
+  <th>Covariance Type:</th>      <td>nonrobust</td>    <th>                     </th>     <td> </td>    
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+      <td></td>         <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th> <td>   21.8876</td> <td>    0.224</td> <td>   97.758</td> <td> 0.000</td> <td>   21.448</td> <td>   22.328</td>
+</tr>
+<tr>
+  <th>CRIM</th>      <td>   -1.4183</td> <td>    0.661</td> <td>   -2.145</td> <td> 0.032</td> <td>   -2.718</td> <td>   -0.119</td>
+</tr>
+<tr>
+  <th>ZN</th>        <td>    0.1895</td> <td>    0.359</td> <td>    0.528</td> <td> 0.598</td> <td>   -0.516</td> <td>    0.895</td>
+</tr>
+<tr>
+  <th>CHAS</th>      <td>    3.4029</td> <td>    0.837</td> <td>    4.067</td> <td> 0.000</td> <td>    1.759</td> <td>    5.047</td>
+</tr>
+<tr>
+  <th>NOX</th>       <td>   -1.8117</td> <td>    0.421</td> <td>   -4.299</td> <td> 0.000</td> <td>   -2.640</td> <td>   -0.984</td>
+</tr>
+<tr>
+  <th>RM</th>        <td>    3.0758</td> <td>    0.325</td> <td>    9.474</td> <td> 0.000</td> <td>    2.438</td> <td>    3.714</td>
+</tr>
+<tr>
+  <th>AGE</th>       <td>   -0.0989</td> <td>    0.363</td> <td>   -0.273</td> <td> 0.785</td> <td>   -0.811</td> <td>    0.614</td>
+</tr>
+<tr>
+  <th>DIS</th>       <td>   -2.7331</td> <td>    0.428</td> <td>   -6.393</td> <td> 0.000</td> <td>   -3.573</td> <td>   -1.893</td>
+</tr>
+<tr>
+  <th>RAD</th>       <td>    2.1251</td> <td>    0.599</td> <td>    3.545</td> <td> 0.000</td> <td>    0.947</td> <td>    3.303</td>
+</tr>
+<tr>
+  <th>TAX</th>       <td>   -1.6301</td> <td>    0.557</td> <td>   -2.926</td> <td> 0.004</td> <td>   -2.725</td> <td>   -0.535</td>
+</tr>
+<tr>
+  <th>PTRATIO</th>   <td>   -1.9158</td> <td>    0.278</td> <td>   -6.897</td> <td> 0.000</td> <td>   -2.462</td> <td>   -1.370</td>
+</tr>
+<tr>
+  <th>LSTAT</th>     <td>   -4.0839</td> <td>    0.386</td> <td>  -10.579</td> <td> 0.000</td> <td>   -4.843</td> <td>   -3.325</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+  <th>Omnibus:</th>       <td>205.669</td> <th>  Durbin-Watson:     </th> <td>   1.118</td> 
+</tr>
+<tr>
+  <th>Prob(Omnibus):</th> <td> 0.000</td>  <th>  Jarque-Bera (JB):  </th> <td>1292.504</td> 
+</tr>
+<tr>
+  <th>Skew:</th>          <td> 1.795</td>  <th>  Prob(JB):          </th> <td>2.17e-281</td>
+</tr>
+<tr>
+  <th>Kurtosis:</th>      <td>10.298</td>  <th>  Cond. No.          </th> <td>    8.98</td> 
+</tr>
+</table><br/><br/>Notes:<br/>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Diagnose Model</span>
+<span class="n">resids</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">resid</span>
+
+<span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">sms</span><span class="o">.</span><span class="n">qqplot</span><span class="p">(</span><span class="n">resids</span><span class="p">,</span> <span class="n">stats</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">norm</span><span class="p">,</span>
+          <span class="n">fit</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="s1">&#39;45&#39;</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">resids</span><span class="p">))</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">xs</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="n">resids</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PathCollection at 0x7fdb304b1eb0&gt;
+</pre></div>
+</div>
+<img alt="../../_images/804b489ce05a1ff3c9b34fca62a02e4aca2664c08fbb16c97c46f4926b752b14.png" src="../../_images/804b489ce05a1ff3c9b34fca62a02e4aca2664c08fbb16c97c46f4926b752b14.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">stats</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sms</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.formula.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">smf</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">make_ols_f</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="n">target</span><span class="o">=</span><span class="s1">&#39;price&#39;</span><span class="p">,</span><span class="n">col_list</span><span class="o">=</span><span class="p">[],</span> <span class="n">diagnose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Makes statsmodels formula-based regression with options to make categorical columns.    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        df (Frame): df with data</span>
+<span class="sd">        target (str): target column name</span>
+<span class="sd">        diagnose (bool, optional): Plot Q-Q plot &amp; residuals. Defaults to True.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        model : statsmodels ols model</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1">## Get list of columns to use</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">col_list</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+        <span class="n">col_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">target</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+
+
+    <span class="c1">## MAKE FULL FORMULA</span>
+    <span class="n">formula</span> <span class="o">=</span> <span class="n">target</span><span class="o">+</span><span class="s1">&#39;~&#39;</span><span class="o">+</span><span class="s1">&#39;+&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">col_list</span><span class="p">)</span> <span class="c1">#target~predictors</span>
+    
+    <span class="c1">## Fit model and display summary</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+        
+    <span class="c1">## Plot Q-Qplot &amp; model residuals</span>
+    <span class="k">if</span> <span class="n">diagnose</span><span class="p">:</span>
+        <span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">diagnose_model</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">model</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">diagnose_model</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plot Q-Q plot and model residuals from statsmodels ols model.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        model (smf.ols model): statsmodels formula ols </span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        fig, ax: matplotlib objects</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">resids</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">resid</span>
+    
+    <span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+    <span class="n">sms</span><span class="o">.</span><span class="n">qqplot</span><span class="p">(</span><span class="n">resids</span><span class="p">,</span> <span class="n">stats</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">norm</span><span class="p">,</span>
+              <span class="n">fit</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="s1">&#39;45&#39;</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">resids</span><span class="p">))</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">xs</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="n">resids</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">fig</span><span class="p">,</span><span class="n">ax</span>  
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="making-a-baseline-model">
+<h2>Making a baseline model<a class="headerlink" href="#making-a-baseline-model" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model1</span> <span class="o">=</span> <span class="n">make_ols_f</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="n">target</span><span class="o">=</span><span class="s1">&#39;price&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>OLS Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>          <td>price</td>      <th>  R-squared:         </th> <td>   0.735</td> 
+</tr>
+<tr>
+  <th>Model:</th>                   <td>OLS</td>       <th>  Adj. R-squared:    </th> <td>   0.729</td> 
+</tr>
+<tr>
+  <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th> <td>   115.2</td> 
+</tr>
+<tr>
+  <th>Date:</th>             <td>Tue, 13 Apr 2021</td> <th>  Prob (F-statistic):</th> <td>3.40e-124</td>
+</tr>
+<tr>
+  <th>Time:</th>                 <td>13:46:11</td>     <th>  Log-Likelihood:    </th> <td> -1363.9</td> 
+</tr>
+<tr>
+  <th>No. Observations:</th>      <td>   469</td>      <th>  AIC:               </th> <td>   2752.</td> 
+</tr>
+<tr>
+  <th>Df Residuals:</th>          <td>   457</td>      <th>  BIC:               </th> <td>   2802.</td> 
+</tr>
+<tr>
+  <th>Df Model:</th>              <td>    11</td>      <th>                     </th>     <td> </td>    
+</tr>
+<tr>
+  <th>Covariance Type:</th>      <td>nonrobust</td>    <th>                     </th>     <td> </td>    
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+      <td></td>         <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th> <td>   21.8876</td> <td>    0.224</td> <td>   97.758</td> <td> 0.000</td> <td>   21.448</td> <td>   22.328</td>
+</tr>
+<tr>
+  <th>CRIM</th>      <td>   -1.4183</td> <td>    0.661</td> <td>   -2.145</td> <td> 0.032</td> <td>   -2.718</td> <td>   -0.119</td>
+</tr>
+<tr>
+  <th>ZN</th>        <td>    0.1895</td> <td>    0.359</td> <td>    0.528</td> <td> 0.598</td> <td>   -0.516</td> <td>    0.895</td>
+</tr>
+<tr>
+  <th>CHAS</th>      <td>    3.4029</td> <td>    0.837</td> <td>    4.067</td> <td> 0.000</td> <td>    1.759</td> <td>    5.047</td>
+</tr>
+<tr>
+  <th>NOX</th>       <td>   -1.8117</td> <td>    0.421</td> <td>   -4.299</td> <td> 0.000</td> <td>   -2.640</td> <td>   -0.984</td>
+</tr>
+<tr>
+  <th>RM</th>        <td>    3.0758</td> <td>    0.325</td> <td>    9.474</td> <td> 0.000</td> <td>    2.438</td> <td>    3.714</td>
+</tr>
+<tr>
+  <th>AGE</th>       <td>   -0.0989</td> <td>    0.363</td> <td>   -0.273</td> <td> 0.785</td> <td>   -0.811</td> <td>    0.614</td>
+</tr>
+<tr>
+  <th>DIS</th>       <td>   -2.7331</td> <td>    0.428</td> <td>   -6.393</td> <td> 0.000</td> <td>   -3.573</td> <td>   -1.893</td>
+</tr>
+<tr>
+  <th>RAD</th>       <td>    2.1251</td> <td>    0.599</td> <td>    3.545</td> <td> 0.000</td> <td>    0.947</td> <td>    3.303</td>
+</tr>
+<tr>
+  <th>TAX</th>       <td>   -1.6301</td> <td>    0.557</td> <td>   -2.926</td> <td> 0.004</td> <td>   -2.725</td> <td>   -0.535</td>
+</tr>
+<tr>
+  <th>PTRATIO</th>   <td>   -1.9158</td> <td>    0.278</td> <td>   -6.897</td> <td> 0.000</td> <td>   -2.462</td> <td>   -1.370</td>
+</tr>
+<tr>
+  <th>LSTAT</th>     <td>   -4.0839</td> <td>    0.386</td> <td>  -10.579</td> <td> 0.000</td> <td>   -4.843</td> <td>   -3.325</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+  <th>Omnibus:</th>       <td>205.669</td> <th>  Durbin-Watson:     </th> <td>   1.118</td> 
+</tr>
+<tr>
+  <th>Prob(Omnibus):</th> <td> 0.000</td>  <th>  Jarque-Bera (JB):  </th> <td>1292.504</td> 
+</tr>
+<tr>
+  <th>Skew:</th>          <td> 1.795</td>  <th>  Prob(JB):          </th> <td>2.17e-281</td>
+</tr>
+<tr>
+  <th>Kurtosis:</th>      <td>10.298</td>  <th>  Cond. No.          </th> <td>    8.98</td> 
+</tr>
+</table><br/><br/>Notes:<br/>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.</div><img alt="../../_images/804b489ce05a1ff3c9b34fca62a02e4aca2664c08fbb16c97c46f4926b752b14.png" src="../../_images/804b489ce05a1ff3c9b34fca62a02e4aca2664c08fbb16c97c46f4926b752b14.png" />
+</div>
+</div>
+</section>
+<section id="interactions-effect-on-model">
+<h2>Interactions Effect On Model<a class="headerlink" href="#interactions-effect-on-model" title="Permalink to this heading">#</a></h2>
+<section id="adding-interaction-terms">
+<h3>Adding interaction terms<a class="headerlink" href="#adding-interaction-terms" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;CHAS_TAX&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;CHAS&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;TAX&#39;</span><span class="p">]</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>CRIM</th>
+      <th>ZN</th>
+      <th>CHAS</th>
+      <th>NOX</th>
+      <th>RM</th>
+      <th>AGE</th>
+      <th>DIS</th>
+      <th>RAD</th>
+      <th>TAX</th>
+      <th>PTRATIO</th>
+      <th>LSTAT</th>
+      <th>price</th>
+      <th>CHAS_TAX</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-0.419782</td>
+      <td>0.284830</td>
+      <td>0</td>
+      <td>-0.144217</td>
+      <td>0.413672</td>
+      <td>-0.120013</td>
+      <td>0.140214</td>
+      <td>-0.982843</td>
+      <td>-0.666608</td>
+      <td>-1.459000</td>
+      <td>-1.075562</td>
+      <td>24.0</td>
+      <td>-0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-0.417339</td>
+      <td>-0.487722</td>
+      <td>0</td>
+      <td>-0.740262</td>
+      <td>0.194274</td>
+      <td>0.367166</td>
+      <td>0.557160</td>
+      <td>-0.867883</td>
+      <td>-0.987329</td>
+      <td>-0.303094</td>
+      <td>-0.492439</td>
+      <td>21.6</td>
+      <td>-0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-0.417342</td>
+      <td>-0.487722</td>
+      <td>0</td>
+      <td>-0.740262</td>
+      <td>1.282714</td>
+      <td>-0.265812</td>
+      <td>0.557160</td>
+      <td>-0.867883</td>
+      <td>-0.987329</td>
+      <td>-0.303094</td>
+      <td>-1.208727</td>
+      <td>34.7</td>
+      <td>-0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-0.416750</td>
+      <td>-0.487722</td>
+      <td>0</td>
+      <td>-0.835284</td>
+      <td>1.016303</td>
+      <td>-0.809889</td>
+      <td>1.077737</td>
+      <td>-0.752922</td>
+      <td>-1.106115</td>
+      <td>0.113032</td>
+      <td>-1.361517</td>
+      <td>33.4</td>
+      <td>-0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-0.412482</td>
+      <td>-0.487722</td>
+      <td>0</td>
+      <td>-0.835284</td>
+      <td>1.228577</td>
+      <td>-0.511180</td>
+      <td>1.077737</td>
+      <td>-0.752922</td>
+      <td>-1.106115</td>
+      <td>0.113032</td>
+      <td>-1.026501</td>
+      <td>36.2</td>
+      <td>-0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## To create multiple interaction columns</span>
+<span class="n">ixn_cols</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;CHAS&#39;</span><span class="p">,</span><span class="s2">&quot;TAX&quot;</span><span class="p">],</span>
+            <span class="p">[</span><span class="s1">&#39;CHAS&#39;</span><span class="p">,</span><span class="s1">&#39;PTRATIO&#39;</span><span class="p">]]</span>
+
+<span class="k">for</span> <span class="n">cols</span> <span class="ow">in</span> <span class="n">ixn_cols</span><span class="p">:</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">cols</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;_&#39;</span><span class="o">+</span> <span class="n">cols</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">cols</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="n">cols</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>CRIM</th>
+      <th>ZN</th>
+      <th>CHAS</th>
+      <th>NOX</th>
+      <th>RM</th>
+      <th>AGE</th>
+      <th>DIS</th>
+      <th>RAD</th>
+      <th>TAX</th>
+      <th>PTRATIO</th>
+      <th>LSTAT</th>
+      <th>price</th>
+      <th>CHAS_TAX</th>
+      <th>CHAS_PTRATIO</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-0.419782</td>
+      <td>0.284830</td>
+      <td>0</td>
+      <td>-0.144217</td>
+      <td>0.413672</td>
+      <td>-0.120013</td>
+      <td>0.140214</td>
+      <td>-0.982843</td>
+      <td>-0.666608</td>
+      <td>-1.459000</td>
+      <td>-1.075562</td>
+      <td>24.0</td>
+      <td>-0.0</td>
+      <td>-0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-0.417339</td>
+      <td>-0.487722</td>
+      <td>0</td>
+      <td>-0.740262</td>
+      <td>0.194274</td>
+      <td>0.367166</td>
+      <td>0.557160</td>
+      <td>-0.867883</td>
+      <td>-0.987329</td>
+      <td>-0.303094</td>
+      <td>-0.492439</td>
+      <td>21.6</td>
+      <td>-0.0</td>
+      <td>-0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-0.417342</td>
+      <td>-0.487722</td>
+      <td>0</td>
+      <td>-0.740262</td>
+      <td>1.282714</td>
+      <td>-0.265812</td>
+      <td>0.557160</td>
+      <td>-0.867883</td>
+      <td>-0.987329</td>
+      <td>-0.303094</td>
+      <td>-1.208727</td>
+      <td>34.7</td>
+      <td>-0.0</td>
+      <td>-0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-0.416750</td>
+      <td>-0.487722</td>
+      <td>0</td>
+      <td>-0.835284</td>
+      <td>1.016303</td>
+      <td>-0.809889</td>
+      <td>1.077737</td>
+      <td>-0.752922</td>
+      <td>-1.106115</td>
+      <td>0.113032</td>
+      <td>-1.361517</td>
+      <td>33.4</td>
+      <td>-0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-0.412482</td>
+      <td>-0.487722</td>
+      <td>0</td>
+      <td>-0.835284</td>
+      <td>1.228577</td>
+      <td>-0.511180</td>
+      <td>1.077737</td>
+      <td>-0.752922</td>
+      <td>-1.106115</td>
+      <td>0.113032</td>
+      <td>-1.026501</td>
+      <td>36.2</td>
+      <td>-0.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Fit model</span>
+<span class="n">make_ols_f</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>OLS Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>          <td>price</td>      <th>  R-squared:         </th> <td>   0.749</td> 
+</tr>
+<tr>
+  <th>Model:</th>                   <td>OLS</td>       <th>  Adj. R-squared:    </th> <td>   0.742</td> 
+</tr>
+<tr>
+  <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th> <td>   104.3</td> 
+</tr>
+<tr>
+  <th>Date:</th>             <td>Tue, 13 Apr 2021</td> <th>  Prob (F-statistic):</th> <td>2.23e-127</td>
+</tr>
+<tr>
+  <th>Time:</th>                 <td>13:46:12</td>     <th>  Log-Likelihood:    </th> <td> -1351.4</td> 
+</tr>
+<tr>
+  <th>No. Observations:</th>      <td>   469</td>      <th>  AIC:               </th> <td>   2731.</td> 
+</tr>
+<tr>
+  <th>Df Residuals:</th>          <td>   455</td>      <th>  BIC:               </th> <td>   2789.</td> 
+</tr>
+<tr>
+  <th>Df Model:</th>              <td>    13</td>      <th>                     </th>     <td> </td>    
+</tr>
+<tr>
+  <th>Covariance Type:</th>      <td>nonrobust</td>    <th>                     </th>     <td> </td>    
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+        <td></td>          <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th>    <td>   21.8981</td> <td>    0.219</td> <td>  100.207</td> <td> 0.000</td> <td>   21.469</td> <td>   22.328</td>
+</tr>
+<tr>
+  <th>CRIM</th>         <td>   -1.2025</td> <td>    0.648</td> <td>   -1.855</td> <td> 0.064</td> <td>   -2.477</td> <td>    0.072</td>
+</tr>
+<tr>
+  <th>ZN</th>           <td>    0.1155</td> <td>    0.351</td> <td>    0.329</td> <td> 0.743</td> <td>   -0.575</td> <td>    0.806</td>
+</tr>
+<tr>
+  <th>CHAS</th>         <td>    4.5854</td> <td>    0.894</td> <td>    5.131</td> <td> 0.000</td> <td>    2.829</td> <td>    6.342</td>
+</tr>
+<tr>
+  <th>NOX</th>          <td>   -2.0252</td> <td>    0.427</td> <td>   -4.747</td> <td> 0.000</td> <td>   -2.864</td> <td>   -1.187</td>
+</tr>
+<tr>
+  <th>RM</th>           <td>    3.2189</td> <td>    0.318</td> <td>   10.120</td> <td> 0.000</td> <td>    2.594</td> <td>    3.844</td>
+</tr>
+<tr>
+  <th>AGE</th>          <td>   -0.1705</td> <td>    0.354</td> <td>   -0.482</td> <td> 0.630</td> <td>   -0.866</td> <td>    0.525</td>
+</tr>
+<tr>
+  <th>DIS</th>          <td>   -2.8283</td> <td>    0.420</td> <td>   -6.735</td> <td> 0.000</td> <td>   -3.654</td> <td>   -2.003</td>
+</tr>
+<tr>
+  <th>RAD</th>          <td>    1.9140</td> <td>    0.593</td> <td>    3.225</td> <td> 0.001</td> <td>    0.748</td> <td>    3.080</td>
+</tr>
+<tr>
+  <th>TAX</th>          <td>   -1.7655</td> <td>    0.549</td> <td>   -3.217</td> <td> 0.001</td> <td>   -2.844</td> <td>   -0.687</td>
+</tr>
+<tr>
+  <th>PTRATIO</th>      <td>   -2.0727</td> <td>    0.275</td> <td>   -7.545</td> <td> 0.000</td> <td>   -2.613</td> <td>   -1.533</td>
+</tr>
+<tr>
+  <th>LSTAT</th>        <td>   -3.7261</td> <td>    0.388</td> <td>   -9.601</td> <td> 0.000</td> <td>   -4.489</td> <td>   -2.963</td>
+</tr>
+<tr>
+  <th>CHAS_TAX</th>     <td>    3.4411</td> <td>    1.021</td> <td>    3.371</td> <td> 0.001</td> <td>    1.435</td> <td>    5.447</td>
+</tr>
+<tr>
+  <th>CHAS_PTRATIO</th> <td>    1.5624</td> <td>    1.037</td> <td>    1.507</td> <td> 0.133</td> <td>   -0.476</td> <td>    3.600</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+  <th>Omnibus:</th>       <td>193.808</td> <th>  Durbin-Watson:     </th> <td>   1.222</td> 
+</tr>
+<tr>
+  <th>Prob(Omnibus):</th> <td> 0.000</td>  <th>  Jarque-Bera (JB):  </th> <td>1268.803</td> 
+</tr>
+<tr>
+  <th>Skew:</th>          <td> 1.654</td>  <th>  Prob(JB):          </th> <td>3.04e-276</td>
+</tr>
+<tr>
+  <th>Kurtosis:</th>      <td>10.348</td>  <th>  Cond. No.          </th> <td>    13.7</td> 
+</tr>
+</table><br/><br/>Notes:<br/>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.</div><img alt="../../_images/36d648c301a375535b7453eaa0aa55bd4de05848df4da4e874d6180978068369.png" src="../../_images/36d648c301a375535b7453eaa0aa55bd4de05848df4da4e874d6180978068369.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;statsmodels.regression.linear_model.RegressionResultsWrapper at 0x7fdb2ffa6130&gt;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="polynomial-regressions">
+<h1>Polynomial Regressions<a class="headerlink" href="#polynomial-regressions" title="Permalink to this heading">#</a></h1>
+<p>Remember we started with (multiple) linear equation:</p>
+<div class="math notranslate nohighlight">
+\[ \large \hat{y} = w_0 + w_1  x_1 + w_2  x_2 + ... + w_N  x_N \]</div>
+<div class="math notranslate nohighlight">
+\[ \large \hat{y} = \sum_{n=0}^{N} w_n x_n \]</div>
+<p><strong>Knowledge check:</strong> Why is this “linear”?</p>
+<section id="making-it-more-complex">
+<h2>Making it more complex!<a class="headerlink" href="#making-it-more-complex" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df2</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">load_yields</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s1">&#39;other&#39;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df2</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Temp</th>
+      <th>Yield</th>
+    </tr>
+    <tr>
+      <th>i</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>50</td>
+      <td>3.3</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>50</td>
+      <td>2.8</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>50</td>
+      <td>2.9</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>50</td>
+      <td>3.2</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>60</td>
+      <td>2.7</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="n">df2</span><span class="p">[</span><span class="s1">&#39;Yield&#39;</span><span class="p">]</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">df2</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Yield&#39;</span><span class="p">])</span>
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Temperature&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Yield&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/076b42a8d2b4b71c025aad3bceecf0705b3ad86735a6a95bf7bbd5a56db17e90.png" src="../../_images/076b42a8d2b4b71c025aad3bceecf0705b3ad86735a6a95bf7bbd5a56db17e90.png" />
+</div>
+</div>
+<p><span class="math notranslate nohighlight">\(\large \hat y = \hat \beta_0 + \hat \beta_1x \)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Fit a simple linear model</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="n">reg</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">reg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">reg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Temperature&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Yield&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/8d2a64459398a1d7076b9c7737e49bca9821f72d1e9672ec1c8255a36cd57333.png" src="../../_images/8d2a64459398a1d7076b9c7737e49bca9821f72d1e9672ec1c8255a36cd57333.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">mean_squared_error</span><span class="p">,</span> <span class="n">r2_score</span>
+<span class="n">r2</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">reg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
+<span class="n">mse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">reg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R2 = </span><span class="si">{</span><span class="n">r2</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MSE = </span><span class="si">{</span><span class="n">mse</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>R2 = 0.08605718085106362
+MSE = 0.13926747720364746
+</pre></div>
+</div>
+</div>
+</div>
+<section id="a-quadratic-relationship">
+<h3>A quadratic relationship<a class="headerlink" href="#a-quadratic-relationship" title="Permalink to this heading">#</a></h3>
+<p><span class="math notranslate nohighlight">\(\large \hat y = \hat \beta_0 + \hat \beta_1x + \hat \beta_2 x^2\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="p">[</span><span class="s1">&#39;Temp_sq&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="s1">&#39;Temp&#39;</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">X</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Temp</th>
+      <th>Temp_sq</th>
+    </tr>
+    <tr>
+      <th>i</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>50</td>
+      <td>2500</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>50</td>
+      <td>2500</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>50</td>
+      <td>2500</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>50</td>
+      <td>2500</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>60</td>
+      <td>3600</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>60</td>
+      <td>3600</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>60</td>
+      <td>3600</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>70</td>
+      <td>4900</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>70</td>
+      <td>4900</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>70</td>
+      <td>4900</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>80</td>
+      <td>6400</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>80</td>
+      <td>6400</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>80</td>
+      <td>6400</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>90</td>
+      <td>8100</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>90</td>
+      <td>8100</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>90</td>
+      <td>8100</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>90</td>
+      <td>8100</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>100</td>
+      <td>10000</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>100</td>
+      <td>10000</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>100</td>
+      <td>10000</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>100</td>
+      <td>10000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_plot</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="s2">&quot;Temp&quot;</span><span class="p">]</span>
+<span class="n">reg_q</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_plot</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_plot</span><span class="p">,</span> <span class="n">reg_q</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Temperature&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Yield&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/4735a24d8408b9dc87d0c31403ddbdfbf0a1ac74819a1a1aa8c2d1c2d73784fe.png" src="../../_images/4735a24d8408b9dc87d0c31403ddbdfbf0a1ac74819a1a1aa8c2d1c2d73784fe.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r2</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">reg_q</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
+<span class="n">mse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">reg_q</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R2 = </span><span class="si">{</span><span class="n">r2</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MSE = </span><span class="si">{</span><span class="n">mse</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>R2 = 0.694816588411055
+MSE = 0.046504138908791626
+</pre></div>
+</div>
+</div>
+</div>
+<p>Adding higher-order polynomials
+$<span class="math notranslate nohighlight">\( \large \hat{y} = \beta_0 + \beta_1  x + \beta_2  x^2 + ... + \beta_N  x^N \)</span><span class="math notranslate nohighlight">\(
+\)</span><span class="math notranslate nohighlight">\( \large \hat{y} = \sum_{n=0}^{N} \beta_n x^n \)</span>$</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="n">df2</span><span class="p">[</span><span class="s1">&#39;Yield&#39;</span><span class="p">]</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">df2</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Yield&#39;</span><span class="p">])</span>
+<span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(21, 1)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">PolynomialFeatures</span>
+<span class="n">n_poly</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">polyfeat</span> <span class="o">=</span> <span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">n_poly</span><span class="p">)</span>
+<span class="n">X_poly</span> <span class="o">=</span> <span class="n">polyfeat</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">X_poly</span><span class="p">[:</span><span class="mi">10</span><span class="p">])</span>
+<span class="n">X_poly</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[1.00000e+00, 5.00000e+01, 2.50000e+03, 1.25000e+05, 6.25000e+06,
+        3.12500e+08, 1.56250e+10],
+       [1.00000e+00, 5.00000e+01, 2.50000e+03, 1.25000e+05, 6.25000e+06,
+        3.12500e+08, 1.56250e+10],
+       [1.00000e+00, 5.00000e+01, 2.50000e+03, 1.25000e+05, 6.25000e+06,
+        3.12500e+08, 1.56250e+10],
+       [1.00000e+00, 5.00000e+01, 2.50000e+03, 1.25000e+05, 6.25000e+06,
+        3.12500e+08, 1.56250e+10],
+       [1.00000e+00, 6.00000e+01, 3.60000e+03, 2.16000e+05, 1.29600e+07,
+        7.77600e+08, 4.66560e+10],
+       [1.00000e+00, 6.00000e+01, 3.60000e+03, 2.16000e+05, 1.29600e+07,
+        7.77600e+08, 4.66560e+10],
+       [1.00000e+00, 6.00000e+01, 3.60000e+03, 2.16000e+05, 1.29600e+07,
+        7.77600e+08, 4.66560e+10],
+       [1.00000e+00, 7.00000e+01, 4.90000e+03, 3.43000e+05, 2.40100e+07,
+        1.68070e+09, 1.17649e+11],
+       [1.00000e+00, 7.00000e+01, 4.90000e+03, 3.43000e+05, 2.40100e+07,
+        1.68070e+09, 1.17649e+11],
+       [1.00000e+00, 7.00000e+01, 4.90000e+03, 3.43000e+05, 2.40100e+07,
+        1.68070e+09, 1.17649e+11]])
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(21, 7)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">col_names</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;Temp&#39;</span><span class="si">}</span><span class="s2">^</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_poly</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
+<span class="n">df_poly</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X_poly</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="n">col_names</span><span class="p">)</span>
+<span class="n">df_poly</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Temp^0</th>
+      <th>Temp^1</th>
+      <th>Temp^2</th>
+      <th>Temp^3</th>
+      <th>Temp^4</th>
+      <th>Temp^5</th>
+      <th>Temp^6</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1.0</td>
+      <td>50.0</td>
+      <td>2500.0</td>
+      <td>125000.0</td>
+      <td>6250000.0</td>
+      <td>3.125000e+08</td>
+      <td>1.562500e+10</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.0</td>
+      <td>50.0</td>
+      <td>2500.0</td>
+      <td>125000.0</td>
+      <td>6250000.0</td>
+      <td>3.125000e+08</td>
+      <td>1.562500e+10</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1.0</td>
+      <td>50.0</td>
+      <td>2500.0</td>
+      <td>125000.0</td>
+      <td>6250000.0</td>
+      <td>3.125000e+08</td>
+      <td>1.562500e+10</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1.0</td>
+      <td>50.0</td>
+      <td>2500.0</td>
+      <td>125000.0</td>
+      <td>6250000.0</td>
+      <td>3.125000e+08</td>
+      <td>1.562500e+10</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1.0</td>
+      <td>60.0</td>
+      <td>3600.0</td>
+      <td>216000.0</td>
+      <td>12960000.0</td>
+      <td>7.776000e+08</td>
+      <td>4.665600e+10</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1.0</td>
+      <td>60.0</td>
+      <td>3600.0</td>
+      <td>216000.0</td>
+      <td>12960000.0</td>
+      <td>7.776000e+08</td>
+      <td>4.665600e+10</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>1.0</td>
+      <td>60.0</td>
+      <td>3600.0</td>
+      <td>216000.0</td>
+      <td>12960000.0</td>
+      <td>7.776000e+08</td>
+      <td>4.665600e+10</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>1.0</td>
+      <td>70.0</td>
+      <td>4900.0</td>
+      <td>343000.0</td>
+      <td>24010000.0</td>
+      <td>1.680700e+09</td>
+      <td>1.176490e+11</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>1.0</td>
+      <td>70.0</td>
+      <td>4900.0</td>
+      <td>343000.0</td>
+      <td>24010000.0</td>
+      <td>1.680700e+09</td>
+      <td>1.176490e+11</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>1.0</td>
+      <td>70.0</td>
+      <td>4900.0</td>
+      <td>343000.0</td>
+      <td>24010000.0</td>
+      <td>1.680700e+09</td>
+      <td>1.176490e+11</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>1.0</td>
+      <td>80.0</td>
+      <td>6400.0</td>
+      <td>512000.0</td>
+      <td>40960000.0</td>
+      <td>3.276800e+09</td>
+      <td>2.621440e+11</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>1.0</td>
+      <td>80.0</td>
+      <td>6400.0</td>
+      <td>512000.0</td>
+      <td>40960000.0</td>
+      <td>3.276800e+09</td>
+      <td>2.621440e+11</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>1.0</td>
+      <td>80.0</td>
+      <td>6400.0</td>
+      <td>512000.0</td>
+      <td>40960000.0</td>
+      <td>3.276800e+09</td>
+      <td>2.621440e+11</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>1.0</td>
+      <td>90.0</td>
+      <td>8100.0</td>
+      <td>729000.0</td>
+      <td>65610000.0</td>
+      <td>5.904900e+09</td>
+      <td>5.314410e+11</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>1.0</td>
+      <td>90.0</td>
+      <td>8100.0</td>
+      <td>729000.0</td>
+      <td>65610000.0</td>
+      <td>5.904900e+09</td>
+      <td>5.314410e+11</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>1.0</td>
+      <td>90.0</td>
+      <td>8100.0</td>
+      <td>729000.0</td>
+      <td>65610000.0</td>
+      <td>5.904900e+09</td>
+      <td>5.314410e+11</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>1.0</td>
+      <td>90.0</td>
+      <td>8100.0</td>
+      <td>729000.0</td>
+      <td>65610000.0</td>
+      <td>5.904900e+09</td>
+      <td>5.314410e+11</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>1.0</td>
+      <td>100.0</td>
+      <td>10000.0</td>
+      <td>1000000.0</td>
+      <td>100000000.0</td>
+      <td>1.000000e+10</td>
+      <td>1.000000e+12</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>1.0</td>
+      <td>100.0</td>
+      <td>10000.0</td>
+      <td>1000000.0</td>
+      <td>100000000.0</td>
+      <td>1.000000e+10</td>
+      <td>1.000000e+12</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>1.0</td>
+      <td>100.0</td>
+      <td>10000.0</td>
+      <td>1000000.0</td>
+      <td>100000000.0</td>
+      <td>1.000000e+10</td>
+      <td>1.000000e+12</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>1.0</td>
+      <td>100.0</td>
+      <td>10000.0</td>
+      <td>1000000.0</td>
+      <td>100000000.0</td>
+      <td>1.000000e+10</td>
+      <td>1.000000e+12</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reg_poly</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_poly</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+
+<span class="n">r2</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">reg_poly</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_poly</span><span class="p">))</span>
+<span class="n">mse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">reg_poly</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_poly</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R2 = </span><span class="si">{</span><span class="n">r2</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MSE = </span><span class="si">{</span><span class="n">mse</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>R2 = 0.7591145833278744
+MSE = 0.03670634920718104
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_plot</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_plot</span><span class="p">,</span> <span class="n">reg_poly</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_poly</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Temperature&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Yield&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/a89ab087c2ae665a8038044b0da3ca874bcf8f1f510df487ca995b8406b9fdf4.png" src="../../_images/a89ab087c2ae665a8038044b0da3ca874bcf8f1f510df487ca995b8406b9fdf4.png" />
+</div>
+</div>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="bias-variance-trade-off">
+<h1>Bias-Variance Trade Off<a class="headerlink" href="#bias-variance-trade-off" title="Permalink to this heading">#</a></h1>
+<section id="underfitting-and-overfitting">
+<h2>Underfitting and Overfitting<a class="headerlink" href="#underfitting-and-overfitting" title="Permalink to this heading">#</a></h2>
+<p><img alt="which_model" src="Phase_2/topic_20_extensions_linear_models/ds-model_validation/img/which_model_is_better_2.png" /></p>
+<blockquote>
+<div><p><em>Underfitting</em> happens when a model cannot learn the training data, nor can it generalize to new data.</p>
+</div></blockquote>
+<blockquote>
+<div><p><em>Overfitting</em> happens when a model learns the training data too well. In fact, so well that it is not generalizeable to new data</p>
+</div></blockquote>
+</section>
+<section id="the-bias-variance-trade-off">
+<h2>The Bias-Variance Trade Off<a class="headerlink" href="#the-bias-variance-trade-off" title="Permalink to this heading">#</a></h2>
+<p>Another perspective on this problem of overfitting versus underfitting is the bias-variance tradeoff.</p>
+<p>We can break down our error term (the mean squared error) as the sum of 3 sources of error:</p>
+<ul class="simple">
+<li><p><em>bias</em></p></li>
+<li><p><em>variance</em>, and</p></li>
+<li><p><em>irreducible error</em></p></li>
+</ul>
+<p><span class="math notranslate nohighlight">\(\Large Total\ Error\ = Prediction\ Error+ Irreducible\ Error\)</span></p>
+<div class="math notranslate nohighlight">
+\[ \large \text{MSE} = \text{Bias}(\hat{f}(x))^2 + \text{Var}(\hat{f}(x)) + \sigma^2\]</div>
+<ul class="simple">
+<li><p>The derivation of this can be found <a class="reference external" href="https://en.wikipedia.org/wiki/Bias%E2%80%93variance_tradeoff#Derivation">here</a>.</p></li>
+</ul>
+<img src="https://raw.githubusercontent.com/jirvingphd/dsc-bias-variance-trade-off-online-ds-pt-100719/master/images/new_bias_variance.png" width=50%><img src="https://raw.githubusercontent.com/jirvingphd/fsds_pt_100719_cohort_notes/master/Images/bias_variance_optimize.png">
+<blockquote>
+<div><p><strong>The balance between bias and variance is a trade-off.</strong> We can reduce the variance but then there is a risk of running a bigger bias, and vice versa.</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>Bias is usually associated with low model complexity, variance with high model complexity.</p></li>
+<li><p>There is generally a “sweet spot” in-between, compromising between bias and variance.</p></li>
+</ul>
+<section id="bias">
+<h3>Bias<a class="headerlink" href="#bias" title="Permalink to this heading">#</a></h3>
+<div class="math notranslate nohighlight">
+\[\large \text{Bias}(\hat{f}(x)) = E[\hat{f}(x)-f(x)]\]</div>
+<ul class="simple">
+<li><p><strong>Bias</strong> arises when wrong assumptions are made when training a model. For example:</p>
+<ul>
+<li><p>An interaction effect is missed,</p></li>
+<li><p>We missed a certain polynomial relationship.</p></li>
+<li><p>Because of this, our algorithm misses the relevant relations between predictors and the target variable.</p></li>
+<li><p><em>(Note how this is similar to underfitting!)</em></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="variance">
+<h3>Variance<a class="headerlink" href="#variance" title="Permalink to this heading">#</a></h3>
+<div class="math notranslate nohighlight">
+\[Var(\hat{f}(x)) = E[\hat{f}(x)^2] - \big(E[\hat{f}(x)]\big)^2\]</div>
+<ul class="simple">
+<li><p><strong>Variance</strong> arises  when a model is too sensitive to small fluctuations in the training set.</p>
+<ul>
+<li><p>When variance is high, random noise is modeled instead of the intended outputs.</p></li>
+<li><p><em>(This is overfitting!)</em></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="calcualted-in-lab">
+<h3>Calcualted in Lab:<a class="headerlink" href="#calcualted-in-lab" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://nbviewer.jupyter.org/github/learn-co-curriculum/dsc-bias-variance-trade-off-lab/blob/solution/index.ipynb">Bias Variance Trade-Off Lab</a></p></li>
+</ul>
+</section>
+<section id="how-do-we-know-if-our-model-is-overfitting-or-underfitting">
+<h3>How do we know if our model is overfitting or underfitting?<a class="headerlink" href="#how-do-we-know-if-our-model-is-overfitting-or-underfitting" title="Permalink to this heading">#</a></h3>
+<p>If our model is not performing well on the training  data, we are probably underfitting it.</p>
+<p>To know if our  model is overfitting the data, we need  to test our model on unseen data.
+We then measure our performance on the unseen data.</p>
+<p>If the model performs significantly worse on the  unseen data, it is probably  overfitting the data.</p>
+<img src='https://developers.google.com/machine-learning/crash-course/images/WorkflowWithTestSet.svg' width=500/><section id="bias-variance-examples-from-cl-model-validation-022221ft-ipynb">
+<h4>Bias/Variance Examples from CL “<code class="docutils literal notranslate"><span class="pre">model_validation-022221FT.ipynb</span></code>”<a class="headerlink" href="#bias-variance-examples-from-cl-model-validation-022221ft-ipynb" title="Permalink to this heading">#</a></h4>
+<p>Consider the following scenarios and describe them according to bias and variance. There are four possibilities:</p>
+<ul class="simple">
+<li><p>a. The model has low bias and high variance.</p></li>
+<li><p>b. The model has high bias and low variance.</p></li>
+<li><p>c. The model has both low bias and low variance.</p></li>
+<li><p>d. The model has both high bias and high variance.</p></li>
+</ul>
+<p><strong>Scenario 1</strong>: The model has a low RMSE on training and a low RMSE on test.</p>
+<details>
+    <summary> Answer
+    </summary>
+    c. The model has both low bias and low variance.
+    </details><p><strong>Scenario 2</strong>: The model has a high <span class="math notranslate nohighlight">\(R^2\)</span> on the training set, but a low <span class="math notranslate nohighlight">\(R^2\)</span> on the test.</p>
+<details>
+    <summary> Answer
+    </summary>
+    a. The model has low bias and high variance.
+    </details><p><strong>Scenario 3</strong>: The model performs well on data it is fit on and well on data it has not seen.</p>
+<details>
+    <summary> Answer
+    </summary>
+    c. The model has both low bias and low variance.
+    </details>
+<p><strong>Scenario 4</strong>: The model has a low <span class="math notranslate nohighlight">\(R^2\)</span> on training but high on the test set.</p>
+<details>
+    <summary> Answer
+    </summary>
+    d. The model has both high bias and high variance.
+    </details><p><strong>Scenario 5</strong>: The model leaves out many of the meaningful predictors, but is consistent across samples.</p>
+<details>
+    <summary> Answer
+    </summary>
+    b. The model has high bias and low variance.
+    </details><p><strong>Scenario 6</strong>: The model is highly sensitive to random noise in the training set.</p>
+<details>
+    <summary> Answer
+    </summary>
+    a. The model has low bias and high variance.
+    </details></section>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "learn-env-new"
+        },
+        kernelOptions: {
+            name: "learn-env-new",
+            path: "./Phase_2/topic_20_extensions_linear_models"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'learn-env-new'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../topic_19_part2_model_validation/topic_19_part_2_Multiple_Regression_v2-SG.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Topic 19 Part 2: Feature Selection &amp; Model Validation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../../Phase_3/topic_21_OOP/topic_21_OOP_playing_cards_SG.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Topic 21: Object-Oriented Programming</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Topic 20: Extensions to Linear Models</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objectives">Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#topics-covered-in-section-20">Topics Covered in Section 20</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#interactions">Interactions</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-an-interaction">What is an interaction?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#confounding-factor">Confounding factor</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-is-important-to-account-for-interactions">Why is important to account for interactions?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#when-should-we-use-interactions">When should we use interactions?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-seaborn-to-view-interactions">Using seaborn to view interactions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ex-interaction-not-very-different">Ex Interaction: Not very different</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-interaction-different">Example Interaction: different</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#making-a-baseline-model">Making a baseline model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interactions-effect-on-model">Interactions Effect On Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-interaction-terms">Adding interaction terms</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#polynomial-regressions">Polynomial Regressions</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#making-it-more-complex">Making it more complex!</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-quadratic-relationship">A quadratic relationship</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bias-variance-trade-off">Bias-Variance Trade Off</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#underfitting-and-overfitting">Underfitting and Overfitting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-bias-variance-trade-off">The Bias-Variance Trade Off</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bias">Bias</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variance">Variance</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calcualted-in-lab">Calcualted in Lab:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-do-we-know-if-our-model-is-overfitting-or-underfitting">How do we know if our model is overfitting or underfitting?</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bias-variance-examples-from-cl-model-validation-022221ft-ipynb">Bias/Variance Examples from CL “<code class="docutils literal notranslate"><span class="pre">model_validation-022221FT.ipynb</span></code>”</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By James Irving, PhD
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

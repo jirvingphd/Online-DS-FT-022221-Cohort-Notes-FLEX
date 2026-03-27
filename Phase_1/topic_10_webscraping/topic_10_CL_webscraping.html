@@ -1,0 +1,1771 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Web Scraping with BeautifulSoup &#8212; Data Science Curriculum</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Phase_1/topic_10_webscraping/topic_10_CL_webscraping';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/flatironschool_banner.jpg" class="logo__image only-light" alt="Data Science Curriculum - Home"/>
+    <script>document.write(`<img src="../../_static/flatironschool_banner.jpg" class="logo__image only-dark" alt="Data Science Curriculum - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Data Science Curriculum
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 1 - Python &amp; Data Fundamentals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../topic_01_getting_started/topic_01_getting_started.html">Topic 1: Getting Started with Data Science</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_02_bash_git/topic_02_bash_and_git.html">Topic 02:  Bash and Git</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_03_control_flow_functions/topic_03_control_flow_and_functions.html">Topic 03: Control Flow, Functions, and Statistics</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_04_python_libraries/topic_04_intro_to_libraries_numpy_SG.html">Topic 04-Part 1: Python Libraries &amp; NumPy</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_04_python_libraries/topic_04_pt-2_brief_intro_to_pandas-SG.html">Topic 04-Part 2: Brief Intro to Pandas with Doctor Who</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topic_05_data_cleaning_in_pandas/topic_05_Data_Cleaning_in_Pandas.html">Topic 05: Data Cleaning in Pandas</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_06_data_visualization/topic_06_visualizations_heroes_project_SG.html">Topic 06:  Data Visualizations</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_07_SQL_and_relational_databases/topic_07_SQL_and_relational_databases_SG.html">TOPIC 07: SQL DATABASES</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_08_noSQL_databases/topic_08_mongodb-SG.html">Topic 08: NoSQL Databases</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_09_json_and_apis/topic_09_json-api-SG.html">Topic 09: Using APIs and JSON Data</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="topic_10_SG_HTML_CSS_web_scraping.html">Topic 10: HTML, CSS, &amp; Web Scraping</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 2 - Statistics &amp; Regression</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_11_probability_and_combinatorics/topic_11_playlist_probabilities-SG.html">Topic 11 - Intro to Combinatorics &amp; Probability</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_12_statistical_distributions/topic-12-distributions-with-movies-sg.html">Exploring Distributions with Movies Data</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_13_central_limit_theorem/topic_13_central_limit_theorem_SG.html">Topic 13: Central Limit Theorem</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_14_hypothesis_testing/topic_14_hypothesis_testing-SG.html">Topic 14: Hypothesis Testing -  T-Tests</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_15_ANOVA/topic_15_ANOVA_with_neuro_data-SG.html">Topic 15: ANOVAs &amp; Statistical Power with  Neuro Data</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_16_AB_testing/topic_16_AB_testing_with_movies-SG.html">Topic 16: Practicing AB Testing with Movies</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_17_bayesian_statistics/topic_17_bayesian_statistics-SG.html">Topic 17: Bayesian Statistics</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_18_linear_regression/topic_18_intro_to_linear_regression_SG.html">Topic 18: Intro to Linear Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_19_part1_multiple_regression/topic_19_Multiple_Regression_v2-SG.html">Topic 19: Multiple Linear Regression</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_19_part2_model_validation/topic_19_part_2_Multiple_Regression_v2-SG.html">Topic 19 Part 2: Feature Selection &amp; Model Validation</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_20_extensions_linear_models/topic_20_extensions_to_linear_models_SG.html">Topic 20: Extensions to Linear Models</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 3 - Machine Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_21_OOP/topic_21_OOP_playing_cards_SG.html">Topic 21: Object-Oriented Programming</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_22_linear_algebra/topic_22_linear_algebra_SG.html">Topic 22: Linear Algebra</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_23_calculus_gradient_descent/topic_23_gradient_descent_SG.html">Topic 23: Cost Functions and Gradient Descent</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_24_regularization/topic_24_Regularization_Ridge_Lasso_v2_SG.html">Topic 24: Feature Selection &amp; Regularization (Ridge and Lasso Regression)</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_25_logistic_regression/topic_25_pt1_LogisticRegression_titanic-v2-SG.html">Topic 25-Pt 1: Intro to Logistic Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_25_logistic_regression/topic_25_pt2_LogisticRegression_titanic-v2-SG.html">Topic 25-Part 2: Evaluating Classifiers, Dealing with Class Imbalance, and <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code></a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_27_KNN/Topic_27_KNN_with_pipelines_with_lab_v3_SG.html">Topic 27: K-Nearest Neighbors<br/> +Topic 32: Pipelines</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_29_decision_trees/topic_29_decision_trees_v2_titanic-SG.html">Topic 29: Decision Trees</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_30_ensemble_methods/topic_30_ensemble_methods-SG.html">Topic 30: Ensemble Methods</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_31_support_vector_machines/topic_31_SupportVectorMachines_SG.html">Topic 31: Support Vector Machines</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 4 - Advanced ML &amp; Time Series</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_33_pca/topic_33_PCA_SG.html">Topic 33: Principal Component Analysis</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_34_clustering/topic_34_Kmeans_clustering_v3_SG.html">Topic 34: Clustering</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_35-36_using_databricks_for_pyspark/using_databricks_for_pyspark.html">How to Use Databricks for PySpark Canvas Material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_36_recommendation_systems/topic_36_Recommendation_Systems_with_Surprise.html">Topic 36: Recommendation Systems</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_37_intro_to_time_series/topic_37_intro_to_time_series_crime_v3-SG.html">Topic 37: Intro to Time Series</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_38_time_series_models/topic_38-time_series_models_v3_SG.html">Topic 38: Time Series Models</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_39_NLP/topic_39_NLP_finding_trump_v3_SG.html">Topic 39: Natural Language Processing + Topic 28: Bayesian Classification</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_40-41_neural_networks/topic_40-41_Artificial_Neural_Networks_v1_SG.html">Topic 40-41: Artificial Neural Networks</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_42_tuning_neural_networks/topic_42_tuning_ANNs_with_deep_NLP_v1_SG.html">Topic 42 - Tuning Neural Networks + Deep NLP</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_43_AWS/topic_43_operationalizing_code_AWS_SG.html">Topic 43: Operationalizing Code &amp; AWS</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 5 - Capstone &amp; Bonus Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/Capstone_Kickoff.html">Capstone Kickoff!</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/APIs/working_with_apis.html">Working with APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/developing_app_functions/developing-streamlit-app-functions_SG.html">Developing Streamlit App Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/tableau/tableau_fundamentals_2021-SG.html">Tableau Fundamentals</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/Bonus%20Notebooks/plotly_visuals.html">Plotly Question</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/master?urlpath=tree/Phase_1/topic_10_webscraping/topic_10_CL_webscraping.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/blob/master/Phase_1/topic_10_webscraping/topic_10_CL_webscraping.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/issues/new?title=Issue%20on%20page%20%2FPhase_1/topic_10_webscraping/topic_10_CL_webscraping.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/Phase_1/topic_10_webscraping/topic_10_CL_webscraping.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Web Scraping with BeautifulSoup</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#agenda">Agenda:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#context">Context</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-components-of-a-web-page">The components of a web page</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#html">HTML</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#let-s-take-a-look-at-a-sample-web-page-from-our-local-computer">Let’s take a look at a sample web page from our local computer</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#make-a-sample-webpage">Make a sample webpage</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#webscraping-with-python">Webscraping with Python</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-requests-library">The requests library</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parsing-a-page-with-beautifulsoup">Parsing a page with BeautifulSoup</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#finding-all-instances-of-a-tag-at-once">Finding all instances of a tag at once</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#searching-for-tags-by-class-and-id">Searching for tags by class and id</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#more-sophisticated-webpages">More sophisticated webpages</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pulling-in-a-table">Pulling in a Table</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#combining-our-data-into-a-pandas-dataframe">Combining our data into a Pandas DataFrame</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="web-scraping-with-beautifulsoup">
+<h1>Web Scraping with BeautifulSoup<a class="headerlink" href="#web-scraping-with-beautifulsoup" title="Permalink to this heading">#</a></h1>
+<blockquote>
+<div><p>Corresponding Recording: <a class="reference external" href="https://vimeo.com/507104276/6ea87c957b">Webscraping Lecture</a></p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">bs4</span><span class="w"> </span><span class="kn">import</span> <span class="n">BeautifulSoup</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><img alt="soup" src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MXx8aHRtbHxlbnwwfHwwfA%3D%3D&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=800&amp;q=60" /></p>
+<section id="agenda">
+<h2>Agenda:<a class="headerlink" href="#agenda" title="Permalink to this heading">#</a></h2>
+<p>SWBAT:</p>
+<ul class="simple">
+<li><p>Describe webscraping in the context of other data-gathering methods;</p></li>
+<li><p>Identify the basic structure of a webpage;</p></li>
+<li><p>Become familiar with the essential objects and critical methods of <code class="docutils literal notranslate"><span class="pre">BeautifulSoup</span></code>;</p></li>
+<li><p>Be able to scrape data from a live website.</p></li>
+</ul>
+</section>
+<section id="context">
+<h2>Context<a class="headerlink" href="#context" title="Permalink to this heading">#</a></h2>
+<p>We have already developed many ways of interacting with data.  We are able to:</p>
+<ul class="simple">
+<li><p>import .csv files (and other .csv-like objects)</p></li>
+<li><p>gather data from API’s and interact with JSON objects</p></li>
+<li><p>query SQL databases</p></li>
+</ul>
+<p>There is publicly available data all over the internet ripe for scraping, whether that be artist information data from wikipedia, song lyrics from <a class="reference external" href="http://songlyrics.com">songlyrics.com</a>, or texts of famous books from Project Gutenberg. Below, we will learn how to navigate HTML and CSS to bring data into our local computers.</p>
+</section>
+<section id="the-components-of-a-web-page">
+<h2>The components of a web page<a class="headerlink" href="#the-components-of-a-web-page" title="Permalink to this heading">#</a></h2>
+<p>When we visit a web page, our web browser makes a GET request to a web server. The server then sends back files that tell our browser how to render the page for us. The files fall into a few main types:</p>
+<ul class="simple">
+<li><p>HTML — contain the main content of the page.</p></li>
+<li><p>CSS — add styling to make the page look nicer.</p></li>
+<li><p>JS — Javascript files add interactivity to web pages.</p></li>
+<li><p>Images — image formats, such as JPG and PNG allow web pages to show pictures.</p></li>
+</ul>
+<p>After our browser receives all the files, it renders the page and displays it to us. There’s a lot that happens behind the scenes to render a page nicely, but we don’t need to worry about most of it when we’re web scraping.</p>
+<section id="html">
+<h3>HTML<a class="headerlink" href="#html" title="Permalink to this heading">#</a></h3>
+<p>HyperText Markup Language (HTML) is a language that web pages are created in. HTML isn’t a programming language, like Python — instead, it’s a markup language that tells a browser how to layout content.</p>
+<p>Let’s take a quick tour through HTML so we know enough to scrape effectively. HTML consists of elements called tags. The most basic tag is the <code class="docutils literal notranslate"><span class="pre">&lt;html&gt;</span></code> tag. This tag tells the web browser that everything inside of it is HTML. We can make a simple HTML document just using this tag:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">html</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">html</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>⬇ Example cell with html in Markdown!</p>
+<html>
+</html><p>Right inside an html tag, we put two other tags, the head tag, and the body tag. The main content of the web page goes into the body tag. The head tag contains data about the title of the page, and other information that generally isn’t useful in web scraping:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">html</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">head</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">head</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">body</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">body</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">html</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>We’ll now add our first content to the page, in the form of the p tag. The p tag defines a paragraph, and any text inside the tag is shown as a separate paragraph:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">html</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">head</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">head</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">body</span><span class="o">&gt;</span>
+          <span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+            <span class="n">Here</span><span class="s1">&#39;s a paragraph of text!</span>
+        <span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+            <span class="n">Here</span><span class="s1">&#39;s a second paragraph of text!</span>
+        <span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">body</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">html</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<html>
+    <head>
+    </head>
+    <body>
+          <p>
+            Here's a paragraph of text!
+        </p>
+        <p>
+            Here's a second paragraph of text!
+        </p>
+    </body>
+</html><p>Tags have commonly used names that depend on their position in relation to other tags:</p>
+<ul class="simple">
+<li><p><strong>child</strong> — a child is a tag inside another tag. So the two p tags above are both children of the body tag.</p></li>
+<li><p><strong>parent</strong> — a parent is the tag another tag is inside. Above, the html tag is the parent of the body tag.</p></li>
+<li><p><strong>sibiling</strong> — a sibiling is a tag that is nested inside the same parent as another tag. For example, head and body are siblings, since they’re both inside html. Both p tags are siblings, since they’re both inside body.</p></li>
+</ul>
+<p>We can also add properties to HTML tags that change their behavior:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">html</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">head</span><span class="o">&gt;&lt;/</span><span class="n">head</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">body</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+      <span class="n">Here</span><span class="s1">&#39;s a paragraph of text!</span>
+      <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;https://www.dataquest.io&quot;</span><span class="o">&gt;</span><span class="n">Learn</span> <span class="n">Data</span> <span class="n">Science</span> <span class="n">Online</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+      <span class="n">Here</span><span class="s1">&#39;s a second paragraph of text!</span>
+      <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;https://www.python.org&quot;</span><span class="o">&gt;</span><span class="n">Python</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>        
+    <span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+  <span class="o">&lt;/</span><span class="n">body</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">html</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<html>
+    <head>
+    </head>
+    <body>
+        <p>
+            Here's a paragraph of text!
+            <a href="https://www.dataquest.io">Learn Data Science Online</a>
+        </p>
+        <p>
+            Here's a second paragraph of text!
+            <a href="https://www.python.org">Python</a>        </p>
+    </body></html><p>In the above example, we added two a tags. a tags are links, and tell the browser to render a link to another web page. The href property of the tag determines where the link goes.</p>
+<p>a and p are extremely common html tags. Here are a few others:</p>
+<ul class="simple">
+<li><p><em>div</em>: indicates a division, or area, of the page.</p></li>
+<li><p><em>b</em>: bolds any text inside.</p></li>
+<li><p><em>i</em>: italicizes any text inside.</p></li>
+<li><p><em>u</em>: underlines any text inside.</p></li>
+<li><p><em>table</em>: creates a table.</p></li>
+<li><p><em>form</em>: creates an input form.</p></li>
+</ul>
+<p>For a full list of tags, look <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">here</a>.</p>
+<html>
+    <b>bold</b> <br/>
+    <i>italics</i> <br/>
+    <u>underlining</u>
+</html><p>There are two special properties that give HTML elements names, and make them easier to interact with when we’re scraping: <strong>class</strong> and <strong>id</strong>.</p>
+<ul class="simple">
+<li><p>One element can have multiple classes, and a class can be shared between elements.</p></li>
+<li><p>Each element can only have one id, and an id can only be used once on a page.</p></li>
+<li><p>Classes and ids are optional, and not all elements will have them.</p></li>
+</ul>
+<p>We can add classes and ids to our example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">html</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">head</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">head</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">body</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">p</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;bold-paragraph&quot;</span><span class="o">&gt;</span>
+            <span class="n">Here</span><span class="s1">&#39;s a paragraph of text!</span>
+            <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;https://www.dataquest.io&quot;</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;learn-link&quot;</span><span class="o">&gt;</span><span class="n">Learn</span> <span class="n">Data</span> <span class="n">Science</span> <span class="n">Online</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
+        <span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">p</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;bold-paragraph extra-large&quot;</span><span class="o">&gt;</span>
+            <span class="n">Here</span><span class="s1">&#39;s a second paragraph of text!</span>
+            <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;https://www.python.org&quot;</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;extra-large&quot;</span><span class="o">&gt;</span><span class="n">Python</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
+        <span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">body</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">html</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<html>
+    <head>
+    </head>
+    <body>
+        <p class="bold-paragraph">
+            Here's a paragraph of text!
+            <a href="https://www.dataquest.io" id="learn-link">Learn Data Science Online</a>
+        </p>
+        <p class="bold-paragraph extra-large">
+            Here's a second paragraph of text!
+            <a href="https://www.python.org" class="extra-large">Python</a>
+        </p>
+    </body>
+</html></section>
+<section id="let-s-take-a-look-at-a-sample-web-page-from-our-local-computer">
+<h3>Let’s take a look at a sample web page from our local computer<a class="headerlink" href="#let-s-take-a-look-at-a-sample-web-page-from-our-local-computer" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Open up <a class="reference external" href="http://example.com">example.com</a> in your browser.</p></li>
+<li><p>Open up the inspector</p>
+<ul>
+<li><p>Mac: cmd+option+c</p></li>
+<li><p>Windows: ctrl+shift+c</p></li>
+</ul>
+</li>
+<li><p>Click on the elements tab, and click on an element</p></li>
+</ul>
+</section>
+</section>
+<section id="make-a-sample-webpage">
+<h2>Make a sample webpage<a class="headerlink" href="#make-a-sample-webpage" title="Permalink to this heading">#</a></h2>
+<p>Use <a class="reference external" href="https://htmledit.squarefree.com/">this site</a> to see your page as you edit the underlying html.</p>
+</section>
+<section id="webscraping-with-python">
+<h2>Webscraping with Python<a class="headerlink" href="#webscraping-with-python" title="Permalink to this heading">#</a></h2>
+<section id="the-requests-library">
+<h3>The requests library<a class="headerlink" href="#the-requests-library" title="Permalink to this heading">#</a></h3>
+<p>The first thing we’ll need to do to scrape a web page is to download the page. We can download pages using the Python requests library (similar to interacting with APIs!).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">req</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;http://dataquestio.github.io/web-scraping-pages/simple.html&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>After running our request, we get a Response object. This object has a status_code property, which indicates if the page was downloaded successfully:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">req</span><span class="o">.</span><span class="n">status_code</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>200
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can print out the HTML content of the page using the content property:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">req</span><span class="o">.</span><span class="n">content</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>b&#39;&lt;!DOCTYPE html&gt;\n&lt;html&gt;\n    &lt;head&gt;\n        &lt;title&gt;A simple example page&lt;/title&gt;\n    &lt;/head&gt;\n    &lt;body&gt;\n        &lt;p&gt;Here is some simple content for this page.&lt;/p&gt;\n    &lt;/body&gt;\n&lt;/html&gt;&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="parsing-a-page-with-beautifulsoup">
+<h3>Parsing a page with BeautifulSoup<a class="headerlink" href="#parsing-a-page-with-beautifulsoup" title="Permalink to this heading">#</a></h3>
+<p>We can use the BeautifulSoup library to parse this document, and extract the text from the <code class="docutils literal notranslate"><span class="pre">&lt;p&gt;</span></code> tag.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+<span class="nb">list</span><span class="p">(</span><span class="n">soup</span><span class="o">.</span><span class="n">children</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;html&#39;,
+ &lt;html&gt;
+ &lt;head&gt;
+ &lt;title&gt;A simple example page&lt;/title&gt;
+ &lt;/head&gt;
+ &lt;body&gt;
+ &lt;p&gt;Here is some simple content for this page.&lt;/p&gt;
+ &lt;/body&gt;
+ &lt;/html&gt;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">soup</span><span class="o">.</span><span class="n">prettify</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+ &lt;head&gt;
+  &lt;title&gt;
+   A simple example page
+  &lt;/title&gt;
+ &lt;/head&gt;
+ &lt;body&gt;
+  &lt;p&gt;
+   Here is some simple content for this page.
+  &lt;/p&gt;
+ &lt;/body&gt;
+&lt;/html&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>As all the tags are nested, we can move through the structure one level at a time. We can first select all the elements at the top level of the page using the <code class="docutils literal notranslate"><span class="pre">children</span></code> property of <code class="docutils literal notranslate"><span class="pre">soup</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="n">soup</span><span class="o">.</span><span class="n">children</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;html&#39;,
+ &lt;html&gt;
+ &lt;head&gt;
+ &lt;title&gt;A simple example page&lt;/title&gt;
+ &lt;/head&gt;
+ &lt;body&gt;
+ &lt;p&gt;Here is some simple content for this page.&lt;/p&gt;
+ &lt;/body&gt;
+ &lt;/html&gt;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">soup</span><span class="o">.</span><span class="n">children</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[bs4.element.Doctype, bs4.element.Tag]
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">Tag</span></code> object allows us to navigate through an HTML document, and extract other tags and text. You can learn more about the various <code class="docutils literal notranslate"><span class="pre">BeautifulSoup</span></code> objects <a class="reference external" href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/#kinds-of-objects">here</a>.</p>
+<p>We can now select the html tag and its children by taking the second item in the list:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">html</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">soup</span><span class="o">.</span><span class="n">children</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">html</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;A simple example page&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;p&gt;Here is some simple content for this page.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Each item in the list returned by the <code class="docutils literal notranslate"><span class="pre">children</span></code> property is also a <code class="docutils literal notranslate"><span class="pre">BeautifulSoup</span></code> object, so we can also call the <code class="docutils literal notranslate"><span class="pre">children</span></code> method on <code class="docutils literal notranslate"><span class="pre">html</span></code>.</p>
+<p>Now we can find the <code class="docutils literal notranslate"><span class="pre">children</span></code> inside the <code class="docutils literal notranslate"><span class="pre">html</span></code> tag:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="n">html</span><span class="o">.</span><span class="n">children</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;\n&#39;,
+ &lt;head&gt;
+ &lt;title&gt;A simple example page&lt;/title&gt;
+ &lt;/head&gt;,
+ &#39;\n&#39;,
+ &lt;body&gt;
+ &lt;p&gt;Here is some simple content for this page.&lt;/p&gt;
+ &lt;/body&gt;,
+ &#39;\n&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>As you can see above, there are two tags here, <code class="docutils literal notranslate"><span class="pre">head</span></code>, and <code class="docutils literal notranslate"><span class="pre">body</span></code>. We want to extract the text inside the <code class="docutils literal notranslate"><span class="pre">p</span></code> tag, so we’ll dive into the body:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">body</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">html</span><span class="o">.</span><span class="n">children</span><span class="p">)[</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can now isolate the <code class="docutils literal notranslate"><span class="pre">p</span></code> tag:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">body</span><span class="o">.</span><span class="n">children</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Once we’ve isolated the tag, we can use the <code class="docutils literal notranslate"><span class="pre">get_text</span></code> method to extract all of the text inside the tag:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="o">.</span><span class="n">get_text</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;bound method Tag.get_text of &lt;p&gt;Here is some simple content for this page.&lt;/p&gt;&gt;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="finding-all-instances-of-a-tag-at-once">
+<h3>Finding all instances of a tag at once<a class="headerlink" href="#finding-all-instances-of-a-tag-at-once" title="Permalink to this heading">#</a></h3>
+<p>If we want to extract a single tag, we can instead use the find_all method, which will find all the instances of a tag on a page.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+<span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;p&gt;Here is some simple content for this page.&lt;/p&gt;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">find_all</span></code> returns a list, so we’ll have to loop through, or use list indexing, it to extract text:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_text</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;Here is some simple content for this page.&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>If you instead only want to find the first instance of a tag, you can use the <code class="docutils literal notranslate"><span class="pre">find</span></code> method, which will return a single <code class="docutils literal notranslate"><span class="pre">BeautifulSoup</span></code> object:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;p&gt;Here is some simple content for this page.&lt;/p&gt;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="searching-for-tags-by-class-and-id">
+<h3>Searching for tags by class and id<a class="headerlink" href="#searching-for-tags-by-class-and-id" title="Permalink to this heading">#</a></h3>
+<p>We introduced classes and ids earlier, but it probably wasn’t clear why they were useful. Classes and ids are used by CSS to determine which HTML elements to apply certain styles to. We can also use them when scraping to specify specific elements we want to scrape. Let’s look at the following page:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">html</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">head</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">title</span><span class="o">&gt;</span><span class="n">A</span> <span class="n">simple</span> <span class="n">example</span> <span class="n">page</span><span class="o">&lt;/</span><span class="n">title</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">head</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">body</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">div</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">p</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;inner-text first-item&quot;</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;first&quot;</span><span class="o">&gt;</span>
+                <span class="n">First</span> <span class="n">paragraph</span><span class="o">.</span>
+            <span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">p</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;inner-text&quot;</span><span class="o">&gt;</span>
+                <span class="n">Second</span> <span class="n">paragraph</span><span class="o">.</span>
+            <span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+        <span class="o">&lt;/</span><span class="n">div</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">p</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;outer-text first-item&quot;</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;second&quot;</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">b</span><span class="o">&gt;</span>
+                <span class="n">First</span> <span class="n">outer</span> <span class="n">paragraph</span><span class="o">.</span>
+            <span class="o">&lt;/</span><span class="n">b</span><span class="o">&gt;</span>
+        <span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">p</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;outer-text&quot;</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">b</span><span class="o">&gt;</span>
+                <span class="n">Second</span> <span class="n">outer</span> <span class="n">paragraph</span><span class="o">.</span>
+            <span class="o">&lt;/</span><span class="n">b</span><span class="o">&gt;</span>
+        <span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">body</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">html</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">page</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;http://dataquestio.github.io/web-scraping-pages/ids_and_classes.html&quot;</span><span class="p">)</span>
+<span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">page</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+<span class="n">soup</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;A simple example page&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div&gt;
+&lt;p class=&quot;inner-text first-item&quot; id=&quot;first&quot;&gt;
+                First paragraph.
+            &lt;/p&gt;
+&lt;p class=&quot;inner-text&quot;&gt;
+                Second paragraph.
+            &lt;/p&gt;
+&lt;/div&gt;
+&lt;p class=&quot;outer-text first-item&quot; id=&quot;second&quot;&gt;
+&lt;b&gt;
+                First outer paragraph.
+            &lt;/b&gt;
+&lt;/p&gt;
+&lt;p class=&quot;outer-text&quot;&gt;
+&lt;b&gt;
+                Second outer paragraph.
+            &lt;/b&gt;
+&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, we can use the <code class="docutils literal notranslate"><span class="pre">find_all</span></code> method to search for items by class or by id. In the below example, we’ll search for any <code class="docutils literal notranslate"><span class="pre">p</span></code> tag that has the class <code class="docutils literal notranslate"><span class="pre">outer-text</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s1">&#39;outer-text&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;p class=&quot;outer-text first-item&quot; id=&quot;second&quot;&gt;
+ &lt;b&gt;
+                 First outer paragraph.
+             &lt;/b&gt;
+ &lt;/p&gt;,
+ &lt;p class=&quot;outer-text&quot;&gt;
+ &lt;b&gt;
+                 Second outer paragraph.
+             &lt;/b&gt;
+ &lt;/p&gt;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>In the below example, we’ll look for any tag that has the class <code class="docutils literal notranslate"><span class="pre">outer-text</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="n">class_</span><span class="o">=</span><span class="s2">&quot;outer-text&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;p class=&quot;outer-text first-item&quot; id=&quot;second&quot;&gt;
+&lt;b&gt;
+                First outer paragraph.
+            &lt;/b&gt;
+&lt;/p&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can also search for elements by <code class="docutils literal notranslate"><span class="pre">id</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;first&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;p class=&quot;inner-text first-item&quot; id=&quot;first&quot;&gt;
+                 First paragraph.
+             &lt;/p&gt;]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="more-sophisticated-webpages">
+<h3>More sophisticated webpages<a class="headerlink" href="#more-sophisticated-webpages" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://forecast.weather.gov/MapClick.php?lat=41.8843&amp;lon=-87.6324#.XdPlJUVKg6g&#39;</span>
+<span class="n">request</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">times</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="n">class_</span><span class="o">=</span><span class="s1">&#39;period-name&#39;</span><span class="p">)</span>
+<span class="n">times</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;p class=&quot;period-name&quot;&gt;This&lt;br/&gt;Afternoon&lt;/p&gt;,
+ &lt;p class=&quot;period-name&quot;&gt;Tonight&lt;br/&gt;&lt;br/&gt;&lt;/p&gt;,
+ &lt;p class=&quot;period-name&quot;&gt;Friday&lt;br/&gt;&lt;br/&gt;&lt;/p&gt;,
+ &lt;p class=&quot;period-name&quot;&gt;Friday&lt;br/&gt;Night&lt;/p&gt;,
+ &lt;p class=&quot;period-name&quot;&gt;Saturday&lt;br/&gt;&lt;br/&gt;&lt;/p&gt;,
+ &lt;p class=&quot;period-name&quot;&gt;Saturday&lt;br/&gt;Night&lt;/p&gt;,
+ &lt;p class=&quot;period-name&quot;&gt;Sunday&lt;br/&gt;&lt;br/&gt;&lt;/p&gt;,
+ &lt;p class=&quot;period-name&quot;&gt;Sunday&lt;br/&gt;Night&lt;/p&gt;,
+ &lt;p class=&quot;period-name&quot;&gt;Monday&lt;br/&gt;&lt;br/&gt;&lt;/p&gt;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">descs</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="n">class_</span><span class="o">=</span><span class="s1">&#39;short-desc&#39;</span><span class="p">)</span>
+<span class="n">descs</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;p class=&quot;short-desc&quot;&gt;Sunny and&lt;br/&gt;Breezy&lt;/p&gt;,
+ &lt;p class=&quot;short-desc&quot;&gt;Mostly Clear&lt;/p&gt;,
+ &lt;p class=&quot;short-desc&quot;&gt;Mostly Sunny&lt;/p&gt;,
+ &lt;p class=&quot;short-desc&quot;&gt;Mostly Cloudy&lt;/p&gt;,
+ &lt;p class=&quot;short-desc&quot;&gt;Mostly Sunny&lt;/p&gt;,
+ &lt;p class=&quot;short-desc&quot;&gt;Mostly Cloudy&lt;/p&gt;,
+ &lt;p class=&quot;short-desc&quot;&gt;Mostly Cloudy&lt;/p&gt;,
+ &lt;p class=&quot;short-desc&quot;&gt;Breezy.&lt;br/&gt;Mostly Cloudy&lt;br/&gt;then Slight&lt;br/&gt;Chance&lt;br/&gt;Rain/Snow&lt;/p&gt;,
+ &lt;p class=&quot;short-desc&quot;&gt;Breezy.&lt;br/&gt;Chance&lt;br/&gt;Rain/Snow&lt;br/&gt;then Rain&lt;br/&gt;Likely&lt;/p&gt;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">together</span> <span class="o">=</span> <span class="p">[(</span><span class="n">entry</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">entry</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">)</span> <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">descs</span><span class="p">)]</span>
+<span class="n">together</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(&#39;ThisAfternoon&#39;, &#39;Sunny andBreezy&#39;),
+ (&#39;Tonight&#39;, &#39;Mostly Clear&#39;),
+ (&#39;Friday&#39;, &#39;Mostly Sunny&#39;),
+ (&#39;FridayNight&#39;, &#39;Mostly Cloudy&#39;),
+ (&#39;Saturday&#39;, &#39;Mostly Sunny&#39;),
+ (&#39;SaturdayNight&#39;, &#39;Mostly Cloudy&#39;),
+ (&#39;Sunday&#39;, &#39;Mostly Cloudy&#39;),
+ (&#39;SundayNight&#39;, &#39;Breezy.Mostly Cloudythen SlightChanceRain/Snow&#39;),
+ (&#39;Monday&#39;, &#39;Breezy.ChanceRain/Snowthen RainLikely&#39;)]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="pulling-in-a-table">
+<h3>Pulling in a Table<a class="headerlink" href="#pulling-in-a-table" title="Permalink to this heading">#</a></h3>
+<p><em>In general you’ll need to examine the html code so that you can tell the BeautifulSoup parser what to look for!</em></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://www.pro-football-reference.com/&#39;</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tbodies</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;tbody&#39;</span><span class="p">)</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">tbodies</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>7
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">teams</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">table</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;table&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;AFC&#39;</span><span class="p">})</span>
+
+<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">table</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;tbody&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;tr&#39;</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">team</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">row</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;th&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;data-stat&#39;</span><span class="p">:</span> <span class="s1">&#39;team&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+               <span class="s1">&#39;wins&#39;</span><span class="p">:</span> <span class="n">row</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;td&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;data-stat&#39;</span><span class="p">:</span> <span class="s1">&#39;wins&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+               <span class="s1">&#39;losses&#39;</span><span class="p">:</span> <span class="n">row</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;td&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;data-stat&#39;</span><span class="p">:</span> <span class="s1">&#39;losses&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+               <span class="s1">&#39;ties&#39;</span><span class="p">:</span> <span class="n">row</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;td&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;data-stat&#39;</span><span class="p">:</span> <span class="s1">&#39;ties&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">text</span><span class="p">}</span>
+        <span class="n">teams</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">team</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+<span class="n">teams</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[{&#39;name&#39;: &#39;BUF*&#39;, &#39;wins&#39;: &#39;13&#39;, &#39;losses&#39;: &#39;3&#39;, &#39;ties&#39;: &#39;0&#39;},
+ {&#39;name&#39;: &#39;MIA&#39;, &#39;wins&#39;: &#39;10&#39;, &#39;losses&#39;: &#39;6&#39;, &#39;ties&#39;: &#39;0&#39;},
+ {&#39;name&#39;: &#39;NWE&#39;, &#39;wins&#39;: &#39;7&#39;, &#39;losses&#39;: &#39;9&#39;, &#39;ties&#39;: &#39;0&#39;},
+ {&#39;name&#39;: &#39;NYJ&#39;, &#39;wins&#39;: &#39;2&#39;, &#39;losses&#39;: &#39;14&#39;, &#39;ties&#39;: &#39;0&#39;},
+ {&#39;name&#39;: &#39;PIT*&#39;, &#39;wins&#39;: &#39;12&#39;, &#39;losses&#39;: &#39;4&#39;, &#39;ties&#39;: &#39;0&#39;},
+ {&#39;name&#39;: &#39;BAL+&#39;, &#39;wins&#39;: &#39;11&#39;, &#39;losses&#39;: &#39;5&#39;, &#39;ties&#39;: &#39;0&#39;},
+ {&#39;name&#39;: &#39;CLE+&#39;, &#39;wins&#39;: &#39;11&#39;, &#39;losses&#39;: &#39;5&#39;, &#39;ties&#39;: &#39;0&#39;},
+ {&#39;name&#39;: &#39;CIN&#39;, &#39;wins&#39;: &#39;4&#39;, &#39;losses&#39;: &#39;11&#39;, &#39;ties&#39;: &#39;1&#39;},
+ {&#39;name&#39;: &#39;TEN*&#39;, &#39;wins&#39;: &#39;11&#39;, &#39;losses&#39;: &#39;5&#39;, &#39;ties&#39;: &#39;0&#39;},
+ {&#39;name&#39;: &#39;IND+&#39;, &#39;wins&#39;: &#39;11&#39;, &#39;losses&#39;: &#39;5&#39;, &#39;ties&#39;: &#39;0&#39;},
+ {&#39;name&#39;: &#39;HOU&#39;, &#39;wins&#39;: &#39;4&#39;, &#39;losses&#39;: &#39;12&#39;, &#39;ties&#39;: &#39;0&#39;},
+ {&#39;name&#39;: &#39;JAX&#39;, &#39;wins&#39;: &#39;1&#39;, &#39;losses&#39;: &#39;15&#39;, &#39;ties&#39;: &#39;0&#39;},
+ {&#39;name&#39;: &#39;KAN*&#39;, &#39;wins&#39;: &#39;14&#39;, &#39;losses&#39;: &#39;2&#39;, &#39;ties&#39;: &#39;0&#39;},
+ {&#39;name&#39;: &#39;LVR&#39;, &#39;wins&#39;: &#39;8&#39;, &#39;losses&#39;: &#39;8&#39;, &#39;ties&#39;: &#39;0&#39;},
+ {&#39;name&#39;: &#39;LAC&#39;, &#39;wins&#39;: &#39;7&#39;, &#39;losses&#39;: &#39;9&#39;, &#39;ties&#39;: &#39;0&#39;},
+ {&#39;name&#39;: &#39;DEN&#39;, &#39;wins&#39;: &#39;5&#39;, &#39;losses&#39;: &#39;11&#39;, &#39;ties&#39;: &#39;0&#39;}]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="combining-our-data-into-a-pandas-dataframe">
+<h2>Combining our data into a Pandas DataFrame<a class="headerlink" href="#combining-our-data-into-a-pandas-dataframe" title="Permalink to this heading">#</a></h2>
+<p>We can now combine the data into a Pandas DataFrame and analyze it.</p>
+<p>In order to do this, we’ll call the DataFrame class, and pass in each list of items that we have. We pass them in as part of a dictionary. Each dictionary key will become a column in the DataFrame, and each list will become the values in the column:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Football data from the table in dictionary form (very easy!)</span>
+
+<span class="n">football</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">teams</span><span class="p">)</span>
+<span class="n">football</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>wins</th>
+      <th>losses</th>
+      <th>ties</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>BUF*</td>
+      <td>13</td>
+      <td>3</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>MIA</td>
+      <td>10</td>
+      <td>6</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>NWE</td>
+      <td>7</td>
+      <td>9</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>NYJ</td>
+      <td>2</td>
+      <td>14</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>PIT*</td>
+      <td>12</td>
+      <td>4</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>BAL+</td>
+      <td>11</td>
+      <td>5</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>CLE+</td>
+      <td>11</td>
+      <td>5</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>CIN</td>
+      <td>4</td>
+      <td>11</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>TEN*</td>
+      <td>11</td>
+      <td>5</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>IND+</td>
+      <td>11</td>
+      <td>5</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>HOU</td>
+      <td>4</td>
+      <td>12</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>JAX</td>
+      <td>1</td>
+      <td>15</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>KAN*</td>
+      <td>14</td>
+      <td>2</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>LVR</td>
+      <td>8</td>
+      <td>8</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>LAC</td>
+      <td>7</td>
+      <td>9</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>DEN</td>
+      <td>5</td>
+      <td>11</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Weather data from the list of doubles</span>
+
+<span class="n">weather</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">together</span><span class="p">,</span>
+                      <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="s1">&#39;description&#39;</span><span class="p">])</span>
+<span class="n">weather</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>ThisAfternoon</td>
+      <td>Sunny andBreezy</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Tonight</td>
+      <td>Mostly Clear</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Friday</td>
+      <td>Mostly Sunny</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>FridayNight</td>
+      <td>Mostly Cloudy</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Saturday</td>
+      <td>Mostly Sunny</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>SaturdayNight</td>
+      <td>Mostly Cloudy</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Sunday</td>
+      <td>Mostly Cloudy</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>SundayNight</td>
+      <td>Breezy.Mostly Cloudythen SlightChanceRain/Snow</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Monday</td>
+      <td>Breezy.ChanceRain/Snowthen RainLikely</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Phase_1/topic_10_webscraping"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#agenda">Agenda:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#context">Context</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-components-of-a-web-page">The components of a web page</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#html">HTML</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#let-s-take-a-look-at-a-sample-web-page-from-our-local-computer">Let’s take a look at a sample web page from our local computer</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#make-a-sample-webpage">Make a sample webpage</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#webscraping-with-python">Webscraping with Python</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-requests-library">The requests library</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parsing-a-page-with-beautifulsoup">Parsing a page with BeautifulSoup</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#finding-all-instances-of-a-tag-at-once">Finding all instances of a tag at once</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#searching-for-tags-by-class-and-id">Searching for tags by class and id</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#more-sophisticated-webpages">More sophisticated webpages</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pulling-in-a-table">Pulling in a Table</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#combining-our-data-into-a-pandas-dataframe">Combining our data into a Pandas DataFrame</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By James Irving, PhD
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

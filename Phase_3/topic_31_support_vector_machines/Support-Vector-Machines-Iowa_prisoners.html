@@ -1,0 +1,2489 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Support Vector Machines &#8212; Data Science Curriculum</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Phase_3/topic_31_support_vector_machines/Support-Vector-Machines-Iowa_prisoners';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/flatironschool_banner.jpg" class="logo__image only-light" alt="Data Science Curriculum - Home"/>
+    <script>document.write(`<img src="../../_static/flatironschool_banner.jpg" class="logo__image only-dark" alt="Data Science Curriculum - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Data Science Curriculum
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 1 - Python &amp; Data Fundamentals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_01_getting_started/topic_01_getting_started.html">Topic 1: Getting Started with Data Science</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_02_bash_git/topic_02_bash_and_git.html">Topic 02:  Bash and Git</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_03_control_flow_functions/topic_03_control_flow_and_functions.html">Topic 03: Control Flow, Functions, and Statistics</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_04_python_libraries/topic_04_intro_to_libraries_numpy_SG.html">Topic 04-Part 1: Python Libraries &amp; NumPy</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_04_python_libraries/topic_04_pt-2_brief_intro_to_pandas-SG.html">Topic 04-Part 2: Brief Intro to Pandas with Doctor Who</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_05_data_cleaning_in_pandas/topic_05_Data_Cleaning_in_Pandas.html">Topic 05: Data Cleaning in Pandas</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_06_data_visualization/topic_06_visualizations_heroes_project_SG.html">Topic 06:  Data Visualizations</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_07_SQL_and_relational_databases/topic_07_SQL_and_relational_databases_SG.html">TOPIC 07: SQL DATABASES</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_08_noSQL_databases/topic_08_mongodb-SG.html">Topic 08: NoSQL Databases</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_09_json_and_apis/topic_09_json-api-SG.html">Topic 09: Using APIs and JSON Data</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_10_webscraping/topic_10_SG_HTML_CSS_web_scraping.html">Topic 10: HTML, CSS, &amp; Web Scraping</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 2 - Statistics &amp; Regression</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_11_probability_and_combinatorics/topic_11_playlist_probabilities-SG.html">Topic 11 - Intro to Combinatorics &amp; Probability</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_12_statistical_distributions/topic-12-distributions-with-movies-sg.html">Exploring Distributions with Movies Data</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_13_central_limit_theorem/topic_13_central_limit_theorem_SG.html">Topic 13: Central Limit Theorem</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_14_hypothesis_testing/topic_14_hypothesis_testing-SG.html">Topic 14: Hypothesis Testing -  T-Tests</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_15_ANOVA/topic_15_ANOVA_with_neuro_data-SG.html">Topic 15: ANOVAs &amp; Statistical Power with  Neuro Data</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_16_AB_testing/topic_16_AB_testing_with_movies-SG.html">Topic 16: Practicing AB Testing with Movies</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_17_bayesian_statistics/topic_17_bayesian_statistics-SG.html">Topic 17: Bayesian Statistics</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_18_linear_regression/topic_18_intro_to_linear_regression_SG.html">Topic 18: Intro to Linear Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_19_part1_multiple_regression/topic_19_Multiple_Regression_v2-SG.html">Topic 19: Multiple Linear Regression</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_19_part2_model_validation/topic_19_part_2_Multiple_Regression_v2-SG.html">Topic 19 Part 2: Feature Selection &amp; Model Validation</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_20_extensions_linear_models/topic_20_extensions_to_linear_models_SG.html">Topic 20: Extensions to Linear Models</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 3 - Machine Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../topic_21_OOP/topic_21_OOP_playing_cards_SG.html">Topic 21: Object-Oriented Programming</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_22_linear_algebra/topic_22_linear_algebra_SG.html">Topic 22: Linear Algebra</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_23_calculus_gradient_descent/topic_23_gradient_descent_SG.html">Topic 23: Cost Functions and Gradient Descent</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_24_regularization/topic_24_Regularization_Ridge_Lasso_v2_SG.html">Topic 24: Feature Selection &amp; Regularization (Ridge and Lasso Regression)</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_25_logistic_regression/topic_25_pt1_LogisticRegression_titanic-v2-SG.html">Topic 25-Pt 1: Intro to Logistic Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_25_logistic_regression/topic_25_pt2_LogisticRegression_titanic-v2-SG.html">Topic 25-Part 2: Evaluating Classifiers, Dealing with Class Imbalance, and <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code></a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_27_KNN/Topic_27_KNN_with_pipelines_with_lab_v3_SG.html">Topic 27: K-Nearest Neighbors<br/> +Topic 32: Pipelines</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_29_decision_trees/topic_29_decision_trees_v2_titanic-SG.html">Topic 29: Decision Trees</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_30_ensemble_methods/topic_30_ensemble_methods-SG.html">Topic 30: Ensemble Methods</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="topic_31_SupportVectorMachines_SG.html">Topic 31: Support Vector Machines</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 4 - Advanced ML &amp; Time Series</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_33_pca/topic_33_PCA_SG.html">Topic 33: Principal Component Analysis</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_34_clustering/topic_34_Kmeans_clustering_v3_SG.html">Topic 34: Clustering</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_35-36_using_databricks_for_pyspark/using_databricks_for_pyspark.html">How to Use Databricks for PySpark Canvas Material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_36_recommendation_systems/topic_36_Recommendation_Systems_with_Surprise.html">Topic 36: Recommendation Systems</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_37_intro_to_time_series/topic_37_intro_to_time_series_crime_v3-SG.html">Topic 37: Intro to Time Series</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_38_time_series_models/topic_38-time_series_models_v3_SG.html">Topic 38: Time Series Models</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_39_NLP/topic_39_NLP_finding_trump_v3_SG.html">Topic 39: Natural Language Processing + Topic 28: Bayesian Classification</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_40-41_neural_networks/topic_40-41_Artificial_Neural_Networks_v1_SG.html">Topic 40-41: Artificial Neural Networks</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_42_tuning_neural_networks/topic_42_tuning_ANNs_with_deep_NLP_v1_SG.html">Topic 42 - Tuning Neural Networks + Deep NLP</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_43_AWS/topic_43_operationalizing_code_AWS_SG.html">Topic 43: Operationalizing Code &amp; AWS</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 5 - Capstone &amp; Bonus Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/Capstone_Kickoff.html">Capstone Kickoff!</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/APIs/working_with_apis.html">Working with APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/developing_app_functions/developing-streamlit-app-functions_SG.html">Developing Streamlit App Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/tableau/tableau_fundamentals_2021-SG.html">Tableau Fundamentals</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/Bonus%20Notebooks/plotly_visuals.html">Plotly Question</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/master?urlpath=tree/Phase_3/topic_31_support_vector_machines/Support-Vector-Machines-Iowa_prisoners.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/blob/master/Phase_3/topic_31_support_vector_machines/Support-Vector-Machines-Iowa_prisoners.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/issues/new?title=Issue%20on%20page%20%2FPhase_3/topic_31_support_vector_machines/Support-Vector-Machines-Iowa_prisoners.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/Phase_3/topic_31_support_vector_machines/Support-Vector-Machines-Iowa_prisoners.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Support Vector Machines</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Support Vector Machines</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#support-vector-classifier">Support Vector Classifier</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#maximal-margin-classifier">Maximal Margin Classifier</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#soft-margin-classifier">Soft Margin Classifier</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-kernel-trick">“The Kernel Trick”</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementation-performance-comparison">Implementation &amp; Performance Comparison</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#original-smaller-dataset">Original Smaller Dataset</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#predicting-recidivism-with-svc">📙 Predicting Recidivism with SVC</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#obtain">OBTAIN</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scrub">SCRUB</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-engineering">Feature Engineering</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#race-ethnicity"><code class="docutils literal notranslate"><span class="pre">race_ethnicity</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#crime-class"><code class="docutils literal notranslate"><span class="pre">crime_class</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#age-released"><code class="docutils literal notranslate"><span class="pre">age_released</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#train-test-split">Train-Test-Split</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pipelnes-and-columntransformer">Pipelnes and ColumnTransformer</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#resampling-with-smotenc">Resampling with SMOTENC</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#model">📙 MODEL</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#selecting-the-final-dataset-for-modeling">⫚ Selecting the Final Dataset for Modeling</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#first-linear-kernel">First: Linear Kernel</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#now-rbf">Now: RBF</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#and-a-polynomial-kernel-for-good-measure">And a Polynomial Kernel for good measure</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adjusting-c">Adjusting C?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pros">Pros</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cons">Cons</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#requirements">Requirements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resources">Resources</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#appendix-if-there-s-time">Appendix/IF there’s time</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#meta-ensembles">Meta-Ensembles</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-dictionaries-to-record-the-training-times-of-all-models-for-all-datasets">Using dictionaries to record the training times of all models for all datasets</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="support-vector-machines">
+<h1>Support Vector Machines<a class="headerlink" href="#support-vector-machines" title="Permalink to this heading">#</a></h1>
+<p><em>Adapted from Yish’s interpretation of Chapter 9 of Introduction to Statistical Learning in R</em></p>
+<section id="support-vector-classifier">
+<h2>Support Vector Classifier<a class="headerlink" href="#support-vector-classifier" title="Permalink to this heading">#</a></h2>
+<p>SVMs approach the classification problem in a direct way - <strong>we try and find a plane that separates the classes in the feature space</strong></p>
+<p>If we cannot, we do one of the two things:</p>
+<ul class="simple">
+<li><p>We <strong>soften</strong> what we mean by “separates”</p></li>
+<li><p>We <strong>enlarge</strong> the feature space so that the separation is possible</p></li>
+</ul>
+<p><strong>Notes on Terminology</strong>:</p>
+<ul class="simple">
+<li><p>Support vector machines are sometimes used as a general method that incorporate maximal margin classifier, support vector classifiers etc. However, strictly by definition, support vector machine is a support vector classifier utilized with non-linear kernel.</p></li>
+</ul>
+<blockquote>
+<div><p>“When the support vector classifier is combined with a non-linear kernel such as (9.22), the resulting classifier is known as a support vector machine.” – P366, ISLR</p>
+</div></blockquote>
+<p>Example of a boundary hyperplane in a two dimensional space:</p>
+<img src="images/exampleboundary.png" width=500><section id="maximal-margin-classifier">
+<h3>Maximal Margin Classifier<a class="headerlink" href="#maximal-margin-classifier" title="Permalink to this heading">#</a></h3>
+<p>SVM tackles the problem of classification directly, in the sense that it does not compute a probabilistic model. Instead, it constructs a hyperplane to directly separate the classes.</p>
+<p>For example:</p>
+<p><img alt="" src="../../_images/manyboundaries.png" /></p>
+<p>However, the problem with this approach is that we can come up with infinite number of such hyperplanes as we can tilt the line back and forth and it would still serve the same purpose.</p>
+<p><strong>Therefore, we are using the hyperplane such that the it would be the farthest from training observations from either side</strong>. The intuition behind it is that if we have chosen a hyperplane that is far from the training observations, it would be far for the testing observations as well. <br></p>
+<p>The distance between the training observations and the hyperplane is called the <em>margin</em>, and the classifier aims to find the maximal margin from the hyperplane that separates the training examples:</p>
+<img src="images/bestboundary.png" width=500></section>
+</section>
+<section id="soft-margin-classifier">
+<h2>Soft Margin Classifier<a class="headerlink" href="#soft-margin-classifier" title="Permalink to this heading">#</a></h2>
+<p>Even though the maximal margin classifier sounds like an intuitive idea and not too difficult to optimize for, it might not be desirable under two circumstances:</p>
+<ol class="arabic simple">
+<li><p>It will be sensitive to individual training observations</p></li>
+<li><p>The algorithm will not converge if the training observations cannot be linearly separated.</p></li>
+</ol>
+<p><img alt="" src="../../_images/softboundary.png" /></p>
+<p>What happens if we cannot come up with a hyperplane that perfectly separates the training observations like the ones above? The first solution is the soft margin classifier, where we can loosen up our definition of the margin.</p>
+<img src="images/withoutboundary.png" width=500>
+<p><strong>Rather than seeking the largest possible margin so that every observation is not only on the correct side of the hyperplane but also on the correct side of the margin, we instead allow some observations to be on the incorrect side of the margin, or even on the incorrect side of the hyperplane.</strong></p>
+<p><img alt="" src="../../_images/errortolerance.png" /></p>
+<p>In this case, the hyperparameter ε is known as the slack variables, which dictate how many training observations we allow to violate the rule of margins or even the hyperplane. The amount of slack is bounded by C accordingly.</p>
+<p>The parameter εi tells us where the ith training observation is located.</p>
+<ul class="simple">
+<li><p>If εi = 0, then we say the ith training observation is on the correct side of the margin;</p></li>
+<li><p>If εi &gt; 0, then we say it has violated the margin</p></li>
+<li><p>If εi &gt; 1, then it is on the wrong side of the hyperplane</p></li>
+</ul>
+<p>The value C is the sum of ε across all i training observations. The parameter C controls the bias-variance tradeoff of the statistical technique. A high value of C meaning we are more tolerant of the violation, which in turn might give us a model that has high bias but low variance; however, a low value of C indicates low tolerance of the violation, potentially giving us more variance but less bias.</p>
+<p><strong>How do we determine the ideal value of C?</strong></p>
+<p><img alt="" src="../../_images/impactofchyperparameter.png" /></p>
+<p><strong>Note!</strong></p>
+<p>In scikit-learn implementation, <code class="docutils literal notranslate"><span class="pre">c</span></code> is defined as the inverse. A higher value of <code class="docutils literal notranslate"><span class="pre">c</span></code> is a smaller regularization or smaller penalty, whereas a lower value of <code class="docutils literal notranslate"><span class="pre">c</span></code> is a higher penalty.</p>
+<p><strong>Note!</strong>
+It is important to point out that in the support vector classfier (or SVM) in general, only the vectors on the margins are used for classification. They are called the <strong>“Support Vectors”</strong></p>
+</section>
+<section id="the-kernel-trick">
+<h2>“The Kernel Trick”<a class="headerlink" href="#the-kernel-trick" title="Permalink to this heading">#</a></h2>
+<p>Sometimes we have training data that are not able to be separated even with softened margin:</p>
+<p><img alt="" src="../../_images/needforkerneltrick.png" /></p>
+<p>The intuition to find the optimal fit is called feature space expansion:</p>
+<ul class="simple">
+<li><p>First, we <strong>enlarge</strong> the feature space through the use of kernel</p></li>
+<li><p>Fit a support vector classifier in the enlarged space</p></li>
+<li><p>This results in nonlinear decision boundaries in the original space</p></li>
+</ul>
+<img src="images/nonlinearring.png" width=500>
+<img src="images/nonlinearringin3d.png" width=500>
+<p>Why do we know that enlarging the feature space makes the data more linearly separable? <a class="reference external" href="https://en.wikipedia.org/wiki/Cover%27s_theorem">Cover’s Theorem</a>.</p>
+<p>Another view:</p>
+<p><img alt="" src="../../_images/kernel_trick_hyperdimensional.png" /></p>
+</section>
+<section id="implementation-performance-comparison">
+<h2>Implementation &amp; Performance Comparison<a class="headerlink" href="#implementation-performance-comparison" title="Permalink to this heading">#</a></h2>
+<p>Docs: <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html">https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># imports</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>  
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>  
+<span class="kn">from</span><span class="w"> </span><span class="nn">time</span><span class="w"> </span><span class="kn">import</span> <span class="n">time</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="original-smaller-dataset">
+<h3>Original Smaller Dataset<a class="headerlink" href="#original-smaller-dataset" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## ORIGINAL DATA</span>
+
+<span class="n">df0</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/data_banknote_authentication.csv&#39;</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+
+<span class="c1"># our data needs column names</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Variance&quot;</span><span class="p">,</span> <span class="s2">&quot;Skewness&quot;</span><span class="p">,</span> <span class="s2">&quot;Curtosis&quot;</span><span class="p">,</span> <span class="s2">&quot;Entropy&quot;</span><span class="p">,</span> <span class="s2">&quot;Class&quot;</span><span class="p">]</span>
+<span class="n">df0</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">headers</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">df0</span><span class="o">.</span><span class="n">head</span><span class="p">(),</span><span class="n">df0</span><span class="o">.</span><span class="n">info</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 1372 entries, 0 to 1371
+Data columns (total 5 columns):
+ #   Column    Non-Null Count  Dtype  
+---  ------    --------------  -----  
+ 0   Variance  1372 non-null   float64
+ 1   Skewness  1372 non-null   float64
+ 2   Curtosis  1372 non-null   float64
+ 3   Entropy   1372 non-null   float64
+ 4   Class     1372 non-null   int64  
+dtypes: float64(4), int64(1)
+memory usage: 53.7 KB
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Variance</th>
+      <th>Skewness</th>
+      <th>Curtosis</th>
+      <th>Entropy</th>
+      <th>Class</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3.62160</td>
+      <td>8.6661</td>
+      <td>-2.8073</td>
+      <td>-0.44699</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.54590</td>
+      <td>8.1674</td>
+      <td>-2.4586</td>
+      <td>-1.46210</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3.86600</td>
+      <td>-2.6383</td>
+      <td>1.9242</td>
+      <td>0.10645</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3.45660</td>
+      <td>9.5228</td>
+      <td>-4.0112</td>
+      <td>-3.59440</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.32924</td>
+      <td>-4.4552</td>
+      <td>4.5718</td>
+      <td>-0.98880</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>None
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># define X and y, then train test split</span>
+<span class="n">X0</span> <span class="o">=</span> <span class="n">df0</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Class&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  
+<span class="n">y0</span> <span class="o">=</span> <span class="n">df0</span><span class="p">[</span><span class="s1">&#39;Class&#39;</span><span class="p">]</span> 
+<span class="n">X_train0</span><span class="p">,</span> <span class="n">X_test0</span><span class="p">,</span> <span class="n">y_train0</span><span class="p">,</span> <span class="n">y_test0</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X0</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">test_size</span> <span class="o">=</span> <span class="mf">0.20</span><span class="p">)</span> 
+<span class="n">X_train0</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Variance</th>
+      <th>Skewness</th>
+      <th>Curtosis</th>
+      <th>Entropy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>922</th>
+      <td>-1.4174</td>
+      <td>-2.2535</td>
+      <td>1.51800</td>
+      <td>0.61981</td>
+    </tr>
+    <tr>
+      <th>453</th>
+      <td>3.5761</td>
+      <td>9.7753</td>
+      <td>-3.97950</td>
+      <td>-3.46380</td>
+    </tr>
+    <tr>
+      <th>697</th>
+      <td>3.6077</td>
+      <td>6.8576</td>
+      <td>-1.16220</td>
+      <td>0.28231</td>
+    </tr>
+    <tr>
+      <th>1245</th>
+      <td>-1.1306</td>
+      <td>1.8458</td>
+      <td>-1.35750</td>
+      <td>-1.38060</td>
+    </tr>
+    <tr>
+      <th>548</th>
+      <td>1.8533</td>
+      <td>6.1458</td>
+      <td>1.01760</td>
+      <td>-2.04010</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>48</th>
+      <td>3.9102</td>
+      <td>6.0650</td>
+      <td>-2.45340</td>
+      <td>-0.68234</td>
+    </tr>
+    <tr>
+      <th>886</th>
+      <td>-1.6514</td>
+      <td>-8.4985</td>
+      <td>9.11220</td>
+      <td>1.23790</td>
+    </tr>
+    <tr>
+      <th>683</th>
+      <td>4.3365</td>
+      <td>-3.5840</td>
+      <td>3.68840</td>
+      <td>0.74912</td>
+    </tr>
+    <tr>
+      <th>605</th>
+      <td>1.0652</td>
+      <td>8.3682</td>
+      <td>-1.40040</td>
+      <td>-1.65090</td>
+    </tr>
+    <tr>
+      <th>939</th>
+      <td>-2.0529</td>
+      <td>3.8385</td>
+      <td>-0.79544</td>
+      <td>-1.21380</td>
+    </tr>
+  </tbody>
+</table>
+<p>1097 rows × 4 columns</p>
+</div></div></div>
+</div>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="predicting-recidivism-with-svc">
+<h1>📙 Predicting Recidivism with SVC<a class="headerlink" href="#predicting-recidivism-with-svc" title="Permalink to this heading">#</a></h1>
+<section id="obtain">
+<h2>OBTAIN<a class="headerlink" href="#obtain" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Iowa has a major problem with recidivism,  where ~38% of all inmates released from prison wind up back in jail after returning to a life of crime (AKA recidivism).</p></li>
+<li><p>Dataset contains information on released prisoners and if they returned to prison within 3 years of being release.</p>
+<ul>
+<li><p>Dataset can be <a class="reference external" href="https://www.kaggle.com/slonnadube/recidivism-for-offenders-released-from-prison">found on Kaggle</a>, which was extracted from <a class="reference external" href="https://data.iowa.gov/Correctional-System/3-Year-Recidivism-for-Offenders-Released-from-Pris/mw8r-vqy4">Iowa’s data portal</a>.</p></li>
+</ul>
+</li>
+<li><p>We will be using a partially pre-processed version of the dataset (columns have been renamed/simplified).</p></li>
+</ul>
+<img src="https://raw.githubusercontent.com/jirvingphd/dsc-3-final-project-online-ds-ft-021119/master/LSA_map_with_counties_districts_and_B54A5BBCE4156.jpg" width=20%> 
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">load_ext</span> autoreload
+<span class="o">%</span><span class="k">autoreload</span> 2
+<span class="kn">import</span><span class="w"> </span><span class="nn">functions_022221FT</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">fn</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">plotly.express</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">px</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">plotly.graph_objects</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">go</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;seaborn-notebook&#39;</span><span class="p">)</span>
+
+<span class="n">renamed_data</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/jirvingphd/dsc-3-final-project-online-ds-ft-021119/master/datasets/Iowa_Prisoners_Renamed_Columns_fsds_100719.csv&#39;</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">renamed_data</span><span class="p">,</span><span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1">## Drop unwanted cols using year</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;yr_released&#39;</span><span class="p">,</span><span class="s1">&#39;report_year&#39;</span><span class="p">])</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(),</span><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+Int64Index: 26020 entries, 0 to 26019
+Data columns (total 10 columns):
+ #   Column          Non-Null Count  Dtype 
+---  ------          --------------  ----- 
+ 0   race_ethnicity  25990 non-null  object
+ 1   age_released    26017 non-null  object
+ 2   crime_class     26020 non-null  object
+ 3   crime_type      26020 non-null  object
+ 4   crime_subtype   26020 non-null  object
+ 5   release_type    24258 non-null  object
+ 6   super_dist      16439 non-null  object
+ 7   recidivist      26020 non-null  object
+ 8   target_pop      26020 non-null  object
+ 9   sex             26017 non-null  object
+dtypes: object(10)
+memory usage: 2.2+ MB
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>race_ethnicity</th>
+      <th>age_released</th>
+      <th>crime_class</th>
+      <th>crime_type</th>
+      <th>crime_subtype</th>
+      <th>release_type</th>
+      <th>super_dist</th>
+      <th>recidivist</th>
+      <th>target_pop</th>
+      <th>sex</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Black - Non-Hispanic</td>
+      <td>25-34</td>
+      <td>C Felony</td>
+      <td>Violent</td>
+      <td>Robbery</td>
+      <td>Parole</td>
+      <td>7JD</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Male</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>White - Non-Hispanic</td>
+      <td>25-34</td>
+      <td>D Felony</td>
+      <td>Property</td>
+      <td>Theft</td>
+      <td>Discharged – End of Sentence</td>
+      <td>NaN</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>Male</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>White - Non-Hispanic</td>
+      <td>35-44</td>
+      <td>B Felony</td>
+      <td>Drug</td>
+      <td>Trafficking</td>
+      <td>Parole</td>
+      <td>5JD</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Male</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>White - Non-Hispanic</td>
+      <td>25-34</td>
+      <td>B Felony</td>
+      <td>Other</td>
+      <td>Other Criminal</td>
+      <td>Parole</td>
+      <td>6JD</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Male</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Black - Non-Hispanic</td>
+      <td>35-44</td>
+      <td>D Felony</td>
+      <td>Violent</td>
+      <td>Assault</td>
+      <td>Discharged – End of Sentence</td>
+      <td>NaN</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>Male</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>None
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="scrub">
+<h2>SCRUB<a class="headerlink" href="#scrub" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Null values (fill or drop)</p></li>
+<li><p>Data Types (finding categorical variables)</p></li>
+<li><p>Inspect the value_counts/labels of categoricals</p></li>
+<li><p>Scaling or lack-off</p></li>
+<li><p>One hot encoding</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Check null values</span>
+<span class="c1"># import missingno</span>
+<span class="c1"># missingno.matrix(df)</span>
+<span class="c1"># plt.show()</span>
+<span class="c1"># null_check = pd.DataFrame({</span>
+<span class="c1">#     &#39;#null&#39;:df.isna().sum(),</span>
+<span class="c1">#     &#39;%null&#39;:round(df.isna().sum()/len(df)*100,2)</span>
+<span class="c1"># })</span>
+<span class="c1"># null_check</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ## inspect categories</span>
+<span class="c1"># dashes = &#39;---&#39;*20</span>
+<span class="c1"># for col in df.columns:</span>
+<span class="c1">#     print(dashes)</span>
+<span class="c1">#     print(f&quot;Value Counts for {col}:&quot;)</span>
+<span class="c1">#     display(df[col].value_counts(dropna=False))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="feature-engineering">
+<h3>Feature Engineering<a class="headerlink" href="#feature-engineering" title="Permalink to this heading">#</a></h3>
+<section id="race-ethnicity">
+<h4><code class="docutils literal notranslate"><span class="pre">race_ethnicity</span></code><a class="headerlink" href="#race-ethnicity" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># df[&#39;race_ethnicity&#39;].value_counts(dropna=False)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><ul class="simple">
+<li><p>Simplify race and ethnicity down to race
+- (also tried separating race and ethnicity and using as 2 separate features).</p></li>
+</ul>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining Dictionary Map for race_ethnicity categories</span>
+<span class="n">race_ethnicity_map</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;White - Non-Hispanic&#39;</span><span class="p">:</span><span class="s1">&#39;White&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;Black - Non-Hispanic&#39;</span><span class="p">:</span> <span class="s1">&#39;Black&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;White - Hispanic&#39;</span> <span class="p">:</span> <span class="s1">&#39;Hispanic&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;American Indian or Alaska Native - Non-Hispanic&#39;</span> <span class="p">:</span> <span class="s1">&#39;American Native&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;Asian or Pacific Islander - Non-Hispanic&#39;</span> <span class="p">:</span> <span class="s1">&#39;Asian or Pacific Islander&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;Black - Hispanic&#39;</span> <span class="p">:</span> <span class="s1">&#39;Black&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;American Indian or Alaska Native - Hispanic&#39;</span><span class="p">:</span><span class="s1">&#39;American Native&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;White -&#39;</span> <span class="p">:</span> <span class="s1">&#39;White&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;Asian or Pacific Islander - Hispanic&#39;</span> <span class="p">:</span> <span class="s1">&#39;Asian or Pacific Islander&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;N/A -&#39;</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span>
+                        <span class="s1">&#39;Black -&#39;</span><span class="p">:</span><span class="s1">&#39;Black&#39;</span><span class="p">}</span>
+
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;race&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;race_ethnicity&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">race_ethnicity_map</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;race&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">dropna</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>White                        17596
+Black                         6148
+Hispanic                      1522
+American Native                522
+Asian or Pacific Islander      197
+NaN                             35
+Name: race, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="crime-class">
+<h4><code class="docutils literal notranslate"><span class="pre">crime_class</span></code><a class="headerlink" href="#crime-class" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># df[&#39;crime_class&#39;].value_counts()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p>After some research, we found that several of the less-frequent classes were actually equivalent to other classes. (e.g. ‘Special Sentence 2005’ -&gt; ‘Sex Offender’,)</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Remapping</span>
+<span class="n">crime_class_map</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Other Felony (Old Code)&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span> <span class="p">,</span><span class="c1">#or other felony</span>
+                  <span class="s1">&#39;Other Misdemeanor&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span>
+                   <span class="s1">&#39;Felony - Mandatory Minimum&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="c1"># if minimum then lowest sentence ==  D Felony</span>
+                   <span class="s1">&#39;Special Sentence 2005&#39;</span><span class="p">:</span> <span class="s1">&#39;Sex Offender&#39;</span><span class="p">,</span>
+                   <span class="s1">&#39;Other Felony&#39;</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span> <span class="p">,</span>
+                   <span class="s1">&#39;Sexual Predator Community Supervision&#39;</span> <span class="p">:</span> <span class="s1">&#39;Sex Offender&#39;</span><span class="p">,</span>
+                   <span class="s1">&#39;D Felony&#39;</span><span class="p">:</span> <span class="s1">&#39;D Felony&#39;</span><span class="p">,</span>
+                   <span class="s1">&#39;C Felony&#39;</span> <span class="p">:</span><span class="s1">&#39;C Felony&#39;</span><span class="p">,</span>
+                   <span class="s1">&#39;B Felony&#39;</span> <span class="p">:</span> <span class="s1">&#39;B Felony&#39;</span><span class="p">,</span>
+                   <span class="s1">&#39;A Felony&#39;</span> <span class="p">:</span> <span class="s1">&#39;A Felony&#39;</span><span class="p">,</span>
+                   <span class="s1">&#39;Aggravated Misdemeanor&#39;</span><span class="p">:</span><span class="s1">&#39;Aggravated Misdemeanor&#39;</span><span class="p">,</span>
+                   <span class="s1">&#39;Felony - Enhancement to Original Penalty&#39;</span><span class="p">:</span><span class="s1">&#39;Felony - Enhanced&#39;</span><span class="p">,</span>
+                   <span class="s1">&#39;Felony - Enhanced&#39;</span><span class="p">:</span><span class="s1">&#39;Felony - Enhanced&#39;</span> <span class="p">,</span>
+                   <span class="s1">&#39;Serious Misdemeanor&#39;</span><span class="p">:</span><span class="s1">&#39;Serious Misdemeanor&#39;</span><span class="p">,</span>
+                   <span class="s1">&#39;Simple Misdemeanor&#39;</span><span class="p">:</span><span class="s1">&#39;Simple Misdemeanor&#39;</span><span class="p">}</span>
+
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;crime_class&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;crime_class&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">crime_class_map</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;crime_class&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">dropna</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>D Felony                  10487
+C Felony                   6803
+Aggravated Misdemeanor     4930
+B Felony                   1765
+Felony - Enhanced          1753
+Serious Misdemeanor         155
+Sex Offender                100
+NaN                          20
+A Felony                      4
+Simple Misdemeanor            3
+Name: crime_class, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="age-released">
+<h4><code class="docutils literal notranslate"><span class="pre">age_released</span></code><a class="headerlink" href="#age-released" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;age_released&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">dropna</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>25-34           9554
+35-44           6223
+Under 25        4590
+45-54           4347
+55 and Older    1303
+NaN                3
+Name: age_released, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mapping age_map onto &#39;age_released&#39;</span>
+<span class="c1"># Encoding age groups as ordinal</span>
+<span class="n">age_ranges</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Under 25&#39;</span><span class="p">,</span><span class="s1">&#39;25-34&#39;</span><span class="p">,</span> <span class="s1">&#39;35-44&#39;</span><span class="p">,</span><span class="s1">&#39;45-54&#39;</span><span class="p">,</span><span class="s1">&#39;55 and Older&#39;</span><span class="p">)</span>
+<span class="n">age_numbers</span> <span class="o">=</span> <span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">40</span><span class="p">,</span><span class="mi">50</span><span class="p">,</span><span class="mi">65</span><span class="p">)</span> 
+
+<span class="n">age_num_map</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">age_ranges</span><span class="p">,</span><span class="n">age_numbers</span><span class="p">))</span>
+<span class="n">age_num_map</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Under 25&#39;: 20, &#39;25-34&#39;: 30, &#39;35-44&#39;: 40, &#39;45-54&#39;: 50, &#39;55 and Older&#39;: 65}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;age_number&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;age_released&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">age_num_map</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;age_number&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">dropna</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>30.0    9554
+40.0    6223
+20.0    4590
+50.0    4347
+65.0    1303
+NaN        3
+Name: age_number, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## saving list of features thaat have been replaced wiht engineered nes</span>
+<span class="n">drop_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;age_released&#39;</span><span class="p">,</span><span class="s1">&#39;race_ethnicity&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="train-test-split">
+<h3>Train-Test-Split<a class="headerlink" href="#train-test-split" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;recidivist&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="s1">&#39;Yes&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s2">&quot;No&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">})</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;recidivist&#39;</span><span class="p">,</span><span class="o">*</span><span class="n">drop_cols</span><span class="p">])</span>
+
+<span class="c1">## Train test split</span>
+<span class="n">X_tr</span><span class="p">,</span> <span class="n">X_te</span><span class="p">,</span> <span class="n">y_tr</span><span class="p">,</span><span class="n">y_te</span>  <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">test_size</span><span class="o">=</span><span class="mf">.25</span><span class="p">)</span>
+<span class="c1">#                                                     random_state=3210)#,stratify=y)</span>
+<span class="n">y_tr</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    0.665232
+1    0.334768
+Name: recidivist, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<section id="pipelnes-and-columntransformer">
+<h4>Pipelnes and ColumnTransformer<a class="headerlink" href="#pipelnes-and-columntransformer" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.impute</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimpleImputer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span><span class="p">,</span> <span class="n">OneHotEncoder</span><span class="p">,</span><span class="n">MinMaxScaler</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.compose</span><span class="w"> </span><span class="kn">import</span> <span class="n">ColumnTransformer</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_tr</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>crime_class        16
+crime_type          0
+crime_subtype       0
+release_type     1317
+super_dist       7122
+target_pop          0
+sex                 1
+race               25
+age_number          1
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn</span><span class="w"> </span><span class="kn">import</span> <span class="n">set_config</span>
+<span class="n">set_config</span><span class="p">(</span><span class="n">display</span><span class="o">=</span><span class="s1">&#39;diagram&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## saving list of numeric vs categorical feature</span>
+<span class="n">num_cols</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">X_tr</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="s1">&#39;number&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+<span class="n">cat_cols</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">X_tr</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="s1">&#39;object&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+<span class="n">num_cols</span><span class="p">,</span><span class="n">cat_cols</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>([&#39;age_number&#39;],
+ [&#39;crime_class&#39;,
+  &#39;crime_type&#39;,
+  &#39;crime_subtype&#39;,
+  &#39;release_type&#39;,
+  &#39;super_dist&#39;,
+  &#39;target_pop&#39;,
+  &#39;sex&#39;,
+  &#39;race&#39;])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## create pipelines and column transformer</span>
+<span class="n">num_transformer</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span><span class="p">[</span>
+    <span class="p">(</span><span class="s1">&#39;imputer&#39;</span><span class="p">,</span><span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s1">&#39;median&#39;</span><span class="p">)),</span>
+    <span class="p">(</span><span class="s1">&#39;scale&#39;</span><span class="p">,</span><span class="n">MinMaxScaler</span><span class="p">())</span>
+<span class="p">])</span>
+
+<span class="n">cat_transformer</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span><span class="p">[</span>
+    <span class="p">(</span><span class="s1">&#39;imputer&#39;</span><span class="p">,</span><span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s1">&#39;constant&#39;</span><span class="p">,</span><span class="n">fill_value</span><span class="o">=</span><span class="s1">&#39;MISSING&#39;</span><span class="p">)),</span>
+    <span class="p">(</span><span class="s1">&#39;encoder&#39;</span><span class="p">,</span><span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">handle_unknown</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">))])</span>
+
+<span class="c1">## COMBINE BOTH PIPELINES INTO ONE WITH COLUMN TRANSFORMER</span>
+<span class="n">preprocessor</span><span class="o">=</span><span class="n">ColumnTransformer</span><span class="p">(</span><span class="n">transformers</span><span class="o">=</span><span class="p">[</span>
+    <span class="p">(</span><span class="s1">&#39;num&#39;</span><span class="p">,</span><span class="n">num_transformer</span><span class="p">,</span><span class="n">num_cols</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;cat&#39;</span><span class="p">,</span><span class="n">cat_transformer</span><span class="p">,</span><span class="n">cat_cols</span><span class="p">)])</span>
+
+<span class="n">preprocessor</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>div.sk-top-container {color: black;background-color: white;}div.sk-toggleable {background-color: white;}label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.2em 0.3em;box-sizing: border-box;text-align: center;}div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}div.sk-estimator {font-family: monospace;background-color: #f0f8ff;margin: 0.25em 0.25em;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;}div.sk-estimator:hover {background-color: #d4ebff;}div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;}div.sk-item {z-index: 1;}div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;}div.sk-parallel-item {display: flex;flex-direction: column;position: relative;background-color: white;}div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}div.sk-parallel-item:only-child::after {width: 0;}div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0.2em;box-sizing: border-box;padding-bottom: 0.1em;background-color: white;position: relative;}div.sk-label label {font-family: monospace;font-weight: bold;background-color: white;display: inline-block;line-height: 1.2em;}div.sk-label-container {position: relative;z-index: 2;text-align: center;}div.sk-container {display: inline-block;position: relative;}</style><div class="sk-top-container"><div class="sk-container"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="08995eef-cebf-41a6-8d88-8dd7e9c961c7" type="checkbox" ><label class="sk-toggleable__label" for="08995eef-cebf-41a6-8d88-8dd7e9c961c7">ColumnTransformer</label><div class="sk-toggleable__content"><pre>ColumnTransformer(transformers=[('num',
+                                 Pipeline(steps=[('imputer',
+                                                  SimpleImputer(strategy='median')),
+                                                 ('scale', MinMaxScaler())]),
+                                 ['age_number']),
+                                ('cat',
+                                 Pipeline(steps=[('imputer',
+                                                  SimpleImputer(fill_value='MISSING',
+                                                                strategy='constant')),
+                                                 ('encoder',
+                                                  OneHotEncoder(handle_unknown='ignore',
+                                                                sparse=False))]),
+                                 ['crime_class', 'crime_type', 'crime_subtype',
+                                  'release_type', 'super_dist', 'target_pop',
+                                  'sex', 'race'])])</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="29f1bee8-6d1a-40f7-86f0-f5f02e54cb01" type="checkbox" ><label class="sk-toggleable__label" for="29f1bee8-6d1a-40f7-86f0-f5f02e54cb01">num</label><div class="sk-toggleable__content"><pre>['age_number']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="92b29b0a-bb6e-43fe-a940-a59ea5fe860c" type="checkbox" ><label class="sk-toggleable__label" for="92b29b0a-bb6e-43fe-a940-a59ea5fe860c">SimpleImputer</label><div class="sk-toggleable__content"><pre>SimpleImputer(strategy='median')</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="0058f8dc-4f53-4afc-b2bb-017d4a9a04ae" type="checkbox" ><label class="sk-toggleable__label" for="0058f8dc-4f53-4afc-b2bb-017d4a9a04ae">MinMaxScaler</label><div class="sk-toggleable__content"><pre>MinMaxScaler()</pre></div></div></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="8cf0dac7-6221-4d3d-8811-2c22696c7764" type="checkbox" ><label class="sk-toggleable__label" for="8cf0dac7-6221-4d3d-8811-2c22696c7764">cat</label><div class="sk-toggleable__content"><pre>['crime_class', 'crime_type', 'crime_subtype', 'release_type', 'super_dist', 'target_pop', 'sex', 'race']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="a26273b0-ba36-409d-a017-f302cc9ca715" type="checkbox" ><label class="sk-toggleable__label" for="a26273b0-ba36-409d-a017-f302cc9ca715">SimpleImputer</label><div class="sk-toggleable__content"><pre>SimpleImputer(fill_value='MISSING', strategy='constant')</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="d68fd08a-b9ea-497d-bdd8-d98a8a4e70fa" type="checkbox" ><label class="sk-toggleable__label" for="d68fd08a-b9ea-497d-bdd8-d98a8a4e70fa">OneHotEncoder</label><div class="sk-toggleable__content"><pre>OneHotEncoder(handle_unknown='ignore', sparse=False)</pre></div></div></div></div></div></div></div></div></div></div></div></div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Fit preprocessing pipeline on training data and pull out the feature names and X_cols</span>
+<span class="n">preprocessor</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_tr</span><span class="p">)</span>
+
+<span class="c1">## Use the encoder&#39;s .get_feature_names</span>
+<span class="n">cat_features</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">preprocessor</span><span class="o">.</span><span class="n">named_transformers_</span><span class="p">[</span><span class="s1">&#39;cat&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">named_steps</span><span class="p">[</span><span class="s1">&#39;encoder&#39;</span><span class="p">]</span>\
+                            <span class="o">.</span><span class="n">get_feature_names</span><span class="p">(</span><span class="n">cat_cols</span><span class="p">))</span>
+<span class="n">X_cols</span> <span class="o">=</span> <span class="n">num_cols</span><span class="o">+</span><span class="n">cat_features</span>
+
+<span class="c1">## Transform X_traian,X_test and remake dfs</span>
+<span class="n">X_train_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">preprocessor</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_tr</span><span class="p">),</span>
+                          <span class="n">index</span><span class="o">=</span><span class="n">X_tr</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">X_cols</span><span class="p">)</span>
+<span class="n">X_test_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">preprocessor</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_te</span><span class="p">),</span>
+                          <span class="n">index</span><span class="o">=</span><span class="n">X_te</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">X_cols</span><span class="p">)</span>
+
+<span class="c1">## Tranform X_train and X_test and make into DataFrames</span>
+<span class="n">X_train_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>age_number</th>
+      <th>crime_class_A Felony</th>
+      <th>crime_class_Aggravated Misdemeanor</th>
+      <th>crime_class_B Felony</th>
+      <th>crime_class_C Felony</th>
+      <th>crime_class_D Felony</th>
+      <th>crime_class_Felony - Enhanced</th>
+      <th>crime_class_MISSING</th>
+      <th>crime_class_Serious Misdemeanor</th>
+      <th>crime_class_Sex Offender</th>
+      <th>...</th>
+      <th>target_pop_Yes</th>
+      <th>sex_Female</th>
+      <th>sex_MISSING</th>
+      <th>sex_Male</th>
+      <th>race_American Native</th>
+      <th>race_Asian or Pacific Islander</th>
+      <th>race_Black</th>
+      <th>race_Hispanic</th>
+      <th>race_MISSING</th>
+      <th>race_White</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>14599</th>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>21356</th>
+      <td>0.444444</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>16195</th>
+      <td>1.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>5691</th>
+      <td>0.444444</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>10998</th>
+      <td>0.222222</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>8107</th>
+      <td>0.666667</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>12105</th>
+      <td>0.222222</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>24096</th>
+      <td>0.222222</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>577</th>
+      <td>0.444444</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>7296</th>
+      <td>0.666667</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>19515 rows × 77 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="resampling-with-smotenc">
+<h4>Resampling with SMOTENC<a class="headerlink" href="#resampling-with-smotenc" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imblearn.over_sampling</span><span class="w"> </span><span class="kn">import</span> <span class="n">SMOTE</span><span class="p">,</span><span class="n">SMOTENC</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cat_features</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;crime_class_A Felony&#39;,
+ &#39;crime_class_Aggravated Misdemeanor&#39;,
+ &#39;crime_class_B Felony&#39;,
+ &#39;crime_class_C Felony&#39;,
+ &#39;crime_class_D Felony&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Save list of trues and falses for each cols</span>
+<span class="n">smote_feats</span> <span class="o">=</span> <span class="p">[</span><span class="kc">False</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">num_cols</span><span class="p">)</span> <span class="o">+</span><span class="p">[</span><span class="kc">True</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">cat_features</span><span class="p">)</span>
+<span class="c1"># smote_feats</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">smote</span> <span class="o">=</span> <span class="n">SMOTENC</span><span class="p">(</span><span class="n">smote_feats</span><span class="p">)</span>
+<span class="n">X_train_sm</span><span class="p">,</span><span class="n">y_train_sm</span> <span class="o">=</span> <span class="n">smote</span><span class="o">.</span><span class="n">fit_sample</span><span class="p">(</span><span class="n">X_train_df</span><span class="p">,</span><span class="n">y_tr</span><span class="p">)</span>
+<span class="n">y_train_sm</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1    12982
+0    12982
+Name: recidivist, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="model">
+<h1>📙 MODEL<a class="headerlink" href="#model" title="Permalink to this heading">#</a></h1>
+<section id="selecting-the-final-dataset-for-modeling">
+<h2>⫚ Selecting the Final Dataset for Modeling<a class="headerlink" href="#selecting-the-final-dataset-for-modeling" title="Permalink to this heading">#</a></h2>
+<blockquote>
+<div><p>The following cell determines which dataset is used for modeling. Modify the <code class="docutils literal notranslate"><span class="pre">PRISONERS</span></code> and <code class="docutils literal notranslate"><span class="pre">RESAMPLED_PRISONERS</span></code> correspondingly</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>If <code class="docutils literal notranslate"><span class="pre">PRISONERS</span></code> == False:</p>
+<ul>
+<li><p>Use original smaller bank-note dataset</p></li>
+</ul>
+</li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">PRISONERS</span></code> == True:</p>
+<ul>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">RESAMPLED_PRISONERS</span></code> == False:</p>
+<ul>
+<li><p>Use original imbalanced prisoners dataset</p></li>
+</ul>
+</li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">RESAMPLED_PRISONERS</span></code> == True:</p>
+<ul>
+<li><p>Use resampled training dataset.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Setting X_train/X_test</span>
+<span class="n">PRISONERS</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">RESAMPLED_PRISONERS</span> <span class="o">=</span> <span class="kc">False</span>
+
+
+<span class="k">if</span> <span class="n">PRISONERS</span><span class="o">==</span><span class="kc">False</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;[!] Using original dataset.&#39;</span><span class="p">)</span>
+    <span class="n">X_train</span> <span class="o">=</span> <span class="n">X_train0</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">y_train</span> <span class="o">=</span> <span class="n">y_train0</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="n">X_test</span> <span class="o">=</span> <span class="n">X_test0</span>
+    <span class="n">y_test</span> <span class="o">=</span> <span class="n">y_test0</span>
+
+<span class="k">else</span><span class="p">:</span>
+    
+    <span class="k">if</span> <span class="n">RESAMPLED_PRISONERS</span><span class="o">==</span><span class="kc">True</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;[!] Using resampled Iowa prisoners dataset.&#39;</span><span class="p">)</span>
+        <span class="n">X_train</span> <span class="o">=</span> <span class="n">X_train_sm</span><span class="c1">#.copy()</span>
+        <span class="n">y_train</span> <span class="o">=</span> <span class="n">y_train_sm</span><span class="c1">#.copy()</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;[!] Using imbalanced Iowa prisoners dataset .&#39;</span><span class="p">)</span>
+        <span class="n">X_train</span> <span class="o">=</span> <span class="n">X_train_df</span>
+        <span class="n">y_train</span> <span class="o">=</span> <span class="n">y_tr</span>
+    
+    <span class="c1">## Rename X,y test</span>
+    <span class="n">X_test</span> <span class="o">=</span> <span class="n">X_test_df</span>
+    <span class="n">y_test</span> <span class="o">=</span> <span class="n">y_te</span>
+
+<span class="c1"># print(&#39;\tX_train and X_test:&#39;)</span>
+<span class="c1"># print(X_train.shape, X_test.shape)</span>
+
+<span class="c1"># print(&#39;\ty_train and y_test&#39;)</span>
+<span class="c1"># print(y_train.shape,y_test.shape)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">X_train shape: </span><span class="si">{</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">y_train class balance:&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">y_train</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[!] Using original dataset.
+
+X_train shape: (1097, 4)
+
+y_train class balance:
+0    608
+1    489
+Name: Class, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<section id="first-linear-kernel">
+<h3>First: Linear Kernel<a class="headerlink" href="#first-linear-kernel" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.svm</span><span class="w"> </span><span class="kn">import</span> <span class="n">SVC</span>
+<span class="n">tic</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span> <span class="c1">#timing!</span>
+
+<span class="n">svc_linear</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">svc_linear</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="n">y_pred_train</span> <span class="o">=</span> <span class="n">svc_linear</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">y_pred_test</span> <span class="o">=</span> <span class="n">svc_linear</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="n">toc</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Run time is </span><span class="si">{</span><span class="n">toc</span><span class="o">-</span><span class="n">tic</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Run time is 0.03623676300048828 seconds
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># how&#39;d we do?</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">classification_report</span><span class="p">,</span> <span class="n">plot_confusion_matrix</span> <span class="p">,</span> <span class="n">accuracy_score</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_test</span><span class="p">))</span> 
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Train accuracy: </span><span class="si">{</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span><span class="w"> </span><span class="n">y_pred_train</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Test accuracy: </span><span class="si">{</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span><span class="w"> </span><span class="n">y_pred_test</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">plot_confusion_matrix</span><span class="p">(</span><span class="n">svc_linear</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">,</span><span class="n">normalize</span><span class="o">=</span><span class="s1">&#39;true&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>              precision    recall  f1-score   support
+
+           0       1.00      0.99      0.99       154
+           1       0.98      1.00      0.99       121
+
+    accuracy                           0.99       275
+   macro avg       0.99      0.99      0.99       275
+weighted avg       0.99      0.99      0.99       275
+
+Train accuracy: 0.9881
+Test accuracy: 0.9927
+</pre></div>
+</div>
+<img alt="../../_images/dbf5a65f19845c90fa741bbc6bf5e393624b3930b2d8b4a3d0408f19953c052c.png" src="../../_images/dbf5a65f19845c90fa741bbc6bf5e393624b3930b2d8b4a3d0408f19953c052c.png" />
+</div>
+</div>
+</section>
+<section id="now-rbf">
+<h3>Now: RBF<a class="headerlink" href="#now-rbf" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tic</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span> <span class="c1">#timing!</span>
+
+<span class="n">svc_rbf</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;rbf&#39;</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="s1">&#39;scale&#39;</span><span class="p">)</span> <span class="c1"># using all default values here</span>
+<span class="n">svc_rbf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="n">y_pred_train</span> <span class="o">=</span> <span class="n">svc_rbf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">y_pred_test</span> <span class="o">=</span> <span class="n">svc_rbf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="n">toc</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Run time is </span><span class="si">{</span><span class="n">toc</span><span class="o">-</span><span class="n">tic</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Run time is 0.023016929626464844 seconds
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># how&#39;d we do?</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_test</span><span class="p">))</span> 
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Train accuracy: </span><span class="si">{</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span><span class="w"> </span><span class="n">y_pred_train</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Test accuracy: </span><span class="si">{</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span><span class="w"> </span><span class="n">y_pred_test</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">plot_confusion_matrix</span><span class="p">(</span><span class="n">svc_rbf</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">,</span><span class="n">normalize</span><span class="o">=</span><span class="s1">&#39;true&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00       154
+           1       1.00      1.00      1.00       121
+
+    accuracy                           1.00       275
+   macro avg       1.00      1.00      1.00       275
+weighted avg       1.00      1.00      1.00       275
+
+Train accuracy: 1.0000
+Test accuracy: 1.0000
+</pre></div>
+</div>
+<img alt="../../_images/42edbd2b7f14ee126b1d6b9d582a94745e369869ae3e6fbf2d290fb2e2c2e2ef.png" src="../../_images/42edbd2b7f14ee126b1d6b9d582a94745e369869ae3e6fbf2d290fb2e2c2e2ef.png" />
+</div>
+</div>
+</section>
+<section id="and-a-polynomial-kernel-for-good-measure">
+<h3>And a Polynomial Kernel for good measure<a class="headerlink" href="#and-a-polynomial-kernel-for-good-measure" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tic</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span> <span class="c1">#timing!</span>
+
+<span class="n">svc_poly</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;poly&#39;</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="s1">&#39;scale&#39;</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span> <span class="c1"># using mostly default values here</span>
+<span class="n">svc_poly</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="n">y_pred_train</span> <span class="o">=</span> <span class="n">svc_poly</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">y_pred_test</span> <span class="o">=</span> <span class="n">svc_poly</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="n">toc</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Run time is </span><span class="si">{</span><span class="n">toc</span><span class="o">-</span><span class="n">tic</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Run time is 0.03173494338989258 seconds
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># how&#39;d we do?</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_test</span><span class="p">))</span> 
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Train accuracy: </span><span class="si">{</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span><span class="w"> </span><span class="n">y_pred_train</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Test accuracy: </span><span class="si">{</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span><span class="w"> </span><span class="n">y_pred_test</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">plot_confusion_matrix</span><span class="p">(</span><span class="n">svc_poly</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">,</span><span class="n">normalize</span><span class="o">=</span><span class="s1">&#39;true&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>              precision    recall  f1-score   support
+
+           0       1.00      0.95      0.98       154
+           1       0.95      1.00      0.97       121
+
+    accuracy                           0.97       275
+   macro avg       0.97      0.98      0.97       275
+weighted avg       0.98      0.97      0.97       275
+
+Train accuracy: 0.9663
+Test accuracy: 0.9745
+</pre></div>
+</div>
+<img alt="../../_images/9a110559b1de05cf179ad7f31d113740f125f93d0bc8e6b226bb5402b81aa10b.png" src="../../_images/9a110559b1de05cf179ad7f31d113740f125f93d0bc8e6b226bb5402b81aa10b.png" />
+</div>
+</div>
+</section>
+<section id="adjusting-c">
+<h3>Adjusting C?<a class="headerlink" href="#adjusting-c" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">.01</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">]:</span> 
+    <span class="n">svc_c</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="n">c</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="s1">&#39;scale&#39;</span><span class="p">)</span> <span class="c1"># going linear again</span>
+    <span class="n">svc_c</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+    <span class="n">y_pred_train</span> <span class="o">=</span> <span class="n">svc_c</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+    <span class="n">y_pred_test</span> <span class="o">=</span> <span class="n">svc_c</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+    <span class="c1"># how&#39;d we do?</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-----&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Results at C = </span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_test</span><span class="p">))</span> 
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Train accuracy: </span><span class="si">{</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span><span class="w"> </span><span class="n">y_pred_train</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Test accuracy: </span><span class="si">{</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span><span class="w"> </span><span class="n">y_pred_test</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">plot_confusion_matrix</span><span class="p">(</span><span class="n">svc_c</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">,</span><span class="n">normalize</span><span class="o">=</span><span class="s1">&#39;true&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-----
+Results at C = 0.01
+              precision    recall  f1-score   support
+
+           0       1.00      0.98      0.99       154
+           1       0.98      1.00      0.99       121
+
+    accuracy                           0.99       275
+   macro avg       0.99      0.99      0.99       275
+weighted avg       0.99      0.99      0.99       275
+
+Train accuracy: 0.9809
+Test accuracy: 0.9891
+</pre></div>
+</div>
+<img alt="../../_images/03c4e0eb14c22cf493dca03e789ff08bb2bd5fe7ac0f0b93ad70bc180985dae0.png" src="../../_images/03c4e0eb14c22cf493dca03e789ff08bb2bd5fe7ac0f0b93ad70bc180985dae0.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-----
+Results at C = 1
+              precision    recall  f1-score   support
+
+           0       1.00      0.99      0.99       154
+           1       0.98      1.00      0.99       121
+
+    accuracy                           0.99       275
+   macro avg       0.99      0.99      0.99       275
+weighted avg       0.99      0.99      0.99       275
+
+Train accuracy: 0.9881
+Test accuracy: 0.9927
+</pre></div>
+</div>
+<img alt="../../_images/dbf5a65f19845c90fa741bbc6bf5e393624b3930b2d8b4a3d0408f19953c052c.png" src="../../_images/dbf5a65f19845c90fa741bbc6bf5e393624b3930b2d8b4a3d0408f19953c052c.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-----
+Results at C = 100
+              precision    recall  f1-score   support
+
+           0       1.00      0.99      0.99       154
+           1       0.98      1.00      0.99       121
+
+    accuracy                           0.99       275
+   macro avg       0.99      0.99      0.99       275
+weighted avg       0.99      0.99      0.99       275
+
+Train accuracy: 0.9872
+Test accuracy: 0.9927
+</pre></div>
+</div>
+<img alt="../../_images/dbf5a65f19845c90fa741bbc6bf5e393624b3930b2d8b4a3d0408f19953c052c.png" src="../../_images/dbf5a65f19845c90fa741bbc6bf5e393624b3930b2d8b4a3d0408f19953c052c.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="pros">
+<h2>Pros<a class="headerlink" href="#pros" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Good for datasets with more variables than observations</p></li>
+<li><p>Robust against outliers</p></li>
+<li><p>Good performance</p></li>
+<li><p>Good off-the-shelf model in general for several scenarios</p></li>
+<li><p>Can approximate complex non-linear functions</p></li>
+</ul>
+</section>
+<section id="cons">
+<h2>Cons<a class="headerlink" href="#cons" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Long training time required</p></li>
+<li><p>Tuning required to determine optimal kernel for non-linear SVMs</p></li>
+</ul>
+</section>
+<section id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Scaled features</p></li>
+<li><p>Null values filled</p></li>
+</ul>
+</section>
+<section id="resources">
+<h2>Resources<a class="headerlink" href="#resources" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://web.mit.edu/6.034/wwwbob/svm.pdf">An Idiot’s Guide to Support Vector Machines (SVMs) from MIT</a></p></li>
+<li><p><a class="reference external" href="https://machinelearningmastery.com/support-vector-machines-for-machine-learning/">Machine Learning Mastery’s Post on Support Vector Machines for Machine Learning</a></p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="appendix-if-there-s-time">
+<h1>Appendix/IF there’s time<a class="headerlink" href="#appendix-if-there-s-time" title="Permalink to this heading">#</a></h1>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="meta-ensembles">
+<h1>Meta-Ensembles<a class="headerlink" href="#meta-ensembles" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">StackingClassifier</span><span class="p">,</span><span class="n">VotingClassifier</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="using-dictionaries-to-record-the-training-times-of-all-models-for-all-datasets">
+<h2>Using dictionaries to record the training times of all models for all datasets<a class="headerlink" href="#using-dictionaries-to-record-the-training-times-of-all-models-for-all-datasets" title="Permalink to this heading">#</a></h2>
+<blockquote>
+<div><p>Comparing training times across datasets and kernels.</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># results = {}</span>
+<span class="c1"># results[&#39;example&#39;] = {&#39;data&#39;:{&#39;PRISONERS&#39;:PRISONERS,</span>
+<span class="c1">#                              &quot;REWSAMPLED&quot;:RESAMPLED_PRISONERS},</span>
+<span class="c1">#                       &#39;time&#39;: None}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "learn-env-new"
+        },
+        kernelOptions: {
+            name: "learn-env-new",
+            path: "./Phase_3/topic_31_support_vector_machines"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'learn-env-new'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Support Vector Machines</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#support-vector-classifier">Support Vector Classifier</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#maximal-margin-classifier">Maximal Margin Classifier</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#soft-margin-classifier">Soft Margin Classifier</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-kernel-trick">“The Kernel Trick”</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementation-performance-comparison">Implementation &amp; Performance Comparison</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#original-smaller-dataset">Original Smaller Dataset</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#predicting-recidivism-with-svc">📙 Predicting Recidivism with SVC</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#obtain">OBTAIN</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scrub">SCRUB</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-engineering">Feature Engineering</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#race-ethnicity"><code class="docutils literal notranslate"><span class="pre">race_ethnicity</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#crime-class"><code class="docutils literal notranslate"><span class="pre">crime_class</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#age-released"><code class="docutils literal notranslate"><span class="pre">age_released</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#train-test-split">Train-Test-Split</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pipelnes-and-columntransformer">Pipelnes and ColumnTransformer</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#resampling-with-smotenc">Resampling with SMOTENC</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#model">📙 MODEL</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#selecting-the-final-dataset-for-modeling">⫚ Selecting the Final Dataset for Modeling</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#first-linear-kernel">First: Linear Kernel</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#now-rbf">Now: RBF</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#and-a-polynomial-kernel-for-good-measure">And a Polynomial Kernel for good measure</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adjusting-c">Adjusting C?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pros">Pros</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cons">Cons</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#requirements">Requirements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resources">Resources</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#appendix-if-there-s-time">Appendix/IF there’s time</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#meta-ensembles">Meta-Ensembles</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-dictionaries-to-record-the-training-times-of-all-models-for-all-datasets">Using dictionaries to record the training times of all models for all datasets</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By James Irving, PhD
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

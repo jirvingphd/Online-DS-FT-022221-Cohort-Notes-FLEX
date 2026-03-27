@@ -1,0 +1,1834 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Deeper Neural Networks - Lab + Level-Up [022221FT] &#8212; Data Science Curriculum</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/clipboard.min.js"></script>
+    <script src="../../../../_static/copybutton.js"></script>
+    <script src="../../../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Phase_4/topic_40-41_neural_networks/labs/dsc-deeper-neural-networks-lab-master/index_level_up-solution';</script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../_static/flatironschool_banner.jpg" class="logo__image only-light" alt="Data Science Curriculum - Home"/>
+    <script>document.write(`<img src="../../../../_static/flatironschool_banner.jpg" class="logo__image only-dark" alt="Data Science Curriculum - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../intro.html">
+                    Data Science Curriculum
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 1 - Python &amp; Data Fundamentals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_1/topic_01_getting_started/topic_01_getting_started.html">Topic 1: Getting Started with Data Science</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_1/topic_02_bash_git/topic_02_bash_and_git.html">Topic 02:  Bash and Git</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_1/topic_03_control_flow_functions/topic_03_control_flow_and_functions.html">Topic 03: Control Flow, Functions, and Statistics</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_1/topic_04_python_libraries/topic_04_intro_to_libraries_numpy_SG.html">Topic 04-Part 1: Python Libraries &amp; NumPy</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_1/topic_04_python_libraries/topic_04_pt-2_brief_intro_to_pandas-SG.html">Topic 04-Part 2: Brief Intro to Pandas with Doctor Who</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_1/topic_05_data_cleaning_in_pandas/topic_05_Data_Cleaning_in_Pandas.html">Topic 05: Data Cleaning in Pandas</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_1/topic_06_data_visualization/topic_06_visualizations_heroes_project_SG.html">Topic 06:  Data Visualizations</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_1/topic_07_SQL_and_relational_databases/topic_07_SQL_and_relational_databases_SG.html">TOPIC 07: SQL DATABASES</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_1/topic_08_noSQL_databases/topic_08_mongodb-SG.html">Topic 08: NoSQL Databases</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_1/topic_09_json_and_apis/topic_09_json-api-SG.html">Topic 09: Using APIs and JSON Data</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_1/topic_10_webscraping/topic_10_SG_HTML_CSS_web_scraping.html">Topic 10: HTML, CSS, &amp; Web Scraping</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 2 - Statistics &amp; Regression</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_11_probability_and_combinatorics/topic_11_playlist_probabilities-SG.html">Topic 11 - Intro to Combinatorics &amp; Probability</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_12_statistical_distributions/topic-12-distributions-with-movies-sg.html">Exploring Distributions with Movies Data</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_13_central_limit_theorem/topic_13_central_limit_theorem_SG.html">Topic 13: Central Limit Theorem</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_14_hypothesis_testing/topic_14_hypothesis_testing-SG.html">Topic 14: Hypothesis Testing -  T-Tests</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_15_ANOVA/topic_15_ANOVA_with_neuro_data-SG.html">Topic 15: ANOVAs &amp; Statistical Power with  Neuro Data</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_16_AB_testing/topic_16_AB_testing_with_movies-SG.html">Topic 16: Practicing AB Testing with Movies</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_17_bayesian_statistics/topic_17_bayesian_statistics-SG.html">Topic 17: Bayesian Statistics</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_18_linear_regression/topic_18_intro_to_linear_regression_SG.html">Topic 18: Intro to Linear Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_19_part1_multiple_regression/topic_19_Multiple_Regression_v2-SG.html">Topic 19: Multiple Linear Regression</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_19_part2_model_validation/topic_19_part_2_Multiple_Regression_v2-SG.html">Topic 19 Part 2: Feature Selection &amp; Model Validation</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_20_extensions_linear_models/topic_20_extensions_to_linear_models_SG.html">Topic 20: Extensions to Linear Models</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 3 - Machine Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_21_OOP/topic_21_OOP_playing_cards_SG.html">Topic 21: Object-Oriented Programming</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_22_linear_algebra/topic_22_linear_algebra_SG.html">Topic 22: Linear Algebra</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_23_calculus_gradient_descent/topic_23_gradient_descent_SG.html">Topic 23: Cost Functions and Gradient Descent</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_24_regularization/topic_24_Regularization_Ridge_Lasso_v2_SG.html">Topic 24: Feature Selection &amp; Regularization (Ridge and Lasso Regression)</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_25_logistic_regression/topic_25_pt1_LogisticRegression_titanic-v2-SG.html">Topic 25-Pt 1: Intro to Logistic Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_25_logistic_regression/topic_25_pt2_LogisticRegression_titanic-v2-SG.html">Topic 25-Part 2: Evaluating Classifiers, Dealing with Class Imbalance, and <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code></a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_27_KNN/Topic_27_KNN_with_pipelines_with_lab_v3_SG.html">Topic 27: K-Nearest Neighbors<br/> +Topic 32: Pipelines</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_29_decision_trees/topic_29_decision_trees_v2_titanic-SG.html">Topic 29: Decision Trees</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_30_ensemble_methods/topic_30_ensemble_methods-SG.html">Topic 30: Ensemble Methods</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_31_support_vector_machines/topic_31_SupportVectorMachines_SG.html">Topic 31: Support Vector Machines</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 4 - Advanced ML &amp; Time Series</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_33_pca/topic_33_PCA_SG.html">Topic 33: Principal Component Analysis</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_34_clustering/topic_34_Kmeans_clustering_v3_SG.html">Topic 34: Clustering</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_35-36_using_databricks_for_pyspark/using_databricks_for_pyspark.html">How to Use Databricks for PySpark Canvas Material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_36_recommendation_systems/topic_36_Recommendation_Systems_with_Surprise.html">Topic 36: Recommendation Systems</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_37_intro_to_time_series/topic_37_intro_to_time_series_crime_v3-SG.html">Topic 37: Intro to Time Series</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_38_time_series_models/topic_38-time_series_models_v3_SG.html">Topic 38: Time Series Models</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_39_NLP/topic_39_NLP_finding_trump_v3_SG.html">Topic 39: Natural Language Processing + Topic 28: Bayesian Classification</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_40-41_Artificial_Neural_Networks_v1_SG.html">Topic 40-41: Artificial Neural Networks</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_42_tuning_neural_networks/topic_42_tuning_ANNs_with_deep_NLP_v1_SG.html">Topic 42 - Tuning Neural Networks + Deep NLP</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_43_AWS/topic_43_operationalizing_code_AWS_SG.html">Topic 43: Operationalizing Code &amp; AWS</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 5 - Capstone &amp; Bonus Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_5/Capstone_Kickoff.html">Capstone Kickoff!</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_5/APIs/working_with_apis.html">Working with APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_5/developing_app_functions/developing-streamlit-app-functions_SG.html">Developing Streamlit App Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_5/tableau/tableau_fundamentals_2021-SG.html">Tableau Fundamentals</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_5/Bonus%20Notebooks/plotly_visuals.html">Plotly Question</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/master?urlpath=tree/Phase_4/topic_40-41_neural_networks/labs/dsc-deeper-neural-networks-lab-master/index_level_up-solution.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/blob/master/Phase_4/topic_40-41_neural_networks/labs/dsc-deeper-neural-networks-lab-master/index_level_up-solution.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/issues/new?title=Issue%20on%20page%20%2FPhase_4/topic_40-41_neural_networks/labs/dsc-deeper-neural-networks-lab-master/index_level_up-solution.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../_sources/Phase_4/topic_40-41_neural_networks/labs/dsc-deeper-neural-networks-lab-master/index_level_up-solution.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Deeper Neural Networks - Lab + Level-Up [022221FT]</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Deeper Neural Networks - Lab + Level-Up [022221FT]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objectives">Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-started">Getting Started</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#updating-for-tensorflow-2-0">UPDATING FOR TENSORFLOW 2.0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-the-data-ready-for-deep-learning">Getting the Data Ready for Deep Learning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#binarizing-our-labels">Binarizing our Labels</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-our-mlp">Building our MLP</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#compiling-the-model">Compiling the Model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-the-model">Fitting the Model</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#detecting-overfitting">Detecting Overfitting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#iterating-on-the-model">Iterating on the Model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-happened">What Happened?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-why-we-normalize-our-data">Visualizing why we Normalize our Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#study-group-level-up">Study Group Level-UP</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="deeper-neural-networks-lab-level-up-022221ft">
+<h1>Deeper Neural Networks - Lab + Level-Up [022221FT]<a class="headerlink" href="#deeper-neural-networks-lab-level-up-022221ft" title="Permalink to this heading">#</a></h1>
+<blockquote>
+<div><p><strong>For 022221FT: we have an additional Level-Up added at the end to revisit the consequences of our scaler/preprocessing choices.</strong></p>
+</div></blockquote>
+<hr class="docutils" />
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
+<p>In this lesson, we’ll dig deeper into the work horse of deep learning, <strong><em>Multi-Layer Perceptrons</em></strong>! We’ll build and train a couple of different MLPs with Keras and explore the tradeoffs that come with adding extra hidden layers. We’ll also try switching between some of the activation functions we learned about in the previous lesson to see how they affect training and performance.</p>
+</section>
+<section id="objectives">
+<h2>Objectives<a class="headerlink" href="#objectives" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Build a deep neural network using Keras</p></li>
+</ul>
+</section>
+<section id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this heading">#</a></h2>
+<p>Run the cell below to import everything we’ll need for this lab.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span><span class="p">,</span> <span class="n">LabelBinarizer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_breast_cancer</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="updating-for-tensorflow-2-0">
+<h2>UPDATING FOR TENSORFLOW 2.0<a class="headerlink" href="#updating-for-tensorflow-2-0" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="ch">#!pip install -U tensorflow</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">tensorflow</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tf</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tensorflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">keras</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tensorflow.keras.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sequential</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tensorflow.keras.layers</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dense</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">__version__</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;2.4.0&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import keras</span>
+<span class="c1"># from keras.models import Sequential</span>
+<span class="c1"># from keras.layers import Dense</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>For this lab, we’ll be working with the <a class="reference external" href="https://www.kaggle.com/uciml/breast-cancer-wisconsin-data">Boston Breast Cancer Dataset</a>. Although we’re importing this dataset directly from scikit-learn, the Kaggle link above contains a detailed explanation of the dataset, in case you’re interested. We recommend you take a minute to familiarize yourself with the dataset before digging in.</p>
+<p>In the cell below:</p>
+<ul class="simple">
+<li><p>Call <code class="docutils literal notranslate"><span class="pre">load_breast_cancer()</span></code> to store the dataset</p></li>
+<li><p>Access the <code class="docutils literal notranslate"><span class="pre">.data</span></code>, <code class="docutils literal notranslate"><span class="pre">.target</span></code>, and <code class="docutils literal notranslate"><span class="pre">.feature_names</span></code> attributes and store them in the appropriate variables below</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bc_dataset</span> <span class="o">=</span> <span class="n">load_breast_cancer</span><span class="p">()</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">bc_dataset</span><span class="o">.</span><span class="n">data</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">bc_dataset</span><span class="o">.</span><span class="n">target</span>
+<span class="n">col_names</span> <span class="o">=</span> <span class="n">bc_dataset</span><span class="o">.</span><span class="n">feature_names</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, let’s create a DataFrame so that we can see the data and explore it a bit more easily with the column names attached.</p>
+<ul class="simple">
+<li><p>In the cell below, create a pandas DataFrame from <code class="docutils literal notranslate"><span class="pre">data</span></code> (use <code class="docutils literal notranslate"><span class="pre">col_names</span></code> for column names)</p></li>
+<li><p>Print the <code class="docutils literal notranslate"><span class="pre">.head()</span></code> of the DataFrame</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">col_names</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>mean radius</th>
+      <th>mean texture</th>
+      <th>mean perimeter</th>
+      <th>mean area</th>
+      <th>mean smoothness</th>
+      <th>mean compactness</th>
+      <th>mean concavity</th>
+      <th>mean concave points</th>
+      <th>mean symmetry</th>
+      <th>mean fractal dimension</th>
+      <th>...</th>
+      <th>worst radius</th>
+      <th>worst texture</th>
+      <th>worst perimeter</th>
+      <th>worst area</th>
+      <th>worst smoothness</th>
+      <th>worst compactness</th>
+      <th>worst concavity</th>
+      <th>worst concave points</th>
+      <th>worst symmetry</th>
+      <th>worst fractal dimension</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>17.99</td>
+      <td>10.38</td>
+      <td>122.80</td>
+      <td>1001.0</td>
+      <td>0.11840</td>
+      <td>0.27760</td>
+      <td>0.3001</td>
+      <td>0.14710</td>
+      <td>0.2419</td>
+      <td>0.07871</td>
+      <td>...</td>
+      <td>25.38</td>
+      <td>17.33</td>
+      <td>184.60</td>
+      <td>2019.0</td>
+      <td>0.1622</td>
+      <td>0.6656</td>
+      <td>0.7119</td>
+      <td>0.2654</td>
+      <td>0.4601</td>
+      <td>0.11890</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>20.57</td>
+      <td>17.77</td>
+      <td>132.90</td>
+      <td>1326.0</td>
+      <td>0.08474</td>
+      <td>0.07864</td>
+      <td>0.0869</td>
+      <td>0.07017</td>
+      <td>0.1812</td>
+      <td>0.05667</td>
+      <td>...</td>
+      <td>24.99</td>
+      <td>23.41</td>
+      <td>158.80</td>
+      <td>1956.0</td>
+      <td>0.1238</td>
+      <td>0.1866</td>
+      <td>0.2416</td>
+      <td>0.1860</td>
+      <td>0.2750</td>
+      <td>0.08902</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>19.69</td>
+      <td>21.25</td>
+      <td>130.00</td>
+      <td>1203.0</td>
+      <td>0.10960</td>
+      <td>0.15990</td>
+      <td>0.1974</td>
+      <td>0.12790</td>
+      <td>0.2069</td>
+      <td>0.05999</td>
+      <td>...</td>
+      <td>23.57</td>
+      <td>25.53</td>
+      <td>152.50</td>
+      <td>1709.0</td>
+      <td>0.1444</td>
+      <td>0.4245</td>
+      <td>0.4504</td>
+      <td>0.2430</td>
+      <td>0.3613</td>
+      <td>0.08758</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>11.42</td>
+      <td>20.38</td>
+      <td>77.58</td>
+      <td>386.1</td>
+      <td>0.14250</td>
+      <td>0.28390</td>
+      <td>0.2414</td>
+      <td>0.10520</td>
+      <td>0.2597</td>
+      <td>0.09744</td>
+      <td>...</td>
+      <td>14.91</td>
+      <td>26.50</td>
+      <td>98.87</td>
+      <td>567.7</td>
+      <td>0.2098</td>
+      <td>0.8663</td>
+      <td>0.6869</td>
+      <td>0.2575</td>
+      <td>0.6638</td>
+      <td>0.17300</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>20.29</td>
+      <td>14.34</td>
+      <td>135.10</td>
+      <td>1297.0</td>
+      <td>0.10030</td>
+      <td>0.13280</td>
+      <td>0.1980</td>
+      <td>0.10430</td>
+      <td>0.1809</td>
+      <td>0.05883</td>
+      <td>...</td>
+      <td>22.54</td>
+      <td>16.67</td>
+      <td>152.20</td>
+      <td>1575.0</td>
+      <td>0.1374</td>
+      <td>0.2050</td>
+      <td>0.4000</td>
+      <td>0.1625</td>
+      <td>0.2364</td>
+      <td>0.07678</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 30 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="getting-the-data-ready-for-deep-learning">
+<h2>Getting the Data Ready for Deep Learning<a class="headerlink" href="#getting-the-data-ready-for-deep-learning" title="Permalink to this heading">#</a></h2>
+<p>In order to pass this data into a neural network, we’ll need to make sure that the data:</p>
+<ul class="simple">
+<li><p>is purely numerical</p></li>
+<li><p>contains no missing values</p></li>
+<li><p>is normalized</p></li>
+</ul>
+<p>Let’s begin by calling the DataFrame’s <code class="docutils literal notranslate"><span class="pre">.info()</span></code> method to check the datatype of each feature.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 569 entries, 0 to 568
+Data columns (total 30 columns):
+ #   Column                   Non-Null Count  Dtype  
+---  ------                   --------------  -----  
+ 0   mean radius              569 non-null    float64
+ 1   mean texture             569 non-null    float64
+ 2   mean perimeter           569 non-null    float64
+ 3   mean area                569 non-null    float64
+ 4   mean smoothness          569 non-null    float64
+ 5   mean compactness         569 non-null    float64
+ 6   mean concavity           569 non-null    float64
+ 7   mean concave points      569 non-null    float64
+ 8   mean symmetry            569 non-null    float64
+ 9   mean fractal dimension   569 non-null    float64
+ 10  radius error             569 non-null    float64
+ 11  texture error            569 non-null    float64
+ 12  perimeter error          569 non-null    float64
+ 13  area error               569 non-null    float64
+ 14  smoothness error         569 non-null    float64
+ 15  compactness error        569 non-null    float64
+ 16  concavity error          569 non-null    float64
+ 17  concave points error     569 non-null    float64
+ 18  symmetry error           569 non-null    float64
+ 19  fractal dimension error  569 non-null    float64
+ 20  worst radius             569 non-null    float64
+ 21  worst texture            569 non-null    float64
+ 22  worst perimeter          569 non-null    float64
+ 23  worst area               569 non-null    float64
+ 24  worst smoothness         569 non-null    float64
+ 25  worst compactness        569 non-null    float64
+ 26  worst concavity          569 non-null    float64
+ 27  worst concave points     569 non-null    float64
+ 28  worst symmetry           569 non-null    float64
+ 29  worst fractal dimension  569 non-null    float64
+dtypes: float64(30)
+memory usage: 133.5 KB
+</pre></div>
+</div>
+</div>
+</div>
+<p>From the output above, we can see that the entire dataset is already in numerical format. We can also see from the counts that each feature has the same number of entries as the number of rows in the DataFrame – that means that no feature contains any missing values. Great!</p>
+<p>Now, let’s check to see if our data needs to be normalized. Instead of doing statistical tests here, let’s just take a quick look at the <code class="docutils literal notranslate"><span class="pre">.head()</span></code> of the DataFrame again. Do this in the cell below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>mean radius</th>
+      <th>mean texture</th>
+      <th>mean perimeter</th>
+      <th>mean area</th>
+      <th>mean smoothness</th>
+      <th>mean compactness</th>
+      <th>mean concavity</th>
+      <th>mean concave points</th>
+      <th>mean symmetry</th>
+      <th>mean fractal dimension</th>
+      <th>...</th>
+      <th>worst radius</th>
+      <th>worst texture</th>
+      <th>worst perimeter</th>
+      <th>worst area</th>
+      <th>worst smoothness</th>
+      <th>worst compactness</th>
+      <th>worst concavity</th>
+      <th>worst concave points</th>
+      <th>worst symmetry</th>
+      <th>worst fractal dimension</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>17.99</td>
+      <td>10.38</td>
+      <td>122.80</td>
+      <td>1001.0</td>
+      <td>0.11840</td>
+      <td>0.27760</td>
+      <td>0.3001</td>
+      <td>0.14710</td>
+      <td>0.2419</td>
+      <td>0.07871</td>
+      <td>...</td>
+      <td>25.38</td>
+      <td>17.33</td>
+      <td>184.60</td>
+      <td>2019.0</td>
+      <td>0.1622</td>
+      <td>0.6656</td>
+      <td>0.7119</td>
+      <td>0.2654</td>
+      <td>0.4601</td>
+      <td>0.11890</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>20.57</td>
+      <td>17.77</td>
+      <td>132.90</td>
+      <td>1326.0</td>
+      <td>0.08474</td>
+      <td>0.07864</td>
+      <td>0.0869</td>
+      <td>0.07017</td>
+      <td>0.1812</td>
+      <td>0.05667</td>
+      <td>...</td>
+      <td>24.99</td>
+      <td>23.41</td>
+      <td>158.80</td>
+      <td>1956.0</td>
+      <td>0.1238</td>
+      <td>0.1866</td>
+      <td>0.2416</td>
+      <td>0.1860</td>
+      <td>0.2750</td>
+      <td>0.08902</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>19.69</td>
+      <td>21.25</td>
+      <td>130.00</td>
+      <td>1203.0</td>
+      <td>0.10960</td>
+      <td>0.15990</td>
+      <td>0.1974</td>
+      <td>0.12790</td>
+      <td>0.2069</td>
+      <td>0.05999</td>
+      <td>...</td>
+      <td>23.57</td>
+      <td>25.53</td>
+      <td>152.50</td>
+      <td>1709.0</td>
+      <td>0.1444</td>
+      <td>0.4245</td>
+      <td>0.4504</td>
+      <td>0.2430</td>
+      <td>0.3613</td>
+      <td>0.08758</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>11.42</td>
+      <td>20.38</td>
+      <td>77.58</td>
+      <td>386.1</td>
+      <td>0.14250</td>
+      <td>0.28390</td>
+      <td>0.2414</td>
+      <td>0.10520</td>
+      <td>0.2597</td>
+      <td>0.09744</td>
+      <td>...</td>
+      <td>14.91</td>
+      <td>26.50</td>
+      <td>98.87</td>
+      <td>567.7</td>
+      <td>0.2098</td>
+      <td>0.8663</td>
+      <td>0.6869</td>
+      <td>0.2575</td>
+      <td>0.6638</td>
+      <td>0.17300</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>20.29</td>
+      <td>14.34</td>
+      <td>135.10</td>
+      <td>1297.0</td>
+      <td>0.10030</td>
+      <td>0.13280</td>
+      <td>0.1980</td>
+      <td>0.10430</td>
+      <td>0.1809</td>
+      <td>0.05883</td>
+      <td>...</td>
+      <td>22.54</td>
+      <td>16.67</td>
+      <td>152.20</td>
+      <td>1575.0</td>
+      <td>0.1374</td>
+      <td>0.2050</td>
+      <td>0.4000</td>
+      <td>0.1625</td>
+      <td>0.2364</td>
+      <td>0.07678</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 30 columns</p>
+</div></div></div>
+</div>
+<p>As we can see from comparing <code class="docutils literal notranslate"><span class="pre">mean</span> <span class="pre">radius</span></code> and <code class="docutils literal notranslate"><span class="pre">mean</span> <span class="pre">area</span></code>, columns are clearly on different scales, which means that we need to normalize our dataset. To do this, we’ll make use of scikit-learn’s <code class="docutils literal notranslate"><span class="pre">StandardScaler()</span></code> class.</p>
+<p>In the cell below, instantiate a <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code> and use it to create a normalized version of our dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">scaled_data</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="binarizing-our-labels">
+<h2>Binarizing our Labels<a class="headerlink" href="#binarizing-our-labels" title="Permalink to this heading">#</a></h2>
+<p>If you took a look at the data dictionary on Kaggle, then you probably noticed the target for this dataset is to predict if the sample is “M” (Malignant) or “B” (Benign). This means that this is a <strong><em>Binary Classification</em></strong> task, so we’ll need to binarize our labels.</p>
+<p>In the cell below, make use of scikit-learn’s <code class="docutils literal notranslate"><span class="pre">LabelBinarizer()</span></code> class to create a binarized version of our labels.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">binarizer</span> <span class="o">=</span> <span class="n">LabelBinarizer</span><span class="p">()</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="n">binarizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="building-our-mlp">
+<h2>Building our MLP<a class="headerlink" href="#building-our-mlp" title="Permalink to this heading">#</a></h2>
+<p>Now, we’ll build a small <strong><em>Multi-Layer Perceptron</em></strong> using Keras in the cell below. Our first model will act as a baseline, and then we’ll make it bigger to see what happens to model performance.</p>
+<p>In the cell below:</p>
+<ul class="simple">
+<li><p>Instantiate a <code class="docutils literal notranslate"><span class="pre">Sequential()</span></code> Keras model</p></li>
+<li><p>Use the model’s <code class="docutils literal notranslate"><span class="pre">.add()</span></code> method to add a <code class="docutils literal notranslate"><span class="pre">Dense</span></code> layer with 10 neurons and a <code class="docutils literal notranslate"><span class="pre">'tanh'</span></code> activation function. Also set the <code class="docutils literal notranslate"><span class="pre">input_shape</span></code> attribute to <code class="docutils literal notranslate"><span class="pre">(30,)</span></code>, since we have 30 features</p></li>
+<li><p>Since this is a binary classification task, the output layer should be a <code class="docutils literal notranslate"><span class="pre">Dense</span></code> layer with a single neuron, and the activation set to <code class="docutils literal notranslate"><span class="pre">'sigmoid'</span></code></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_1</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">()</span>
+<span class="n">model_1</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;tanh&#39;</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">30</span><span class="p">,)))</span>
+<span class="n">model_1</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;sigmoid&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="compiling-the-model">
+<h3>Compiling the Model<a class="headerlink" href="#compiling-the-model" title="Permalink to this heading">#</a></h3>
+<p>Now that we’ve created the model, the next step is to compile it.</p>
+<p>In the cell below, compile the model. Set the following hyperparameters:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">loss='binary_crossentropy'</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">optimizer='sgd'</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">metrics=['acc']</span></code></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_1</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s1">&#39;binary_crossentropy&#39;</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;sgd&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;acc&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="fitting-the-model">
+<h3>Fitting the Model<a class="headerlink" href="#fitting-the-model" title="Permalink to this heading">#</a></h3>
+<p>Now, let’s fit the model. Set the following hyperparameters:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">epochs=25</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">batch_size=1</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">validation_split=0.2</span></code></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results_1</span> <span class="o">=</span> <span class="n">model_1</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">scaled_data</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">validation_split</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 1/25
+455/455 [==============================] - 1s 2ms/step - loss: 0.4345 - acc: 0.8029 - val_loss: 0.1892 - val_acc: 0.9474
+Epoch 2/25
+455/455 [==============================] - 0s 583us/step - loss: 0.1472 - acc: 0.9574 - val_loss: 0.1317 - val_acc: 0.9474
+Epoch 3/25
+455/455 [==============================] - 0s 607us/step - loss: 0.0843 - acc: 0.9748 - val_loss: 0.1095 - val_acc: 0.9649
+Epoch 4/25
+455/455 [==============================] - 0s 549us/step - loss: 0.0752 - acc: 0.9751 - val_loss: 0.1022 - val_acc: 0.9561
+Epoch 5/25
+455/455 [==============================] - 0s 646us/step - loss: 0.0601 - acc: 0.9823 - val_loss: 0.0954 - val_acc: 0.9649
+Epoch 6/25
+455/455 [==============================] - 0s 643us/step - loss: 0.0666 - acc: 0.9668 - val_loss: 0.0924 - val_acc: 0.9561
+Epoch 7/25
+455/455 [==============================] - 0s 662us/step - loss: 0.0653 - acc: 0.9808 - val_loss: 0.0901 - val_acc: 0.9561
+Epoch 8/25
+455/455 [==============================] - 0s 680us/step - loss: 0.0709 - acc: 0.9795 - val_loss: 0.0852 - val_acc: 0.9737
+Epoch 9/25
+455/455 [==============================] - 0s 673us/step - loss: 0.1025 - acc: 0.9745 - val_loss: 0.0883 - val_acc: 0.9561
+Epoch 10/25
+455/455 [==============================] - 0s 672us/step - loss: 0.0366 - acc: 0.9926 - val_loss: 0.0907 - val_acc: 0.9561
+Epoch 11/25
+455/455 [==============================] - 0s 541us/step - loss: 0.0646 - acc: 0.9806 - val_loss: 0.0890 - val_acc: 0.9561
+Epoch 12/25
+455/455 [==============================] - 0s 559us/step - loss: 0.0345 - acc: 0.9909 - val_loss: 0.0869 - val_acc: 0.9649
+Epoch 13/25
+455/455 [==============================] - 0s 645us/step - loss: 0.0507 - acc: 0.9831 - val_loss: 0.0880 - val_acc: 0.9649
+Epoch 14/25
+455/455 [==============================] - 0s 564us/step - loss: 0.0537 - acc: 0.9893 - val_loss: 0.0857 - val_acc: 0.9649
+Epoch 15/25
+455/455 [==============================] - 0s 801us/step - loss: 0.0502 - acc: 0.9840 - val_loss: 0.0886 - val_acc: 0.9649
+Epoch 16/25
+455/455 [==============================] - 0s 546us/step - loss: 0.0589 - acc: 0.9810 - val_loss: 0.0953 - val_acc: 0.9649
+Epoch 17/25
+455/455 [==============================] - 0s 743us/step - loss: 0.0529 - acc: 0.9815 - val_loss: 0.0906 - val_acc: 0.9649
+Epoch 18/25
+455/455 [==============================] - 0s 657us/step - loss: 0.0387 - acc: 0.9814 - val_loss: 0.0809 - val_acc: 0.9649
+Epoch 19/25
+455/455 [==============================] - 0s 716us/step - loss: 0.0424 - acc: 0.9899 - val_loss: 0.0785 - val_acc: 0.9649
+Epoch 20/25
+455/455 [==============================] - 0s 600us/step - loss: 0.0316 - acc: 0.9889 - val_loss: 0.0812 - val_acc: 0.9649
+Epoch 21/25
+455/455 [==============================] - 0s 634us/step - loss: 0.0743 - acc: 0.9764 - val_loss: 0.0776 - val_acc: 0.9737
+Epoch 22/25
+455/455 [==============================] - 0s 659us/step - loss: 0.0324 - acc: 0.9908 - val_loss: 0.0917 - val_acc: 0.9649
+Epoch 23/25
+455/455 [==============================] - 0s 636us/step - loss: 0.0573 - acc: 0.9769 - val_loss: 0.0750 - val_acc: 0.9737
+Epoch 24/25
+455/455 [==============================] - 0s 555us/step - loss: 0.0284 - acc: 0.9909 - val_loss: 0.0804 - val_acc: 0.9649
+Epoch 25/25
+455/455 [==============================] - 0s 651us/step - loss: 0.0305 - acc: 0.9916 - val_loss: 0.0747 - val_acc: 0.9649
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note that when you call a Keras model’s <code class="docutils literal notranslate"><span class="pre">.fit()</span></code> method, it returns a Keras callback containing information on the training process of the model. If you examine the callback’s <code class="docutils literal notranslate"><span class="pre">.history</span></code> attribute, you’ll find a dictionary containing both the training and validation loss, as well as any metrics we specified when compiling the model (in this case, just accuracy).</p>
+<p>Let’s quickly plot our validation and accuracy curves and see if we notice anything. Since we’ll want to do this anytime we train an MLP, its worth wrapping this code in a function so that we can easily reuse it.</p>
+<p>In the cell below, we created a function for visualizing the loss and accuracy metrics.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">visualize_training_results</span><span class="p">(</span><span class="n">results</span><span class="p">):</span>
+    <span class="n">history</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">history</span>
+    <span class="n">kws</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;marker&#39;</span><span class="p">:</span><span class="s1">&#39;o&#39;</span><span class="p">}</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">history</span><span class="p">[</span><span class="s1">&#39;val_loss&#39;</span><span class="p">],</span><span class="o">**</span><span class="n">kws</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">history</span><span class="p">[</span><span class="s1">&#39;loss&#39;</span><span class="p">],</span><span class="o">**</span><span class="n">kws</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s1">&#39;val_loss&#39;</span><span class="p">,</span> <span class="s1">&#39;loss&#39;</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Loss&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Epochs&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Loss&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">history</span><span class="p">[</span><span class="s1">&#39;val_acc&#39;</span><span class="p">],</span><span class="o">**</span><span class="n">kws</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">history</span><span class="p">[</span><span class="s1">&#39;acc&#39;</span><span class="p">],</span><span class="o">**</span><span class="n">kws</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s1">&#39;val_acc&#39;</span><span class="p">,</span> <span class="s1">&#39;acc&#39;</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Epochs&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">visualize_training_results</span><span class="p">(</span><span class="n">results_1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../../_images/f56378b564fbc0318016b42b60af45c091c4911e4518e1af1b0099bbbbd57b0e.png" src="../../../../_images/f56378b564fbc0318016b42b60af45c091c4911e4518e1af1b0099bbbbd57b0e.png" />
+<img alt="../../../../_images/20d4c3494de370830c778282cd520f44c2ad1ea60029eebe28db43362389f106.png" src="../../../../_images/20d4c3494de370830c778282cd520f44c2ad1ea60029eebe28db43362389f106.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="detecting-overfitting">
+<h2>Detecting Overfitting<a class="headerlink" href="#detecting-overfitting" title="Permalink to this heading">#</a></h2>
+<p>You’ll probably notice that the model did pretty well! It’s always recommended to visualize your training and validation metrics against each other after training a model. By plotting them like this, we can easily detect when the model is starting to overfit. We can tell that this is happening by seeing the model’s training performance steadily improve long after the validation performance plateaus. We can see that in the plots above as the training loss continues to decrease and the training accuracy continues to increase, and the distance between the two lines gets greater as the epochs gets higher.</p>
+</section>
+<section id="iterating-on-the-model">
+<h2>Iterating on the Model<a class="headerlink" href="#iterating-on-the-model" title="Permalink to this heading">#</a></h2>
+<p>By adding another hidden layer, we can a given the model the ability to capture more high-level abstraction in the data. However, increasing the depth of the model also increases the amount of data the model needs to converge to answer, because with a more complex model comes the “Curse of Dimensionality”, thanks to all the extra trainable parameters that come from adding more size to our network.</p>
+<p>If there is complexity in the data that our smaller model was not big enough to catch, then a larger model may improve performance. However, if our dataset isn’t big enough for the new, larger model, then we may see performance decrease as then model “thrashes” about a bit, failing to converge. Let’s try and see what happens.</p>
+<p>In the cell below, recreate the model that you created above, with one exception. In the model below, add a second <code class="docutils literal notranslate"><span class="pre">Dense</span></code> layer with <code class="docutils literal notranslate"><span class="pre">'tanh'</span></code> activation function and 5 neurons after the first. The network’s output layer should still be a <code class="docutils literal notranslate"><span class="pre">Dense</span></code> layer with a single neuron and a <code class="docutils literal notranslate"><span class="pre">'sigmoid'</span></code> activation function, since this is still a binary classification task.</p>
+<p>Create, compile, and fit the model in the cells below, and then visualize the results to compare the history.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_2</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">()</span>
+<span class="n">model_2</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;tanh&#39;</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">30</span><span class="p">,)))</span>
+<span class="n">model_2</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;tanh&#39;</span><span class="p">))</span>
+<span class="n">model_2</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;sigmoid&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_2</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s1">&#39;binary_crossentropy&#39;</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;sgd&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;acc&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results_2</span> <span class="o">=</span> <span class="n">model_2</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">scaled_data</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">validation_split</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 1/25
+455/455 [==============================] - 1s 779us/step - loss: 0.4485 - acc: 0.8335 - val_loss: 0.1639 - val_acc: 0.9737
+Epoch 2/25
+455/455 [==============================] - 0s 572us/step - loss: 0.1473 - acc: 0.9500 - val_loss: 0.1231 - val_acc: 0.9737
+Epoch 3/25
+455/455 [==============================] - 0s 583us/step - loss: 0.1299 - acc: 0.9579 - val_loss: 0.1070 - val_acc: 0.9649
+Epoch 4/25
+455/455 [==============================] - 0s 588us/step - loss: 0.0854 - acc: 0.9754 - val_loss: 0.1030 - val_acc: 0.9474
+Epoch 5/25
+455/455 [==============================] - 0s 567us/step - loss: 0.0638 - acc: 0.9837 - val_loss: 0.1065 - val_acc: 0.9561
+Epoch 6/25
+455/455 [==============================] - 0s 577us/step - loss: 0.0522 - acc: 0.9869 - val_loss: 0.0867 - val_acc: 0.9649
+Epoch 7/25
+455/455 [==============================] - 0s 584us/step - loss: 0.0493 - acc: 0.9857 - val_loss: 0.0904 - val_acc: 0.9561
+Epoch 8/25
+455/455 [==============================] - 0s 567us/step - loss: 0.0570 - acc: 0.9787 - val_loss: 0.0909 - val_acc: 0.9649
+Epoch 9/25
+455/455 [==============================] - 0s 565us/step - loss: 0.0767 - acc: 0.9611 - val_loss: 0.0787 - val_acc: 0.9737
+Epoch 10/25
+455/455 [==============================] - 0s 574us/step - loss: 0.0597 - acc: 0.9759 - val_loss: 0.0824 - val_acc: 0.9649
+Epoch 11/25
+455/455 [==============================] - 0s 567us/step - loss: 0.0508 - acc: 0.9850 - val_loss: 0.0830 - val_acc: 0.9649
+Epoch 12/25
+455/455 [==============================] - 0s 575us/step - loss: 0.0308 - acc: 0.9913 - val_loss: 0.0831 - val_acc: 0.9737
+Epoch 13/25
+455/455 [==============================] - 0s 573us/step - loss: 0.0264 - acc: 0.9968 - val_loss: 0.0833 - val_acc: 0.9649
+Epoch 14/25
+455/455 [==============================] - 0s 558us/step - loss: 0.0394 - acc: 0.9920 - val_loss: 0.0794 - val_acc: 0.9737
+Epoch 15/25
+455/455 [==============================] - 0s 655us/step - loss: 0.0289 - acc: 0.9943 - val_loss: 0.0795 - val_acc: 0.9825
+Epoch 16/25
+455/455 [==============================] - 0s 559us/step - loss: 0.0365 - acc: 0.9883 - val_loss: 0.0814 - val_acc: 0.9649
+Epoch 17/25
+455/455 [==============================] - 0s 562us/step - loss: 0.0337 - acc: 0.9885 - val_loss: 0.0880 - val_acc: 0.9649
+Epoch 18/25
+455/455 [==============================] - 0s 584us/step - loss: 0.0204 - acc: 0.9961 - val_loss: 0.0834 - val_acc: 0.9737
+Epoch 19/25
+455/455 [==============================] - 0s 549us/step - loss: 0.0257 - acc: 0.9917 - val_loss: 0.0800 - val_acc: 0.9649
+Epoch 20/25
+455/455 [==============================] - 0s 580us/step - loss: 0.0341 - acc: 0.9875 - val_loss: 0.0771 - val_acc: 0.9737
+Epoch 21/25
+455/455 [==============================] - 0s 600us/step - loss: 0.0235 - acc: 0.9944 - val_loss: 0.0999 - val_acc: 0.9561
+Epoch 22/25
+455/455 [==============================] - 0s 580us/step - loss: 0.0275 - acc: 0.9924 - val_loss: 0.0715 - val_acc: 0.9825
+Epoch 23/25
+455/455 [==============================] - 0s 579us/step - loss: 0.0224 - acc: 0.9932 - val_loss: 0.0767 - val_acc: 0.9649
+Epoch 24/25
+455/455 [==============================] - 0s 566us/step - loss: 0.0268 - acc: 0.9876 - val_loss: 0.0588 - val_acc: 0.9737
+Epoch 25/25
+455/455 [==============================] - 0s 576us/step - loss: 0.0283 - acc: 0.9903 - val_loss: 0.0732 - val_acc: 0.9737
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">visualize_training_results</span><span class="p">(</span><span class="n">results_2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../../_images/ece0272915be3d4f3206ed6f33c61d3bb46f1eb7ccaaca527aabab569cfec53b.png" src="../../../../_images/ece0272915be3d4f3206ed6f33c61d3bb46f1eb7ccaaca527aabab569cfec53b.png" />
+<img alt="../../../../_images/4c91f62e6f812e7ba699da6405bb3616da8859d5e784ab6c363d171d718935e9.png" src="../../../../_images/4c91f62e6f812e7ba699da6405bb3616da8859d5e784ab6c363d171d718935e9.png" />
+</div>
+</div>
+</section>
+<section id="what-happened">
+<h2>What Happened?<a class="headerlink" href="#what-happened" title="Permalink to this heading">#</a></h2>
+<p>Although the final validation score for both models is the same, this model is clearly worse because it hasn’t converged yet. We can tell because of the greater variance in the movement of the <code class="docutils literal notranslate"><span class="pre">val_loss</span></code> and <code class="docutils literal notranslate"><span class="pre">val_acc</span></code> lines. This suggests that we can remedy this by either:</p>
+<ul class="simple">
+<li><p>Decreasing the size of the network, or</p></li>
+<li><p>Increasing the size of our training data</p></li>
+</ul>
+</section>
+<section id="visualizing-why-we-normalize-our-data">
+<h2>Visualizing why we Normalize our Data<a class="headerlink" href="#visualizing-why-we-normalize-our-data" title="Permalink to this heading">#</a></h2>
+<p>As a final exercise, let’s create a third model that is the same as the first model we created earlier. The only difference is that we will train it on our raw dataset, not the normalized version. This way, we can see how much of a difference normalizing our input data makes.</p>
+<p>Create, compile, and fit a model in the cell below. The only change in parameters will be using <code class="docutils literal notranslate"><span class="pre">data</span></code> instead of <code class="docutils literal notranslate"><span class="pre">scaled_data</span></code> during the <code class="docutils literal notranslate"><span class="pre">.fit()</span></code> step.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_3</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">()</span>
+<span class="n">model_3</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;tanh&#39;</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">30</span><span class="p">,)))</span>
+<span class="n">model_3</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;sigmoid&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_3</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s1">&#39;binary_crossentropy&#39;</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;sgd&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;acc&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results_3</span> <span class="o">=</span> <span class="n">model_3</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">validation_split</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 1/25
+455/455 [==============================] - 1s 771us/step - loss: 0.6732 - acc: 0.6062 - val_loss: 0.6068 - val_acc: 0.7719
+Epoch 2/25
+455/455 [==============================] - 0s 569us/step - loss: 0.6824 - acc: 0.5870 - val_loss: 0.6550 - val_acc: 0.7719
+Epoch 3/25
+455/455 [==============================] - 0s 593us/step - loss: 0.6807 - acc: 0.5902 - val_loss: 0.6074 - val_acc: 0.7719
+Epoch 4/25
+455/455 [==============================] - 0s 612us/step - loss: 0.6846 - acc: 0.5828 - val_loss: 0.6233 - val_acc: 0.7719
+Epoch 5/25
+455/455 [==============================] - 0s 604us/step - loss: 0.6843 - acc: 0.5751 - val_loss: 0.6091 - val_acc: 0.7719
+Epoch 6/25
+455/455 [==============================] - 0s 599us/step - loss: 0.6821 - acc: 0.5879 - val_loss: 0.6262 - val_acc: 0.7719
+Epoch 7/25
+455/455 [==============================] - 0s 569us/step - loss: 0.6873 - acc: 0.5666 - val_loss: 0.5996 - val_acc: 0.7719
+Epoch 8/25
+455/455 [==============================] - 0s 650us/step - loss: 0.6804 - acc: 0.5931 - val_loss: 0.6063 - val_acc: 0.7719
+Epoch 9/25
+455/455 [==============================] - 0s 593us/step - loss: 0.6914 - acc: 0.5509 - val_loss: 0.5793 - val_acc: 0.7719
+Epoch 10/25
+455/455 [==============================] - 0s 566us/step - loss: 0.6987 - acc: 0.5515 - val_loss: 0.6042 - val_acc: 0.7719
+Epoch 11/25
+455/455 [==============================] - 0s 763us/step - loss: 0.6839 - acc: 0.5824 - val_loss: 0.6036 - val_acc: 0.7719
+Epoch 12/25
+455/455 [==============================] - 0s 629us/step - loss: 0.6631 - acc: 0.6238 - val_loss: 0.6179 - val_acc: 0.7719
+Epoch 13/25
+455/455 [==============================] - 0s 871us/step - loss: 0.6880 - acc: 0.5734 - val_loss: 0.6060 - val_acc: 0.7719
+Epoch 14/25
+455/455 [==============================] - 0s 837us/step - loss: 0.6789 - acc: 0.5975 - val_loss: 0.5875 - val_acc: 0.7719
+Epoch 15/25
+455/455 [==============================] - 0s 757us/step - loss: 0.6935 - acc: 0.5602 - val_loss: 0.5818 - val_acc: 0.7719
+Epoch 16/25
+455/455 [==============================] - 0s 931us/step - loss: 0.6925 - acc: 0.5694 - val_loss: 0.6022 - val_acc: 0.7719
+Epoch 17/25
+455/455 [==============================] - 0s 683us/step - loss: 0.6786 - acc: 0.6005 - val_loss: 0.6244 - val_acc: 0.7719
+Epoch 18/25
+455/455 [==============================] - 0s 619us/step - loss: 0.6812 - acc: 0.5829 - val_loss: 0.6082 - val_acc: 0.7719
+Epoch 19/25
+455/455 [==============================] - 0s 782us/step - loss: 0.6818 - acc: 0.5891 - val_loss: 0.5837 - val_acc: 0.7719
+Epoch 20/25
+455/455 [==============================] - 0s 637us/step - loss: 0.6853 - acc: 0.5855 - val_loss: 0.6086 - val_acc: 0.7719
+Epoch 21/25
+455/455 [==============================] - 0s 647us/step - loss: 0.6673 - acc: 0.6255 - val_loss: 0.6665 - val_acc: 0.7719
+Epoch 22/25
+455/455 [==============================] - 0s 689us/step - loss: 0.6815 - acc: 0.6032 - val_loss: 0.5898 - val_acc: 0.7719
+Epoch 23/25
+455/455 [==============================] - 0s 778us/step - loss: 0.6820 - acc: 0.5839 - val_loss: 0.5723 - val_acc: 0.7719
+Epoch 24/25
+455/455 [==============================] - 0s 710us/step - loss: 0.6924 - acc: 0.5613 - val_loss: 0.5747 - val_acc: 0.7719
+Epoch 25/25
+455/455 [==============================] - 0s 690us/step - loss: 0.6810 - acc: 0.5951 - val_loss: 0.5896 - val_acc: 0.7719
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">visualize_training_results</span><span class="p">(</span><span class="n">results_3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../../_images/b843685f3bed0285564923d7fa6509a2b99ea227f48d223e2391987c3da7dc4b.png" src="../../../../_images/b843685f3bed0285564923d7fa6509a2b99ea227f48d223e2391987c3da7dc4b.png" />
+<img alt="../../../../_images/2586d5d4a9826df44750b85c9b096f26f9edb5bcc306dfc6455ee5509a107885.png" src="../../../../_images/2586d5d4a9826df44750b85c9b096f26f9edb5bcc306dfc6455ee5509a107885.png" />
+</div>
+</div>
+<p>Wow! Our results were much worse – over 20% poorer performance when working with non-normalized input data!</p>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">#</a></h2>
+<p>In this lab, we got some practice creating <strong><em>Multi-Layer Perceptrons</em></strong>, and explored how things like the number of layers in a model and data normalization affect our overall training results!</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="study-group-level-up">
+<h1>Study Group Level-UP<a class="headerlink" href="#study-group-level-up" title="Permalink to this heading">#</a></h1>
+<blockquote>
+<div><p>Compare the training results for StandardScaled vs MinMaxScaled data</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinMaxScaler</span>
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span>
+
+<span class="n">min_scaled_data</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_4</span> <span class="o">=</span><span class="n">Sequential</span><span class="p">()</span>
+<span class="n">model_4</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="n">activation</span><span class="o">=</span><span class="s1">&#39;tanh&#39;</span><span class="p">,</span><span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">30</span><span class="p">,)))</span>
+<span class="n">model_4</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;sigmoid&#39;</span><span class="p">))</span>
+
+<span class="n">model_4</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s1">&#39;binary_crossentropy&#39;</span><span class="p">,</span><span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;sgd&#39;</span><span class="p">,</span><span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;acc&#39;</span><span class="p">])</span>
+<span class="n">model_4</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+
+<span class="n">results_4</span> <span class="o">=</span> <span class="n">model_4</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">min_scaled_data</span><span class="p">,</span><span class="n">target</span><span class="p">,</span><span class="n">epochs</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">validation_split</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model: &quot;sequential_6&quot;
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+dense_14 (Dense)             (None, 10)                310       
+_________________________________________________________________
+dense_15 (Dense)             (None, 1)                 11        
+=================================================================
+Total params: 321
+Trainable params: 321
+Non-trainable params: 0
+_________________________________________________________________
+Epoch 1/25
+455/455 [==============================] - 1s 1ms/step - loss: 0.6421 - acc: 0.7051 - val_loss: 0.4953 - val_acc: 0.9211
+Epoch 2/25
+455/455 [==============================] - 0s 684us/step - loss: 0.4589 - acc: 0.9031 - val_loss: 0.3642 - val_acc: 0.9211
+Epoch 3/25
+455/455 [==============================] - 0s 671us/step - loss: 0.3238 - acc: 0.9154 - val_loss: 0.2581 - val_acc: 0.9211
+Epoch 4/25
+455/455 [==============================] - 0s 643us/step - loss: 0.2432 - acc: 0.9345 - val_loss: 0.2314 - val_acc: 0.9474
+Epoch 5/25
+455/455 [==============================] - 0s 624us/step - loss: 0.2160 - acc: 0.9275 - val_loss: 0.1990 - val_acc: 0.9474
+Epoch 6/25
+455/455 [==============================] - 0s 629us/step - loss: 0.1819 - acc: 0.9506 - val_loss: 0.1609 - val_acc: 0.9561
+Epoch 7/25
+455/455 [==============================] - 0s 648us/step - loss: 0.1492 - acc: 0.9606 - val_loss: 0.1562 - val_acc: 0.9649
+Epoch 8/25
+455/455 [==============================] - 0s 588us/step - loss: 0.1568 - acc: 0.9498 - val_loss: 0.1628 - val_acc: 0.9474
+Epoch 9/25
+455/455 [==============================] - 0s 646us/step - loss: 0.1489 - acc: 0.9514 - val_loss: 0.1607 - val_acc: 0.9474
+Epoch 10/25
+455/455 [==============================] - 0s 601us/step - loss: 0.1292 - acc: 0.9571 - val_loss: 0.1485 - val_acc: 0.9561
+Epoch 11/25
+455/455 [==============================] - 0s 675us/step - loss: 0.1255 - acc: 0.9703 - val_loss: 0.1399 - val_acc: 0.9737
+Epoch 12/25
+455/455 [==============================] - 0s 572us/step - loss: 0.1328 - acc: 0.9635 - val_loss: 0.1729 - val_acc: 0.9298
+Epoch 13/25
+455/455 [==============================] - 0s 737us/step - loss: 0.1057 - acc: 0.9740 - val_loss: 0.1189 - val_acc: 0.9912
+Epoch 14/25
+455/455 [==============================] - 0s 615us/step - loss: 0.0845 - acc: 0.9795 - val_loss: 0.1096 - val_acc: 0.9912
+Epoch 15/25
+455/455 [==============================] - 0s 694us/step - loss: 0.0929 - acc: 0.9796 - val_loss: 0.1253 - val_acc: 0.9825
+Epoch 16/25
+455/455 [==============================] - 0s 655us/step - loss: 0.1294 - acc: 0.9657 - val_loss: 0.0977 - val_acc: 0.9912
+Epoch 17/25
+455/455 [==============================] - 0s 650us/step - loss: 0.1043 - acc: 0.9633 - val_loss: 0.1235 - val_acc: 0.9737
+Epoch 18/25
+455/455 [==============================] - 0s 567us/step - loss: 0.0790 - acc: 0.9756 - val_loss: 0.1112 - val_acc: 0.9912
+Epoch 19/25
+455/455 [==============================] - 0s 798us/step - loss: 0.1006 - acc: 0.9701 - val_loss: 0.1331 - val_acc: 0.9737
+Epoch 20/25
+455/455 [==============================] - 0s 663us/step - loss: 0.0989 - acc: 0.9585 - val_loss: 0.0860 - val_acc: 0.9825
+Epoch 21/25
+455/455 [==============================] - 0s 811us/step - loss: 0.1080 - acc: 0.9559 - val_loss: 0.1308 - val_acc: 0.9737
+Epoch 22/25
+455/455 [==============================] - 0s 559us/step - loss: 0.0837 - acc: 0.9680 - val_loss: 0.1044 - val_acc: 0.9825
+Epoch 23/25
+455/455 [==============================] - 0s 826us/step - loss: 0.0803 - acc: 0.9683 - val_loss: 0.1422 - val_acc: 0.9474
+Epoch 24/25
+455/455 [==============================] - 0s 872us/step - loss: 0.0805 - acc: 0.9765 - val_loss: 0.0827 - val_acc: 0.9912
+Epoch 25/25
+455/455 [==============================] - 0s 738us/step - loss: 0.0734 - acc: 0.9778 - val_loss: 0.0759 - val_acc: 0.9825
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">visualize_training_results</span><span class="p">(</span><span class="n">results_4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../../_images/3d1e39957336df4e051dbc68a7eba5057628ac1956ef6487c0ed0ac3b05429b3.png" src="../../../../_images/3d1e39957336df4e051dbc68a7eba5057628ac1956ef6487c0ed0ac3b05429b3.png" />
+<img alt="../../../../_images/c949e95f77919440a5d2fb17f294876297e8be079958f8ad8e5edc9c1d9c4a3e.png" src="../../../../_images/c949e95f77919440a5d2fb17f294876297e8be079958f8ad8e5edc9c1d9c4a3e.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">visualize_training_results</span><span class="p">(</span><span class="n">results_2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../../_images/ece0272915be3d4f3206ed6f33c61d3bb46f1eb7ccaaca527aabab569cfec53b.png" src="../../../../_images/ece0272915be3d4f3206ed6f33c61d3bb46f1eb7ccaaca527aabab569cfec53b.png" />
+<img alt="../../../../_images/4c91f62e6f812e7ba699da6405bb3616da8859d5e784ab6c363d171d718935e9.png" src="../../../../_images/4c91f62e6f812e7ba699da6405bb3616da8859d5e784ab6c363d171d718935e9.png" />
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "learn-env-new"
+        },
+        kernelOptions: {
+            name: "learn-env-new",
+            path: "./Phase_4/topic_40-41_neural_networks/labs/dsc-deeper-neural-networks-lab-master"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'learn-env-new'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Deeper Neural Networks - Lab + Level-Up [022221FT]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objectives">Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-started">Getting Started</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#updating-for-tensorflow-2-0">UPDATING FOR TENSORFLOW 2.0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-the-data-ready-for-deep-learning">Getting the Data Ready for Deep Learning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#binarizing-our-labels">Binarizing our Labels</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-our-mlp">Building our MLP</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#compiling-the-model">Compiling the Model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-the-model">Fitting the Model</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#detecting-overfitting">Detecting Overfitting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#iterating-on-the-model">Iterating on the Model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-happened">What Happened?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-why-we-normalize-our-data">Visualizing why we Normalize our Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#study-group-level-up">Study Group Level-UP</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By James Irving, PhD
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

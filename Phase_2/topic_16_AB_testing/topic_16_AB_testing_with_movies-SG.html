@@ -1,0 +1,2901 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Topic 16: Practicing AB Testing with Movies &#8212; Data Science Curriculum</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Phase_2/topic_16_AB_testing/topic_16_AB_testing_with_movies-SG';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Topic 17: Bayesian Statistics" href="../topic_17_bayesian_statistics/topic_17_bayesian_statistics-SG.html" />
+    <link rel="prev" title="Topic 15: ANOVAs &amp; Statistical Power with Neuro Data" href="../topic_15_ANOVA/topic_15_ANOVA_with_neuro_data-SG.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/flatironschool_banner.jpg" class="logo__image only-light" alt="Data Science Curriculum - Home"/>
+    <script>document.write(`<img src="../../_static/flatironschool_banner.jpg" class="logo__image only-dark" alt="Data Science Curriculum - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Data Science Curriculum
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 1 - Python &amp; Data Fundamentals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_01_getting_started/topic_01_getting_started.html">Topic 1: Getting Started with Data Science</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_02_bash_git/topic_02_bash_and_git.html">Topic 02:  Bash and Git</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_03_control_flow_functions/topic_03_control_flow_and_functions.html">Topic 03: Control Flow, Functions, and Statistics</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_04_python_libraries/topic_04_intro_to_libraries_numpy_SG.html">Topic 04-Part 1: Python Libraries &amp; NumPy</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_04_python_libraries/topic_04_pt-2_brief_intro_to_pandas-SG.html">Topic 04-Part 2: Brief Intro to Pandas with Doctor Who</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_05_data_cleaning_in_pandas/topic_05_Data_Cleaning_in_Pandas.html">Topic 05: Data Cleaning in Pandas</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_06_data_visualization/topic_06_visualizations_heroes_project_SG.html">Topic 06:  Data Visualizations</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_07_SQL_and_relational_databases/topic_07_SQL_and_relational_databases_SG.html">TOPIC 07: SQL DATABASES</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_08_noSQL_databases/topic_08_mongodb-SG.html">Topic 08: NoSQL Databases</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_09_json_and_apis/topic_09_json-api-SG.html">Topic 09: Using APIs and JSON Data</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_10_webscraping/topic_10_SG_HTML_CSS_web_scraping.html">Topic 10: HTML, CSS, &amp; Web Scraping</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 2 - Statistics &amp; Regression</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../topic_11_probability_and_combinatorics/topic_11_playlist_probabilities-SG.html">Topic 11 - Intro to Combinatorics &amp; Probability</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_12_statistical_distributions/topic-12-distributions-with-movies-sg.html">Exploring Distributions with Movies Data</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_13_central_limit_theorem/topic_13_central_limit_theorem_SG.html">Topic 13: Central Limit Theorem</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_14_hypothesis_testing/topic_14_hypothesis_testing-SG.html">Topic 14: Hypothesis Testing -  T-Tests</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_15_ANOVA/topic_15_ANOVA_with_neuro_data-SG.html">Topic 15: ANOVAs &amp; Statistical Power with  Neuro Data</a></li>
+
+
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Topic 16: Practicing AB Testing with Movies</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_17_bayesian_statistics/topic_17_bayesian_statistics-SG.html">Topic 17: Bayesian Statistics</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_18_linear_regression/topic_18_intro_to_linear_regression_SG.html">Topic 18: Intro to Linear Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_19_part1_multiple_regression/topic_19_Multiple_Regression_v2-SG.html">Topic 19: Multiple Linear Regression</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_19_part2_model_validation/topic_19_part_2_Multiple_Regression_v2-SG.html">Topic 19 Part 2: Feature Selection &amp; Model Validation</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_20_extensions_linear_models/topic_20_extensions_to_linear_models_SG.html">Topic 20: Extensions to Linear Models</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 3 - Machine Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_21_OOP/topic_21_OOP_playing_cards_SG.html">Topic 21: Object-Oriented Programming</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_22_linear_algebra/topic_22_linear_algebra_SG.html">Topic 22: Linear Algebra</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_23_calculus_gradient_descent/topic_23_gradient_descent_SG.html">Topic 23: Cost Functions and Gradient Descent</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_24_regularization/topic_24_Regularization_Ridge_Lasso_v2_SG.html">Topic 24: Feature Selection &amp; Regularization (Ridge and Lasso Regression)</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_25_logistic_regression/topic_25_pt1_LogisticRegression_titanic-v2-SG.html">Topic 25-Pt 1: Intro to Logistic Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_25_logistic_regression/topic_25_pt2_LogisticRegression_titanic-v2-SG.html">Topic 25-Part 2: Evaluating Classifiers, Dealing with Class Imbalance, and <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code></a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_27_KNN/Topic_27_KNN_with_pipelines_with_lab_v3_SG.html">Topic 27: K-Nearest Neighbors<br/> +Topic 32: Pipelines</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_29_decision_trees/topic_29_decision_trees_v2_titanic-SG.html">Topic 29: Decision Trees</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_30_ensemble_methods/topic_30_ensemble_methods-SG.html">Topic 30: Ensemble Methods</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_31_support_vector_machines/topic_31_SupportVectorMachines_SG.html">Topic 31: Support Vector Machines</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 4 - Advanced ML &amp; Time Series</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_33_pca/topic_33_PCA_SG.html">Topic 33: Principal Component Analysis</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_34_clustering/topic_34_Kmeans_clustering_v3_SG.html">Topic 34: Clustering</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_35-36_using_databricks_for_pyspark/using_databricks_for_pyspark.html">How to Use Databricks for PySpark Canvas Material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_36_recommendation_systems/topic_36_Recommendation_Systems_with_Surprise.html">Topic 36: Recommendation Systems</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_37_intro_to_time_series/topic_37_intro_to_time_series_crime_v3-SG.html">Topic 37: Intro to Time Series</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_38_time_series_models/topic_38-time_series_models_v3_SG.html">Topic 38: Time Series Models</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_39_NLP/topic_39_NLP_finding_trump_v3_SG.html">Topic 39: Natural Language Processing + Topic 28: Bayesian Classification</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_40-41_neural_networks/topic_40-41_Artificial_Neural_Networks_v1_SG.html">Topic 40-41: Artificial Neural Networks</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_42_tuning_neural_networks/topic_42_tuning_ANNs_with_deep_NLP_v1_SG.html">Topic 42 - Tuning Neural Networks + Deep NLP</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_43_AWS/topic_43_operationalizing_code_AWS_SG.html">Topic 43: Operationalizing Code &amp; AWS</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 5 - Capstone &amp; Bonus Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/Capstone_Kickoff.html">Capstone Kickoff!</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/APIs/working_with_apis.html">Working with APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/developing_app_functions/developing-streamlit-app-functions_SG.html">Developing Streamlit App Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/tableau/tableau_fundamentals_2021-SG.html">Tableau Fundamentals</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/Bonus%20Notebooks/plotly_visuals.html">Plotly Question</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/master?urlpath=tree/Phase_2/topic_16_AB_testing/topic_16_AB_testing_with_movies-SG.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/blob/master/Phase_2/topic_16_AB_testing/topic_16_AB_testing_with_movies-SG.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/issues/new?title=Issue%20on%20page%20%2FPhase_2/topic_16_AB_testing/topic_16_AB_testing_with_movies-SG.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/Phase_2/topic_16_AB_testing/topic_16_AB_testing_with_movies-SG.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Topic 16: Practicing AB Testing with Movies</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Topic 16: Practicing AB Testing with Movies</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#testing-hypotheses-about-movies">Testing Hypotheses About Movies</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#q1-do-movies-with-longer-run-times-generate-more-or-less-revenue-than-shorter-run-times">Q1: Do movies with longer run times generate more or less revenue than shorter run times?</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#q2-are-short-run-time-movies-more-likely-to-lose-money">Q2 Are short run time movies more likely to lose money?</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#do-movies-released-in-some-months-earn-more-revenue-than-others">Do movies released in some months earn more revenue than others?</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="topic-16-practicing-ab-testing-with-movies">
+<h1>Topic 16: Practicing AB Testing with Movies<a class="headerlink" href="#topic-16-practicing-ab-testing-with-movies" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p>onl01-dtsc-ft-022221</p></li>
+<li><p>04/02/21</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Importing our study group functions</span>
+<span class="o">%</span><span class="k">load_ext</span> autoreload
+<span class="o">%</span><span class="k">autoreload</span> 2
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="n">py_folder</span> <span class="o">=</span> <span class="s2">&quot;../../py_files/&quot;</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">py_folder</span><span class="p">)</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">functions_SG</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sg</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">stats</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;seaborn-talk&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="testing-hypotheses-about-movies">
+<h1>Testing Hypotheses About Movies<a class="headerlink" href="#testing-hypotheses-about-movies" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../topic_12_statistical_distributions/joined_movie_data_for_sg.csv&#39;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>release_date</th>
+      <th>movie</th>
+      <th>production_budget</th>
+      <th>domestic_gross</th>
+      <th>worldwide_gross</th>
+      <th>tconst</th>
+      <th>primary_title</th>
+      <th>original_title</th>
+      <th>start_year</th>
+      <th>runtime_minutes</th>
+      <th>genres</th>
+      <th>revenue-domestic</th>
+      <th>revenue-worldwide</th>
+      <th>lost_money</th>
+      <th>roi-domestic</th>
+      <th>roi-worldwide</th>
+      <th>release_month</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2</td>
+      <td>2011-05-20</td>
+      <td>Pirates of the Caribbean: On Stranger Tides</td>
+      <td>410600000.0</td>
+      <td>241063875.0</td>
+      <td>1.045664e+09</td>
+      <td>tt1298650</td>
+      <td>Pirates of the Caribbean: On Stranger Tides</td>
+      <td>Pirates of the Caribbean: On Stranger Tides</td>
+      <td>2011</td>
+      <td>136.0</td>
+      <td>Action,Adventure,Fantasy</td>
+      <td>-169536125.0</td>
+      <td>6.350639e+08</td>
+      <td>True</td>
+      <td>-41.289850</td>
+      <td>154.667286</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>3</td>
+      <td>2019-06-07</td>
+      <td>Dark Phoenix</td>
+      <td>350000000.0</td>
+      <td>42762350.0</td>
+      <td>1.497624e+08</td>
+      <td>tt6565702</td>
+      <td>Dark Phoenix</td>
+      <td>Dark Phoenix</td>
+      <td>2019</td>
+      <td>113.0</td>
+      <td>Action,Adventure,Sci-Fi</td>
+      <td>-307237650.0</td>
+      <td>-2.002376e+08</td>
+      <td>True</td>
+      <td>-87.782186</td>
+      <td>-57.210757</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4</td>
+      <td>2015-05-01</td>
+      <td>Avengers: Age of Ultron</td>
+      <td>330600000.0</td>
+      <td>459005868.0</td>
+      <td>1.403014e+09</td>
+      <td>tt2395427</td>
+      <td>Avengers: Age of Ultron</td>
+      <td>Avengers: Age of Ultron</td>
+      <td>2015</td>
+      <td>141.0</td>
+      <td>Action,Adventure,Sci-Fi</td>
+      <td>128405868.0</td>
+      <td>1.072414e+09</td>
+      <td>False</td>
+      <td>38.840250</td>
+      <td>324.384139</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>7</td>
+      <td>2018-04-27</td>
+      <td>Avengers: Infinity War</td>
+      <td>300000000.0</td>
+      <td>678815482.0</td>
+      <td>2.048134e+09</td>
+      <td>tt4154756</td>
+      <td>Avengers: Infinity War</td>
+      <td>Avengers: Infinity War</td>
+      <td>2018</td>
+      <td>149.0</td>
+      <td>Action,Adventure,Sci-Fi</td>
+      <td>378815482.0</td>
+      <td>1.748134e+09</td>
+      <td>False</td>
+      <td>126.271827</td>
+      <td>582.711400</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>9</td>
+      <td>2017-11-17</td>
+      <td>Justice League</td>
+      <td>300000000.0</td>
+      <td>229024295.0</td>
+      <td>6.559452e+08</td>
+      <td>tt0974015</td>
+      <td>Justice League</td>
+      <td>Justice League</td>
+      <td>2017</td>
+      <td>120.0</td>
+      <td>Action,Adventure,Fantasy</td>
+      <td>-70975705.0</td>
+      <td>3.559452e+08</td>
+      <td>True</td>
+      <td>-23.658568</td>
+      <td>118.648403</td>
+      <td>11</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 3467 entries, 0 to 3466
+Data columns (total 18 columns):
+ #   Column             Non-Null Count  Dtype  
+---  ------             --------------  -----  
+ 0   id                 3467 non-null   int64  
+ 1   release_date       3467 non-null   object 
+ 2   movie              3467 non-null   object 
+ 3   production_budget  3467 non-null   float64
+ 4   domestic_gross     3467 non-null   float64
+ 5   worldwide_gross    3467 non-null   float64
+ 6   tconst             3467 non-null   object 
+ 7   primary_title      3467 non-null   object 
+ 8   original_title     3467 non-null   object 
+ 9   start_year         3467 non-null   int64  
+ 10  runtime_minutes    3056 non-null   float64
+ 11  genres             3467 non-null   object 
+ 12  revenue-domestic   3467 non-null   float64
+ 13  revenue-worldwide  3467 non-null   float64
+ 14  lost_money         3467 non-null   bool   
+ 15  roi-domestic       3467 non-null   float64
+ 16  roi-worldwide      3467 non-null   float64
+ 17  release_month      3467 non-null   int64  
+dtypes: bool(1), float64(8), int64(3), object(6)
+memory usage: 464.0+ KB
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>id                     0
+release_date           0
+movie                  0
+production_budget      0
+domestic_gross         0
+worldwide_gross        0
+tconst                 0
+primary_title          0
+original_title         0
+start_year             0
+runtime_minutes      411
+genres                 0
+revenue-domestic       0
+revenue-worldwide      0
+lost_money             0
+roi-domestic           0
+roi-worldwide          0
+release_month          0
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;runtime_minutes&#39;</span><span class="p">],</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>id                   0
+release_date         0
+movie                0
+production_budget    0
+domestic_gross       0
+worldwide_gross      0
+tconst               0
+primary_title        0
+original_title       0
+start_year           0
+runtime_minutes      0
+genres               0
+revenue-domestic     0
+revenue-worldwide    0
+lost_money           0
+roi-domestic         0
+roi-worldwide        0
+release_month        0
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="q1-do-movies-with-longer-run-times-generate-more-or-less-revenue-than-shorter-run-times">
+<h1>Q1: Do movies with longer run times generate more or less revenue than shorter run times?<a class="headerlink" href="#q1-do-movies-with-longer-run-times-generate-more-or-less-revenue-than-shorter-run-times" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">clean_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;runtime_minutes&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">60</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sg</span><span class="o">.</span><span class="n">plot_distribution</span><span class="p">(</span><span class="n">clean_df</span><span class="p">[</span><span class="s1">&#39;runtime_minutes&#39;</span><span class="p">],</span><span class="n">boxplot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/anaconda3/envs/learn-env-new/lib/python3.8/site-packages/seaborn/_decorators.py:36: FutureWarning: Pass the following variable as a keyword arg: x. From version 0.12, the only valid positional argument will be `data`, and passing other arguments without an explicit keyword will result in an error or misinterpretation.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&lt;Figure size 720x576 with 1 Axes&gt;,
+ array([&lt;AxesSubplot:title={&#39;center&#39;:&#39;Distribution of runtime_minutes&#39;}, xlabel=&#39;runtime_minutes&#39;, ylabel=&#39;Density&#39;&gt;,
+        &lt;AxesSubplot:xlabel=&#39;runtime_minutes&#39;&gt;], dtype=object))
+</pre></div>
+</div>
+<img alt="../../_images/d2636a8c70068dd2e1bc6739f6fdeb93ef97af1b2f8f5ec1ce8534f01bb6330e.png" src="../../_images/d2636a8c70068dd2e1bc6739f6fdeb93ef97af1b2f8f5ec1ce8534f01bb6330e.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">clean_df</span><span class="p">[</span><span class="s1">&#39;runtime_minutes&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>count    2788.000000
+mean      103.022597
+std        20.271087
+min        61.000000
+25%        90.000000
+50%       100.000000
+75%       113.000000
+max       360.000000
+Name: runtime_minutes, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">median</span> <span class="o">=</span> <span class="n">clean_df</span><span class="p">[</span><span class="s1">&#39;runtime_minutes&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+<span class="n">median</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># df[df[&#39;runtime_minutes&#39;] == median]</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">clean_df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>release_date</th>
+      <th>movie</th>
+      <th>production_budget</th>
+      <th>domestic_gross</th>
+      <th>worldwide_gross</th>
+      <th>tconst</th>
+      <th>primary_title</th>
+      <th>original_title</th>
+      <th>start_year</th>
+      <th>runtime_minutes</th>
+      <th>genres</th>
+      <th>revenue-domestic</th>
+      <th>revenue-worldwide</th>
+      <th>lost_money</th>
+      <th>roi-domestic</th>
+      <th>roi-worldwide</th>
+      <th>release_month</th>
+      <th>runtime_groups</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2</td>
+      <td>2011-05-20</td>
+      <td>Pirates of the Caribbean: On Stranger Tides</td>
+      <td>410600000.0</td>
+      <td>241063875.0</td>
+      <td>1.045664e+09</td>
+      <td>tt1298650</td>
+      <td>Pirates of the Caribbean: On Stranger Tides</td>
+      <td>Pirates of the Caribbean: On Stranger Tides</td>
+      <td>2011</td>
+      <td>136.0</td>
+      <td>Action,Adventure,Fantasy</td>
+      <td>-169536125.0</td>
+      <td>6.350639e+08</td>
+      <td>True</td>
+      <td>-41.289850</td>
+      <td>154.667286</td>
+      <td>5</td>
+      <td>Short</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>3</td>
+      <td>2019-06-07</td>
+      <td>Dark Phoenix</td>
+      <td>350000000.0</td>
+      <td>42762350.0</td>
+      <td>1.497624e+08</td>
+      <td>tt6565702</td>
+      <td>Dark Phoenix</td>
+      <td>Dark Phoenix</td>
+      <td>2019</td>
+      <td>113.0</td>
+      <td>Action,Adventure,Sci-Fi</td>
+      <td>-307237650.0</td>
+      <td>-2.002376e+08</td>
+      <td>True</td>
+      <td>-87.782186</td>
+      <td>-57.210757</td>
+      <td>6</td>
+      <td>Short</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4</td>
+      <td>2015-05-01</td>
+      <td>Avengers: Age of Ultron</td>
+      <td>330600000.0</td>
+      <td>459005868.0</td>
+      <td>1.403014e+09</td>
+      <td>tt2395427</td>
+      <td>Avengers: Age of Ultron</td>
+      <td>Avengers: Age of Ultron</td>
+      <td>2015</td>
+      <td>141.0</td>
+      <td>Action,Adventure,Sci-Fi</td>
+      <td>128405868.0</td>
+      <td>1.072414e+09</td>
+      <td>False</td>
+      <td>38.840250</td>
+      <td>324.384139</td>
+      <td>5</td>
+      <td>Short</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>7</td>
+      <td>2018-04-27</td>
+      <td>Avengers: Infinity War</td>
+      <td>300000000.0</td>
+      <td>678815482.0</td>
+      <td>2.048134e+09</td>
+      <td>tt4154756</td>
+      <td>Avengers: Infinity War</td>
+      <td>Avengers: Infinity War</td>
+      <td>2018</td>
+      <td>149.0</td>
+      <td>Action,Adventure,Sci-Fi</td>
+      <td>378815482.0</td>
+      <td>1.748134e+09</td>
+      <td>False</td>
+      <td>126.271827</td>
+      <td>582.711400</td>
+      <td>4</td>
+      <td>Short</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>9</td>
+      <td>2017-11-17</td>
+      <td>Justice League</td>
+      <td>300000000.0</td>
+      <td>229024295.0</td>
+      <td>6.559452e+08</td>
+      <td>tt0974015</td>
+      <td>Justice League</td>
+      <td>Justice League</td>
+      <td>2017</td>
+      <td>120.0</td>
+      <td>Action,Adventure,Fantasy</td>
+      <td>-70975705.0</td>
+      <td>3.559452e+08</td>
+      <td>True</td>
+      <td>-23.658568</td>
+      <td>118.648403</td>
+      <td>11</td>
+      <td>Short</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>3462</th>
+      <td>67</td>
+      <td>2006-04-28</td>
+      <td>Clean</td>
+      <td>10000.0</td>
+      <td>138711.0</td>
+      <td>1.387110e+05</td>
+      <td>tt6619196</td>
+      <td>Clean</td>
+      <td>Clean</td>
+      <td>2017</td>
+      <td>70.0</td>
+      <td>Comedy,Drama,Horror</td>
+      <td>128711.0</td>
+      <td>1.287110e+05</td>
+      <td>False</td>
+      <td>1287.110000</td>
+      <td>1287.110000</td>
+      <td>4</td>
+      <td>Long</td>
+    </tr>
+    <tr>
+      <th>3463</th>
+      <td>68</td>
+      <td>2001-07-06</td>
+      <td>Cure</td>
+      <td>10000.0</td>
+      <td>94596.0</td>
+      <td>9.459600e+04</td>
+      <td>tt1872026</td>
+      <td>Cure</td>
+      <td>Cure</td>
+      <td>2011</td>
+      <td>93.0</td>
+      <td>Drama</td>
+      <td>84596.0</td>
+      <td>8.459600e+04</td>
+      <td>False</td>
+      <td>845.960000</td>
+      <td>845.960000</td>
+      <td>7</td>
+      <td>Long</td>
+    </tr>
+    <tr>
+      <th>3464</th>
+      <td>73</td>
+      <td>2012-01-13</td>
+      <td>Newlyweds</td>
+      <td>9000.0</td>
+      <td>4584.0</td>
+      <td>4.584000e+03</td>
+      <td>tt1880418</td>
+      <td>Newlyweds</td>
+      <td>Newlyweds</td>
+      <td>2011</td>
+      <td>95.0</td>
+      <td>Comedy,Drama</td>
+      <td>-4416.0</td>
+      <td>-4.416000e+03</td>
+      <td>True</td>
+      <td>-49.066667</td>
+      <td>-49.066667</td>
+      <td>1</td>
+      <td>Long</td>
+    </tr>
+    <tr>
+      <th>3465</th>
+      <td>78</td>
+      <td>2018-12-31</td>
+      <td>Red 11</td>
+      <td>7000.0</td>
+      <td>0.0</td>
+      <td>0.000000e+00</td>
+      <td>tt7837402</td>
+      <td>Red 11</td>
+      <td>Red 11</td>
+      <td>2019</td>
+      <td>77.0</td>
+      <td>Horror,Sci-Fi,Thriller</td>
+      <td>-7000.0</td>
+      <td>-7.000000e+03</td>
+      <td>True</td>
+      <td>-100.000000</td>
+      <td>-100.000000</td>
+      <td>12</td>
+      <td>Long</td>
+    </tr>
+    <tr>
+      <th>3466</th>
+      <td>81</td>
+      <td>2015-09-29</td>
+      <td>A Plague So Pleasant</td>
+      <td>1400.0</td>
+      <td>0.0</td>
+      <td>0.000000e+00</td>
+      <td>tt2107644</td>
+      <td>A Plague So Pleasant</td>
+      <td>A Plague So Pleasant</td>
+      <td>2013</td>
+      <td>76.0</td>
+      <td>Drama,Horror,Thriller</td>
+      <td>-1400.0</td>
+      <td>-1.400000e+03</td>
+      <td>True</td>
+      <td>-100.000000</td>
+      <td>-100.000000</td>
+      <td>9</td>
+      <td>Long</td>
+    </tr>
+  </tbody>
+</table>
+<p>2788 rows × 19 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Create my binary group</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;runtime_groups&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;runtime_minutes&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">median</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="kc">True</span><span class="p">:</span><span class="s1">&#39;Short&#39;</span><span class="p">,</span> 
+                                                             <span class="kc">False</span><span class="p">:</span><span class="s1">&#39;Long&#39;</span><span class="p">})</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;runtime_groups&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Long     1435
+Short    1353
+Name: runtime_groups, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span> 
+                       <span class="n">gridspec_kw</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;width_ratios&#39;</span><span class="p">:[</span><span class="mf">0.8</span><span class="p">,</span><span class="mf">0.2</span><span class="p">]})</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;revenue-worldwide&#39;</span><span class="p">,</span><span class="n">hue</span><span class="o">=</span><span class="s1">&#39;runtime_groups&#39;</span><span class="p">,</span><span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;revenue-worldwide&#39;</span><span class="p">,</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;runtime_groups&#39;</span><span class="p">,</span><span class="n">ci</span><span class="o">=</span><span class="mi">68</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;runtime_groups&#39;, ylabel=&#39;revenue-worldwide&#39;&gt;
+</pre></div>
+</div>
+<img alt="../../_images/59a7c434f6b635ba42d70e3930d8afc531188b0f0cb1c99bbd4b231b3cfa15d8.png" src="../../_images/59a7c434f6b635ba42d70e3930d8afc531188b0f0cb1c99bbd4b231b3cfa15d8.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>H0: Long and short movies have the same revenue.</p></li>
+<li><p>H1: Long and short movies have different  revenue.</p></li>
+<li><p>Groups: Long/Short</p></li>
+<li><p>Measure: Worldwide Revenue</p></li>
+<li><p>Ideal test:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">long</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;runtime_groups&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="s1">&#39;Long&#39;</span><span class="p">)</span>
+<span class="n">sg</span><span class="o">.</span><span class="n">plot_distribution</span><span class="p">(</span><span class="n">long</span><span class="p">,</span> <span class="s1">&#39;revenue-worldwide&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/anaconda3/envs/learn-env-new/lib/python3.8/site-packages/seaborn/_decorators.py:36: FutureWarning: Pass the following variable as a keyword arg: x. From version 0.12, the only valid positional argument will be `data`, and passing other arguments without an explicit keyword will result in an error or misinterpretation.
+  warnings.warn(
+</pre></div>
+</div>
+<img alt="../../_images/d3e57ff53215abf3e331a7a843d4109a3d80be6f84972a68c0575041f8ad5cba.png" src="../../_images/d3e57ff53215abf3e331a7a843d4109a3d80be6f84972a68c0575041f8ad5cba.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[i] Distribution Stats:
+	Skew = 3.82
+	Kurtosis = 20.71
+	N = 1,435
+
+ NormaltestResult(statistic=1190.9012822563436, pvalue=2.506526567949592e-259)
+	- p&lt;.05: The distribution is NOT normally distributed.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">short</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;runtime_groups&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="s1">&#39;Short&#39;</span><span class="p">)</span>
+<span class="n">sg</span><span class="o">.</span><span class="n">plot_distribution</span><span class="p">(</span><span class="n">short</span><span class="p">,</span> <span class="s1">&#39;revenue-worldwide&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/anaconda3/envs/learn-env-new/lib/python3.8/site-packages/seaborn/_decorators.py:36: FutureWarning: Pass the following variable as a keyword arg: x. From version 0.12, the only valid positional argument will be `data`, and passing other arguments without an explicit keyword will result in an error or misinterpretation.
+  warnings.warn(
+</pre></div>
+</div>
+<img alt="../../_images/e5e90399e6432bc710d7f0548e0064cc81ab5915b95c65469465b4095cbd0182.png" src="../../_images/e5e90399e6432bc710d7f0548e0064cc81ab5915b95c65469465b4095cbd0182.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[i] Distribution Stats:
+	Skew = 4.8
+	Kurtosis = 29.04
+	N = 1,353
+
+ NormaltestResult(statistic=1334.9196425792106, pvalue=1.3362346269475206e-290)
+	- p&lt;.05: The distribution is NOT normally distributed.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stats</span><span class="o">.</span><span class="n">levene</span><span class="p">(</span><span class="n">long</span><span class="p">[</span><span class="s1">&#39;revenue-worldwide&#39;</span><span class="p">],</span><span class="n">short</span><span class="p">[</span><span class="s1">&#39;revenue-worldwide&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LeveneResult(statistic=67.88087529176774, pvalue=2.6402405246562505e-16)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stats</span><span class="o">.</span><span class="n">ttest_ind</span><span class="p">(</span><span class="n">long</span><span class="p">[</span><span class="s1">&#39;revenue-worldwide&#39;</span><span class="p">],</span><span class="n">short</span><span class="p">[</span><span class="s1">&#39;revenue-worldwide&#39;</span><span class="p">],</span><span class="n">equal_var</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Ttest_indResult(statistic=8.495626170575216, pvalue=3.40810908881946e-17)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stats</span><span class="o">.</span><span class="n">mannwhitneyu</span><span class="p">(</span><span class="n">long</span><span class="p">[</span><span class="s1">&#39;revenue-worldwide&#39;</span><span class="p">],</span><span class="n">short</span><span class="p">[</span><span class="s1">&#39;revenue-worldwide&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MannwhitneyuResult(statistic=778633.5, pvalue=7.470485402923227e-20)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sg</span><span class="o">.</span><span class="n">Cohen_d</span><span class="p">(</span><span class="n">long</span><span class="p">[</span><span class="s1">&#39;revenue-worldwide&#39;</span><span class="p">],</span> <span class="n">short</span><span class="p">[</span><span class="s1">&#39;revenue-worldwide&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.3176134060453906
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">long</span><span class="p">[</span><span class="s1">&#39;revenue-worldwide&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">-</span> <span class="n">short</span><span class="p">[</span><span class="s1">&#39;revenue-worldwide&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>49852014.95747017
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;runtime_minutes&#39;</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="s1">&#39;revenue-worldwide&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;runtime_groups&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7fdb9f2ae130&gt;
+</pre></div>
+</div>
+<img alt="../../_images/3e72798f01abe96486c461c7736e40de723f4fc95f26f988d1b21b0656f6fd2b.png" src="../../_images/3e72798f01abe96486c461c7736e40de723f4fc95f26f988d1b21b0656f6fd2b.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;revenue-worldwide&#39;</span><span class="p">,</span><span class="s1">&#39;runtime_minutes&#39;</span><span class="p">,</span><span class="s1">&#39;runtime_groups&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;runtime_groups&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>revenue-worldwide</th>
+      <th>runtime_minutes</th>
+    </tr>
+    <tr>
+      <th>runtime_groups</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="2" valign="top">Long</th>
+      <th>revenue-worldwide</th>
+      <td>1.000000</td>
+      <td>0.169340</td>
+    </tr>
+    <tr>
+      <th>runtime_minutes</th>
+      <td>0.169340</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th rowspan="2" valign="top">Short</th>
+      <th>revenue-worldwide</th>
+      <td>1.000000</td>
+      <td>0.065163</td>
+    </tr>
+    <tr>
+      <th>runtime_minutes</th>
+      <td>0.065163</td>
+      <td>1.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="q2-are-short-run-time-movies-more-likely-to-lose-money">
+<h1>Q2 Are short run time movies more likely to lose money?<a class="headerlink" href="#q2-are-short-run-time-movies-more-likely-to-lose-money" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Two categorical features</p></li>
+<li><p>H0: Short and long movies have the same likiehood of losing money.</p></li>
+<li><p>H1:Short and long movies have different’ likiehood of losing money.</p></li>
+<li><p>Groups: Long/Short vs Lost/Gained money</p></li>
+<li><p>Measure: group membership values</p></li>
+<li><p>Ideal test: Chi-Squared</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tab</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;runtime_groups&#39;</span><span class="p">],</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;lost_money&#39;</span><span class="p">])</span>
+<span class="n">tab</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>lost_money</th>
+      <th>False</th>
+      <th>True</th>
+    </tr>
+    <tr>
+      <th>runtime_groups</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Long</th>
+      <td>642</td>
+      <td>793</td>
+    </tr>
+    <tr>
+      <th>Short</th>
+      <td>484</td>
+      <td>869</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">chi2</span><span class="p">,</span><span class="n">p</span><span class="p">,</span> <span class="n">dof</span><span class="p">,</span> <span class="n">expected</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">chi2_contingency</span><span class="p">(</span><span class="n">tab</span><span class="p">)</span>
+<span class="n">p</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.7214359148131321e-06
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">expected</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[579.55882353, 855.44117647],
+       [546.44117647, 806.55882353]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tab_perc</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;runtime_groups&#39;</span><span class="p">],</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;lost_money&#39;</span><span class="p">],</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">tab_perc</span><span class="c1">#.style.background_gradient()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>lost_money</th>
+      <th>False</th>
+      <th>True</th>
+    </tr>
+    <tr>
+      <th>runtime_groups</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Long</th>
+      <td>0.230273</td>
+      <td>0.284433</td>
+    </tr>
+    <tr>
+      <th>Short</th>
+      <td>0.173601</td>
+      <td>0.311693</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;runtime_groups&#39;</span><span class="p">)[</span><span class="s1">&#39;lost_money&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">results</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>runtime_groups  lost_money
+Long            True          0.552613
+                False         0.447387
+Short           True          0.642276
+                False         0.357724
+Name: lost_money, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">odds</span><span class="p">,</span><span class="n">p</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">fisher_exact</span><span class="p">(</span><span class="n">tab</span><span class="p">)</span>
+<span class="n">p</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.652824305508238e-06
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="do-movies-released-in-some-months-earn-more-revenue-than-others">
+<h1>Do movies released in some months earn more revenue than others?<a class="headerlink" href="#do-movies-released-in-some-months-earn-more-revenue-than-others" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p>H0: There is no difference between roi depending on release_month.</p></li>
+<li><p>H1:There is a difference between roi depending on release_month.</p></li>
+<li><p>Groups: Months</p></li>
+<li><p>Measure: roi-worldwide</p></li>
+<li><p>Ideal test:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>release_date</th>
+      <th>movie</th>
+      <th>production_budget</th>
+      <th>domestic_gross</th>
+      <th>worldwide_gross</th>
+      <th>tconst</th>
+      <th>primary_title</th>
+      <th>original_title</th>
+      <th>start_year</th>
+      <th>runtime_minutes</th>
+      <th>genres</th>
+      <th>revenue-domestic</th>
+      <th>revenue-worldwide</th>
+      <th>lost_money</th>
+      <th>roi-domestic</th>
+      <th>roi-worldwide</th>
+      <th>release_month</th>
+      <th>runtime_groups</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2</td>
+      <td>2011-05-20</td>
+      <td>Pirates of the Caribbean: On Stranger Tides</td>
+      <td>410600000.0</td>
+      <td>241063875.0</td>
+      <td>1.045664e+09</td>
+      <td>tt1298650</td>
+      <td>Pirates of the Caribbean: On Stranger Tides</td>
+      <td>Pirates of the Caribbean: On Stranger Tides</td>
+      <td>2011</td>
+      <td>136.0</td>
+      <td>Action,Adventure,Fantasy</td>
+      <td>-169536125.0</td>
+      <td>6.350639e+08</td>
+      <td>True</td>
+      <td>-41.289850</td>
+      <td>154.667286</td>
+      <td>5</td>
+      <td>Long</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>3</td>
+      <td>2019-06-07</td>
+      <td>Dark Phoenix</td>
+      <td>350000000.0</td>
+      <td>42762350.0</td>
+      <td>1.497624e+08</td>
+      <td>tt6565702</td>
+      <td>Dark Phoenix</td>
+      <td>Dark Phoenix</td>
+      <td>2019</td>
+      <td>113.0</td>
+      <td>Action,Adventure,Sci-Fi</td>
+      <td>-307237650.0</td>
+      <td>-2.002376e+08</td>
+      <td>True</td>
+      <td>-87.782186</td>
+      <td>-57.210757</td>
+      <td>6</td>
+      <td>Long</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4</td>
+      <td>2015-05-01</td>
+      <td>Avengers: Age of Ultron</td>
+      <td>330600000.0</td>
+      <td>459005868.0</td>
+      <td>1.403014e+09</td>
+      <td>tt2395427</td>
+      <td>Avengers: Age of Ultron</td>
+      <td>Avengers: Age of Ultron</td>
+      <td>2015</td>
+      <td>141.0</td>
+      <td>Action,Adventure,Sci-Fi</td>
+      <td>128405868.0</td>
+      <td>1.072414e+09</td>
+      <td>False</td>
+      <td>38.840250</td>
+      <td>324.384139</td>
+      <td>5</td>
+      <td>Long</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>7</td>
+      <td>2018-04-27</td>
+      <td>Avengers: Infinity War</td>
+      <td>300000000.0</td>
+      <td>678815482.0</td>
+      <td>2.048134e+09</td>
+      <td>tt4154756</td>
+      <td>Avengers: Infinity War</td>
+      <td>Avengers: Infinity War</td>
+      <td>2018</td>
+      <td>149.0</td>
+      <td>Action,Adventure,Sci-Fi</td>
+      <td>378815482.0</td>
+      <td>1.748134e+09</td>
+      <td>False</td>
+      <td>126.271827</td>
+      <td>582.711400</td>
+      <td>4</td>
+      <td>Long</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>9</td>
+      <td>2017-11-17</td>
+      <td>Justice League</td>
+      <td>300000000.0</td>
+      <td>229024295.0</td>
+      <td>6.559452e+08</td>
+      <td>tt0974015</td>
+      <td>Justice League</td>
+      <td>Justice League</td>
+      <td>2017</td>
+      <td>120.0</td>
+      <td>Action,Adventure,Fantasy</td>
+      <td>-70975705.0</td>
+      <td>3.559452e+08</td>
+      <td>True</td>
+      <td>-23.658568</td>
+      <td>118.648403</td>
+      <td>11</td>
+      <td>Long</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df_</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">new_cols</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+    <span class="n">new_cols</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">col</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">,</span><span class="s2">&quot;_&quot;</span><span class="p">))</span>
+<span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">=</span><span class="n">new_cols</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>release_date</th>
+      <th>movie</th>
+      <th>production_budget</th>
+      <th>domestic_gross</th>
+      <th>worldwide_gross</th>
+      <th>tconst</th>
+      <th>primary_title</th>
+      <th>original_title</th>
+      <th>start_year</th>
+      <th>runtime_minutes</th>
+      <th>genres</th>
+      <th>revenue_domestic</th>
+      <th>revenue_worldwide</th>
+      <th>lost_money</th>
+      <th>roi_domestic</th>
+      <th>roi_worldwide</th>
+      <th>release_month</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2</td>
+      <td>2011-05-20</td>
+      <td>Pirates of the Caribbean: On Stranger Tides</td>
+      <td>410600000.0</td>
+      <td>241063875.0</td>
+      <td>1.045664e+09</td>
+      <td>tt1298650</td>
+      <td>Pirates of the Caribbean: On Stranger Tides</td>
+      <td>Pirates of the Caribbean: On Stranger Tides</td>
+      <td>2011</td>
+      <td>136.0</td>
+      <td>Action,Adventure,Fantasy</td>
+      <td>-169536125.0</td>
+      <td>6.350639e+08</td>
+      <td>True</td>
+      <td>-41.289850</td>
+      <td>154.667286</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>3</td>
+      <td>2019-06-07</td>
+      <td>Dark Phoenix</td>
+      <td>350000000.0</td>
+      <td>42762350.0</td>
+      <td>1.497624e+08</td>
+      <td>tt6565702</td>
+      <td>Dark Phoenix</td>
+      <td>Dark Phoenix</td>
+      <td>2019</td>
+      <td>113.0</td>
+      <td>Action,Adventure,Sci-Fi</td>
+      <td>-307237650.0</td>
+      <td>-2.002376e+08</td>
+      <td>True</td>
+      <td>-87.782186</td>
+      <td>-57.210757</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4</td>
+      <td>2015-05-01</td>
+      <td>Avengers: Age of Ultron</td>
+      <td>330600000.0</td>
+      <td>459005868.0</td>
+      <td>1.403014e+09</td>
+      <td>tt2395427</td>
+      <td>Avengers: Age of Ultron</td>
+      <td>Avengers: Age of Ultron</td>
+      <td>2015</td>
+      <td>141.0</td>
+      <td>Action,Adventure,Sci-Fi</td>
+      <td>128405868.0</td>
+      <td>1.072414e+09</td>
+      <td>False</td>
+      <td>38.840250</td>
+      <td>324.384139</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>7</td>
+      <td>2018-04-27</td>
+      <td>Avengers: Infinity War</td>
+      <td>300000000.0</td>
+      <td>678815482.0</td>
+      <td>2.048134e+09</td>
+      <td>tt4154756</td>
+      <td>Avengers: Infinity War</td>
+      <td>Avengers: Infinity War</td>
+      <td>2018</td>
+      <td>149.0</td>
+      <td>Action,Adventure,Sci-Fi</td>
+      <td>378815482.0</td>
+      <td>1.748134e+09</td>
+      <td>False</td>
+      <td>126.271827</td>
+      <td>582.711400</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>9</td>
+      <td>2017-11-17</td>
+      <td>Justice League</td>
+      <td>300000000.0</td>
+      <td>229024295.0</td>
+      <td>6.559452e+08</td>
+      <td>tt0974015</td>
+      <td>Justice League</td>
+      <td>Justice League</td>
+      <td>2017</td>
+      <td>120.0</td>
+      <td>Action,Adventure,Fantasy</td>
+      <td>-70975705.0</td>
+      <td>3.559452e+08</td>
+      <td>True</td>
+      <td>-23.658568</td>
+      <td>118.648403</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>3462</th>
+      <td>67</td>
+      <td>2006-04-28</td>
+      <td>Clean</td>
+      <td>10000.0</td>
+      <td>138711.0</td>
+      <td>1.387110e+05</td>
+      <td>tt6619196</td>
+      <td>Clean</td>
+      <td>Clean</td>
+      <td>2017</td>
+      <td>70.0</td>
+      <td>Comedy,Drama,Horror</td>
+      <td>128711.0</td>
+      <td>1.287110e+05</td>
+      <td>False</td>
+      <td>1287.110000</td>
+      <td>1287.110000</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>3463</th>
+      <td>68</td>
+      <td>2001-07-06</td>
+      <td>Cure</td>
+      <td>10000.0</td>
+      <td>94596.0</td>
+      <td>9.459600e+04</td>
+      <td>tt1872026</td>
+      <td>Cure</td>
+      <td>Cure</td>
+      <td>2011</td>
+      <td>93.0</td>
+      <td>Drama</td>
+      <td>84596.0</td>
+      <td>8.459600e+04</td>
+      <td>False</td>
+      <td>845.960000</td>
+      <td>845.960000</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>3464</th>
+      <td>73</td>
+      <td>2012-01-13</td>
+      <td>Newlyweds</td>
+      <td>9000.0</td>
+      <td>4584.0</td>
+      <td>4.584000e+03</td>
+      <td>tt1880418</td>
+      <td>Newlyweds</td>
+      <td>Newlyweds</td>
+      <td>2011</td>
+      <td>95.0</td>
+      <td>Comedy,Drama</td>
+      <td>-4416.0</td>
+      <td>-4.416000e+03</td>
+      <td>True</td>
+      <td>-49.066667</td>
+      <td>-49.066667</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3465</th>
+      <td>78</td>
+      <td>2018-12-31</td>
+      <td>Red 11</td>
+      <td>7000.0</td>
+      <td>0.0</td>
+      <td>0.000000e+00</td>
+      <td>tt7837402</td>
+      <td>Red 11</td>
+      <td>Red 11</td>
+      <td>2019</td>
+      <td>77.0</td>
+      <td>Horror,Sci-Fi,Thriller</td>
+      <td>-7000.0</td>
+      <td>-7.000000e+03</td>
+      <td>True</td>
+      <td>-100.000000</td>
+      <td>-100.000000</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>3466</th>
+      <td>81</td>
+      <td>2015-09-29</td>
+      <td>A Plague So Pleasant</td>
+      <td>1400.0</td>
+      <td>0.0</td>
+      <td>0.000000e+00</td>
+      <td>tt2107644</td>
+      <td>A Plague So Pleasant</td>
+      <td>A Plague So Pleasant</td>
+      <td>2013</td>
+      <td>76.0</td>
+      <td>Drama,Horror,Thriller</td>
+      <td>-1400.0</td>
+      <td>-1.400000e+03</td>
+      <td>True</td>
+      <td>-100.000000</td>
+      <td>-100.000000</td>
+      <td>9</td>
+    </tr>
+  </tbody>
+</table>
+<p>3056 rows × 18 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.formula.api</span><span class="w"> </span><span class="kn">import</span> <span class="n">ols</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula</span> <span class="o">=</span> <span class="s2">&quot;roi_worldwide~C(release_month)&quot;</span>
+<span class="n">model</span><span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;release_month&#39;</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="s1">&#39;roi_worldwide&#39;</span><span class="p">,</span><span class="n">ci</span><span class="o">=</span><span class="mi">68</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;release_month&#39;, ylabel=&#39;roi_worldwide&#39;&gt;
+</pre></div>
+</div>
+<img alt="../../_images/6a4fcb71a8542d4e2ae7b03fbbc2712c04ea703716b672dbd7802f5f427c1680.png" src="../../_images/6a4fcb71a8542d4e2ae7b03fbbc2712c04ea703716b672dbd7802f5f427c1680.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">months</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;release_month&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span>
+
+<span class="k">for</span> <span class="n">month</span> <span class="ow">in</span> <span class="n">months</span><span class="p">:</span>
+    <span class="n">months</span><span class="p">[</span><span class="n">month</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;release_month&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="n">month</span><span class="p">)[</span><span class="s1">&#39;roi_worldwide&#39;</span><span class="p">]</span>
+<span class="n">months</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>172     269.713673
+279     -50.685762
+315     108.323185
+435     305.921599
+455      98.438521
+           ...    
+3447    -86.862963
+3448    -86.862963
+3449    680.172000
+3458   -100.000000
+3464    -49.066667
+Name: roi_worldwide, Length: 198, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">month</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">months</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">month</span><span class="p">)</span>
+    <span class="n">sg</span><span class="o">.</span><span class="n">plot_distribution</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/anaconda3/envs/learn-env-new/lib/python3.8/site-packages/seaborn/_decorators.py:36: FutureWarning: Pass the following variable as a keyword arg: x. From version 0.12, the only valid positional argument will be `data`, and passing other arguments without an explicit keyword will result in an error or misinterpretation.
+  warnings.warn(
+</pre></div>
+</div>
+<img alt="../../_images/12673c78b86730de2f2a3708ad2b37789fa8919596acf4f72a6c31cbf5c43f95.png" src="../../_images/12673c78b86730de2f2a3708ad2b37789fa8919596acf4f72a6c31cbf5c43f95.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[i] Distribution Stats:
+	Skew = 4.92
+	Kurtosis = 29.51
+	N = 198
+
+ NormaltestResult(statistic=232.03863684720199, pvalue=4.106295644690384e-51)
+	- p&lt;.05: The distribution is NOT normally distributed.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/anaconda3/envs/learn-env-new/lib/python3.8/site-packages/seaborn/_decorators.py:36: FutureWarning: Pass the following variable as a keyword arg: x. From version 0.12, the only valid positional argument will be `data`, and passing other arguments without an explicit keyword will result in an error or misinterpretation.
+  warnings.warn(
+</pre></div>
+</div>
+<img alt="../../_images/70c5eda34aa0c2bd294fbaec3f0879de753ad285d5ba1830d028df9ccbe93340.png" src="../../_images/70c5eda34aa0c2bd294fbaec3f0879de753ad285d5ba1830d028df9ccbe93340.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[i] Distribution Stats:
+	Skew = 4.92
+	Kurtosis = 24.07
+	N = 211
+
+ NormaltestResult(statistic=238.85211474630353, pvalue=1.3612010874549431e-52)
+	- p&lt;.05: The distribution is NOT normally distributed.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/anaconda3/envs/learn-env-new/lib/python3.8/site-packages/seaborn/_decorators.py:36: FutureWarning: Pass the following variable as a keyword arg: x. From version 0.12, the only valid positional argument will be `data`, and passing other arguments without an explicit keyword will result in an error or misinterpretation.
+  warnings.warn(
+</pre></div>
+</div>
+<img alt="../../_images/da38006ba0d040f4dde0a20dc5135447506250c2ea8b42e94592250ca9a5eb63.png" src="../../_images/da38006ba0d040f4dde0a20dc5135447506250c2ea8b42e94592250ca9a5eb63.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[i] Distribution Stats:
+	Skew = 2.33
+	Kurtosis = 8.48
+	N = 268
+
+ NormaltestResult(statistic=154.44140129743857, pvalue=2.9072060888998466e-34)
+	- p&lt;.05: The distribution is NOT normally distributed.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/anaconda3/envs/learn-env-new/lib/python3.8/site-packages/seaborn/_decorators.py:36: FutureWarning: Pass the following variable as a keyword arg: x. From version 0.12, the only valid positional argument will be `data`, and passing other arguments without an explicit keyword will result in an error or misinterpretation.
+  warnings.warn(
+</pre></div>
+</div>
+<img alt="../../_images/1e04a75660a1ca72bf3482afa66ab9792d6c1f28fbd757f9bdf44713350cd2ec.png" src="../../_images/1e04a75660a1ca72bf3482afa66ab9792d6c1f28fbd757f9bdf44713350cd2ec.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[i] Distribution Stats:
+	Skew = 3.35
+	Kurtosis = 9.78
+	N = 274
+
+ NormaltestResult(statistic=208.19021732532528, pvalue=6.1953909167240265e-46)
+	- p&lt;.05: The distribution is NOT normally distributed.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/anaconda3/envs/learn-env-new/lib/python3.8/site-packages/seaborn/_decorators.py:36: FutureWarning: Pass the following variable as a keyword arg: x. From version 0.12, the only valid positional argument will be `data`, and passing other arguments without an explicit keyword will result in an error or misinterpretation.
+  warnings.warn(
+</pre></div>
+</div>
+<img alt="../../_images/77b256df137e7ecb90d4cedfe26c8d69c564f353ef9e3705569952c1a69daab0.png" src="../../_images/77b256df137e7ecb90d4cedfe26c8d69c564f353ef9e3705569952c1a69daab0.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[i] Distribution Stats:
+	Skew = 9.41
+	Kurtosis = 107.43
+	N = 209
+
+ NormaltestResult(statistic=373.6273790130917, pvalue=7.376417734709555e-82)
+	- p&lt;.05: The distribution is NOT normally distributed.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/anaconda3/envs/learn-env-new/lib/python3.8/site-packages/seaborn/_decorators.py:36: FutureWarning: Pass the following variable as a keyword arg: x. From version 0.12, the only valid positional argument will be `data`, and passing other arguments without an explicit keyword will result in an error or misinterpretation.
+  warnings.warn(
+</pre></div>
+</div>
+<img alt="../../_images/0791426b1e6abf73952a0f0884e15a3ed403dd24858dee95f6eb115b3ead0066.png" src="../../_images/0791426b1e6abf73952a0f0884e15a3ed403dd24858dee95f6eb115b3ead0066.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[i] Distribution Stats:
+	Skew = 3.15
+	Kurtosis = 12.99
+	N = 247
+
+ NormaltestResult(statistic=191.5040416282934, pvalue=2.6027096921227615e-42)
+	- p&lt;.05: The distribution is NOT normally distributed.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/anaconda3/envs/learn-env-new/lib/python3.8/site-packages/seaborn/_decorators.py:36: FutureWarning: Pass the following variable as a keyword arg: x. From version 0.12, the only valid positional argument will be `data`, and passing other arguments without an explicit keyword will result in an error or misinterpretation.
+  warnings.warn(
+</pre></div>
+</div>
+<img alt="../../_images/6c8e9e8e03ead53f461bff67071c32b1f08f2d2be281706df572d539d69fefff.png" src="../../_images/6c8e9e8e03ead53f461bff67071c32b1f08f2d2be281706df572d539d69fefff.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[i] Distribution Stats:
+	Skew = 14.01
+	Kurtosis = 202.63
+	N = 217
+
+ NormaltestResult(statistic=473.4686536427621, pvalue=1.5402392430749834e-103)
+	- p&lt;.05: The distribution is NOT normally distributed.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/anaconda3/envs/learn-env-new/lib/python3.8/site-packages/seaborn/_decorators.py:36: FutureWarning: Pass the following variable as a keyword arg: x. From version 0.12, the only valid positional argument will be `data`, and passing other arguments without an explicit keyword will result in an error or misinterpretation.
+  warnings.warn(
+</pre></div>
+</div>
+<img alt="../../_images/421d4cff35f98cc69f6ea9041c6c6437c2b18cd11e50ed6c192d5501d2238db3.png" src="../../_images/421d4cff35f98cc69f6ea9041c6c6437c2b18cd11e50ed6c192d5501d2238db3.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[i] Distribution Stats:
+	Skew = 14.63
+	Kurtosis = 222.95
+	N = 245
+
+ NormaltestResult(statistic=536.2702527718584, pvalue=3.5513559715483454e-117)
+	- p&lt;.05: The distribution is NOT normally distributed.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/anaconda3/envs/learn-env-new/lib/python3.8/site-packages/seaborn/_decorators.py:36: FutureWarning: Pass the following variable as a keyword arg: x. From version 0.12, the only valid positional argument will be `data`, and passing other arguments without an explicit keyword will result in an error or misinterpretation.
+  warnings.warn(
+</pre></div>
+</div>
+<img alt="../../_images/190379e115b112c5a971beb1800c8bfd6f2deab6be817c3af9a21f5655c99670.png" src="../../_images/190379e115b112c5a971beb1800c8bfd6f2deab6be817c3af9a21f5655c99670.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[i] Distribution Stats:
+	Skew = 3.52
+	Kurtosis = 16.12
+	N = 270
+
+ NormaltestResult(statistic=229.95465436872445, pvalue=1.1640757975276543e-50)
+	- p&lt;.05: The distribution is NOT normally distributed.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/anaconda3/envs/learn-env-new/lib/python3.8/site-packages/seaborn/_decorators.py:36: FutureWarning: Pass the following variable as a keyword arg: x. From version 0.12, the only valid positional argument will be `data`, and passing other arguments without an explicit keyword will result in an error or misinterpretation.
+  warnings.warn(
+</pre></div>
+</div>
+<img alt="../../_images/545371e304f4c3a39216189c1fcc59d3c2559c3b5fba0065ee3967f38649e5cb.png" src="../../_images/545371e304f4c3a39216189c1fcc59d3c2559c3b5fba0065ee3967f38649e5cb.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[i] Distribution Stats:
+	Skew = 10.1
+	Kurtosis = 112.44
+	N = 286
+
+ NormaltestResult(statistic=505.5148312402707, pvalue=1.6937493285363254e-110)
+	- p&lt;.05: The distribution is NOT normally distributed.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/anaconda3/envs/learn-env-new/lib/python3.8/site-packages/seaborn/_decorators.py:36: FutureWarning: Pass the following variable as a keyword arg: x. From version 0.12, the only valid positional argument will be `data`, and passing other arguments without an explicit keyword will result in an error or misinterpretation.
+  warnings.warn(
+</pre></div>
+</div>
+<img alt="../../_images/42a0dcefc3328e63d966fff5c4c96d5f4b4eaaed4f0a97786c57b0cb2276f49f.png" src="../../_images/42a0dcefc3328e63d966fff5c4c96d5f4b4eaaed4f0a97786c57b0cb2276f49f.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[i] Distribution Stats:
+	Skew = 11.55
+	Kurtosis = 155.0
+	N = 245
+
+ NormaltestResult(statistic=477.48229450195925, pvalue=2.0703184176541767e-104)
+	- p&lt;.05: The distribution is NOT normally distributed.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/anaconda3/envs/learn-env-new/lib/python3.8/site-packages/seaborn/_decorators.py:36: FutureWarning: Pass the following variable as a keyword arg: x. From version 0.12, the only valid positional argument will be `data`, and passing other arguments without an explicit keyword will result in an error or misinterpretation.
+  warnings.warn(
+</pre></div>
+</div>
+<img alt="../../_images/e9d14aba956031c1520b35aa53738e6aa56c610de1c709ea5fda77e7394b1954.png" src="../../_images/e9d14aba956031c1520b35aa53738e6aa56c610de1c709ea5fda77e7394b1954.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[i] Distribution Stats:
+	Skew = 13.0
+	Kurtosis = 210.98
+	N = 386
+
+ NormaltestResult(statistic=759.5904700219646, pvalue=1.1403159042787167e-165)
+	- p&lt;.05: The distribution is NOT normally distributed.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_list</span> <span class="o">=</span> <span class="p">[</span><span class="o">*</span><span class="n">months</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+<span class="n">data_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>172     269.713673
+279     -50.685762
+315     108.323185
+435     305.921599
+455      98.438521
+           ...    
+3447    -86.862963
+3448    -86.862963
+3449    680.172000
+3458   -100.000000
+3464    -49.066667
+Name: 1, Length: 198, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stats</span><span class="o">.</span><span class="n">levene</span><span class="p">(</span><span class="o">*</span><span class="n">data_list</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LeveneResult(statistic=3.2519842465956192, pvalue=0.0001960119837824529)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stats</span><span class="o">.</span><span class="n">kruskal</span><span class="p">(</span><span class="o">*</span><span class="n">data_list</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>KruskalResult(statistic=44.58863244702112, pvalue=5.730654139098781e-06)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sm</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">anova_lm</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">robust</span><span class="o">=</span><span class="s1">&#39;hc3&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>df</th>
+      <th>sum_sq</th>
+      <th>mean_sq</th>
+      <th>F</th>
+      <th>PR(&gt;F)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>C(release_month)</th>
+      <td>11.0</td>
+      <td>8.612399e+07</td>
+      <td>7.829453e+06</td>
+      <td>3.332126</td>
+      <td>0.00014</td>
+    </tr>
+    <tr>
+      <th>Residual</th>
+      <td>3044.0</td>
+      <td>7.152447e+09</td>
+      <td>2.349687e+06</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.stats.multicomp</span><span class="w"> </span><span class="kn">import</span> <span class="n">pairwise_tukeyhsd</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">pairwise_tukeyhsd</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;roi_worldwide&#39;</span><span class="p">],</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;release_month&#39;</span><span class="p">])</span>
+<span class="n">results</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>Multiple Comparison of Means - Tukey HSD, FWER=0.05</caption>
+<tr>
+  <th>group1</th> <th>group2</th> <th>meandiff</th>   <th>p-adj</th>   <th>lower</th>     <th>upper</th>   <th>reject</th>
+</tr>
+<tr>
+     <td>1</td>      <td>2</td>    <td>9.8373</td>     <td>0.9</td>  <td>-486.2157</td> <td>505.8903</td>   <td>False</td>
+</tr>
+<tr>
+     <td>1</td>      <td>3</td>   <td>-289.1556</td>  <td>0.66</td>  <td>-758.9774</td> <td>180.6663</td>   <td>False</td>
+</tr>
+<tr>
+     <td>1</td>      <td>4</td>   <td>282.8101</td>  <td>0.6819</td> <td>-184.8209</td> <td>750.4412</td>   <td>False</td>
+</tr>
+<tr>
+     <td>1</td>      <td>5</td>   <td>-223.3229</td>   <td>0.9</td>  <td>-720.5236</td> <td>273.8778</td>   <td>False</td>
+</tr>
+<tr>
+     <td>1</td>      <td>6</td>   <td>-228.0959</td>   <td>0.9</td>  <td>-706.3285</td> <td>250.1367</td>   <td>False</td>
+</tr>
+<tr>
+     <td>1</td>      <td>7</td>    <td>4.8556</td>     <td>0.9</td>  <td>-487.8663</td> <td>497.5775</td>   <td>False</td>
+</tr>
+<tr>
+     <td>1</td>      <td>8</td>   <td>-132.9628</td>   <td>0.9</td>  <td>-612.0631</td> <td>346.1375</td>   <td>False</td>
+</tr>
+<tr>
+     <td>1</td>      <td>9</td>   <td>-257.1278</td> <td>0.7982</td> <td>-726.2097</td> <td>211.9541</td>   <td>False</td>
+</tr>
+<tr>
+     <td>1</td>     <td>10</td>    <td>-19.551</td>    <td>0.9</td>  <td>-483.0485</td> <td>443.9464</td>   <td>False</td>
+</tr>
+<tr>
+     <td>1</td>     <td>11</td>   <td>-40.9823</td>    <td>0.9</td>  <td>-520.0826</td>  <td>438.118</td>   <td>False</td>
+</tr>
+<tr>
+     <td>1</td>     <td>12</td>   <td>-281.6882</td>  <td>0.604</td> <td>-719.9366</td> <td>156.5603</td>   <td>False</td>
+</tr>
+<tr>
+     <td>2</td>      <td>3</td>   <td>-298.9929</td> <td>0.5933</td> <td>-760.4161</td> <td>162.4302</td>   <td>False</td>
+</tr>
+<tr>
+     <td>2</td>      <td>4</td>   <td>272.9728</td>  <td>0.7031</td> <td>-186.2195</td> <td>732.1651</td>   <td>False</td>
+</tr>
+<tr>
+     <td>2</td>      <td>5</td>   <td>-233.1602</td>   <td>0.9</td>  <td>-722.4324</td>  <td>256.112</td>   <td>False</td>
+</tr>
+<tr>
+     <td>2</td>      <td>6</td>   <td>-237.9332</td> <td>0.8842</td> <td>-707.9174</td>  <td>232.051</td>   <td>False</td>
+</tr>
+<tr>
+     <td>2</td>      <td>7</td>    <td>-4.9817</td>    <td>0.9</td>  <td>-489.7018</td> <td>479.7384</td>   <td>False</td>
+</tr>
+<tr>
+     <td>2</td>      <td>8</td>   <td>-142.8001</td>   <td>0.9</td>  <td>-613.6673</td>  <td>328.067</td>   <td>False</td>
+</tr>
+<tr>
+     <td>2</td>      <td>9</td>   <td>-266.9651</td> <td>0.7338</td> <td>-727.6348</td> <td>193.7046</td>   <td>False</td>
+</tr>
+<tr>
+     <td>2</td>     <td>10</td>   <td>-29.3884</td>    <td>0.9</td>  <td>-484.3704</td> <td>425.5936</td>   <td>False</td>
+</tr>
+<tr>
+     <td>2</td>     <td>11</td>   <td>-50.8196</td>    <td>0.9</td>  <td>-521.6868</td> <td>420.0475</td>   <td>False</td>
+</tr>
+<tr>
+     <td>2</td>     <td>12</td>   <td>-291.5255</td> <td>0.5292</td> <td>-720.7579</td>  <td>137.707</td>   <td>False</td>
+</tr>
+<tr>
+     <td>3</td>      <td>4</td>   <td>571.9657</td>   <td>0.001</td> <td>141.2436</td>  <td>1002.6879</td>  <td>True</td> 
+</tr>
+<tr>
+     <td>3</td>      <td>5</td>    <td>65.8327</td>    <td>0.9</td>  <td>-396.8241</td> <td>528.4894</td>   <td>False</td>
+</tr>
+<tr>
+     <td>3</td>      <td>6</td>    <td>61.0597</td>    <td>0.9</td>  <td>-381.1497</td> <td>503.2691</td>   <td>False</td>
+</tr>
+<tr>
+     <td>3</td>      <td>7</td>   <td>294.0112</td>  <td>0.6052</td> <td>-163.8289</td> <td>751.8513</td>   <td>False</td>
+</tr>
+<tr>
+     <td>3</td>      <td>8</td>   <td>156.1928</td>    <td>0.9</td>  <td>-286.9549</td> <td>599.3405</td>   <td>False</td>
+</tr>
+<tr>
+     <td>3</td>      <td>9</td>    <td>32.0278</td>    <td>0.9</td>  <td>-400.2691</td> <td>464.3247</td>   <td>False</td>
+</tr>
+<tr>
+     <td>3</td>     <td>10</td>   <td>269.6045</td>   <td>0.625</td> <td>-156.6262</td> <td>695.8352</td>   <td>False</td>
+</tr>
+<tr>
+     <td>3</td>     <td>11</td>   <td>248.1733</td>  <td>0.7738</td> <td>-194.9744</td>  <td>691.321</td>   <td>False</td>
+</tr>
+<tr>
+     <td>3</td>     <td>12</td>    <td>7.4674</td>     <td>0.9</td>  <td>-391.1608</td> <td>406.0957</td>   <td>False</td>
+</tr>
+<tr>
+     <td>4</td>      <td>5</td>   <td>-506.133</td>  <td>0.0172</td> <td>-966.5649</td> <td>-45.7012</td>   <td>True</td> 
+</tr>
+<tr>
+     <td>4</td>      <td>6</td>   <td>-510.906</td>  <td>0.0082</td> <td>-950.7872</td> <td>-71.0249</td>   <td>True</td> 
+</tr>
+<tr>
+     <td>4</td>      <td>7</td>   <td>-277.9545</td>  <td>0.671</td> <td>-733.5463</td> <td>177.6372</td>   <td>False</td>
+</tr>
+<tr>
+     <td>4</td>      <td>8</td>   <td>-415.7729</td> <td>0.0868</td> <td>-856.5973</td>  <td>25.0514</td>   <td>False</td>
+</tr>
+<tr>
+     <td>4</td>      <td>9</td>   <td>-539.9379</td> <td>0.0024</td> <td>-969.8529</td> <td>-110.023</td>   <td>True</td> 
+</tr>
+<tr>
+     <td>4</td>     <td>10</td>   <td>-302.3612</td> <td>0.4564</td> <td>-726.1758</td> <td>121.4535</td>   <td>False</td>
+</tr>
+<tr>
+     <td>4</td>     <td>11</td>   <td>-323.7924</td> <td>0.4082</td> <td>-764.6168</td> <td>117.0319</td>   <td>False</td>
+</tr>
+<tr>
+     <td>4</td>     <td>12</td>   <td>-564.4983</td>  <td>0.001</td> <td>-960.5422</td> <td>-168.4544</td>  <td>True</td> 
+</tr>
+<tr>
+     <td>5</td>      <td>6</td>    <td>-4.773</td>     <td>0.9</td>  <td>-475.9684</td> <td>466.4224</td>   <td>False</td>
+</tr>
+<tr>
+     <td>5</td>      <td>7</td>   <td>228.1785</td>    <td>0.9</td>  <td>-257.7161</td> <td>714.0731</td>   <td>False</td>
+</tr>
+<tr>
+     <td>5</td>      <td>8</td>    <td>90.3601</td>    <td>0.9</td>  <td>-381.716</td>  <td>562.4362</td>   <td>False</td>
+</tr>
+<tr>
+     <td>5</td>      <td>9</td>   <td>-33.8049</td>    <td>0.9</td>  <td>-495.7102</td> <td>428.1005</td>   <td>False</td>
+</tr>
+<tr>
+     <td>5</td>     <td>10</td>   <td>203.7719</td>    <td>0.9</td>  <td>-252.4611</td> <td>660.0049</td>   <td>False</td>
+</tr>
+<tr>
+     <td>5</td>     <td>11</td>   <td>182.3406</td>    <td>0.9</td>  <td>-289.7355</td> <td>654.4167</td>   <td>False</td>
+</tr>
+<tr>
+     <td>5</td>     <td>12</td>   <td>-58.3653</td>    <td>0.9</td>  <td>-488.9235</td>  <td>372.193</td>   <td>False</td>
+</tr>
+<tr>
+     <td>6</td>      <td>7</td>   <td>232.9515</td>  <td>0.8983</td> <td>-233.5155</td> <td>699.4184</td>   <td>False</td>
+</tr>
+<tr>
+     <td>6</td>      <td>8</td>    <td>95.1331</td>    <td>0.9</td>  <td>-356.9219</td> <td>547.1881</td>   <td>False</td>
+</tr>
+<tr>
+     <td>6</td>      <td>9</td>   <td>-29.0319</td>    <td>0.9</td>  <td>-470.4551</td> <td>412.3913</td>   <td>False</td>
+</tr>
+<tr>
+     <td>6</td>     <td>10</td>   <td>208.5448</td>    <td>0.9</td>  <td>-226.9393</td>  <td>644.029</td>   <td>False</td>
+</tr>
+<tr>
+     <td>6</td>     <td>11</td>   <td>187.1136</td>    <td>0.9</td>  <td>-264.9414</td> <td>639.1686</td>   <td>False</td>
+</tr>
+<tr>
+     <td>6</td>     <td>12</td>   <td>-53.5923</td>    <td>0.9</td>  <td>-462.0997</td> <td>354.9152</td>   <td>False</td>
+</tr>
+<tr>
+     <td>7</td>      <td>8</td>   <td>-137.8184</td>   <td>0.9</td>  <td>-605.175</td>  <td>329.5381</td>   <td>False</td>
+</tr>
+<tr>
+     <td>7</td>      <td>9</td>   <td>-261.9834</td> <td>0.7468</td> <td>-719.0642</td> <td>195.0974</td>   <td>False</td>
+</tr>
+<tr>
+     <td>7</td>     <td>10</td>   <td>-24.4067</td>    <td>0.9</td>  <td>-475.7545</td> <td>426.9412</td>   <td>False</td>
+</tr>
+<tr>
+     <td>7</td>     <td>11</td>   <td>-45.8379</td>    <td>0.9</td>  <td>-513.1945</td> <td>421.5186</td>   <td>False</td>
+</tr>
+<tr>
+     <td>7</td>     <td>12</td>   <td>-286.5438</td> <td>0.5406</td> <td>-711.9221</td> <td>138.8346</td>   <td>False</td>
+</tr>
+<tr>
+     <td>8</td>      <td>9</td>   <td>-124.165</td>    <td>0.9</td>  <td>-566.5281</td> <td>318.1982</td>   <td>False</td>
+</tr>
+<tr>
+     <td>8</td>     <td>10</td>   <td>113.4118</td>    <td>0.9</td>  <td>-323.0251</td> <td>549.8487</td>   <td>False</td>
+</tr>
+<tr>
+     <td>8</td>     <td>11</td>    <td>91.9805</td>    <td>0.9</td>  <td>-360.9924</td> <td>544.9534</td>   <td>False</td>
+</tr>
+<tr>
+     <td>8</td>     <td>12</td>   <td>-148.7253</td>   <td>0.9</td>  <td>-558.2483</td> <td>260.7976</td>   <td>False</td>
+</tr>
+<tr>
+     <td>9</td>     <td>10</td>   <td>237.5767</td>   <td>0.777</td> <td>-187.8382</td> <td>662.9917</td>   <td>False</td>
+</tr>
+<tr>
+     <td>9</td>     <td>11</td>   <td>216.1455</td>    <td>0.9</td>  <td>-226.2177</td> <td>658.5086</td>   <td>False</td>
+</tr>
+<tr>
+     <td>9</td>     <td>12</td>   <td>-24.5604</td>    <td>0.9</td>  <td>-422.3163</td> <td>373.1955</td>   <td>False</td>
+</tr>
+<tr>
+    <td>10</td>     <td>11</td>   <td>-21.4313</td>    <td>0.9</td>  <td>-457.8681</td> <td>415.0056</td>   <td>False</td>
+</tr>
+<tr>
+    <td>10</td>     <td>12</td>   <td>-262.1371</td> <td>0.5477</td> <td>-653.2915</td> <td>129.0173</td>   <td>False</td>
+</tr>
+<tr>
+    <td>11</td>     <td>12</td>   <td>-240.7059</td> <td>0.7168</td> <td>-650.2288</td> <td>168.8171</td>   <td>False</td>
+</tr>
+</table></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># sm.stats.multipletests()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># results._results_table()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">plot_simultaneous</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/anaconda3/envs/learn-env-new/lib/python3.8/site-packages/statsmodels/sandbox/stats/multicomp.py:775: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax1.set_yticklabels(np.insert(self.groupsunique.astype(str), 0, &#39;&#39;))
+</pre></div>
+</div>
+<img alt="../../_images/8e21358c3e3e28b730838303bcf9f2108f6346b594fe0dd863cc547990659b26.png" src="../../_images/8e21358c3e3e28b730838303bcf9f2108f6346b594fe0dd863cc547990659b26.png" />
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "learn-env-new"
+        },
+        kernelOptions: {
+            name: "learn-env-new",
+            path: "./Phase_2/topic_16_AB_testing"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'learn-env-new'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../topic_15_ANOVA/topic_15_ANOVA_with_neuro_data-SG.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Topic 15: ANOVAs &amp; Statistical Power with  Neuro Data</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../topic_17_bayesian_statistics/topic_17_bayesian_statistics-SG.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Topic 17: Bayesian Statistics</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Topic 16: Practicing AB Testing with Movies</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#testing-hypotheses-about-movies">Testing Hypotheses About Movies</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#q1-do-movies-with-longer-run-times-generate-more-or-less-revenue-than-shorter-run-times">Q1: Do movies with longer run times generate more or less revenue than shorter run times?</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#q2-are-short-run-time-movies-more-likely-to-lose-money">Q2 Are short run time movies more likely to lose money?</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#do-movies-released-in-some-months-earn-more-revenue-than-others">Do movies released in some months earn more revenue than others?</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By James Irving, PhD
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

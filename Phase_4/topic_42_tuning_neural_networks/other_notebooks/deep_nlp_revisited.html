@@ -1,0 +1,3910 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>NOTE: You are not allowed to use any propriety functions from this notebook in your projects. &#8212; Data Science Curriculum</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Phase_4/topic_42_tuning_neural_networks/other_notebooks/deep_nlp_revisited';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/flatironschool_banner.jpg" class="logo__image only-light" alt="Data Science Curriculum - Home"/>
+    <script>document.write(`<img src="../../../_static/flatironschool_banner.jpg" class="logo__image only-dark" alt="Data Science Curriculum - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../intro.html">
+                    Data Science Curriculum
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 1 - Python &amp; Data Fundamentals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_01_getting_started/topic_01_getting_started.html">Topic 1: Getting Started with Data Science</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_02_bash_git/topic_02_bash_and_git.html">Topic 02:  Bash and Git</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_03_control_flow_functions/topic_03_control_flow_and_functions.html">Topic 03: Control Flow, Functions, and Statistics</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_04_python_libraries/topic_04_intro_to_libraries_numpy_SG.html">Topic 04-Part 1: Python Libraries &amp; NumPy</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_04_python_libraries/topic_04_pt-2_brief_intro_to_pandas-SG.html">Topic 04-Part 2: Brief Intro to Pandas with Doctor Who</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_05_data_cleaning_in_pandas/topic_05_Data_Cleaning_in_Pandas.html">Topic 05: Data Cleaning in Pandas</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_06_data_visualization/topic_06_visualizations_heroes_project_SG.html">Topic 06:  Data Visualizations</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_07_SQL_and_relational_databases/topic_07_SQL_and_relational_databases_SG.html">TOPIC 07: SQL DATABASES</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_08_noSQL_databases/topic_08_mongodb-SG.html">Topic 08: NoSQL Databases</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_09_json_and_apis/topic_09_json-api-SG.html">Topic 09: Using APIs and JSON Data</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_10_webscraping/topic_10_SG_HTML_CSS_web_scraping.html">Topic 10: HTML, CSS, &amp; Web Scraping</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 2 - Statistics &amp; Regression</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_11_probability_and_combinatorics/topic_11_playlist_probabilities-SG.html">Topic 11 - Intro to Combinatorics &amp; Probability</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_12_statistical_distributions/topic-12-distributions-with-movies-sg.html">Exploring Distributions with Movies Data</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_13_central_limit_theorem/topic_13_central_limit_theorem_SG.html">Topic 13: Central Limit Theorem</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_14_hypothesis_testing/topic_14_hypothesis_testing-SG.html">Topic 14: Hypothesis Testing -  T-Tests</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_15_ANOVA/topic_15_ANOVA_with_neuro_data-SG.html">Topic 15: ANOVAs &amp; Statistical Power with  Neuro Data</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_16_AB_testing/topic_16_AB_testing_with_movies-SG.html">Topic 16: Practicing AB Testing with Movies</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_17_bayesian_statistics/topic_17_bayesian_statistics-SG.html">Topic 17: Bayesian Statistics</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_18_linear_regression/topic_18_intro_to_linear_regression_SG.html">Topic 18: Intro to Linear Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_19_part1_multiple_regression/topic_19_Multiple_Regression_v2-SG.html">Topic 19: Multiple Linear Regression</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_19_part2_model_validation/topic_19_part_2_Multiple_Regression_v2-SG.html">Topic 19 Part 2: Feature Selection &amp; Model Validation</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_20_extensions_linear_models/topic_20_extensions_to_linear_models_SG.html">Topic 20: Extensions to Linear Models</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 3 - Machine Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_21_OOP/topic_21_OOP_playing_cards_SG.html">Topic 21: Object-Oriented Programming</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_22_linear_algebra/topic_22_linear_algebra_SG.html">Topic 22: Linear Algebra</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_23_calculus_gradient_descent/topic_23_gradient_descent_SG.html">Topic 23: Cost Functions and Gradient Descent</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_24_regularization/topic_24_Regularization_Ridge_Lasso_v2_SG.html">Topic 24: Feature Selection &amp; Regularization (Ridge and Lasso Regression)</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_25_logistic_regression/topic_25_pt1_LogisticRegression_titanic-v2-SG.html">Topic 25-Pt 1: Intro to Logistic Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_25_logistic_regression/topic_25_pt2_LogisticRegression_titanic-v2-SG.html">Topic 25-Part 2: Evaluating Classifiers, Dealing with Class Imbalance, and <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code></a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_27_KNN/Topic_27_KNN_with_pipelines_with_lab_v3_SG.html">Topic 27: K-Nearest Neighbors<br/> +Topic 32: Pipelines</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_29_decision_trees/topic_29_decision_trees_v2_titanic-SG.html">Topic 29: Decision Trees</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_30_ensemble_methods/topic_30_ensemble_methods-SG.html">Topic 30: Ensemble Methods</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_31_support_vector_machines/topic_31_SupportVectorMachines_SG.html">Topic 31: Support Vector Machines</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 4 - Advanced ML &amp; Time Series</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../topic_33_pca/topic_33_PCA_SG.html">Topic 33: Principal Component Analysis</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_34_clustering/topic_34_Kmeans_clustering_v3_SG.html">Topic 34: Clustering</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_35-36_using_databricks_for_pyspark/using_databricks_for_pyspark.html">How to Use Databricks for PySpark Canvas Material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../topic_36_recommendation_systems/topic_36_Recommendation_Systems_with_Surprise.html">Topic 36: Recommendation Systems</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_37_intro_to_time_series/topic_37_intro_to_time_series_crime_v3-SG.html">Topic 37: Intro to Time Series</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_38_time_series_models/topic_38-time_series_models_v3_SG.html">Topic 38: Time Series Models</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_39_NLP/topic_39_NLP_finding_trump_v3_SG.html">Topic 39: Natural Language Processing + Topic 28: Bayesian Classification</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_40-41_neural_networks/topic_40-41_Artificial_Neural_Networks_v1_SG.html">Topic 40-41: Artificial Neural Networks</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_42_tuning_ANNs_with_deep_NLP_v1_SG.html">Topic 42 - Tuning Neural Networks + Deep NLP</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_43_AWS/topic_43_operationalizing_code_AWS_SG.html">Topic 43: Operationalizing Code &amp; AWS</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 5 - Capstone &amp; Bonus Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/Capstone_Kickoff.html">Capstone Kickoff!</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/APIs/working_with_apis.html">Working with APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/developing_app_functions/developing-streamlit-app-functions_SG.html">Developing Streamlit App Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/tableau/tableau_fundamentals_2021-SG.html">Tableau Fundamentals</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/Bonus%20Notebooks/plotly_visuals.html">Plotly Question</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/master?urlpath=tree/Phase_4/topic_42_tuning_neural_networks/other_notebooks/deep_nlp_revisited.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/blob/master/Phase_4/topic_42_tuning_neural_networks/other_notebooks/deep_nlp_revisited.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/issues/new?title=Issue%20on%20page%20%2FPhase_4/topic_42_tuning_neural_networks/other_notebooks/deep_nlp_revisited.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/Phase_4/topic_42_tuning_neural_networks/other_notebooks/deep_nlp_revisited.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>NOTE: You are not allowed to use any propriety functions from this notebook in your projects.</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">NOTE: You are not allowed to use any propriety functions from this notebook in your projects.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#capstone-office-hours-deep-nlp">Capstone Office Hours - Deep NLP</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nlp-word-vectorization">NLP &amp; Word Vectorization</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#word-embeddings">Word Embeddings</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resources">Resources</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#word2vec">Word2Vec</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skip-gram-model">Skip-Gram Model</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#glove-global-vectors-for-word-representation">GloVe - Global Vectors for Word Representation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transfer-learning">Transfer Learning</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sequence-models-recurrent-neural-networks">Sequence Models - Recurrent Neural Networks</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lstms-grus">LSTMs &amp; GRUs</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#activity-creating-word-embeddings-with-trump-s-tweets">Activity: Creating Word Embeddings with Trump’s Tweets</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#text-classification-finding-trump">Text Classification - Finding Trump</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-word2vec">Training Word2Vec</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Resources:</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#word2vec-params">Word2Vec params</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-embeddings-in-classification">Using Embeddings in Classification</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#embedding-layers">Embedding Layers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#references-to-try">References to Try</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-embedding-layers-in-ann">Using Embedding Layers in ANN</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computer-class-weights">Computer Class Weights</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#using-pre-trained-vectors">Using Pre-Trained Vectors</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-our-word2vec-in-keras-embedding">Using Our Word2Vec in Keras Embedding</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-glove">Using GLOVE</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#keeping-only-the-vectors-needed">Keeping only the vectors needed</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#converting-glove-to-word2vec-format">Converting Glove to Word2Vec format</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-glove-in-embedding-layer">Using Glove In Embedding Layer</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple-lstm-bidirectional">Multiple LSTM / Bidirectional</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bidirectional">Bidirectional</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#appendix">APPENDIX</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alternative-approach-to-loading-in-glove">Alternative Approach to Loading in Glove</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rnn-or-gru">RNN or GRU</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alternative-dataset">Alternative Dataset</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <blockquote>
+<div></div></blockquote>
+<section id="note-you-are-not-allowed-to-use-any-propriety-functions-from-this-notebook-in-your-projects">
+<h1>NOTE: You are not allowed to use any propriety functions from this notebook in your projects.<a class="headerlink" href="#note-you-are-not-allowed-to-use-any-propriety-functions-from-this-notebook-in-your-projects" title="Permalink to this heading">#</a></h1>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="capstone-office-hours-deep-nlp">
+<h1>Capstone Office Hours - Deep NLP<a class="headerlink" href="#capstone-office-hours-deep-nlp" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p>01/06/21</p></li>
+<li><p>online-ds-ft-081720</p></li>
+</ul>
+<section id="learning-objectives">
+<h2>Learning Objectives<a class="headerlink" href="#learning-objectives" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Discuss word Embeddings and their advantages</p></li>
+<li><p>Training Word2Vec models</p></li>
+<li><p>Using pretrained word embeddings</p></li>
+<li><p>Create a Classification Model for true-trump (“Twitter for Android”) vs trump-staffer(“Twitter for iPhone - from period of time when android was still in use)</p>
+<ul>
+<li><p>Use lesson’s W2Vec class in Sci-kit learn models</p></li>
+<li><p>Use LSTMs</p></li>
+<li><p>Use RNN/GRUs</p></li>
+</ul>
+</li>
+<li><p>Compare:</p>
+<ol class="arabic simple">
+<li><p>Mean embeddings vs count/tfidf data with scikit learn.</p></li>
+</ol>
+</li>
+</ul>
+<!-- ## References
+
+- My Work-in-Progress Capstone v2.0 Notebook:
+    - [GitHub Notebook Link](https://github.com/jirvingphd/capstone-project-using-trumps-tweets-to-predict-stock-market/blob/WIP/Capstone%20Restarted%2010-2020.ipynb) --></section>
+<section id="nlp-word-vectorization">
+<h2>NLP &amp; Word Vectorization<a class="headerlink" href="#nlp-word-vectorization" title="Permalink to this heading">#</a></h2>
+<blockquote>
+<div><p><strong><em>Natural Language Processing</em></strong>, or <strong><em>NLP</em></strong>, is the study of how computers can interact with humans through the use of human language.  Although this is a field that is quite important to Data Scientists, it does not belong to Data Science alone.  NLP has been around for quite a while, and sits at the intersection of <em>Computer Science</em>, <em>Artificial Intelligence</em>, <em>Linguistics</em>, and <em>Information Theory</em>.</p>
+</div></blockquote>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="word-embeddings">
+<h1>Word Embeddings<a class="headerlink" href="#word-embeddings" title="Permalink to this heading">#</a></h1>
+<img src="https://raw.githubusercontent.com/jirvingphd/dsc-word-embeddings-online-ds-ft-100719/master/images/embeddings.png"><ul class="simple">
+<li><p>Convert words into a vector space</p>
+<ul>
+<li><p>Mathematical object</p></li>
+</ul>
+</li>
+<li><p>It’s all about closeness</p>
+<ul>
+<li><p>Distributional Hypothesis: <a class="reference external" href="https://en.wikipedia.org/wiki/Distributional_semantics#Distributional_hypothesis">https://en.wikipedia.org/wiki/Distributional_semantics#Distributional_hypothesis</a></p></li>
+</ul>
+</li>
+</ul>
+<img src="https://raw.githubusercontent.com/jirvingphd/dsc-word-embeddings-online-ds-ft-100719/master/images/vectors.png"><section id="resources">
+<h2>Resources<a class="headerlink" href="#resources" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Kaggle Tutorial:  <a class="reference external" href="https://www.kaggle.com/learn/embeddings">https://www.kaggle.com/learn/embeddings</a></p></li>
+<li><p>Google Embedding Crash Course: <a class="reference external" href="https://developers.google.com/machine-learning/crash-course/embeddings">https://developers.google.com/machine-learning/crash-course/embeddings</a></p></li>
+</ul>
+</section>
+<section id="word2vec">
+<h2>Word2Vec<a class="headerlink" href="#word2vec" title="Permalink to this heading">#</a></h2>
+<img src="https://raw.githubusercontent.com/jirvingphd/dsc-using-word2vec-online-ds-ft-100719/master/images/training_data.png"><section id="skip-gram-model">
+<h3>Skip-Gram Model<a class="headerlink" href="#skip-gram-model" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Train the MLP to find the best weights (context) to map word-to-word</p></li>
+<li><p>But since words close to another usually contain context, we’re <em>really</em> teaching it context in those weights</p></li>
+<li><p>Gut check: similar contexted words can be exchanged</p>
+<ul>
+<li><p>EX: “A fluffy <strong>dog</strong> is a great pet” &lt;–&gt; “A fluffy <strong>cat</strong> is a great pet”</p></li>
+</ul>
+</li>
+<li><p>By training a text-generation model, we wind up with a lookup table where each word has its own vector</p></li>
+</ul>
+<img src="https://raw.githubusercontent.com/jirvingphd/dsc-using-word2vec-online-ds-ft-100719/master/images/new_skip_gram_net_arch.png">
+<img src="https://raw.githubusercontent.com/learn-co-students/dsc-using-word2vec-online-ds-ft-100719/master/images/new_word2vec_weight_matrix_lookup_table.png"></section>
+</section>
+<section id="glove-global-vectors-for-word-representation">
+<h2>GloVe - Global Vectors for Word Representation<a class="headerlink" href="#glove-global-vectors-for-word-representation" title="Permalink to this heading">#</a></h2>
+<section id="transfer-learning">
+<h3>Transfer Learning<a class="headerlink" href="#transfer-learning" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Usually embeddings are hundreds of dimensions</p></li>
+<li><p>Just use the word embeddings already learned from before!</p>
+<ul>
+<li><p>Unless very specific terminology, context will likely carry within language</p></li>
+</ul>
+</li>
+<li><p>Comparable to CNN transfer learning</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="sequence-models-recurrent-neural-networks">
+<h1>Sequence Models - Recurrent Neural Networks<a class="headerlink" href="#sequence-models-recurrent-neural-networks" title="Permalink to this heading">#</a></h1>
+<img src="https://raw.githubusercontent.com/jirvingphd/dsc-understanding-recurrent-neural-networks-online-ds-ft-100719/master/images/unrolled.gif"><img src="https://raw.githubusercontent.com/jirvingphd/dsc-sequence-model-use-cases-online-ds-ft-100719/master/images/rnn.gif"><section id="lstms-grus">
+<h2>LSTMs &amp; GRUs<a class="headerlink" href="#lstms-grus" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>GRU (Gated Recurrent Units (GRUs)</p>
+<ul>
+<li><p>Reset Gate</p></li>
+<li><p>Update Gate</p></li>
+</ul>
+</li>
+<li><p>LSTM (Long Short Term Memory Cells)</p>
+<ul>
+<li><p>Input Gate</p></li>
+<li><p>Forget Gate</p></li>
+<li><p>Output Gate</p></li>
+</ul>
+</li>
+</ul>
+<img src="https://raw.githubusercontent.com/jirvingphd/dsc-sequence-model-use-cases-online-ds-ft-100719/master/images/RNN-unrolled.png"><p>Each word will have a vector of contexts: the embeddings!</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="activity-creating-word-embeddings-with-trump-s-tweets">
+<h1>Activity: Creating Word Embeddings with Trump’s Tweets<a class="headerlink" href="#activity-creating-word-embeddings-with-trump-s-tweets" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">tensorflow.random</span><span class="w"> </span><span class="kn">import</span> <span class="n">set_seed</span>
+<span class="n">set_seed</span><span class="p">(</span><span class="mi">321</span><span class="p">)</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span> 
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">321</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># !pip install -U fsds</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">fsds.imports</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">load_nlp_finding_trump</span><span class="p">(</span><span class="n">read_csv_kwds</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;parse_dates&#39;</span><span class="p">:[</span><span class="s1">&#39;created_at&#39;</span><span class="p">],</span>
+                                                      <span class="s1">&#39;index_col&#39;</span><span class="p">:</span><span class="s1">&#39;created_at&#39;</span><span class="p">})</span>
+<span class="n">df</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>source</th>
+      <th>text</th>
+      <th>retweet_count</th>
+      <th>favorite_count</th>
+      <th>is_retweet</th>
+      <th>id_str</th>
+    </tr>
+    <tr>
+      <th>created_at</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2016-12-01 14:37:57</th>
+      <td>Twitter for iPhone</td>
+      <td>My thoughts and prayers are with those affecte...</td>
+      <td>12077</td>
+      <td>65724</td>
+      <td>False</td>
+      <td>804333718999539712</td>
+    </tr>
+    <tr>
+      <th>2016-12-01 14:38:09</th>
+      <td>Twitter for Android</td>
+      <td>Getting ready to leave for the Great State of ...</td>
+      <td>9834</td>
+      <td>57249</td>
+      <td>False</td>
+      <td>804333771021570048</td>
+    </tr>
+    <tr>
+      <th>2016-12-01 22:52:10</th>
+      <td>Twitter for iPhone</td>
+      <td>Heading to U.S. Bank Arena in Cincinnati Ohio ...</td>
+      <td>5564</td>
+      <td>31256</td>
+      <td>False</td>
+      <td>804458095569158144</td>
+    </tr>
+    <tr>
+      <th>2016-12-02 02:45:18</th>
+      <td>Twitter for iPhone</td>
+      <td>Thank you Ohio! Together we made history – and...</td>
+      <td>17283</td>
+      <td>72196</td>
+      <td>False</td>
+      <td>804516764562374656</td>
+    </tr>
+    <tr>
+      <th>2016-12-03 00:44:20</th>
+      <td>Twitter for Android</td>
+      <td>The President of Taiwan CALLED ME today to wis...</td>
+      <td>24700</td>
+      <td>111106</td>
+      <td>False</td>
+      <td>804848711599882240</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>2020-01-01 01:17:43</th>
+      <td>Twitter for iPhone</td>
+      <td>RT @SenJohnKennedy: I think Speaker Pelosi is ...</td>
+      <td>8893</td>
+      <td>0</td>
+      <td>True</td>
+      <td>1212181071988703232</td>
+    </tr>
+    <tr>
+      <th>2020-01-01 01:18:47</th>
+      <td>Twitter for iPhone</td>
+      <td>RT @DanScavino: https://t.co/CJRPySkF1Z</td>
+      <td>10796</td>
+      <td>0</td>
+      <td>True</td>
+      <td>1212181341078458369</td>
+    </tr>
+    <tr>
+      <th>2020-01-01 01:22:28</th>
+      <td>Twitter for iPhone</td>
+      <td>Our fantastic First Lady! https://t.co/6iswto4WDI</td>
+      <td>27567</td>
+      <td>132633</td>
+      <td>False</td>
+      <td>1212182267113680896</td>
+    </tr>
+    <tr>
+      <th>2020-01-01 01:30:35</th>
+      <td>Twitter for iPhone</td>
+      <td>HAPPY NEW YEAR!</td>
+      <td>85409</td>
+      <td>576045</td>
+      <td>False</td>
+      <td>1212184310389850119</td>
+    </tr>
+    <tr>
+      <th>2020-01-01 03:12:07</th>
+      <td>Twitter Media Studio</td>
+      <td>https://t.co/EVAEYD1AgV</td>
+      <td>25016</td>
+      <td>108830</td>
+      <td>False</td>
+      <td>1212209862094012416</td>
+    </tr>
+  </tbody>
+</table>
+<p>14066 rows × 6 columns</p>
+</div></div></div>
+</div>
+<section id="text-classification-finding-trump">
+<h2>Text Classification - Finding Trump<a class="headerlink" href="#text-classification-finding-trump" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Getting time period with android tweets</span>
+<span class="n">droid_ts</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;source&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Twitter for Android&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">index</span>
+<span class="n">find_trump</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">droid_ts</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">droid_ts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="c1">## Getting only original-text (not retweets)</span>
+<span class="n">find_trump</span> <span class="o">=</span> <span class="n">find_trump</span><span class="p">[</span><span class="n">find_trump</span><span class="p">[</span><span class="s1">&#39;is_retweet&#39;</span><span class="p">]</span><span class="o">==</span><span class="kc">False</span><span class="p">]</span>
+<span class="n">find_trump</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>source</th>
+      <th>text</th>
+      <th>retweet_count</th>
+      <th>favorite_count</th>
+      <th>is_retweet</th>
+      <th>id_str</th>
+    </tr>
+    <tr>
+      <th>created_at</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2016-12-01 14:38:09</th>
+      <td>Twitter for Android</td>
+      <td>Getting ready to leave for the Great State of ...</td>
+      <td>9834</td>
+      <td>57249</td>
+      <td>False</td>
+      <td>804333771021570048</td>
+    </tr>
+    <tr>
+      <th>2016-12-01 22:52:10</th>
+      <td>Twitter for iPhone</td>
+      <td>Heading to U.S. Bank Arena in Cincinnati Ohio ...</td>
+      <td>5564</td>
+      <td>31256</td>
+      <td>False</td>
+      <td>804458095569158144</td>
+    </tr>
+    <tr>
+      <th>2016-12-02 02:45:18</th>
+      <td>Twitter for iPhone</td>
+      <td>Thank you Ohio! Together we made history – and...</td>
+      <td>17283</td>
+      <td>72196</td>
+      <td>False</td>
+      <td>804516764562374656</td>
+    </tr>
+    <tr>
+      <th>2016-12-03 00:44:20</th>
+      <td>Twitter for Android</td>
+      <td>The President of Taiwan CALLED ME today to wis...</td>
+      <td>24700</td>
+      <td>111106</td>
+      <td>False</td>
+      <td>804848711599882240</td>
+    </tr>
+    <tr>
+      <th>2016-12-03 01:41:30</th>
+      <td>Twitter for Android</td>
+      <td>Interesting how the U.S. sells Taiwan billions...</td>
+      <td>38805</td>
+      <td>122905</td>
+      <td>False</td>
+      <td>804863098138005504</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>2017-03-24 17:03:46</th>
+      <td>Twitter for iPhone</td>
+      <td>Today I was pleased to announce the official a...</td>
+      <td>12933</td>
+      <td>66692</td>
+      <td>False</td>
+      <td>845320243614547968</td>
+    </tr>
+    <tr>
+      <th>2017-03-24 17:59:42</th>
+      <td>Twitter for iPhone</td>
+      <td>Today I was thrilled to announce a commitment ...</td>
+      <td>20212</td>
+      <td>89339</td>
+      <td>False</td>
+      <td>845334323045765121</td>
+    </tr>
+    <tr>
+      <th>2017-03-25 13:29:17</th>
+      <td>Twitter for iPhone</td>
+      <td>Happy #MedalOfHonorDay to our heroes! ➡️https:...</td>
+      <td>14139</td>
+      <td>68302</td>
+      <td>False</td>
+      <td>845628655493677056</td>
+    </tr>
+    <tr>
+      <th>2017-03-25 14:37:52</th>
+      <td>Twitter for Android</td>
+      <td>ObamaCare will explode and we will all get tog...</td>
+      <td>22518</td>
+      <td>104321</td>
+      <td>False</td>
+      <td>845645916732358656</td>
+    </tr>
+    <tr>
+      <th>2017-03-25 14:41:14</th>
+      <td>Twitter for Android</td>
+      <td>Watch @JudgeJeanine on @FoxNews tonight at 9:0...</td>
+      <td>10116</td>
+      <td>51247</td>
+      <td>False</td>
+      <td>845646761704243200</td>
+    </tr>
+  </tbody>
+</table>
+<p>588 rows × 6 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">is_trump</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s1">&#39;Trump&#39;</span> <span class="k">if</span> <span class="n">x</span> <span class="o">==</span><span class="s1">&#39;Twitter for Android&#39;</span> <span class="k">else</span> <span class="s1">&#39;Not Trump&#39;</span>
+<span class="n">find_trump</span><span class="p">[</span><span class="s1">&#39;is_trump&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">find_trump</span><span class="p">[</span><span class="s1">&#39;source&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">is_trump</span><span class="p">)</span>
+<span class="n">find_trump</span><span class="p">[</span><span class="s1">&#39;is_trump&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">dropna</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Trump        0.619048
+Not Trump    0.380952
+Name: is_trump, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_map</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Not Trump&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;Trump&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
+
+<span class="n">find_trump</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">find_trump</span><span class="p">[</span><span class="s1">&#39;is_trump&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">target_map</span><span class="p">)</span>
+<span class="n">find_trump</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>source</th>
+      <th>text</th>
+      <th>retweet_count</th>
+      <th>favorite_count</th>
+      <th>is_retweet</th>
+      <th>id_str</th>
+      <th>is_trump</th>
+      <th>target</th>
+    </tr>
+    <tr>
+      <th>created_at</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2016-12-01 14:38:09</th>
+      <td>Twitter for Android</td>
+      <td>Getting ready to leave for the Great State of ...</td>
+      <td>9834</td>
+      <td>57249</td>
+      <td>False</td>
+      <td>804333771021570048</td>
+      <td>Trump</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2016-12-01 22:52:10</th>
+      <td>Twitter for iPhone</td>
+      <td>Heading to U.S. Bank Arena in Cincinnati Ohio ...</td>
+      <td>5564</td>
+      <td>31256</td>
+      <td>False</td>
+      <td>804458095569158144</td>
+      <td>Not Trump</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2016-12-02 02:45:18</th>
+      <td>Twitter for iPhone</td>
+      <td>Thank you Ohio! Together we made history – and...</td>
+      <td>17283</td>
+      <td>72196</td>
+      <td>False</td>
+      <td>804516764562374656</td>
+      <td>Not Trump</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2016-12-03 00:44:20</th>
+      <td>Twitter for Android</td>
+      <td>The President of Taiwan CALLED ME today to wis...</td>
+      <td>24700</td>
+      <td>111106</td>
+      <td>False</td>
+      <td>804848711599882240</td>
+      <td>Trump</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2016-12-03 01:41:30</th>
+      <td>Twitter for Android</td>
+      <td>Interesting how the U.S. sells Taiwan billions...</td>
+      <td>38805</td>
+      <td>122905</td>
+      <td>False</td>
+      <td>804863098138005504</td>
+      <td>Trump</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>2017-03-24 17:03:46</th>
+      <td>Twitter for iPhone</td>
+      <td>Today I was pleased to announce the official a...</td>
+      <td>12933</td>
+      <td>66692</td>
+      <td>False</td>
+      <td>845320243614547968</td>
+      <td>Not Trump</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2017-03-24 17:59:42</th>
+      <td>Twitter for iPhone</td>
+      <td>Today I was thrilled to announce a commitment ...</td>
+      <td>20212</td>
+      <td>89339</td>
+      <td>False</td>
+      <td>845334323045765121</td>
+      <td>Not Trump</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2017-03-25 13:29:17</th>
+      <td>Twitter for iPhone</td>
+      <td>Happy #MedalOfHonorDay to our heroes! ➡️https:...</td>
+      <td>14139</td>
+      <td>68302</td>
+      <td>False</td>
+      <td>845628655493677056</td>
+      <td>Not Trump</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2017-03-25 14:37:52</th>
+      <td>Twitter for Android</td>
+      <td>ObamaCare will explode and we will all get tog...</td>
+      <td>22518</td>
+      <td>104321</td>
+      <td>False</td>
+      <td>845645916732358656</td>
+      <td>Trump</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2017-03-25 14:41:14</th>
+      <td>Twitter for Android</td>
+      <td>Watch @JudgeJeanine on @FoxNews tonight at 9:0...</td>
+      <td>10116</td>
+      <td>51247</td>
+      <td>False</td>
+      <td>845646761704243200</td>
+      <td>Trump</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+<p>588 rows × 8 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># df = find_trump[[&#39;text&#39;,&#39;is_trump&#39;,&#39;target&#39;]]</span>
+<span class="c1"># df</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="training-word2vec">
+<h2>Training Word2Vec<a class="headerlink" href="#training-word2vec" title="Permalink to this heading">#</a></h2>
+<section id="id1">
+<h3>Resources:<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Two Part Word2Vec Tutorial  (linked from Learn)</p>
+<ul>
+<li><p><a class="reference external" href="http://mccormickml.com/2016/04/19/word2vec-tutorial-the-skip-gram-model/">Part 1: The Skip-Gram Model</a></p></li>
+<li><p><a class="reference external" href="http://mccormickml.com/2017/01/11/word2vec-tutorial-part-2-negative-sampling/">Part 2: Negative Sampling</a></p></li>
+</ul>
+</li>
+</ul>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">sentences</span></code>: dataset to train on</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">size</span></code>: how big of a word vector do we want</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">window</span></code>: how many words around the target word to train with</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">min_count</span></code>: how many times the word shows up in corpus; we don’t want words that are rarely used</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">workers</span></code>: number of threads (individual task “workers”)</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">gensim.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Word2Vec</span>
+
+<span class="c1"># Let&#39;s assume we have our text corpus already tokenized and stored inside the variable &#39;data&#39;--the regular text preprocessing steps still need to be handled before training a Word2Vec model!</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">Word2Vec</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">min_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">workers</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">total_examples</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">corpus_count</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">nltk</span><span class="w"> </span><span class="kn">import</span> <span class="n">word_tokenize</span><span class="p">,</span> <span class="n">TweetTokenizer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">gensim.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">simple_preprocess</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">gensim.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Word2Vec</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## TRAINING WORD2VEC FROM FULL DF NOT JUST TARGETS</span>
+<span class="n">data_lower</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">simple_preprocess</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span><span class="n">deacc</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                                        <span class="n">max_len</span><span class="o">=</span><span class="mi">100</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;text&#39;</span><span class="p">])</span>
+<span class="n">data_lower</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>My thoughts and prayers are with those affected by the tragic storms and tornadoes in the Southeastern United States. Stay safe!
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;my&#39;,
+ &#39;thoughts&#39;,
+ &#39;and&#39;,
+ &#39;prayers&#39;,
+ &#39;are&#39;,
+ &#39;with&#39;,
+ &#39;those&#39;,
+ &#39;affected&#39;,
+ &#39;by&#39;,
+ &#39;the&#39;,
+ &#39;tragic&#39;,
+ &#39;storms&#39;,
+ &#39;and&#39;,
+ &#39;tornadoes&#39;,
+ &#39;in&#39;,
+ &#39;the&#39;,
+ &#39;southeastern&#39;,
+ &#39;united&#39;,
+ &#39;states&#39;,
+ &#39;stay&#39;,
+ &#39;safe&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wv_model</span> <span class="o">=</span> <span class="n">Word2Vec</span><span class="p">(</span><span class="n">data_lower</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span><span class="n">window</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">min_count</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="c1">#,workers=4)</span>
+<span class="n">wv_model</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;gensim.models.word2vec.Word2Vec at 0x7f9111c79978&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wv_model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">data_lower</span><span class="p">,</span> <span class="n">total_examples</span><span class="o">=</span><span class="n">wv_model</span><span class="o">.</span><span class="n">corpus_count</span><span class="p">,</span><span class="n">epochs</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(13572394, 18326300)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## get the keyed vector</span>
+<span class="n">wv</span> <span class="o">=</span> <span class="n">wv_model</span><span class="o">.</span><span class="n">wv</span>
+<span class="n">wv</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;gensim.models.keyedvectors.Word2VecKeyedVectors at 0x7f9111c79860&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wv</span><span class="p">[</span><span class="s1">&#39;republican&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-1.5186056 ,  1.0432038 , -1.6248196 , -0.5963794 , -0.10912094,
+       -1.3959168 , -0.93438447, -3.0586472 ,  2.0369518 ,  2.6508603 ,
+       -2.921037  ,  5.8698673 ,  2.4998512 , -1.8337091 ,  1.7159714 ,
+       -2.8394873 , -2.333745  , -0.28990367, -1.2357205 ,  1.0747035 ,
+        0.5875254 ,  1.6362019 ,  1.0450835 ,  1.0055666 , -0.791718  ,
+        2.6869712 , -0.23812768,  0.5108571 , -5.9973717 ,  0.52950597,
+       -0.6922795 , -3.684372  ,  3.6396863 , -1.7488122 , -1.5429022 ,
+       -2.3110943 , -3.0220711 ,  0.43749195,  1.0387117 , -2.7570548 ,
+       -1.5130683 , -1.8573967 ,  1.695199  ,  0.7008838 ,  2.2193706 ,
+       -1.2039363 ,  1.9542902 ,  0.49366587, -0.7920619 , -4.291762  ,
+        0.2714777 , -4.622125  , -0.7964699 , -0.6809695 ,  2.1424189 ,
+       -0.7049987 , -4.1210747 , -1.6962391 ,  1.3691208 , -1.7295369 ,
+       -3.3603652 ,  1.8647096 , -0.4581001 ,  1.6188774 , -2.6719227 ,
+        1.9066263 ,  0.43146926,  0.7329808 ,  3.2083356 ,  2.6233766 ,
+       -3.5650828 , -0.4822399 ,  2.0569708 ,  0.42371047, -5.334321  ,
+       -0.7933879 ,  2.384581  , -1.5274073 , -3.0359254 ,  1.846948  ,
+       -1.8304332 ,  1.1399287 , -2.2938986 , -3.4642084 ,  0.94907314,
+       -0.9335882 , -0.247443  ,  1.9710171 , -0.64955586, -1.8353418 ,
+       -2.5913339 ,  2.5678918 , -1.8322248 , -2.8613002 , -1.6828859 ,
+        0.62005955,  0.19599642, -1.7643598 ,  0.1466509 ,  1.1234872 ],
+      dtype=float32)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">wv</span><span class="o">.</span><span class="n">vocab</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>7089
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Cosine Similarity </span>
+<span class="n">wv</span><span class="o">.</span><span class="n">most_similar</span><span class="p">(</span><span class="s1">&#39;republican&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(&#39;democrat&#39;, 0.4990944266319275),
+ (&#39;democratic&#39;, 0.49159175157546997),
+ (&#39;republicans&#39;, 0.4493952989578247),
+ (&#39;opposition&#39;, 0.4251896142959595),
+ (&#39;quitting&#39;, 0.37795478105545044),
+ (&#39;opposing&#39;, 0.35771575570106506),
+ (&#39;petrified&#39;, 0.33704280853271484),
+ (&#39;lame&#39;, 0.318926066160202),
+ (&#39;asset&#39;, 0.31869572401046753),
+ (&#39;congressmen&#39;, 0.3181626796722412)]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wv</span><span class="o">.</span><span class="n">most_similar</span><span class="p">(</span><span class="n">negative</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;democrats&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(&#39;delivers&#39;, 0.414692223072052),
+ (&#39;economist&#39;, 0.4114968180656433),
+ (&#39;azar&#39;, 0.3969866931438446),
+ (&#39;alex&#39;, 0.3676407039165497),
+ (&#39;covering&#39;, 0.3628000020980835),
+ (&#39;greet&#39;, 0.3527188003063202),
+ (&#39;triumph&#39;, 0.3505815863609314),
+ (&#39;iagovernor&#39;, 0.34022000432014465),
+ (&#39;scavino&#39;, 0.33930230140686035),
+ (&#39;met&#39;, 0.33459001779556274)]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>            <span class="c1">## Pos words. neg words</span>
+<span class="n">options</span> <span class="o">=</span> <span class="p">[</span> <span class="p">([</span><span class="s1">&#39;cheat&#39;</span><span class="p">],</span>  <span class="p">[]),</span>
+           <span class="p">([</span><span class="s1">&#39;election&#39;</span><span class="p">],[</span><span class="s1">&#39;cheat&#39;</span><span class="p">]),</span>
+          <span class="p">([</span><span class="s1">&#39;election&#39;</span><span class="p">],[</span><span class="s1">&#39;fraud&#39;</span><span class="p">])]</span>
+<span class="k">for</span> <span class="n">eqn</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Pos words= </span><span class="si">{</span><span class="n">eqn</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="se">\t</span><span class="s2">Neg words= </span><span class="si">{</span><span class="n">eqn</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Pos words= [&#39;cheat&#39;]	Neg words= []
+Pos words= [&#39;election&#39;]	Neg words= [&#39;cheat&#39;]
+Pos words= [&#39;election&#39;]	Neg words= [&#39;fraud&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">options</span> <span class="o">=</span> <span class="p">[</span> <span class="p">([</span><span class="s1">&#39;cheat&#39;</span><span class="p">],</span>  <span class="p">[]),</span>
+           <span class="p">([</span><span class="s1">&#39;election&#39;</span><span class="p">],[</span><span class="s1">&#39;cheat&#39;</span><span class="p">]),</span>
+          <span class="p">([</span><span class="s1">&#39;election&#39;</span><span class="p">],[</span><span class="s1">&#39;fraud&#39;</span><span class="p">])]</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">pos</span><span class="p">,</span><span class="n">neg</span><span class="p">)</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Pos words= </span><span class="si">{</span><span class="n">pos</span><span class="si">}</span><span class="se">\t\t</span><span class="s2">Neg words= </span><span class="si">{</span><span class="n">neg</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> 
+    <span class="n">results</span> <span class="o">=</span> <span class="n">wv</span><span class="o">.</span><span class="n">most_similar</span><span class="p">(</span><span class="n">positive</span><span class="o">=</span><span class="n">pos</span><span class="p">,</span><span class="n">negative</span><span class="o">=</span><span class="n">neg</span><span class="p">)</span>
+    <span class="p">[</span><span class="nb">print</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">results</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Pos words= [&#39;cheat&#39;]		Neg words= []
+(&#39;columbia&#39;, 0.37462949752807617)
+(&#39;behavior&#39;, 0.37049365043640137)
+(&#39;nbc&#39;, 0.35910871624946594)
+(&#39;anna&#39;, 0.3583730161190033)
+(&#39;ballot&#39;, 0.35584402084350586)
+(&#39;then&#39;, 0.3556467890739441)
+(&#39;griffin&#39;, 0.3508838415145874)
+(&#39;expense&#39;, 0.3493574261665344)
+(&#39;everybody&#39;, 0.3451763391494751)
+(&#39;term&#39;, 0.33988821506500244)
+
+Pos words= [&#39;election&#39;]		Neg words= [&#39;cheat&#39;]
+(&#39;humiliating&#39;, 0.3256770372390747)
+(&#39;example&#39;, 0.3233208656311035)
+(&#39;inaugurated&#39;, 0.31980100274086)
+(&#39;points&#39;, 0.3133443593978882)
+(&#39;gopchairwoman&#39;, 0.3092685639858246)
+(&#39;figured&#39;, 0.3078387975692749)
+(&#39;confidence&#39;, 0.30351686477661133)
+(&#39;touch&#39;, 0.2925059199333191)
+(&#39;washtimes&#39;, 0.2837539315223694)
+(&#39;decade&#39;, 0.27932703495025635)
+
+Pos words= [&#39;election&#39;]		Neg words= [&#39;fraud&#39;]
+(&#39;washington&#39;, 0.36493197083473206)
+(&#39;office&#39;, 0.3504166603088379)
+(&#39;elections&#39;, 0.318131685256958)
+(&#39;you&#39;, 0.28754714131355286)
+(&#39;elect&#39;, 0.2865354120731354)
+(&#39;market&#39;, 0.28572016954421997)
+(&#39;paris&#39;, 0.28151121735572815)
+(&#39;necessary&#39;, 0.28064805269241333)
+(&#39;deterrent&#39;, 0.2785939574241638)
+(&#39;america&#39;, 0.2752317786216736)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wv</span><span class="o">.</span><span class="n">most_similar</span><span class="p">(</span><span class="n">positive</span><span class="o">=</span><span class="p">[],</span><span class="n">negative</span><span class="o">=</span><span class="p">[])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="word2vec-params">
+<h4>Word2Vec params<a class="headerlink" href="#word2vec-params" title="Permalink to this heading">#</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>## For initializing model
+sentences=None,
+    size=100,
+    alpha=0.025,
+    window=5,
+    min_count=5,
+    max_vocab_size=None,
+    sample=0.001,
+    seed=1,
+    workers=3,
+    min_alpha=0.0001,
+    sg=0,
+    hs=0,
+    negative=5,
+    cbow_mean=1,
+    hashfxn=&lt;built-in function hash&gt;,
+    iter=5,
+    null_word=0,
+    trim_rule=None,
+    sorted_vocab=1,
+    batch_words=10000,
+    compute_loss=False,
+    callbacks=(),
+    
+    
+## For training 
+    sentences,
+    total_examples=None,
+    total_words=None,
+    epochs=None,
+    start_alpha=None,
+    end_alpha=None,
+    word_count=0,
+    queue_factor=2,
+    report_delay=1.0,
+    compute_loss=False,
+    callbacks=(),
+    ```
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ### USING WORD VECTOR MATH TO GET A FEEL FOR QUALITY OF MODE</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">word_math</span><span class="p">(</span><span class="n">wv</span><span class="p">,</span><span class="n">pos_words</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;hillary&#39;</span><span class="p">],</span><span class="n">neg_words</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;bill&#39;</span><span class="p">],</span>
+              <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">return_vec</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pos_words</span><span class="p">,</span><span class="nb">str</span><span class="p">):</span>
+        <span class="n">pos_words</span><span class="o">=</span><span class="p">[</span><span class="n">pos_words</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">neg_words</span><span class="p">,</span><span class="nb">str</span><span class="p">):</span>
+        <span class="n">neg_words</span><span class="o">=</span><span class="p">[</span><span class="n">neg_words</span><span class="p">]</span>
+
+
+    <span class="n">pos_eqn</span> <span class="o">=</span> <span class="s1">&#39;+&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pos_words</span><span class="p">)</span>
+    <span class="n">neg_eqn</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">neg_words</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;---&#39;</span><span class="o">*</span><span class="mi">15</span><span class="p">)</span>    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[i] Result for:</span><span class="se">\t</span><span class="si">{</span><span class="n">pos_eqn</span><span class="si">}{</span><span class="s1">&#39; - &#39;</span><span class="o">+</span><span class="n">neg_eqn</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">neg_eqn</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39; &#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;---&#39;</span><span class="o">*</span><span class="mi">15</span><span class="p">)</span>
+
+    <span class="n">answer</span> <span class="o">=</span> <span class="n">wv</span><span class="o">.</span><span class="n">most_similar</span><span class="p">(</span><span class="n">positive</span><span class="o">=</span><span class="n">pos_words</span><span class="p">,</span><span class="n">negative</span><span class="o">=</span><span class="n">neg_words</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+          <span class="p">[</span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- </span><span class="si">{</span><span class="n">ans</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">ans</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">ans</span> <span class="ow">in</span> <span class="n">answer</span><span class="p">]</span>
+          <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;---&#39;</span><span class="o">*</span><span class="mi">15</span><span class="p">,</span><span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">return_vec</span><span class="p">:</span> 
+          <span class="k">return</span> <span class="n">answer</span>
+    
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## [Positive], [negatigve words]</span>
+<span class="n">equation_list</span><span class="o">=</span><span class="p">[([</span><span class="s1">&#39;america&#39;</span><span class="p">,</span><span class="s1">&#39;crime&#39;</span><span class="p">],[]),</span>
+               
+               <span class="p">([</span><span class="s1">&#39;democrats&#39;</span><span class="p">,</span><span class="s1">&#39;russia&#39;</span><span class="p">],[]),</span>
+               <span class="p">([</span><span class="s1">&#39;republican&#39;</span><span class="p">],[</span><span class="s1">&#39;honor&#39;</span><span class="p">]),</span>
+               <span class="p">([</span><span class="s1">&#39;man&#39;</span><span class="p">,</span><span class="s1">&#39;power&#39;</span><span class="p">],[]),</span>
+               <span class="p">([</span><span class="s1">&#39;russia&#39;</span><span class="p">,</span><span class="s1">&#39;honor&#39;</span><span class="p">],[]),</span>
+              <span class="p">([</span><span class="s1">&#39;china&#39;</span><span class="p">,</span><span class="s1">&#39;tariff&#39;</span><span class="p">])]</span>
+
+<span class="k">for</span> <span class="n">eqn</span> <span class="ow">in</span> <span class="n">equation_list</span><span class="p">:</span>
+<span class="c1">#     print(&#39;\n\n&#39;)</span>
+    <span class="n">word_math</span><span class="p">(</span><span class="n">wv</span><span class="p">,</span><span class="o">*</span><span class="n">eqn</span><span class="p">)</span>
+<span class="c1">#     word_math(wv2,*eqn)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>---------------------------------------------
+[i] Result for:	america+crime 
+---------------------------------------------
+- borders (0.457)
+- criminals (0.365)
+- taxes (0.36)
+- your (0.357)
+- ineffective (0.331)
+- california (0.326)
+- amendment (0.322)
+- our (0.317)
+- november (0.316)
+- sanctuary (0.312)
+--------------------------------------------- 
+
+
+---------------------------------------------
+[i] Result for:	democrats+russia 
+---------------------------------------------
+- dems (0.648)
+- they (0.551)
+- russian (0.495)
+- facts (0.392)
+- russians (0.38)
+- doj (0.373)
+- obstruction (0.371)
+- mueller (0.366)
+- hoax (0.348)
+- dem (0.347)
+--------------------------------------------- 
+
+
+---------------------------------------------
+[i] Result for:	republican - honor
+---------------------------------------------
+- republicans (0.472)
+- democrat (0.412)
+- socialists (0.387)
+- switch (0.374)
+- obstruct (0.374)
+- dem (0.374)
+- democratic (0.366)
+- extreme (0.358)
+- weak (0.324)
+- liberal (0.318)
+--------------------------------------------- 
+
+
+---------------------------------------------
+[i] Result for:	man+power 
+---------------------------------------------
+- impeccable (0.454)
+- person (0.433)
+- guy (0.421)
+- gentleman (0.413)
+- leader (0.397)
+- hack (0.363)
+- talents (0.358)
+- rourke (0.356)
+- loser (0.352)
+- fighter (0.348)
+--------------------------------------------- 
+
+
+---------------------------------------------
+[i] Result for:	russia+honor 
+---------------------------------------------
+- campaign (0.374)
+- relationship (0.365)
+- privilege (0.363)
+- invite (0.356)
+- russians (0.355)
+- war (0.349)
+- spied (0.347)
+- behalf (0.344)
+- pleasure (0.34)
+- writer (0.333)
+--------------------------------------------- 
+
+
+---------------------------------------------
+[i] Result for:	china - tariff
+---------------------------------------------
+- putin (0.442)
+- france (0.372)
+- tower (0.348)
+- timeless (0.337)
+- recession (0.335)
+- kim (0.324)
+- impressed (0.319)
+- direction (0.315)
+- joe (0.311)
+- nasa (0.307)
+--------------------------------------------- 
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="using-embeddings-in-classification">
+<h2>Using Embeddings in Classification<a class="headerlink" href="#using-embeddings-in-classification" title="Permalink to this heading">#</a></h2>
+<section id="embedding-layers">
+<h3>Embedding Layers<a class="headerlink" href="#embedding-layers" title="Permalink to this heading">#</a></h3>
+<p>You should make note of a couple caveats that come with using embedding layers in your neural network – namely:</p>
+<ul class="simple">
+<li><p>The embedding layer must always be the first layer of the network, meaning that it should immediately follow the <code class="docutils literal notranslate"><span class="pre">Input()</span></code> layer</p></li>
+<li><p>All words in the text should be integer-encoded, with each unique word encoded as it’s own unique integer</p></li>
+<li><p>The size of the embedding layer must always be greater than the total vocabulary size of the dataset! The first parameter denotes the vocabulary size, while the second denotes the size of the actual word vectors</p></li>
+<li><p>The size of the sequences passed in as data must be set when creating the layer (all data will be converted to padded sequences of the same size during the preprocessing step)</p></li>
+</ul>
+<p><a class="reference external" href="https://keras.io/layers/embeddings/">Keras Documentation for Embedding Layers</a>.</p>
+</section>
+<section id="references-to-try">
+<h3>References to Try<a class="headerlink" href="#references-to-try" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://stackabuse.com/python-for-nlp-word-embeddings-for-deep-learning-in-keras/">https://stackabuse.com/python-for-nlp-word-embeddings-for-deep-learning-in-keras/</a></p></li>
+<li><p><a class="reference external" href="https://stackoverflow.com/questions/51492778/how-to-properly-use-get-keras-embedding-in-gensim-s-word2vec">https://stackoverflow.com/questions/51492778/how-to-properly-use-get-keras-embedding-in-gensim-s-word2vec</a></p></li>
+<li><p><a class="reference external" href="https://gist.github.com/codekansas/15b3c2a2e9bc7a3c345138a32e029969">https://gist.github.com/codekansas/15b3c2a2e9bc7a3c345138a32e029969</a></p></li>
+</ul>
+</section>
+</section>
+<section id="using-embedding-layers-in-ann">
+<h2>Using Embedding Layers in ANN<a class="headerlink" href="#using-embedding-layers-in-ann" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## IMPORTING PYTHON FILE</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span><span class="o">,</span><span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;../&quot;</span><span class="p">)</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">keras_gridsearch</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">kg</span>
+
+
+<span class="c1">## Auto-reload mpdule </span>
+<span class="o">%</span><span class="k">load_ext</span> autoreload
+<span class="o">%</span><span class="k">autoreload</span> 2
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The autoreload extension is already loaded. To reload it, use:
+  %reload_ext autoreload
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">tensorflow.keras.layers</span><span class="w"> </span><span class="kn">import</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">LSTM</span><span class="p">,</span> <span class="n">Embedding</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tensorflow.keras.layers</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dropout</span><span class="p">,</span> <span class="n">Activation</span><span class="p">,</span> <span class="n">Bidirectional</span><span class="p">,</span> <span class="n">GlobalMaxPool1D</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tensorflow.keras.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sequential</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tensorflow.keras</span><span class="w"> </span><span class="kn">import</span> <span class="n">initializers</span><span class="p">,</span> <span class="n">regularizers</span><span class="p">,</span> <span class="n">constraints</span><span class="p">,</span> <span class="n">optimizers</span><span class="p">,</span> <span class="n">layers</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tensorflow.keras.callbacks</span><span class="w"> </span><span class="kn">import</span> <span class="n">EarlyStopping</span><span class="p">,</span><span class="n">ModelCheckpoint</span>
+
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">tensorflow.keras.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">text</span><span class="p">,</span> <span class="n">sequence</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tensorflow.keras.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">to_categorical</span>
+<span class="c1"># from keras.preprocessing.sequence import pad_sequences</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Now only using find_trump tweets</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">find_trump</span><span class="p">[[</span><span class="s1">&#39;text&#39;</span><span class="p">,</span><span class="s1">&#39;is_trump&#39;</span><span class="p">,</span><span class="s1">&#39;target&#39;</span><span class="p">]]</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>text</th>
+      <th>is_trump</th>
+      <th>target</th>
+    </tr>
+    <tr>
+      <th>created_at</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2016-12-01 14:38:09</th>
+      <td>Getting ready to leave for the Great State of ...</td>
+      <td>Trump</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2016-12-01 22:52:10</th>
+      <td>Heading to U.S. Bank Arena in Cincinnati Ohio ...</td>
+      <td>Not Trump</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2016-12-02 02:45:18</th>
+      <td>Thank you Ohio! Together we made history – and...</td>
+      <td>Not Trump</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2016-12-03 00:44:20</th>
+      <td>The President of Taiwan CALLED ME today to wis...</td>
+      <td>Trump</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2016-12-03 01:41:30</th>
+      <td>Interesting how the U.S. sells Taiwan billions...</td>
+      <td>Trump</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>2017-03-24 17:03:46</th>
+      <td>Today I was pleased to announce the official a...</td>
+      <td>Not Trump</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2017-03-24 17:59:42</th>
+      <td>Today I was thrilled to announce a commitment ...</td>
+      <td>Not Trump</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2017-03-25 13:29:17</th>
+      <td>Happy #MedalOfHonorDay to our heroes! ➡️https:...</td>
+      <td>Not Trump</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2017-03-25 14:37:52</th>
+      <td>ObamaCare will explode and we will all get tog...</td>
+      <td>Trump</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2017-03-25 14:41:14</th>
+      <td>Watch @JudgeJeanine on @FoxNews tonight at 9:0...</td>
+      <td>Trump</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+<p>588 rows × 3 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">keras.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">text</span><span class="p">,</span><span class="n">sequence</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nltk</span><span class="w"> </span><span class="kn">import</span> <span class="n">word_tokenize</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">gensim.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">simple_preprocess</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn</span><span class="w"> </span><span class="kn">import</span> <span class="n">metrics</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span>
+<span class="n">y</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>created_at
+2016-12-01 14:38:09    1
+2016-12-01 22:52:10    0
+2016-12-02 02:45:18    0
+2016-12-03 00:44:20    1
+2016-12-03 01:41:30    1
+                      ..
+2017-03-24 17:03:46    0
+2017-03-24 17:59:42    0
+2017-03-25 13:29:17    0
+2017-03-25 14:37:52    1
+2017-03-25 14:41:14    1
+Name: target, Length: 588, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">random_state</span><span class="o">=</span><span class="mi">123</span><span class="p">)</span> 
+<span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span><span class="n">y_test</span><span class="o">.</span><span class="n">shape</span>
+<span class="c1"># pd.Series(y_test).value_counts(normalize=True)</span>
+<span class="n">y_test</span><span class="o">.</span><span class="n">shape</span>
+<span class="n">X_test</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>created_at
+2017-01-20 12:31:53    It all begins today! I will see you at 11:00 A...
+2016-12-12 13:21:20    Unless you catch &quot;hackers&quot; in the act it is ve...
+2017-03-25 14:41:14    Watch @JudgeJeanine on @FoxNews tonight at 9:0...
+2017-01-09 11:36:02    Hillary flunky who lost big. For the 100th tim...
+2017-02-04 23:37:59    Why aren&#39;t the lawyers looking at and using th...
+                                             ...                        
+2017-01-15 20:04:38    Thank you to Bob Woodward who said &quot;That is a ...
+2016-12-13 12:44:06    The thing I like best about Rex Tillerson is t...
+2017-01-07 03:53:38    Gross negligence by the Democratic National Co...
+2017-01-04 13:19:09    Thank you to Ford for scrapping a new plant in...
+2017-01-07 15:10:46    have enough problems around the world without ...
+Name: text, Length: 147, dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<section id="computer-class-weights">
+<h3>Computer Class Weights<a class="headerlink" href="#computer-class-weights" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Class imbalance</span>
+<span class="n">y_train</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1    0.603175
+0    0.396825
+Name: target, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.utils.class_weight</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_class_weight</span>
+
+<span class="n">weights</span><span class="o">=</span> <span class="n">compute_class_weight</span><span class="p">(</span>
+           <span class="s1">&#39;balanced&#39;</span><span class="p">,</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y_train</span><span class="p">),</span> 
+            <span class="n">y_train</span><span class="p">)</span>
+
+<span class="n">weights_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y_train</span><span class="p">),</span><span class="n">weights</span><span class="p">))</span>
+<span class="n">weights_dict</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/anaconda3/envs/learn-env/lib/python3.6/site-packages/sklearn/utils/validation.py:70: FutureWarning:
+
+Pass classes=[0 1], y=created_at
+2016-12-12 13:26:13    1
+2017-03-10 15:40:53    0
+2017-01-06 12:05:01    1
+2017-03-05 11:40:20    1
+2017-02-20 14:15:42    1
+                      ..
+2016-12-22 16:50:30    1
+2017-01-29 23:28:50    0
+2017-02-08 15:23:29    0
+2017-02-05 20:42:33    1
+2017-03-04 13:19:29    1
+Name: target, Length: 441, dtype: int64 as keyword args. From version 0.25 passing these as positional arguments will result in an error
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{0: 1.26, 1: 0.8289473684210527}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Make OHE y vars</span>
+<span class="n">y_train_seq</span> <span class="o">=</span> <span class="n">to_categorical</span><span class="p">(</span><span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_test_seq</span> <span class="o">=</span> <span class="n">to_categorical</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span>
+<span class="n">y_train_seq</span><span class="c1">#.shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [1., 0.],
+       [1., 0.],
+       [1., 0.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [1., 0.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [1., 0.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [1., 0.],
+       [1., 0.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [1., 0.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [1., 0.],
+       [1., 0.],
+       [1., 0.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [1., 0.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [1., 0.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [1., 0.],
+       [1., 0.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [1., 0.],
+       [1., 0.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [1., 0.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [1., 0.],
+       [1., 0.],
+       [1., 0.],
+       [0., 1.],
+       [1., 0.],
+       [1., 0.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [1., 0.],
+       [1., 0.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [1., 0.],
+       [0., 1.],
+       [1., 0.],
+       [1., 0.],
+       [1., 0.],
+       [1., 0.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [1., 0.],
+       [1., 0.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [1., 0.],
+       [1., 0.],
+       [1., 0.],
+       [0., 1.],
+       [1., 0.],
+       [1., 0.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [1., 0.],
+       [1., 0.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [1., 0.],
+       [1., 0.],
+       [1., 0.],
+       [0., 1.],
+       [1., 0.],
+       [1., 0.],
+       [1., 0.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [1., 0.],
+       [1., 0.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [1., 0.],
+       [0., 1.],
+       [1., 0.],
+       [1., 0.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [1., 0.],
+       [1., 0.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [1., 0.],
+       [1., 0.],
+       [1., 0.],
+       [1., 0.],
+       [0., 1.],
+       [1., 0.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [1., 0.],
+       [1., 0.],
+       [1., 0.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [1., 0.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [0., 1.],
+       [1., 0.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.],
+       [0., 1.],
+       [1., 0.],
+       [1., 0.],
+       [0., 1.],
+       [0., 1.]], dtype=float32)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## TOKENIZE TEXT</span>
+<span class="n">MAX_WORDS</span> <span class="o">=</span> <span class="mi">25000</span>
+<span class="c1"># MAX_SEQUENCE_LENGTH = 40</span>
+
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">Tokenizer</span><span class="p">(</span><span class="n">num_words</span><span class="o">=</span><span class="n">MAX_WORDS</span><span class="p">)</span>
+
+<span class="n">tokenizer</span><span class="o">.</span><span class="n">fit_on_texts</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span> <span class="c1">#df[&#39;text&#39;])</span>
+<span class="n">train_sequences</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">texts_to_sequences</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">test_sequences</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">texts_to_sequences</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span><span class="c1">#df[&#39;text&#39;])</span>
+
+
+<span class="c1">## Find the longest sequence</span>
+<span class="n">seq_lenghts</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">),[</span><span class="o">*</span><span class="n">train_sequences</span><span class="p">,</span><span class="o">*</span><span class="n">test_sequences</span><span class="p">]))</span>
+<span class="nb">max</span><span class="p">(</span><span class="n">seq_lenghts</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>31
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_sequences</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1,
+ 417,
+ 418,
+ 419,
+ 3,
+ 258,
+ 10,
+ 44,
+ 4,
+ 320,
+ 589,
+ 4,
+ 321,
+ 99,
+ 3,
+ 12,
+ 13,
+ 936,
+ 17,
+ 322,
+ 3,
+ 223,
+ 590,
+ 76,
+ 194,
+ 224]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Pad sequences</span>
+<span class="n">X_train_seq</span> <span class="o">=</span> <span class="n">sequence</span><span class="o">.</span><span class="n">pad_sequences</span><span class="p">(</span><span class="n">train_sequences</span><span class="p">,</span> <span class="n">maxlen</span><span class="o">=</span><span class="n">MAX_SEQUENCE_LENGTH</span><span class="p">)</span>
+
+<span class="n">X_test_seq</span> <span class="o">=</span> <span class="n">sequence</span><span class="o">.</span><span class="n">pad_sequences</span><span class="p">(</span><span class="n">test_sequences</span><span class="p">,</span> <span class="n">maxlen</span><span class="o">=</span><span class="n">MAX_SEQUENCE_LENGTH</span><span class="p">)</span>
+<span class="n">X_train_seq</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[   0,    0,    0, ...,   76,  194,  224],
+       [   0,    0,    0, ...,    6,    7,  939],
+       [   0,    0,    0, ...,    5,   14,  327],
+       ...,
+       [   0,    0,    0, ...,    6,    7, 2296],
+       [   0,    0,    0, ...,  191,   32,  878],
+       [   0,    0,    0, ...,    2,   14,  327]], dtype=int32)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">index_word</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2302
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_train_seq</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([   0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0, 2300, 2301,  697, 2302,  506,
+          1,  446,   50,   33,  887,   28,  143,   75,  843,  228,   30,
+         28,   42,  334,  475,    2,   14,  327], dtype=int32)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># y_classes = df[&#39;target&#39;]</span>
+<span class="c1"># y_classes.value_counts(1)</span>
+<span class="n">MAX_WORDS</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>25000
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">tensorflow.keras.callbacks</span><span class="w"> </span><span class="kn">import</span> <span class="n">EarlyStopping</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">get_earlystop</span><span class="p">(</span><span class="n">monitor</span><span class="o">=</span><span class="s1">&#39;val_loss&#39;</span><span class="p">,</span><span class="n">patience</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">restore_best_weights</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="nb">locals</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">EarlyStopping</span><span class="p">(</span><span class="o">**</span><span class="n">args</span><span class="p">)</span>
+
+<span class="n">get_earlystop</span><span class="o">.</span><span class="vm">__doc__</span><span class="o">+=</span><span class="n">EarlyStopping</span><span class="o">.</span><span class="vm">__doc__</span>
+<span class="c1"># get_earlystop</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span> <span class="c1">#where codealong get this?</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">make_model1</span><span class="p">(</span><span class="n">EMBEDDING_SIZE</span> <span class="o">=</span> <span class="mi">128</span><span class="p">):</span>
+    <span class="n">model</span><span class="o">=</span><span class="n">Sequential</span><span class="p">()</span>
+
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Embedding</span><span class="p">(</span><span class="n">MAX_WORDS</span><span class="p">,</span> <span class="n">EMBEDDING_SIZE</span><span class="p">))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">LSTM</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span><span class="n">return_sequences</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+<span class="c1">#     model.add(GlobalMaxPool1D()) </span>
+<span class="c1">#     model.add(Dropout(0.5))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">))</span>
+
+    <span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s1">&#39;categorical_crossentropy&#39;</span><span class="p">,</span><span class="c1">#&#39;categorical_crossentropy&#39;, </span>
+                  <span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;adam&#39;</span><span class="p">,</span> 
+                  <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">])</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">model</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">make_model1</span><span class="p">()</span>
+<span class="n">history</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_seq</span><span class="p">,</span> <span class="n">y_train_seq</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+                    <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">validation_split</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span><span class="n">callbacks</span><span class="o">=</span><span class="n">get_earlystop</span><span class="p">(),</span>
+                   <span class="n">class_weight</span><span class="o">=</span><span class="n">weights_dict</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model: &quot;sequential_13&quot;
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+embedding_14 (Embedding)     (None, None, 128)         3200000   
+_________________________________________________________________
+lstm_13 (LSTM)               (None, 50)                35800     
+_________________________________________________________________
+dense_26 (Dense)             (None, 25)                1275      
+_________________________________________________________________
+dropout_8 (Dropout)          (None, 25)                0         
+_________________________________________________________________
+dense_27 (Dense)             (None, 2)                 52        
+=================================================================
+Total params: 3,237,127
+Trainable params: 3,237,127
+Non-trainable params: 0
+_________________________________________________________________
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>None
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 1/50
+11/11 [==============================] - 4s 241ms/step - loss: 0.6950 - accuracy: 0.5497 - val_loss: 0.6684 - val_accuracy: 0.8876
+Epoch 2/50
+11/11 [==============================] - 0s 45ms/step - loss: 0.6550 - accuracy: 0.8271 - val_loss: 0.5863 - val_accuracy: 0.8539
+Epoch 3/50
+11/11 [==============================] - 1s 51ms/step - loss: 0.5291 - accuracy: 0.8689 - val_loss: 0.4053 - val_accuracy: 0.8539
+Epoch 4/50
+11/11 [==============================] - 1s 53ms/step - loss: 0.3181 - accuracy: 0.9035 - val_loss: 0.4481 - val_accuracy: 0.8090
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_hat_test</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_seq</span><span class="p">)</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">y_hat_test</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1, 1, 0, 1, 0])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_test_seq</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0,
+       1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0,
+       1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+       0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1,
+       1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 0, 0,
+       0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1,
+       0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># print(pd.Series(y_hat_test).value_counts())</span>
+<span class="n">kg</span><span class="o">.</span><span class="n">evaluate_model</span><span class="p">(</span><span class="n">y_test_seq</span><span class="p">,</span><span class="n">y_hat_test</span><span class="p">,</span><span class="n">history</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/60f5bd1dc268a65159e59ab053f1676ffa4fb4ceed7c91294d68d406ba72e793.png" src="../../../_images/60f5bd1dc268a65159e59ab053f1676ffa4fb4ceed7c91294d68d406ba72e793.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>------------------------------------------------------------
+	CLASSIFICATION REPORT:
+------------------------------------------------------------
+              precision    recall  f1-score   support
+
+           0       0.65      0.80      0.72        49
+           1       0.89      0.79      0.83        98
+
+    accuracy                           0.79       147
+   macro avg       0.77      0.79      0.77       147
+weighted avg       0.81      0.79      0.79       147
+</pre></div>
+</div>
+<img alt="../../../_images/d1b2419cf8413206b7e9e3e146908b89aefb50d7bacd690edffdb920d6f963ac.png" src="../../../_images/d1b2419cf8413206b7e9e3e146908b89aefb50d7bacd690edffdb920d6f963ac.png" />
+</div>
+</div>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="using-pre-trained-vectors">
+<h1>Using Pre-Trained Vectors<a class="headerlink" href="#using-pre-trained-vectors" title="Permalink to this heading">#</a></h1>
+<section id="using-our-word2vec-in-keras-embedding">
+<h2>Using Our Word2Vec in Keras Embedding<a class="headerlink" href="#using-our-word2vec-in-keras-embedding" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>        
+<span class="c1"># embedding_layer = Embedding(len(total_vocabulary) + 1,</span>
+<span class="c1">#                             EMBEDDING_SIZE,</span>
+<span class="c1">#                             weights=[embedding_matrix],</span>
+<span class="c1">#                             input_length=MAX_SEQUENCE_LENGTH,</span>
+<span class="c1">#                             trainable=True)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wv</span><span class="o">.</span><span class="n">get_keras_embedding</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;tensorflow.python.keras.layers.embeddings.Embedding at 0x7f91083a58d0&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span> <span class="c1">#where codealong get this?</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">make_model_wv</span><span class="p">(</span><span class="n">wv</span><span class="p">):</span>
+    <span class="n">model</span><span class="o">=</span><span class="n">Sequential</span><span class="p">()</span>
+
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">wv</span><span class="o">.</span><span class="n">get_keras_embedding</span><span class="p">())</span><span class="c1">#Embedding(MAX_WORDS, EMBEDDING_SIZE))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">LSTM</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span><span class="n">return_sequences</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+
+    <span class="c1"># model.add(GlobalMaxPool1D()) </span>
+    <span class="c1"># model.add(Dropout(0.5))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">))</span>
+
+    <span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s1">&#39;categorical_crossentropy&#39;</span><span class="p">,</span><span class="c1">#&#39;categorical_crossentropy&#39;, </span>
+                  <span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;adam&#39;</span><span class="p">,</span> 
+                  <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">])</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">model</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">make_model_wv</span><span class="p">(</span><span class="n">wv</span><span class="p">)</span>
+<span class="n">history</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_seq</span><span class="p">,</span> <span class="n">y_train_seq</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+                    <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">validation_split</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+                    <span class="n">callbacks</span><span class="o">=</span><span class="n">get_earlystop</span><span class="p">(),</span>
+                   <span class="n">class_weight</span><span class="o">=</span><span class="n">weights_dict</span><span class="p">)</span>
+
+<span class="n">y_hat_test</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_seq</span><span class="p">)</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">kg</span><span class="o">.</span><span class="n">evaluate_model</span><span class="p">(</span><span class="n">y_test_seq</span><span class="p">,</span><span class="n">y_hat_test</span><span class="p">,</span><span class="n">history</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model: &quot;sequential_18&quot;
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+embedding_20 (Embedding)     (None, None, 100)         708900    
+_________________________________________________________________
+lstm_18 (LSTM)               (None, 50)                30200     
+_________________________________________________________________
+dense_36 (Dense)             (None, 25)                1275      
+_________________________________________________________________
+dropout_13 (Dropout)         (None, 25)                0         
+_________________________________________________________________
+dense_37 (Dense)             (None, 2)                 52        
+=================================================================
+Total params: 740,427
+Trainable params: 31,527
+Non-trainable params: 708,900
+_________________________________________________________________
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>None
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 1/50
+11/11 [==============================] - 3s 87ms/step - loss: 0.6899 - accuracy: 0.4773 - val_loss: 0.5855 - val_accuracy: 0.7191
+Epoch 2/50
+11/11 [==============================] - 1s 116ms/step - loss: 0.5954 - accuracy: 0.6855 - val_loss: 0.5125 - val_accuracy: 0.7978
+Epoch 3/50
+11/11 [==============================] - 0s 21ms/step - loss: 0.5465 - accuracy: 0.7631 - val_loss: 0.4620 - val_accuracy: 0.8202
+Epoch 4/50
+11/11 [==============================] - 0s 24ms/step - loss: 0.4510 - accuracy: 0.8103 - val_loss: 0.4233 - val_accuracy: 0.8427
+Epoch 5/50
+11/11 [==============================] - 0s 22ms/step - loss: 0.4174 - accuracy: 0.8593 - val_loss: 0.3993 - val_accuracy: 0.8539
+Epoch 6/50
+11/11 [==============================] - 0s 21ms/step - loss: 0.3432 - accuracy: 0.9186 - val_loss: 0.3797 - val_accuracy: 0.8652
+Epoch 7/50
+11/11 [==============================] - 0s 22ms/step - loss: 0.3192 - accuracy: 0.9031 - val_loss: 0.3622 - val_accuracy: 0.8652
+Epoch 8/50
+11/11 [==============================] - 0s 20ms/step - loss: 0.2922 - accuracy: 0.9264 - val_loss: 0.3531 - val_accuracy: 0.8652
+Epoch 9/50
+11/11 [==============================] - 0s 21ms/step - loss: 0.2362 - accuracy: 0.9493 - val_loss: 0.3478 - val_accuracy: 0.8764
+Epoch 10/50
+11/11 [==============================] - 0s 22ms/step - loss: 0.1946 - accuracy: 0.9606 - val_loss: 0.3432 - val_accuracy: 0.8652
+Epoch 11/50
+11/11 [==============================] - 0s 20ms/step - loss: 0.1881 - accuracy: 0.9539 - val_loss: 0.3361 - val_accuracy: 0.8876
+Epoch 12/50
+11/11 [==============================] - 0s 20ms/step - loss: 0.1302 - accuracy: 0.9783 - val_loss: 0.3377 - val_accuracy: 0.8764
+Epoch 13/50
+11/11 [==============================] - 0s 23ms/step - loss: 0.1039 - accuracy: 0.9800 - val_loss: 0.3491 - val_accuracy: 0.8876
+Epoch 14/50
+11/11 [==============================] - 0s 22ms/step - loss: 0.0779 - accuracy: 0.9928 - val_loss: 0.3654 - val_accuracy: 0.8539
+</pre></div>
+</div>
+<img alt="../../../_images/7256b945843ea63b2e19f1ae8ad841867980b5d37cc1fd2189c7bf67dd1a8c49.png" src="../../../_images/7256b945843ea63b2e19f1ae8ad841867980b5d37cc1fd2189c7bf67dd1a8c49.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>------------------------------------------------------------
+	CLASSIFICATION REPORT:
+------------------------------------------------------------
+              precision    recall  f1-score   support
+
+           0       0.82      0.73      0.77        49
+           1       0.87      0.92      0.90        98
+
+    accuracy                           0.86       147
+   macro avg       0.85      0.83      0.83       147
+weighted avg       0.86      0.86      0.86       147
+</pre></div>
+</div>
+<img alt="../../../_images/d2a0201bee5bc8aa3af563c3a305c460b685d6208c0f7e76d0736534382b524b.png" src="../../../_images/d2a0201bee5bc8aa3af563c3a305c460b685d6208c0f7e76d0736534382b524b.png" />
+</div>
+</div>
+</section>
+<section id="using-glove">
+<h2>Using GLOVE<a class="headerlink" href="#using-glove" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="n">folder</span> <span class="o">=</span> <span class="s1">&#39;/Users/jamesirving/Datasets/&#39;</span><span class="c1">#glove.twitter.27B/&#39;</span>
+<span class="c1"># print(os.listdir(folder))</span>
+<span class="n">glove_file</span> <span class="o">=</span> <span class="n">folder</span><span class="o">+</span><span class="s1">&#39;glove.6B/glove.6B.50d.txt&#39;</span><span class="c1">#&#39;glove.twitter.27B.50d.txt&#39;</span>
+<span class="n">glove_twitter_file</span> <span class="o">=</span> <span class="n">folder</span><span class="o">+</span><span class="s1">&#39;glove.twitter.27B/glove.twitter.27B.50d.txt&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">glove_file</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">glove_twitter_file</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/jamesirving/Datasets/glove.6B/glove.6B.50d.txt
+/Users/jamesirving/Datasets/glove.twitter.27B/glove.twitter.27B.50d.txt
+</pre></div>
+</div>
+</div>
+</div>
+<section id="keeping-only-the-vectors-needed">
+<h3>Keeping only the vectors needed<a class="headerlink" href="#keeping-only-the-vectors-needed" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ## This line of code for getting all words bugs me</span>
+<span class="c1"># total_vocabulary = set(word for tweet in data_lower for word in tweet)</span>
+<span class="c1"># len(total_vocabulary)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># glove = {}</span>
+<span class="c1"># with open(glove_file,&#39;rb&#39;) as f:#&#39;glove.6B.50d.txt&#39;, &#39;rb&#39;) as f:</span>
+<span class="c1">#     for line in f:</span>
+<span class="c1">#         parts = line.split()</span>
+<span class="c1">#         word = parts[0].decode(&#39;utf-8&#39;)</span>
+<span class="c1">#         if word in total_vocabulary:</span>
+<span class="c1">#             vector = np.array(parts[1:], dtype=np.float32)</span>
+<span class="c1">#             glove[word] = vector</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="converting-glove-to-word2vec-format">
+<h3>Converting Glove to Word2Vec format<a class="headerlink" href="#converting-glove-to-word2vec-format" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Getting glove into w2vec format:</p>
+<ul>
+<li><p><a class="reference external" href="https://radimrehurek.com/gensim/scripts/glove2word2vec.html">https://radimrehurek.com/gensim/scripts/glove2word2vec.html</a></p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">glove_folder</span> <span class="o">=</span> <span class="n">folder</span><span class="o">+</span><span class="s1">&#39;glove.twitter.27B&#39;</span>
+<span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">glove_folder</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;glove.twitter.27B.100d.txt&#39;,
+ &#39;glove.twitter.27B.50d.txt&#39;,
+ &#39;glove_to_w2vec.txt&#39;,
+ &#39;glove.twitter.27B.25d.txt&#39;,
+ &#39;glove.twitter.27B.200d.txt&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">gensim.test.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">datapath</span><span class="p">,</span> <span class="n">get_tmpfile</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">gensim.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">KeyedVectors</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">gensim.scripts.glove2word2vec</span><span class="w"> </span><span class="kn">import</span> <span class="n">glove2word2vec</span>
+
+<span class="n">glove_file</span> <span class="o">=</span> <span class="n">datapath</span><span class="p">(</span><span class="n">glove_twitter_file</span><span class="p">)</span>
+<span class="n">tmp_file</span> <span class="o">=</span> <span class="n">get_tmpfile</span><span class="p">(</span><span class="n">glove_folder</span><span class="o">+</span><span class="s1">&#39;glove_to_w2vec.txt&#39;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">glove2word2vec</span><span class="p">(</span><span class="n">glove_file</span><span class="p">,</span> <span class="n">tmp_file</span><span class="p">)</span>
+<span class="n">model_glove</span> <span class="o">=</span> <span class="n">KeyedVectors</span><span class="o">.</span><span class="n">load_word2vec_format</span><span class="p">(</span><span class="n">tmp_file</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_glove</span><span class="o">.</span><span class="n">wv</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/anaconda3/envs/learn-env/lib/python3.6/site-packages/ipykernel_launcher.py:1: DeprecationWarning:
+
+Call to deprecated `wv` (Attribute will be removed in 4.0.0, use self instead).
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;gensim.models.keyedvectors.Word2VecKeyedVectors at 0x7f91083a5f60&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_glove</span><span class="p">[</span><span class="s1">&#39;republican&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 1.6157  , -0.25904 ,  0.72508 ,  1.0425  ,  0.13052 , -0.043748,
+        0.47838 ,  1.335   ,  0.46798 , -1.0906  , -0.38838 , -1.2271  ,
+       -2.4627  , -0.31811 ,  1.4408  , -0.30102 , -0.13989 ,  0.38727 ,
+        1.4973  ,  0.7543  ,  0.17385 ,  0.11997 , -0.48673 , -0.43429 ,
+        1.041   ,  1.392   ,  0.44031 ,  0.31378 , -0.86916 ,  0.9268  ,
+        0.81152 ,  0.71418 ,  0.042411,  0.12692 ,  0.67654 ,  1.1624  ,
+        0.11309 ,  0.92866 , -0.19608 , -1.0142  ,  0.12632 ,  0.39504 ,
+        0.38305 , -0.062614,  0.6588  , -0.15264 ,  0.3511  ,  0.16505 ,
+       -0.50478 , -0.10917 ], dtype=float32)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Using pre-trained embeddings for math</span>
+<span class="n">equation_list</span><span class="o">=</span><span class="p">[([</span><span class="s1">&#39;america&#39;</span><span class="p">,</span><span class="s1">&#39;crime&#39;</span><span class="p">],[]),</span>
+               
+               <span class="p">([</span><span class="s1">&#39;democrats&#39;</span><span class="p">,</span><span class="s1">&#39;russia&#39;</span><span class="p">],[]),</span>
+               <span class="p">([</span><span class="s1">&#39;republican&#39;</span><span class="p">],[</span><span class="s1">&#39;honor&#39;</span><span class="p">]),</span>
+               <span class="p">([</span><span class="s1">&#39;man&#39;</span><span class="p">,</span><span class="s1">&#39;power&#39;</span><span class="p">],[]),</span>
+               <span class="p">([</span><span class="s1">&#39;russia&#39;</span><span class="p">,</span><span class="s1">&#39;honor&#39;</span><span class="p">],[]),</span>
+              <span class="p">([</span><span class="s1">&#39;china&#39;</span><span class="p">,</span><span class="s1">&#39;tariff&#39;</span><span class="p">])]</span>
+
+<span class="k">for</span> <span class="n">eqn</span> <span class="ow">in</span> <span class="n">equation_list</span><span class="p">:</span>
+<span class="c1">#     print(&#39;\n\n&#39;)</span>
+    <span class="n">word_math</span><span class="p">(</span><span class="n">model_glove</span><span class="p">,</span><span class="o">*</span><span class="n">eqn</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>---------------------------------------------
+[i] Result for:	america+crime 
+---------------------------------------------
+- american (0.849)
+- country (0.811)
+- criminal (0.805)
+- society (0.8)
+- africa (0.794)
+- death (0.793)
+- the (0.792)
+- world (0.789)
+- states (0.788)
+- attack (0.784)
+--------------------------------------------- 
+
+
+---------------------------------------------
+[i] Result for:	democrats+russia 
+---------------------------------------------
+- republicans (0.869)
+- conservatives (0.841)
+- ukraine (0.839)
+- government (0.835)
+- americans (0.831)
+- liberals (0.821)
+- britain (0.816)
+- u.s. (0.814)
+- immigration (0.813)
+- states (0.81)
+--------------------------------------------- 
+
+
+---------------------------------------------
+[i] Result for:	republican - honor
+---------------------------------------------
+- tsx (0.656)
+- trinamool (0.654)
+- nesunan (0.653)
+- mantashe (0.639)
+- mutungan (0.637)
+- مقدسي (0.634)
+- nyambungan (0.633)
+- مسئولون (0.628)
+- melumelu (0.628)
+- yeek (0.626)
+--------------------------------------------- 
+
+
+---------------------------------------------
+[i] Result for:	man+power 
+---------------------------------------------
+- the (0.861)
+- that (0.858)
+- way (0.846)
+- bad (0.844)
+- of (0.841)
+- it (0.837)
+- is (0.831)
+- but (0.829)
+- will (0.827)
+- and (0.825)
+--------------------------------------------- 
+
+
+---------------------------------------------
+[i] Result for:	russia+honor 
+---------------------------------------------
+- america (0.841)
+- national (0.793)
+- canada (0.789)
+- union (0.787)
+- president (0.785)
+- army (0.773)
+- us (0.769)
+- freedom (0.768)
+- africa (0.766)
+- world (0.764)
+--------------------------------------------- 
+
+
+---------------------------------------------
+[i] Result for:	china - tariff
+---------------------------------------------
+- : (0.654)
+- “ (0.645)
+- &quot; (0.63)
+- &lt;user&gt; (0.622)
+- san (0.615)
+- argentina (0.605)
+- chico (0.603)
+- mario (0.595)
+- rey (0.593)
+- raja (0.591)
+--------------------------------------------- 
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+</section>
+<hr class="docutils" />
+<section id="using-glove-in-embedding-layer">
+<h3>Using Glove In Embedding Layer<a class="headerlink" href="#using-glove-in-embedding-layer" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span> <span class="c1">#where codealong get this?</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">make_model_glove</span><span class="p">(</span><span class="n">wv</span><span class="p">):</span>
+    <span class="n">model</span><span class="o">=</span><span class="n">Sequential</span><span class="p">()</span>
+
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">wv</span><span class="o">.</span><span class="n">get_keras_embedding</span><span class="p">())</span><span class="c1">#Embedding(MAX_WORDS, EMBEDDING_SIZE))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">LSTM</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span><span class="n">return_sequences</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+
+    <span class="c1"># model.add(GlobalMaxPool1D()) </span>
+    <span class="c1"># model.add(Dropout(0.5))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">))</span>
+
+    <span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s1">&#39;categorical_crossentropy&#39;</span><span class="p">,</span><span class="c1">#&#39;categorical_crossentropy&#39;, </span>
+                  <span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;adam&#39;</span><span class="p">,</span> 
+                  <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">])</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">model</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">make_model_wv</span><span class="p">(</span><span class="n">model_glove</span><span class="p">)</span>
+<span class="n">history</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_seq</span><span class="p">,</span> <span class="n">y_train_seq</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+                    <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">validation_split</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+                    <span class="n">callbacks</span><span class="o">=</span><span class="n">get_earlystop</span><span class="p">(),</span>
+                   <span class="n">class_weight</span><span class="o">=</span><span class="n">weights_dict</span><span class="p">)</span>
+
+<span class="n">y_hat_test</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_seq</span><span class="p">)</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">kg</span><span class="o">.</span><span class="n">evaluate_model</span><span class="p">(</span><span class="n">y_test_seq</span><span class="p">,</span><span class="n">y_hat_test</span><span class="p">,</span><span class="n">history</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model: &quot;sequential_19&quot;
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+embedding_21 (Embedding)     (None, None, 50)          59675700  
+_________________________________________________________________
+lstm_19 (LSTM)               (None, 50)                20200     
+_________________________________________________________________
+dense_38 (Dense)             (None, 25)                1275      
+_________________________________________________________________
+dropout_14 (Dropout)         (None, 25)                0         
+_________________________________________________________________
+dense_39 (Dense)             (None, 2)                 52        
+=================================================================
+Total params: 59,697,227
+Trainable params: 21,527
+Non-trainable params: 59,675,700
+_________________________________________________________________
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>None
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 1/50
+11/11 [==============================] - 3s 71ms/step - loss: 0.7025 - accuracy: 0.5290 - val_loss: 0.6328 - val_accuracy: 0.7303
+Epoch 2/50
+11/11 [==============================] - 0s 18ms/step - loss: 0.6314 - accuracy: 0.6679 - val_loss: 0.5638 - val_accuracy: 0.8202
+Epoch 3/50
+11/11 [==============================] - 0s 19ms/step - loss: 0.5868 - accuracy: 0.7054 - val_loss: 0.5017 - val_accuracy: 0.8539
+Epoch 4/50
+11/11 [==============================] - 0s 22ms/step - loss: 0.5505 - accuracy: 0.7702 - val_loss: 0.4617 - val_accuracy: 0.8315
+Epoch 5/50
+11/11 [==============================] - 0s 23ms/step - loss: 0.4914 - accuracy: 0.7725 - val_loss: 0.4320 - val_accuracy: 0.8315
+Epoch 6/50
+11/11 [==============================] - 0s 21ms/step - loss: 0.4384 - accuracy: 0.8311 - val_loss: 0.4481 - val_accuracy: 0.7865
+</pre></div>
+</div>
+<img alt="../../../_images/0cddd0d81c250bdac1a42feb9b07312a6e4ddd0e4e343b201a0f774c379d7df2.png" src="../../../_images/0cddd0d81c250bdac1a42feb9b07312a6e4ddd0e4e343b201a0f774c379d7df2.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>------------------------------------------------------------
+	CLASSIFICATION REPORT:
+------------------------------------------------------------
+              precision    recall  f1-score   support
+
+           0       0.56      0.86      0.68        49
+           1       0.90      0.66      0.76        98
+
+    accuracy                           0.73       147
+   macro avg       0.73      0.76      0.72       147
+weighted avg       0.79      0.73      0.74       147
+</pre></div>
+</div>
+<img alt="../../../_images/471ab19733388476d84404f97aa9ccbd4ad1d82b7cf5a854c1fa4e59b74a741b.png" src="../../../_images/471ab19733388476d84404f97aa9ccbd4ad1d82b7cf5a854c1fa4e59b74a741b.png" />
+</div>
+</div>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="multiple-lstm-bidirectional">
+<h1>Multiple LSTM / Bidirectional<a class="headerlink" href="#multiple-lstm-bidirectional" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span> <span class="c1">#where codealong get this?</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">make_model_2lstm</span><span class="p">(</span><span class="n">wv</span><span class="p">):</span>
+    <span class="n">model</span><span class="o">=</span><span class="n">Sequential</span><span class="p">()</span>
+
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">wv</span><span class="o">.</span><span class="n">get_keras_embedding</span><span class="p">())</span><span class="c1">#Embedding(MAX_WORDS, EMBEDDING_SIZE))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">LSTM</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span><span class="n">return_sequences</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.3</span><span class="p">))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">LSTM</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span><span class="n">return_sequences</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">recurrent_dropout</span><span class="o">=</span><span class="mf">0.3</span><span class="p">))</span>
+
+    <span class="c1"># model.add(GlobalMaxPool1D()) </span>
+    <span class="c1"># model.add(Dropout(0.5))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span><span class="n">activity_regularizer</span><span class="o">=</span><span class="s1">&#39;l2&#39;</span><span class="p">))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">))</span>
+
+    <span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s1">&#39;categorical_crossentropy&#39;</span><span class="p">,</span><span class="c1">#&#39;categorical_crossentropy&#39;, </span>
+                  <span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;adam&#39;</span><span class="p">,</span> 
+                  <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">])</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">model</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">make_model_2lstm</span><span class="p">(</span><span class="n">wv</span><span class="p">)</span>
+<span class="n">history</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_seq</span><span class="p">,</span> <span class="n">y_train_seq</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+                    <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">validation_split</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+                    <span class="n">callbacks</span><span class="o">=</span><span class="n">get_earlystop</span><span class="p">(</span><span class="n">patience</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span>
+                   <span class="n">class_weight</span><span class="o">=</span><span class="n">weights_dict</span><span class="p">)</span>
+
+<span class="n">y_hat_test</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_seq</span><span class="p">)</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">kg</span><span class="o">.</span><span class="n">evaluate_model</span><span class="p">(</span><span class="n">y_test_seq</span><span class="p">,</span><span class="n">y_hat_test</span><span class="p">,</span><span class="n">history</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model: &quot;sequential_27&quot;
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+embedding_29 (Embedding)     (None, None, 100)         708900    
+_________________________________________________________________
+lstm_34 (LSTM)               (None, None, 50)          30200     
+_________________________________________________________________
+dropout_24 (Dropout)         (None, None, 50)          0         
+_________________________________________________________________
+lstm_35 (LSTM)               (None, 50)                20200     
+_________________________________________________________________
+dense_50 (Dense)             (None, 25)                1275      
+_________________________________________________________________
+dropout_25 (Dropout)         (None, 25)                0         
+_________________________________________________________________
+dense_51 (Dense)             (None, 2)                 52        
+=================================================================
+Total params: 760,627
+Trainable params: 51,727
+Non-trainable params: 708,900
+_________________________________________________________________
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>None
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 1/50
+11/11 [==============================] - 4s 98ms/step - loss: 0.6349 - accuracy: 0.5614 - val_loss: 0.5197 - val_accuracy: 0.7865
+Epoch 2/50
+11/11 [==============================] - 0s 35ms/step - loss: 0.5226 - accuracy: 0.7926 - val_loss: 0.4383 - val_accuracy: 0.8539
+Epoch 3/50
+11/11 [==============================] - 0s 38ms/step - loss: 0.4115 - accuracy: 0.8420 - val_loss: 0.4170 - val_accuracy: 0.8539
+Epoch 4/50
+11/11 [==============================] - 0s 36ms/step - loss: 0.4013 - accuracy: 0.8929 - val_loss: 0.4957 - val_accuracy: 0.7753
+Epoch 5/50
+11/11 [==============================] - 0s 39ms/step - loss: 0.4278 - accuracy: 0.8291 - val_loss: 0.4015 - val_accuracy: 0.8652
+Epoch 6/50
+11/11 [==============================] - 0s 35ms/step - loss: 0.3320 - accuracy: 0.9259 - val_loss: 0.4859 - val_accuracy: 0.8202
+Epoch 7/50
+11/11 [==============================] - 0s 38ms/step - loss: 0.2534 - accuracy: 0.9578 - val_loss: 0.4374 - val_accuracy: 0.8539
+Epoch 8/50
+11/11 [==============================] - 0s 38ms/step - loss: 0.2050 - accuracy: 0.9660 - val_loss: 0.5091 - val_accuracy: 0.8315
+</pre></div>
+</div>
+<img alt="../../../_images/bed029b8ca108cc3268515f2e4f66787914277e5c6745a939b4a8cdcb7c2ce53.png" src="../../../_images/bed029b8ca108cc3268515f2e4f66787914277e5c6745a939b4a8cdcb7c2ce53.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>------------------------------------------------------------
+	CLASSIFICATION REPORT:
+------------------------------------------------------------
+              precision    recall  f1-score   support
+
+           0       0.80      0.71      0.75        49
+           1       0.86      0.91      0.89        98
+
+    accuracy                           0.84       147
+   macro avg       0.83      0.81      0.82       147
+weighted avg       0.84      0.84      0.84       147
+</pre></div>
+</div>
+<img alt="../../../_images/26e9849d965cbfd7136cb2ba314e985913ce120c1b429fc20effe4fca6378b3f.png" src="../../../_images/26e9849d965cbfd7136cb2ba314e985913ce120c1b429fc20effe4fca6378b3f.png" />
+</div>
+</div>
+<section id="bidirectional">
+<h2>Bidirectional<a class="headerlink" href="#bidirectional" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span> <span class="c1">#where codealong get this?</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tensorflow.keras.layers</span><span class="w"> </span><span class="kn">import</span> <span class="n">Bidirectional</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">make_model_2lstm</span><span class="p">(</span><span class="n">wv</span><span class="p">):</span>
+    <span class="n">model</span><span class="o">=</span><span class="n">Sequential</span><span class="p">()</span>
+
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">wv</span><span class="o">.</span><span class="n">get_keras_embedding</span><span class="p">())</span><span class="c1">#Embedding(MAX_WORDS, EMBEDDING_SIZE))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Bidirectional</span><span class="p">(</span><span class="n">LSTM</span><span class="p">(</span><span class="mi">50</span><span class="p">)))</span>
+
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.3</span><span class="p">))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">))</span>
+
+    <span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s1">&#39;categorical_crossentropy&#39;</span><span class="p">,</span><span class="c1">#&#39;categorical_crossentropy&#39;, </span>
+                  <span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;adam&#39;</span><span class="p">,</span> 
+                  <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">])</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">model</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">make_model_2lstm</span><span class="p">(</span><span class="n">wv</span><span class="p">)</span>
+<span class="n">history</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_seq</span><span class="p">,</span> <span class="n">y_train_seq</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+                    <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">validation_split</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+                    <span class="n">callbacks</span><span class="o">=</span><span class="n">get_earlystop</span><span class="p">(</span><span class="n">patience</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span>
+                   <span class="n">class_weight</span><span class="o">=</span><span class="n">weights_dict</span><span class="p">)</span>
+
+<span class="n">y_hat_test</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_seq</span><span class="p">)</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">kg</span><span class="o">.</span><span class="n">evaluate_model</span><span class="p">(</span><span class="n">y_test_seq</span><span class="p">,</span><span class="n">y_hat_test</span><span class="p">,</span><span class="n">history</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model: &quot;sequential_31&quot;
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+embedding_33 (Embedding)     (None, None, 100)         708900    
+_________________________________________________________________
+bidirectional_3 (Bidirection (None, 100)               60400     
+_________________________________________________________________
+dense_58 (Dense)             (None, 25)                2525      
+_________________________________________________________________
+dropout_27 (Dropout)         (None, 25)                0         
+_________________________________________________________________
+dense_59 (Dense)             (None, 2)                 52        
+=================================================================
+Total params: 771,877
+Trainable params: 62,977
+Non-trainable params: 708,900
+_________________________________________________________________
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>None
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 1/50
+11/11 [==============================] - 3s 90ms/step - loss: 0.6739 - accuracy: 0.5213 - val_loss: 0.5341 - val_accuracy: 0.8652
+Epoch 2/50
+11/11 [==============================] - 0s 18ms/step - loss: 0.5520 - accuracy: 0.8000 - val_loss: 0.4312 - val_accuracy: 0.8764
+Epoch 3/50
+11/11 [==============================] - 0s 22ms/step - loss: 0.4418 - accuracy: 0.8534 - val_loss: 0.3875 - val_accuracy: 0.8764
+Epoch 4/50
+11/11 [==============================] - 0s 22ms/step - loss: 0.3707 - accuracy: 0.8809 - val_loss: 0.3787 - val_accuracy: 0.8876
+Epoch 5/50
+11/11 [==============================] - 0s 21ms/step - loss: 0.3477 - accuracy: 0.8703 - val_loss: 0.3470 - val_accuracy: 0.8764
+Epoch 6/50
+11/11 [==============================] - 0s 22ms/step - loss: 0.2533 - accuracy: 0.9322 - val_loss: 0.3591 - val_accuracy: 0.9101
+Epoch 7/50
+11/11 [==============================] - 0s 24ms/step - loss: 0.2125 - accuracy: 0.9477 - val_loss: 0.3368 - val_accuracy: 0.8989
+Epoch 8/50
+11/11 [==============================] - 0s 20ms/step - loss: 0.1644 - accuracy: 0.9674 - val_loss: 0.3511 - val_accuracy: 0.8764
+Epoch 9/50
+11/11 [==============================] - 0s 23ms/step - loss: 0.0995 - accuracy: 0.9820 - val_loss: 0.3629 - val_accuracy: 0.8876
+Epoch 10/50
+11/11 [==============================] - 0s 21ms/step - loss: 0.0996 - accuracy: 0.9801 - val_loss: 0.3825 - val_accuracy: 0.8876
+</pre></div>
+</div>
+<img alt="../../../_images/5931e733297672ee924be7e4367b0a5ede7a198dd390bc93b6d5eabdc63c1b89.png" src="../../../_images/5931e733297672ee924be7e4367b0a5ede7a198dd390bc93b6d5eabdc63c1b89.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>------------------------------------------------------------
+	CLASSIFICATION REPORT:
+------------------------------------------------------------
+              precision    recall  f1-score   support
+
+           0       0.80      0.76      0.78        49
+           1       0.88      0.91      0.89        98
+
+    accuracy                           0.86       147
+   macro avg       0.84      0.83      0.84       147
+weighted avg       0.86      0.86      0.86       147
+</pre></div>
+</div>
+<img alt="../../../_images/3b77b63f81bdbf87b362d212c079684c2e128a0ce7ad3fe3861604ad46b0973f.png" src="../../../_images/3b77b63f81bdbf87b362d212c079684c2e128a0ce7ad3fe3861604ad46b0973f.png" />
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="appendix">
+<h1>APPENDIX<a class="headerlink" href="#appendix" title="Permalink to this heading">#</a></h1>
+<section id="alternative-approach-to-loading-in-glove">
+<h2>Alternative Approach to Loading in Glove<a class="headerlink" href="#alternative-approach-to-loading-in-glove" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># EMBEDDING_SIZE = 128 #where codealong get this?</span>
+
+<span class="c1"># embedding_matrix = np.zeros((len(total_vocabulary) + 1, EMBEDDING_SIZE))</span>
+<span class="c1"># for word, i in enumerate(total_vocabulary):#.items():</span>
+<span class="c1">#     embedding_vector = glove.get(word)</span>
+<span class="c1">#     if embedding_vector is not None:</span>
+<span class="c1">#         # words not found in embedding index will be all-zeros.</span>
+<span class="c1">#         embedding_matrix[i] = embedding_vector</span>
+        
+        
+<span class="c1"># embedding_layer = Embedding(len(total_vocabulary) + 1,</span>
+<span class="c1">#                             EMBEDDING_SIZE,</span>
+<span class="c1">#                             weights=[embedding_matrix],</span>
+<span class="c1">#                             input_length=MAX_SEQUENCE_LENGTH,</span>
+<span class="c1">#                             trainable=True)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="rnn-or-gru">
+<h2>RNN or GRU<a class="headerlink" href="#rnn-or-gru" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## GRU Model</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">keras</span><span class="w"> </span><span class="kn">import</span> <span class="n">models</span><span class="p">,</span> <span class="n">layers</span><span class="p">,</span> <span class="n">optimizers</span><span class="p">,</span> <span class="n">regularizers</span>
+<span class="n">modelG</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">Sequential</span><span class="p">()</span>
+
+<span class="c1">## Get and add embedding_layer</span>
+<span class="c1"># embedding_layer = ji.make_keras_embedding_layer(wv, X_train)</span>
+<span class="n">modelG</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Embedding</span><span class="p">(</span><span class="n">MAX_WORDS</span><span class="p">,</span> <span class="n">EMBEDDING_SIZE</span><span class="p">))</span>
+
+<span class="c1"># modelG.add(layers.SpatialDropout1D(0.5))</span>
+<span class="c1"># modelG.add(layers.Bidirectional(layers.GRU(units=100, dropout=0.5, recurrent_dropout=0.2,return_sequences=True)))</span>
+<span class="n">modelG</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Bidirectional</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">GRU</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">dropout</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">recurrent_dropout</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)))</span>
+<span class="n">modelG</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">))</span>
+
+<span class="n">modelG</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s1">&#39;categorical_crossentropy&#39;</span><span class="p">,</span><span class="n">optimizer</span><span class="o">=</span><span class="s2">&quot;adam&quot;</span><span class="p">,</span><span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;acc&#39;</span><span class="p">])</span><span class="c1">#,&#39;val_acc&#39;])#, callbacks=callbacks)</span>
+<span class="n">modelG</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model: &quot;sequential_33&quot;
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+embedding_35 (Embedding)     (None, None, 128)         3200000   
+_________________________________________________________________
+bidirectional_5 (Bidirection (None, 200)               138000    
+_________________________________________________________________
+dense_61 (Dense)             (None, 2)                 402       
+=================================================================
+Total params: 3,338,402
+Trainable params: 3,338,402
+Non-trainable params: 0
+_________________________________________________________________
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">history</span> <span class="o">=</span> <span class="n">modelG</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_seq</span><span class="p">,</span> <span class="n">y_train_seq</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">validation_split</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+
+<span class="n">y_hat_test</span> <span class="o">=</span> <span class="n">modelG</span><span class="o">.</span><span class="n">predict_classes</span><span class="p">(</span><span class="n">X_test_seq</span><span class="p">)</span>
+<span class="n">kg</span><span class="o">.</span><span class="n">evaluate_model</span><span class="p">(</span><span class="n">y_test_seq</span><span class="p">,</span><span class="n">y_hat_test</span><span class="p">,</span><span class="n">history</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 1/10
+11/11 [==============================] - 5s 159ms/step - loss: 0.6792 - acc: 0.5621 - val_loss: 0.6830 - val_acc: 0.5506
+Epoch 2/10
+11/11 [==============================] - 1s 108ms/step - loss: 0.6330 - acc: 0.6109 - val_loss: 0.5313 - val_acc: 0.8764
+Epoch 3/10
+11/11 [==============================] - 1s 109ms/step - loss: 0.4443 - acc: 0.8416 - val_loss: 0.3341 - val_acc: 0.8539
+Epoch 4/10
+11/11 [==============================] - 1s 105ms/step - loss: 0.2291 - acc: 0.9060 - val_loss: 0.4489 - val_acc: 0.8315
+Epoch 5/10
+11/11 [==============================] - 1s 116ms/step - loss: 0.1663 - acc: 0.9623 - val_loss: 0.3667 - val_acc: 0.8989
+Epoch 6/10
+11/11 [==============================] - 1s 116ms/step - loss: 0.0633 - acc: 0.9846 - val_loss: 0.4279 - val_acc: 0.8652
+Epoch 7/10
+11/11 [==============================] - 1s 106ms/step - loss: 0.0218 - acc: 0.9914 - val_loss: 0.5903 - val_acc: 0.8652
+Epoch 8/10
+11/11 [==============================] - 1s 107ms/step - loss: 0.0076 - acc: 0.9982 - val_loss: 0.8238 - val_acc: 0.8539
+Epoch 9/10
+11/11 [==============================] - 1s 106ms/step - loss: 0.0262 - acc: 0.9905 - val_loss: 0.4066 - val_acc: 0.8989
+Epoch 10/10
+11/11 [==============================] - 1s 102ms/step - loss: 0.0184 - acc: 1.0000 - val_loss: 0.5356 - val_acc: 0.8764
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/anaconda3/envs/learn-env/lib/python3.6/site-packages/tensorflow/python/keras/engine/sequential.py:450: UserWarning:
+
+`model.predict_classes()` is deprecated and will be removed after 2021-01-01. Please use instead:* `np.argmax(model.predict(x), axis=-1)`,   if your model does multi-class classification   (e.g. if it uses a `softmax` last-layer activation).* `(model.predict(x) &gt; 0.5).astype(&quot;int32&quot;)`,   if your model does binary classification   (e.g. if it uses a `sigmoid` last-layer activation).
+</pre></div>
+</div>
+<img alt="../../../_images/0bddd7653d1225fb4e772eaf30af9bde0649b4e90219f9a5c9e765232c7c80ac.png" src="../../../_images/0bddd7653d1225fb4e772eaf30af9bde0649b4e90219f9a5c9e765232c7c80ac.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>------------------------------------------------------------
+	CLASSIFICATION REPORT:
+------------------------------------------------------------
+              precision    recall  f1-score   support
+
+           0       0.88      0.76      0.81        49
+           1       0.89      0.95      0.92        98
+
+    accuracy                           0.88       147
+   macro avg       0.88      0.85      0.86       147
+weighted avg       0.88      0.88      0.88       147
+</pre></div>
+</div>
+<img alt="../../../_images/01e7958cd1759106e2f026ed1e4949a562f1eb2a7622b87c65cafa908e96d11d.png" src="../../../_images/01e7958cd1759106e2f026ed1e4949a562f1eb2a7622b87c65cafa908e96d11d.png" />
+</div>
+</div>
+</section>
+<section id="alternative-dataset">
+<h2>Alternative Dataset<a class="headerlink" href="#alternative-dataset" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import os</span>
+<span class="c1"># ## New Dataset Option</span>
+<span class="c1"># # import kaggle.api as kaggle</span>
+<span class="c1"># !kaggle datasets download -d akash14/product-sentiment-classification</span>
+<span class="c1"># !unzip product-sentiment-classification.zip</span>
+<span class="c1"># !rm product-sentiment-classification.zip</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p>Class - Represents various sentiments</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>0 - Cannot Say</p></li>
+<li><p>1 - Negative</p></li>
+<li><p>2 - Positive</p></li>
+<li><p>3 - No Sentimet</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import pandas as pd</span>
+<span class="c1"># folder = &#39;Participants_Data/&#39;</span>
+<span class="c1"># sorted(os.listdir(folder))</span>
+<span class="c1"># df = pd.read_csv(&#39;Participants_Data/Train.csv&#39;,index_col=0)</span>
+<span class="c1"># df</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># mapper = {0: &#39;Cannot Say&#39;, </span>
+<span class="c1">#           1 : &#39;Negative&#39;,</span>
+<span class="c1">#           2 : &#39;Positive&#39;,</span>
+<span class="c1">#           3 : &#39;No Sentimet&#39;}</span>
+<span class="c1"># mapper</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># df[&quot;Sentiment-label&quot;] = df[&#39;Sentiment&#39;].map(mapper)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># df[&#39;Sentiment-label&#39;].value_counts(1)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Drop Cannot Say </span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "learn-env"
+        },
+        kernelOptions: {
+            name: "learn-env",
+            path: "./Phase_4/topic_42_tuning_neural_networks/other_notebooks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'learn-env'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">NOTE: You are not allowed to use any propriety functions from this notebook in your projects.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#capstone-office-hours-deep-nlp">Capstone Office Hours - Deep NLP</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nlp-word-vectorization">NLP &amp; Word Vectorization</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#word-embeddings">Word Embeddings</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resources">Resources</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#word2vec">Word2Vec</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skip-gram-model">Skip-Gram Model</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#glove-global-vectors-for-word-representation">GloVe - Global Vectors for Word Representation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transfer-learning">Transfer Learning</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sequence-models-recurrent-neural-networks">Sequence Models - Recurrent Neural Networks</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lstms-grus">LSTMs &amp; GRUs</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#activity-creating-word-embeddings-with-trump-s-tweets">Activity: Creating Word Embeddings with Trump’s Tweets</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#text-classification-finding-trump">Text Classification - Finding Trump</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-word2vec">Training Word2Vec</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Resources:</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#word2vec-params">Word2Vec params</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-embeddings-in-classification">Using Embeddings in Classification</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#embedding-layers">Embedding Layers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#references-to-try">References to Try</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-embedding-layers-in-ann">Using Embedding Layers in ANN</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computer-class-weights">Computer Class Weights</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#using-pre-trained-vectors">Using Pre-Trained Vectors</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-our-word2vec-in-keras-embedding">Using Our Word2Vec in Keras Embedding</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-glove">Using GLOVE</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#keeping-only-the-vectors-needed">Keeping only the vectors needed</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#converting-glove-to-word2vec-format">Converting Glove to Word2Vec format</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-glove-in-embedding-layer">Using Glove In Embedding Layer</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple-lstm-bidirectional">Multiple LSTM / Bidirectional</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bidirectional">Bidirectional</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#appendix">APPENDIX</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alternative-approach-to-loading-in-glove">Alternative Approach to Loading in Glove</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rnn-or-gru">RNN or GRU</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alternative-dataset">Alternative Dataset</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By James Irving, PhD
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,3212 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Project - Data Cleaning &#8212; Data Science Curriculum</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/clipboard.min.js"></script>
+    <script src="../../../../_static/copybutton.js"></script>
+    <script src="../../../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Phase_1/topic_05_data_cleaning_in_pandas/labs_from_class/dsc-data-cleaning-project-master/index-heroes-continued';</script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../_static/flatironschool_banner.jpg" class="logo__image only-light" alt="Data Science Curriculum - Home"/>
+    <script>document.write(`<img src="../../../../_static/flatironschool_banner.jpg" class="logo__image only-dark" alt="Data Science Curriculum - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../intro.html">
+                    Data Science Curriculum
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 1 - Python &amp; Data Fundamentals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_01_getting_started/topic_01_getting_started.html">Topic 1: Getting Started with Data Science</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_02_bash_git/topic_02_bash_and_git.html">Topic 02:  Bash and Git</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_03_control_flow_functions/topic_03_control_flow_and_functions.html">Topic 03: Control Flow, Functions, and Statistics</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_04_python_libraries/topic_04_intro_to_libraries_numpy_SG.html">Topic 04-Part 1: Python Libraries &amp; NumPy</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_04_python_libraries/topic_04_pt-2_brief_intro_to_pandas-SG.html">Topic 04-Part 2: Brief Intro to Pandas with Doctor Who</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../topic_05_Data_Cleaning_in_Pandas.html">Topic 05: Data Cleaning in Pandas</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_06_data_visualization/topic_06_visualizations_heroes_project_SG.html">Topic 06:  Data Visualizations</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_07_SQL_and_relational_databases/topic_07_SQL_and_relational_databases_SG.html">TOPIC 07: SQL DATABASES</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_08_noSQL_databases/topic_08_mongodb-SG.html">Topic 08: NoSQL Databases</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_09_json_and_apis/topic_09_json-api-SG.html">Topic 09: Using APIs and JSON Data</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../topic_10_webscraping/topic_10_SG_HTML_CSS_web_scraping.html">Topic 10: HTML, CSS, &amp; Web Scraping</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 2 - Statistics &amp; Regression</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_11_probability_and_combinatorics/topic_11_playlist_probabilities-SG.html">Topic 11 - Intro to Combinatorics &amp; Probability</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_12_statistical_distributions/topic-12-distributions-with-movies-sg.html">Exploring Distributions with Movies Data</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_13_central_limit_theorem/topic_13_central_limit_theorem_SG.html">Topic 13: Central Limit Theorem</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_14_hypothesis_testing/topic_14_hypothesis_testing-SG.html">Topic 14: Hypothesis Testing -  T-Tests</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_15_ANOVA/topic_15_ANOVA_with_neuro_data-SG.html">Topic 15: ANOVAs &amp; Statistical Power with  Neuro Data</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_16_AB_testing/topic_16_AB_testing_with_movies-SG.html">Topic 16: Practicing AB Testing with Movies</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_17_bayesian_statistics/topic_17_bayesian_statistics-SG.html">Topic 17: Bayesian Statistics</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_18_linear_regression/topic_18_intro_to_linear_regression_SG.html">Topic 18: Intro to Linear Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_19_part1_multiple_regression/topic_19_Multiple_Regression_v2-SG.html">Topic 19: Multiple Linear Regression</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_19_part2_model_validation/topic_19_part_2_Multiple_Regression_v2-SG.html">Topic 19 Part 2: Feature Selection &amp; Model Validation</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_2/topic_20_extensions_linear_models/topic_20_extensions_to_linear_models_SG.html">Topic 20: Extensions to Linear Models</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 3 - Machine Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_21_OOP/topic_21_OOP_playing_cards_SG.html">Topic 21: Object-Oriented Programming</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_22_linear_algebra/topic_22_linear_algebra_SG.html">Topic 22: Linear Algebra</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_23_calculus_gradient_descent/topic_23_gradient_descent_SG.html">Topic 23: Cost Functions and Gradient Descent</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_24_regularization/topic_24_Regularization_Ridge_Lasso_v2_SG.html">Topic 24: Feature Selection &amp; Regularization (Ridge and Lasso Regression)</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_25_logistic_regression/topic_25_pt1_LogisticRegression_titanic-v2-SG.html">Topic 25-Pt 1: Intro to Logistic Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_25_logistic_regression/topic_25_pt2_LogisticRegression_titanic-v2-SG.html">Topic 25-Part 2: Evaluating Classifiers, Dealing with Class Imbalance, and <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code></a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_27_KNN/Topic_27_KNN_with_pipelines_with_lab_v3_SG.html">Topic 27: K-Nearest Neighbors<br/> +Topic 32: Pipelines</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_29_decision_trees/topic_29_decision_trees_v2_titanic-SG.html">Topic 29: Decision Trees</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_30_ensemble_methods/topic_30_ensemble_methods-SG.html">Topic 30: Ensemble Methods</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_3/topic_31_support_vector_machines/topic_31_SupportVectorMachines_SG.html">Topic 31: Support Vector Machines</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 4 - Advanced ML &amp; Time Series</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_4/topic_33_pca/topic_33_PCA_SG.html">Topic 33: Principal Component Analysis</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_4/topic_34_clustering/topic_34_Kmeans_clustering_v3_SG.html">Topic 34: Clustering</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_4/topic_35-36_using_databricks_for_pyspark/using_databricks_for_pyspark.html">How to Use Databricks for PySpark Canvas Material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_4/topic_36_recommendation_systems/topic_36_Recommendation_Systems_with_Surprise.html">Topic 36: Recommendation Systems</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_4/topic_37_intro_to_time_series/topic_37_intro_to_time_series_crime_v3-SG.html">Topic 37: Intro to Time Series</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_4/topic_38_time_series_models/topic_38-time_series_models_v3_SG.html">Topic 38: Time Series Models</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_4/topic_39_NLP/topic_39_NLP_finding_trump_v3_SG.html">Topic 39: Natural Language Processing + Topic 28: Bayesian Classification</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_4/topic_40-41_neural_networks/topic_40-41_Artificial_Neural_Networks_v1_SG.html">Topic 40-41: Artificial Neural Networks</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_4/topic_42_tuning_neural_networks/topic_42_tuning_ANNs_with_deep_NLP_v1_SG.html">Topic 42 - Tuning Neural Networks + Deep NLP</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_4/topic_43_AWS/topic_43_operationalizing_code_AWS_SG.html">Topic 43: Operationalizing Code &amp; AWS</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 5 - Capstone &amp; Bonus Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_5/Capstone_Kickoff.html">Capstone Kickoff!</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_5/APIs/working_with_apis.html">Working with APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_5/developing_app_functions/developing-streamlit-app-functions_SG.html">Developing Streamlit App Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_5/tableau/tableau_fundamentals_2021-SG.html">Tableau Fundamentals</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../Phase_5/Bonus%20Notebooks/plotly_visuals.html">Plotly Question</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/master?urlpath=tree/Phase_1/topic_05_data_cleaning_in_pandas/labs_from_class/dsc-data-cleaning-project-master/index-heroes-continued.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/blob/master/Phase_1/topic_05_data_cleaning_in_pandas/labs_from_class/dsc-data-cleaning-project-master/index-heroes-continued.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/issues/new?title=Issue%20on%20page%20%2FPhase_1/topic_05_data_cleaning_in_pandas/labs_from_class/dsc-data-cleaning-project-master/index-heroes-continued.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../_sources/Phase_1/topic_05_data_cleaning_in_pandas/labs_from_class/dsc-data-cleaning-project-master/index-heroes-continued.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Project - Data Cleaning</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objectives">Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-dataset">The dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-started">Getting Started</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#familiarize-yourself-with-the-dataset">Familiarize yourself with the dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dealing-with-missing-values">Dealing with missing values</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visual-alternatives">Visual Alternatives</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#heroes-df"><code class="docutils literal notranslate"><span class="pre">heroes_df</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#powers-df"><code class="docutils literal notranslate"><span class="pre">powers_df</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#joining-grouping-and-aggregating">Joining, Grouping, and Aggregating</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#addressing-99s">Addressing -99s</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#some-initial-investigation">Some Initial Investigation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sample-question-most-common-powers">Sample Question: Most Common Powers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#your-own-investigation">Your Own Investigation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="project-data-cleaning">
+<h1>Project - Data Cleaning<a class="headerlink" href="#project-data-cleaning" title="Permalink to this heading">#</a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
+<p>In this lab, we’ll make use of everything we’ve learned about pandas, data cleaning, and exploratory data analysis. In order to complete this lab, you’ll have to import, clean, combine, reshape, and visualize data to answer questions provided, as well as your own questions!</p>
+</section>
+<section id="objectives">
+<h2>Objectives<a class="headerlink" href="#objectives" title="Permalink to this heading">#</a></h2>
+<p>You will be able to:</p>
+<ul class="simple">
+<li><p>Use different types of joins to merge DataFrames</p></li>
+<li><p>Identify missing values in a dataframe using built-in methods</p></li>
+<li><p>Evaluate and execute the best strategy for dealing with missing, duplicate, and erroneous values for a given dataset</p></li>
+<li><p>Inspect data for duplicates or extraneous values and remove them</p></li>
+</ul>
+</section>
+<section id="the-dataset">
+<h2>The dataset<a class="headerlink" href="#the-dataset" title="Permalink to this heading">#</a></h2>
+<p>In this lab, we’ll work with the comprehensive <a class="reference external" href="https://www.kaggle.com/claudiodavi/superhero-set/data">Super Heroes Dataset</a>, which can be found on Kaggle!</p>
+</section>
+<section id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this heading">#</a></h2>
+<p>In the cell below:</p>
+<ul class="simple">
+<li><p>Import and alias pandas as <code class="docutils literal notranslate"><span class="pre">pd</span></code></p></li>
+<li><p>Import and alias numpy as <code class="docutils literal notranslate"><span class="pre">np</span></code></p></li>
+<li><p>Import and alias seaborn as <code class="docutils literal notranslate"><span class="pre">sns</span></code></p></li>
+<li><p>Import and alias matplotlib.pyplot as <code class="docutils literal notranslate"><span class="pre">plt</span></code></p></li>
+<li><p>Set matplotlib visualizations to display inline in the notebook</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+</pre></div>
+</div>
+</div>
+</div>
+<p>For this lab, our dataset is split among two different sources – <code class="docutils literal notranslate"><span class="pre">'heroes_information.csv'</span></code> and <code class="docutils literal notranslate"><span class="pre">'super_hero_powers.csv'</span></code>.</p>
+<p>Use pandas to read in each file and store them in DataFrames in the appropriate variables below. Then, display the <code class="docutils literal notranslate"><span class="pre">.head()</span></code> of each to ensure that everything loaded correctly.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">heroes_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;heroes_information.csv&#39;</span><span class="p">)</span>
+<span class="n">powers_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;super_hero_powers.csv&#39;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">heroes_df</span><span class="o">.</span><span class="n">head</span><span class="p">(),</span> <span class="n">powers_df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Unnamed: 0</th>
+      <th>name</th>
+      <th>Gender</th>
+      <th>Eye color</th>
+      <th>Race</th>
+      <th>Hair color</th>
+      <th>Height</th>
+      <th>Publisher</th>
+      <th>Skin color</th>
+      <th>Alignment</th>
+      <th>Weight</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>A-Bomb</td>
+      <td>Male</td>
+      <td>yellow</td>
+      <td>Human</td>
+      <td>No Hair</td>
+      <td>203.0</td>
+      <td>Marvel Comics</td>
+      <td>-</td>
+      <td>good</td>
+      <td>441.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>Abe Sapien</td>
+      <td>Male</td>
+      <td>blue</td>
+      <td>Icthyo Sapien</td>
+      <td>No Hair</td>
+      <td>191.0</td>
+      <td>Dark Horse Comics</td>
+      <td>blue</td>
+      <td>good</td>
+      <td>65.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>Abin Sur</td>
+      <td>Male</td>
+      <td>blue</td>
+      <td>Ungaran</td>
+      <td>No Hair</td>
+      <td>185.0</td>
+      <td>DC Comics</td>
+      <td>red</td>
+      <td>good</td>
+      <td>90.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>Abomination</td>
+      <td>Male</td>
+      <td>green</td>
+      <td>Human / Radiation</td>
+      <td>No Hair</td>
+      <td>203.0</td>
+      <td>Marvel Comics</td>
+      <td>-</td>
+      <td>bad</td>
+      <td>441.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>Abraxas</td>
+      <td>Male</td>
+      <td>blue</td>
+      <td>Cosmic Entity</td>
+      <td>Black</td>
+      <td>-99.0</td>
+      <td>Marvel Comics</td>
+      <td>-</td>
+      <td>bad</td>
+      <td>-99.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>hero_names</th>
+      <th>Agility</th>
+      <th>Accelerated Healing</th>
+      <th>Lantern Power Ring</th>
+      <th>Dimensional Awareness</th>
+      <th>Cold Resistance</th>
+      <th>Durability</th>
+      <th>Stealth</th>
+      <th>Energy Absorption</th>
+      <th>Flight</th>
+      <th>...</th>
+      <th>Web Creation</th>
+      <th>Reality Warping</th>
+      <th>Odin Force</th>
+      <th>Symbiote Costume</th>
+      <th>Speed Force</th>
+      <th>Phoenix Force</th>
+      <th>Molecular Dissipation</th>
+      <th>Vision - Cryo</th>
+      <th>Omnipresent</th>
+      <th>Omniscient</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3-D Man</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>A-Bomb</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Abe Sapien</td>
+      <td>True</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Abin Sur</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Abomination</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 168 columns</p>
+</div></div></div>
+</div>
+<p>It looks as if the heroes information dataset contained an index column.  We did not specify that this dataset contained an index column, because we hadn’t seen it yet. Pandas does not know how to tell apart an index column from any other data, so it stored it with the column name <code class="docutils literal notranslate"><span class="pre">Unnamed:</span> <span class="pre">0</span></code>.</p>
+<p>Our DataFrame provided row indices by default, so this column is not needed.  Drop it from the DataFrame in place in the cell below, and then display the head of <code class="docutils literal notranslate"><span class="pre">heroes_df</span></code> to ensure that it worked properly.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># heroes_df.drop(columns=[&#39;Unnamed: 0&#39;],inplace=True)</span>
+<span class="n">example</span> <span class="o">=</span> <span class="n">heroes_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Unnamed: 0&#39;</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="c1"># heroes_df</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">heroes_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Unnamed: 0</th>
+      <th>name</th>
+      <th>Gender</th>
+      <th>Eye color</th>
+      <th>Race</th>
+      <th>Hair color</th>
+      <th>Height</th>
+      <th>Publisher</th>
+      <th>Skin color</th>
+      <th>Alignment</th>
+      <th>Weight</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>A-Bomb</td>
+      <td>Male</td>
+      <td>yellow</td>
+      <td>Human</td>
+      <td>No Hair</td>
+      <td>203.0</td>
+      <td>Marvel Comics</td>
+      <td>-</td>
+      <td>good</td>
+      <td>441.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>Abe Sapien</td>
+      <td>Male</td>
+      <td>blue</td>
+      <td>Icthyo Sapien</td>
+      <td>No Hair</td>
+      <td>191.0</td>
+      <td>Dark Horse Comics</td>
+      <td>blue</td>
+      <td>good</td>
+      <td>65.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>Abin Sur</td>
+      <td>Male</td>
+      <td>blue</td>
+      <td>Ungaran</td>
+      <td>No Hair</td>
+      <td>185.0</td>
+      <td>DC Comics</td>
+      <td>red</td>
+      <td>good</td>
+      <td>90.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>Abomination</td>
+      <td>Male</td>
+      <td>green</td>
+      <td>Human / Radiation</td>
+      <td>No Hair</td>
+      <td>203.0</td>
+      <td>Marvel Comics</td>
+      <td>-</td>
+      <td>bad</td>
+      <td>441.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>Abraxas</td>
+      <td>Male</td>
+      <td>blue</td>
+      <td>Cosmic Entity</td>
+      <td>Black</td>
+      <td>-99.0</td>
+      <td>Marvel Comics</td>
+      <td>-</td>
+      <td>bad</td>
+      <td>-99.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>729</th>
+      <td>729</td>
+      <td>Yellowjacket II</td>
+      <td>Female</td>
+      <td>blue</td>
+      <td>Human</td>
+      <td>Strawberry Blond</td>
+      <td>165.0</td>
+      <td>Marvel Comics</td>
+      <td>-</td>
+      <td>good</td>
+      <td>52.0</td>
+    </tr>
+    <tr>
+      <th>730</th>
+      <td>730</td>
+      <td>Ymir</td>
+      <td>Male</td>
+      <td>white</td>
+      <td>Frost Giant</td>
+      <td>No Hair</td>
+      <td>304.8</td>
+      <td>Marvel Comics</td>
+      <td>white</td>
+      <td>good</td>
+      <td>-99.0</td>
+    </tr>
+    <tr>
+      <th>731</th>
+      <td>731</td>
+      <td>Yoda</td>
+      <td>Male</td>
+      <td>brown</td>
+      <td>Yoda's species</td>
+      <td>White</td>
+      <td>66.0</td>
+      <td>George Lucas</td>
+      <td>green</td>
+      <td>good</td>
+      <td>17.0</td>
+    </tr>
+    <tr>
+      <th>732</th>
+      <td>732</td>
+      <td>Zatanna</td>
+      <td>Female</td>
+      <td>blue</td>
+      <td>Human</td>
+      <td>Black</td>
+      <td>170.0</td>
+      <td>DC Comics</td>
+      <td>-</td>
+      <td>good</td>
+      <td>57.0</td>
+    </tr>
+    <tr>
+      <th>733</th>
+      <td>733</td>
+      <td>Zoom</td>
+      <td>Male</td>
+      <td>red</td>
+      <td>-</td>
+      <td>Brown</td>
+      <td>185.0</td>
+      <td>DC Comics</td>
+      <td>-</td>
+      <td>bad</td>
+      <td>81.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>734 rows × 11 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">heroes_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;heroes_information.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">heroes_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>Gender</th>
+      <th>Eye color</th>
+      <th>Race</th>
+      <th>Hair color</th>
+      <th>Height</th>
+      <th>Publisher</th>
+      <th>Skin color</th>
+      <th>Alignment</th>
+      <th>Weight</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>A-Bomb</td>
+      <td>Male</td>
+      <td>yellow</td>
+      <td>Human</td>
+      <td>No Hair</td>
+      <td>203.0</td>
+      <td>Marvel Comics</td>
+      <td>-</td>
+      <td>good</td>
+      <td>441.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Abe Sapien</td>
+      <td>Male</td>
+      <td>blue</td>
+      <td>Icthyo Sapien</td>
+      <td>No Hair</td>
+      <td>191.0</td>
+      <td>Dark Horse Comics</td>
+      <td>blue</td>
+      <td>good</td>
+      <td>65.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Abin Sur</td>
+      <td>Male</td>
+      <td>blue</td>
+      <td>Ungaran</td>
+      <td>No Hair</td>
+      <td>185.0</td>
+      <td>DC Comics</td>
+      <td>red</td>
+      <td>good</td>
+      <td>90.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Abomination</td>
+      <td>Male</td>
+      <td>green</td>
+      <td>Human / Radiation</td>
+      <td>No Hair</td>
+      <td>203.0</td>
+      <td>Marvel Comics</td>
+      <td>-</td>
+      <td>bad</td>
+      <td>441.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Abraxas</td>
+      <td>Male</td>
+      <td>blue</td>
+      <td>Cosmic Entity</td>
+      <td>Black</td>
+      <td>-99.0</td>
+      <td>Marvel Comics</td>
+      <td>-</td>
+      <td>bad</td>
+      <td>-99.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>729</th>
+      <td>Yellowjacket II</td>
+      <td>Female</td>
+      <td>blue</td>
+      <td>Human</td>
+      <td>Strawberry Blond</td>
+      <td>165.0</td>
+      <td>Marvel Comics</td>
+      <td>-</td>
+      <td>good</td>
+      <td>52.0</td>
+    </tr>
+    <tr>
+      <th>730</th>
+      <td>Ymir</td>
+      <td>Male</td>
+      <td>white</td>
+      <td>Frost Giant</td>
+      <td>No Hair</td>
+      <td>304.8</td>
+      <td>Marvel Comics</td>
+      <td>white</td>
+      <td>good</td>
+      <td>-99.0</td>
+    </tr>
+    <tr>
+      <th>731</th>
+      <td>Yoda</td>
+      <td>Male</td>
+      <td>brown</td>
+      <td>Yoda's species</td>
+      <td>White</td>
+      <td>66.0</td>
+      <td>George Lucas</td>
+      <td>green</td>
+      <td>good</td>
+      <td>17.0</td>
+    </tr>
+    <tr>
+      <th>732</th>
+      <td>Zatanna</td>
+      <td>Female</td>
+      <td>blue</td>
+      <td>Human</td>
+      <td>Black</td>
+      <td>170.0</td>
+      <td>DC Comics</td>
+      <td>-</td>
+      <td>good</td>
+      <td>57.0</td>
+    </tr>
+    <tr>
+      <th>733</th>
+      <td>Zoom</td>
+      <td>Male</td>
+      <td>red</td>
+      <td>-</td>
+      <td>Brown</td>
+      <td>185.0</td>
+      <td>DC Comics</td>
+      <td>-</td>
+      <td>bad</td>
+      <td>81.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>734 rows × 10 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="familiarize-yourself-with-the-dataset">
+<h2>Familiarize yourself with the dataset<a class="headerlink" href="#familiarize-yourself-with-the-dataset" title="Permalink to this heading">#</a></h2>
+<p>The first step in our Exploratory Data Analysis will be to get familiar with the data.  This step includes:</p>
+<ul class="simple">
+<li><p>Understanding the dimensionality of your dataset</p></li>
+<li><p>Investigating what type of data it contains, and the data types used to store it</p></li>
+<li><p>Discovering how missing values are encoded, and how many there are</p></li>
+<li><p>Getting a feel for what information it does and doesn’t contain</p></li>
+</ul>
+<p>In the cell below, get the descriptive statistics of each DataFrame.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">heroes_df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+Int64Index: 734 entries, 0 to 733
+Data columns (total 10 columns):
+ #   Column      Non-Null Count  Dtype  
+---  ------      --------------  -----  
+ 0   name        734 non-null    object 
+ 1   Gender      734 non-null    object 
+ 2   Eye color   734 non-null    object 
+ 3   Race        734 non-null    object 
+ 4   Hair color  734 non-null    object 
+ 5   Height      734 non-null    float64
+ 6   Publisher   719 non-null    object 
+ 7   Skin color  734 non-null    object 
+ 8   Alignment   734 non-null    object 
+ 9   Weight      732 non-null    float64
+dtypes: float64(2), object(8)
+memory usage: 63.1+ KB
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># np.nanmean()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">heroes_df</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Height</th>
+      <th>Weight</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>734.00</td>
+      <td>732.00</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>102.25</td>
+      <td>43.86</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>139.62</td>
+      <td>130.82</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>-99.00</td>
+      <td>-99.00</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>-99.00</td>
+      <td>-99.00</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>175.00</td>
+      <td>62.00</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>185.00</td>
+      <td>90.00</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>975.00</td>
+      <td>900.00</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="dealing-with-missing-values">
+<h2>Dealing with missing values<a class="headerlink" href="#dealing-with-missing-values" title="Permalink to this heading">#</a></h2>
+<p>Starting in the cell below, detect and deal with any missing values in either DataFrame. Then, explain your methodology for detecting and dealing with outliers in the markdown section below. Be sure to explain your strategy for dealing with missing values in numeric columns, as well as your strategy for dealing with missing values in non-numeric columns.</p>
+<p>Note that if you need to add more cells to write code in, you can do this by:</p>
+<p><strong>1.</strong> Highlighting a cell and then pressing <code class="docutils literal notranslate"><span class="pre">ESC</span></code> to enter command mode.<br />
+<strong>2.</strong> Press <code class="docutils literal notranslate"><span class="pre">A</span></code> to add a cell above the highlighted cell, or <code class="docutils literal notranslate"><span class="pre">B</span></code> to add a cell below the highlighted cell.</p>
+<p>Describe your strategy below this line:</p>
+<hr class="docutils" />
+<section id="visual-alternatives">
+<h3>Visual Alternatives<a class="headerlink" href="#visual-alternatives" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># !pip install missingno</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">missingno</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">missingno</span><span class="o">.</span><span class="n">matrix</span><span class="p">(</span><span class="n">heroes_df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+</pre></div>
+</div>
+<img alt="../../../../_images/faec5f6a5443254170d89cc41fb953e155cbf3b503a5d92a3c34d3733add47fc.png" src="../../../../_images/faec5f6a5443254170d89cc41fb953e155cbf3b503a5d92a3c34d3733add47fc.png" />
+</div>
+</div>
+</section>
+<section id="heroes-df">
+<h3><code class="docutils literal notranslate"><span class="pre">heroes_df</span></code><a class="headerlink" href="#heroes-df" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">heroes_df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">res</span><span class="p">[</span><span class="n">res</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Publisher    15
+Weight        2
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># heroes_df.loc[heroes_df[&#39;Publisher&#39;].isna(),&#39;Publisher&#39; ]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">heroes_df</span><span class="p">[</span><span class="n">heroes_df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>Gender</th>
+      <th>Eye color</th>
+      <th>Race</th>
+      <th>Hair color</th>
+      <th>Height</th>
+      <th>Publisher</th>
+      <th>Skin color</th>
+      <th>Alignment</th>
+      <th>Weight</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>46</th>
+      <td>Astro Boy</td>
+      <td>Male</td>
+      <td>brown</td>
+      <td>-</td>
+      <td>Black</td>
+      <td>-99.0</td>
+      <td>NaN</td>
+      <td>-</td>
+      <td>good</td>
+      <td>-99.0</td>
+    </tr>
+    <tr>
+      <th>86</th>
+      <td>Bionic Woman</td>
+      <td>Female</td>
+      <td>blue</td>
+      <td>Cyborg</td>
+      <td>Black</td>
+      <td>-99.0</td>
+      <td>NaN</td>
+      <td>-</td>
+      <td>good</td>
+      <td>-99.0</td>
+    </tr>
+    <tr>
+      <th>138</th>
+      <td>Brundlefly</td>
+      <td>Male</td>
+      <td>-</td>
+      <td>Mutant</td>
+      <td>-</td>
+      <td>193.0</td>
+      <td>NaN</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-99.0</td>
+    </tr>
+    <tr>
+      <th>175</th>
+      <td>Chuck Norris</td>
+      <td>Male</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>178.0</td>
+      <td>NaN</td>
+      <td>-</td>
+      <td>good</td>
+      <td>-99.0</td>
+    </tr>
+    <tr>
+      <th>204</th>
+      <td>Darkside</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-99.0</td>
+      <td>NaN</td>
+      <td>-</td>
+      <td>bad</td>
+      <td>-99.0</td>
+    </tr>
+    <tr>
+      <th>244</th>
+      <td>Ethan Hunt</td>
+      <td>Male</td>
+      <td>brown</td>
+      <td>Human</td>
+      <td>Brown</td>
+      <td>168.0</td>
+      <td>NaN</td>
+      <td>-</td>
+      <td>good</td>
+      <td>-99.0</td>
+    </tr>
+    <tr>
+      <th>263</th>
+      <td>Flash Gordon</td>
+      <td>Male</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-99.0</td>
+      <td>NaN</td>
+      <td>-</td>
+      <td>good</td>
+      <td>-99.0</td>
+    </tr>
+    <tr>
+      <th>286</th>
+      <td>Godzilla</td>
+      <td>-</td>
+      <td>-</td>
+      <td>Kaiju</td>
+      <td>-</td>
+      <td>108.0</td>
+      <td>NaN</td>
+      <td>grey</td>
+      <td>bad</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>348</th>
+      <td>Jack Bauer</td>
+      <td>Male</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-99.0</td>
+      <td>NaN</td>
+      <td>-</td>
+      <td>good</td>
+      <td>-99.0</td>
+    </tr>
+    <tr>
+      <th>354</th>
+      <td>Jason Bourne</td>
+      <td>Male</td>
+      <td>-</td>
+      <td>Human</td>
+      <td>-</td>
+      <td>-99.0</td>
+      <td>NaN</td>
+      <td>-</td>
+      <td>good</td>
+      <td>-99.0</td>
+    </tr>
+    <tr>
+      <th>381</th>
+      <td>Katniss Everdeen</td>
+      <td>Female</td>
+      <td>-</td>
+      <td>Human</td>
+      <td>-</td>
+      <td>-99.0</td>
+      <td>NaN</td>
+      <td>-</td>
+      <td>good</td>
+      <td>-99.0</td>
+    </tr>
+    <tr>
+      <th>389</th>
+      <td>King Kong</td>
+      <td>Male</td>
+      <td>yellow</td>
+      <td>Animal</td>
+      <td>Black</td>
+      <td>30.5</td>
+      <td>NaN</td>
+      <td>-</td>
+      <td>good</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>393</th>
+      <td>Kool-Aid Man</td>
+      <td>Male</td>
+      <td>black</td>
+      <td>-</td>
+      <td>No Hair</td>
+      <td>-99.0</td>
+      <td>NaN</td>
+      <td>red</td>
+      <td>good</td>
+      <td>-99.0</td>
+    </tr>
+    <tr>
+      <th>542</th>
+      <td>Rambo</td>
+      <td>Male</td>
+      <td>brown</td>
+      <td>Human</td>
+      <td>Black</td>
+      <td>178.0</td>
+      <td>NaN</td>
+      <td>-</td>
+      <td>good</td>
+      <td>83.0</td>
+    </tr>
+    <tr>
+      <th>658</th>
+      <td>The Cape</td>
+      <td>Male</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-99.0</td>
+      <td>NaN</td>
+      <td>-</td>
+      <td>good</td>
+      <td>-99.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">heroes_df</span><span class="p">[</span><span class="s1">&#39;Publisher&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">heroes_df</span><span class="p">[</span><span class="s1">&#39;Publisher&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s1">&#39;Missing&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Missing </span>
+<span class="n">heroes_df</span><span class="p">[</span><span class="n">heroes_df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>Gender</th>
+      <th>Eye color</th>
+      <th>Race</th>
+      <th>Hair color</th>
+      <th>Height</th>
+      <th>Publisher</th>
+      <th>Skin color</th>
+      <th>Alignment</th>
+      <th>Weight</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>286</th>
+      <td>Godzilla</td>
+      <td>-</td>
+      <td>-</td>
+      <td>Kaiju</td>
+      <td>-</td>
+      <td>108.0</td>
+      <td>Missing</td>
+      <td>grey</td>
+      <td>bad</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>389</th>
+      <td>King Kong</td>
+      <td>Male</td>
+      <td>yellow</td>
+      <td>Animal</td>
+      <td>Black</td>
+      <td>30.5</td>
+      <td>Missing</td>
+      <td>-</td>
+      <td>good</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">heroes_df</span><span class="p">[</span><span class="s1">&#39;Weight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>900.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">heroes_df</span><span class="p">[</span><span class="s1">&#39;Weight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">heroes_df</span><span class="p">[</span><span class="s1">&#39;Weight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">heroes_df</span><span class="p">[</span><span class="n">heroes_df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>Gender</th>
+      <th>Eye color</th>
+      <th>Race</th>
+      <th>Hair color</th>
+      <th>Height</th>
+      <th>Publisher</th>
+      <th>Skin color</th>
+      <th>Alignment</th>
+      <th>Weight</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">heroes_df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>name          0
+Gender        0
+Eye color     0
+Race          0
+Hair color    0
+Height        0
+Publisher     0
+Skin color    0
+Alignment     0
+Weight        0
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="powers-df">
+<h3><code class="docutils literal notranslate"><span class="pre">powers_df</span></code><a class="headerlink" href="#powers-df" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">powers_df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">res</span><span class="p">[</span> <span class="n">res</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Series([], dtype: int64)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="joining-grouping-and-aggregating">
+<h2>Joining, Grouping, and Aggregating<a class="headerlink" href="#joining-grouping-and-aggregating" title="Permalink to this heading">#</a></h2>
+<p>In the cell below, join the two DataFrames.  Think about which sort of join you should use, as well as which columns you should join on.  Rename columns and manipulate as needed.</p>
+<p><strong><em>HINT:</em></strong> Consider the possibility that the columns you choose to join on contain duplicate entries. If that is the case, devise a strategy to deal with the duplicates.</p>
+<p><strong><em>HINT:</em></strong> If the join throws an error message, consider setting the column you want to join on as the index for each DataFrame.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">heroes_df</span><span class="p">[</span><span class="n">heroes_df</span><span class="o">.</span><span class="n">duplicated</span><span class="p">(</span><span class="n">keep</span><span class="o">=</span><span class="kc">False</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>Gender</th>
+      <th>Eye color</th>
+      <th>Race</th>
+      <th>Hair color</th>
+      <th>Height</th>
+      <th>Publisher</th>
+      <th>Skin color</th>
+      <th>Alignment</th>
+      <th>Weight</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>290</th>
+      <td>Goliath</td>
+      <td>Male</td>
+      <td>-</td>
+      <td>Human</td>
+      <td>-</td>
+      <td>-99.0</td>
+      <td>Marvel Comics</td>
+      <td>-</td>
+      <td>good</td>
+      <td>-99.0</td>
+    </tr>
+    <tr>
+      <th>291</th>
+      <td>Goliath</td>
+      <td>Male</td>
+      <td>-</td>
+      <td>Human</td>
+      <td>-</td>
+      <td>-99.0</td>
+      <td>Marvel Comics</td>
+      <td>-</td>
+      <td>good</td>
+      <td>-99.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">heroes_df</span> <span class="o">=</span> <span class="n">heroes_df</span><span class="p">[</span><span class="o">~</span><span class="n">heroes_df</span><span class="o">.</span><span class="n">duplicated</span><span class="p">()]</span>
+<span class="n">heroes_df</span><span class="p">[</span><span class="n">heroes_df</span><span class="o">.</span><span class="n">duplicated</span><span class="p">()]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>Gender</th>
+      <th>Eye color</th>
+      <th>Race</th>
+      <th>Hair color</th>
+      <th>Height</th>
+      <th>Publisher</th>
+      <th>Skin color</th>
+      <th>Alignment</th>
+      <th>Weight</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">heroes_df</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">heroes_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span><span class="n">powers_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>Gender</th>
+      <th>Eye color</th>
+      <th>Race</th>
+      <th>Hair color</th>
+      <th>Height</th>
+      <th>Publisher</th>
+      <th>Skin color</th>
+      <th>Alignment</th>
+      <th>Weight</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>A-Bomb</td>
+      <td>Male</td>
+      <td>yellow</td>
+      <td>Human</td>
+      <td>No Hair</td>
+      <td>203.0</td>
+      <td>Marvel Comics</td>
+      <td>-</td>
+      <td>good</td>
+      <td>441.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Abe Sapien</td>
+      <td>Male</td>
+      <td>blue</td>
+      <td>Icthyo Sapien</td>
+      <td>No Hair</td>
+      <td>191.0</td>
+      <td>Dark Horse Comics</td>
+      <td>blue</td>
+      <td>good</td>
+      <td>65.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>hero_names</th>
+      <th>Agility</th>
+      <th>Accelerated Healing</th>
+      <th>Lantern Power Ring</th>
+      <th>Dimensional Awareness</th>
+      <th>Cold Resistance</th>
+      <th>Durability</th>
+      <th>Stealth</th>
+      <th>Energy Absorption</th>
+      <th>Flight</th>
+      <th>...</th>
+      <th>Web Creation</th>
+      <th>Reality Warping</th>
+      <th>Odin Force</th>
+      <th>Symbiote Costume</th>
+      <th>Speed Force</th>
+      <th>Phoenix Force</th>
+      <th>Molecular Dissipation</th>
+      <th>Vision - Cryo</th>
+      <th>Omnipresent</th>
+      <th>Omniscient</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3-D Man</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>A-Bomb</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+<p>2 rows × 168 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">heroes_df</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">powers_df</span><span class="p">,)[[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span><span class="s1">&#39;hero_names&#39;</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># heroes_df</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">heroes_df</span><span class="p">,</span><span class="n">powers_df</span><span class="p">,</span><span class="n">left_on</span><span class="o">=</span><span class="s1">&#39;name&#39;</span><span class="p">,</span><span class="n">right_on</span><span class="o">=</span><span class="s1">&#39;hero_names&#39;</span><span class="p">,</span><span class="n">how</span><span class="o">=</span><span class="s1">&#39;inner&#39;</span><span class="p">)</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>Gender</th>
+      <th>Eye color</th>
+      <th>Race</th>
+      <th>Hair color</th>
+      <th>Height</th>
+      <th>Publisher</th>
+      <th>Skin color</th>
+      <th>Alignment</th>
+      <th>Weight</th>
+      <th>...</th>
+      <th>Web Creation</th>
+      <th>Reality Warping</th>
+      <th>Odin Force</th>
+      <th>Symbiote Costume</th>
+      <th>Speed Force</th>
+      <th>Phoenix Force</th>
+      <th>Molecular Dissipation</th>
+      <th>Vision - Cryo</th>
+      <th>Omnipresent</th>
+      <th>Omniscient</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>A-Bomb</td>
+      <td>Male</td>
+      <td>yellow</td>
+      <td>Human</td>
+      <td>No Hair</td>
+      <td>203.0</td>
+      <td>Marvel Comics</td>
+      <td>-</td>
+      <td>good</td>
+      <td>441.0</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Abe Sapien</td>
+      <td>Male</td>
+      <td>blue</td>
+      <td>Icthyo Sapien</td>
+      <td>No Hair</td>
+      <td>191.0</td>
+      <td>Dark Horse Comics</td>
+      <td>blue</td>
+      <td>good</td>
+      <td>65.0</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Abin Sur</td>
+      <td>Male</td>
+      <td>blue</td>
+      <td>Ungaran</td>
+      <td>No Hair</td>
+      <td>185.0</td>
+      <td>DC Comics</td>
+      <td>red</td>
+      <td>good</td>
+      <td>90.0</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Abomination</td>
+      <td>Male</td>
+      <td>green</td>
+      <td>Human / Radiation</td>
+      <td>No Hair</td>
+      <td>203.0</td>
+      <td>Marvel Comics</td>
+      <td>-</td>
+      <td>bad</td>
+      <td>441.0</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Abraxas</td>
+      <td>Male</td>
+      <td>blue</td>
+      <td>Cosmic Entity</td>
+      <td>Black</td>
+      <td>-99.0</td>
+      <td>Marvel Comics</td>
+      <td>-</td>
+      <td>bad</td>
+      <td>-99.0</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>655</th>
+      <td>Yellowjacket II</td>
+      <td>Female</td>
+      <td>blue</td>
+      <td>Human</td>
+      <td>Strawberry Blond</td>
+      <td>165.0</td>
+      <td>Marvel Comics</td>
+      <td>-</td>
+      <td>good</td>
+      <td>52.0</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>656</th>
+      <td>Ymir</td>
+      <td>Male</td>
+      <td>white</td>
+      <td>Frost Giant</td>
+      <td>No Hair</td>
+      <td>304.8</td>
+      <td>Marvel Comics</td>
+      <td>white</td>
+      <td>good</td>
+      <td>-99.0</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>657</th>
+      <td>Yoda</td>
+      <td>Male</td>
+      <td>brown</td>
+      <td>Yoda's species</td>
+      <td>White</td>
+      <td>66.0</td>
+      <td>George Lucas</td>
+      <td>green</td>
+      <td>good</td>
+      <td>17.0</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>658</th>
+      <td>Zatanna</td>
+      <td>Female</td>
+      <td>blue</td>
+      <td>Human</td>
+      <td>Black</td>
+      <td>170.0</td>
+      <td>DC Comics</td>
+      <td>-</td>
+      <td>good</td>
+      <td>57.0</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>659</th>
+      <td>Zoom</td>
+      <td>Male</td>
+      <td>red</td>
+      <td>-</td>
+      <td>Brown</td>
+      <td>185.0</td>
+      <td>DC Comics</td>
+      <td>-</td>
+      <td>bad</td>
+      <td>81.0</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+<p>660 rows × 178 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># pd.merge(heroes_df,powers_df,left_on=&#39;name&#39;,right_on=&#39;hero_names&#39;,how=&#39;outer&#39;)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In the cell below, subset male and female heroes into different dataframes.  Create a scatterplot of the height and weight of each hero, with weight as the y-axis.  Plot both the male and female heroes subset into each dataframe, and make the color for each point in the scatterplot correspond to the gender of the superhero.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;seaborn-talk&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Height&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Weight&#39;</span><span class="p">,</span><span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Gender&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;Height&#39;, ylabel=&#39;Weight&#39;&gt;
+</pre></div>
+</div>
+<img alt="../../../../_images/9a262b7d7cb6e5ac9ddf03c67fe5112b7d061ff53cdf0b5a5a81702a88a5f620.png" src="../../../../_images/9a262b7d7cb6e5ac9ddf03c67fe5112b7d061ff53cdf0b5a5a81702a88a5f620.png" />
+</div>
+</div>
+<section id="addressing-99s">
+<h3>Addressing -99s<a class="headerlink" href="#addressing-99s" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Height&#39;</span><span class="p">]</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Weight&#39;</span><span class="p">]</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>Gender</th>
+      <th>Eye color</th>
+      <th>Race</th>
+      <th>Hair color</th>
+      <th>Height</th>
+      <th>Publisher</th>
+      <th>Skin color</th>
+      <th>Alignment</th>
+      <th>Weight</th>
+      <th>...</th>
+      <th>Web Creation</th>
+      <th>Reality Warping</th>
+      <th>Odin Force</th>
+      <th>Symbiote Costume</th>
+      <th>Speed Force</th>
+      <th>Phoenix Force</th>
+      <th>Molecular Dissipation</th>
+      <th>Vision - Cryo</th>
+      <th>Omnipresent</th>
+      <th>Omniscient</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>4</th>
+      <td>Abraxas</td>
+      <td>Male</td>
+      <td>blue</td>
+      <td>Cosmic Entity</td>
+      <td>Black</td>
+      <td>-99.0</td>
+      <td>Marvel Comics</td>
+      <td>-</td>
+      <td>bad</td>
+      <td>-99.0</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Adam Monroe</td>
+      <td>Male</td>
+      <td>blue</td>
+      <td>-</td>
+      <td>Blond</td>
+      <td>-99.0</td>
+      <td>NBC - Heroes</td>
+      <td>-</td>
+      <td>good</td>
+      <td>-99.0</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>Alex Mercer</td>
+      <td>Male</td>
+      <td>-</td>
+      <td>Human</td>
+      <td>-</td>
+      <td>-99.0</td>
+      <td>Wildstorm</td>
+      <td>-</td>
+      <td>bad</td>
+      <td>-99.0</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>Alex Woolsly</td>
+      <td>Male</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-99.0</td>
+      <td>NBC - Heroes</td>
+      <td>-</td>
+      <td>good</td>
+      <td>-99.0</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>Allan Quatermain</td>
+      <td>Male</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-99.0</td>
+      <td>Wildstorm</td>
+      <td>-</td>
+      <td>good</td>
+      <td>-99.0</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>642</th>
+      <td>Watcher</td>
+      <td>Male</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-99.0</td>
+      <td>Marvel Comics</td>
+      <td>-</td>
+      <td>good</td>
+      <td>-99.0</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>643</th>
+      <td>Weapon XI</td>
+      <td>Male</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-99.0</td>
+      <td>Marvel Comics</td>
+      <td>-</td>
+      <td>bad</td>
+      <td>-99.0</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>644</th>
+      <td>White Canary</td>
+      <td>Female</td>
+      <td>brown</td>
+      <td>Human</td>
+      <td>Black</td>
+      <td>-99.0</td>
+      <td>DC Comics</td>
+      <td>-</td>
+      <td>bad</td>
+      <td>-99.0</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>645</th>
+      <td>Wildfire</td>
+      <td>Male</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-99.0</td>
+      <td>DC Comics</td>
+      <td>-</td>
+      <td>good</td>
+      <td>-99.0</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>656</th>
+      <td>Ymir</td>
+      <td>Male</td>
+      <td>white</td>
+      <td>Frost Giant</td>
+      <td>No Hair</td>
+      <td>304.8</td>
+      <td>Marvel Comics</td>
+      <td>white</td>
+      <td>good</td>
+      <td>-99.0</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+<p>195 rows × 178 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Height&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Height&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span> <span class="k">if</span> <span class="n">x</span><span class="o">&lt;</span><span class="mi">0</span> <span class="k">else</span> <span class="n">x</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Height&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>170
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="some-initial-investigation">
+<h2>Some Initial Investigation<a class="headerlink" href="#some-initial-investigation" title="Permalink to this heading">#</a></h2>
+<p>Next, slice the DataFrame as needed and visualize the distribution of heights and weights by gender.  You should have 4 total plots.</p>
+<p>In the cell below:</p>
+<ul class="simple">
+<li><p>Slice the DataFrame into separate DataFrames by gender</p></li>
+<li><p>Complete the <code class="docutils literal notranslate"><span class="pre">show_distplot()</span></code> function.  This helper function should take in a DataFrame, a string containing the gender we want to visualize, and the column name we want to visualize by gender. The function should display a distplot visualization from seaborn of the column/gender combination.</p></li>
+</ul>
+<p>Hint: Don’t forget to check the <a class="reference external" href="https://seaborn.pydata.org/generated/seaborn.distplot.html">seaborn documentation for distplot</a> if you have questions about how to use it correctly!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">male_heroes_df</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">female_heroes_df</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">show_distplot</span><span class="p">(</span><span class="n">dataframe</span><span class="p">,</span> <span class="n">gender</span><span class="p">,</span> <span class="n">column_name</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Male Height</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Male Weight</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Female Height</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Female Weight</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Discuss your findings from the plots above, with respect to the distribution of height and weight by gender.  Your explanation should include a discussion of any relevant summary statistics, including mean, median, mode, and the overall shape of each distribution.</p>
+<p>Write your answer below this line:</p>
+<hr class="docutils" />
+<section id="sample-question-most-common-powers">
+<h3>Sample Question: Most Common Powers<a class="headerlink" href="#sample-question-most-common-powers" title="Permalink to this heading">#</a></h3>
+<p>The rest of this notebook will be left to you to investigate the dataset by formulating your own questions, and then seeking answers using pandas and numpy.  Every answer should include some sort of visualization, when appropriate. Before moving on to formulating your own questions, use the dataset to answer the following questions about superhero powers:</p>
+<ul class="simple">
+<li><p>What are the 5 most common powers overall?</p></li>
+<li><p>What are the 5 most common powers in the Marvel Universe?</p></li>
+<li><p>What are the 5 most common powers in the DC Universe?</p></li>
+</ul>
+<p>Analyze the results you found above to answer the following question:</p>
+<p>How do the top 5 powers in the Marvel and DC universes compare?  Are they similar, or are there significant differences? How do they compare to the overall trends in the entire Superheroes dataset?</p>
+<p>Write your answer below this line:</p>
+</section>
+<hr class="docutils" />
+<section id="your-own-investigation">
+<h3>Your Own Investigation<a class="headerlink" href="#your-own-investigation" title="Permalink to this heading">#</a></h3>
+<p>For the remainder of this lab, you’ll be focusing on coming up with and answering your own question, just like we did above.  Your question should not be overly simple, and should require both descriptive statistics and data visualization to answer.  In case you’re unsure of what questions to ask, some sample questions have been provided below.</p>
+<p>Pick one of the following questions to investigate and answer, or come up with one of your own!</p>
+<ul class="simple">
+<li><p>Which powers have the highest chance of co-occurring in a hero (e.g. super strength and flight), and does this differ by gender?</p></li>
+<li><p>Is there a relationship between a hero’s height and weight and their powerset?</p></li>
+<li><p>What is the distribution of skin colors amongst alien heroes?</p></li>
+</ul>
+<p>Explain your question below this line:</p>
+<hr class="docutils" />
+<p>Some sample cells have been provided to give you room to work. If you need to create more cells, you can do this easily by:</p>
+<ol class="arabic simple">
+<li><p>Highlighting a cell and then pressing <code class="docutils literal notranslate"><span class="pre">esc</span></code> to enter command mode.</p></li>
+<li><p>Pressing <code class="docutils literal notranslate"><span class="pre">b</span></code> to add a cell below the currently highlighted cell, or <code class="docutils literal notranslate"><span class="pre">a</span></code> to add one above it.</p></li>
+</ol>
+<p>Be sure to include thoughtful, well-labeled visualizations to back up your analysis!</p>
+</section>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">#</a></h2>
+<p>In this lab, we demonstrated our mastery of:</p>
+<ul class="simple">
+<li><p>Using all of our Pandas knowledge to date to clean the dataset and deal with null values</p></li>
+<li><p>Using Queries and aggregations to group the data into interesting subsets as needed</p></li>
+<li><p>Using descriptive statistics and data visualization to find answers to questions we may have about the data</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Phase_1/topic_05_data_cleaning_in_pandas/labs_from_class/dsc-data-cleaning-project-master"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objectives">Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-dataset">The dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-started">Getting Started</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#familiarize-yourself-with-the-dataset">Familiarize yourself with the dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dealing-with-missing-values">Dealing with missing values</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visual-alternatives">Visual Alternatives</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#heroes-df"><code class="docutils literal notranslate"><span class="pre">heroes_df</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#powers-df"><code class="docutils literal notranslate"><span class="pre">powers_df</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#joining-grouping-and-aggregating">Joining, Grouping, and Aggregating</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#addressing-99s">Addressing -99s</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#some-initial-investigation">Some Initial Investigation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sample-question-most-common-powers">Sample Question: Most Common Powers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#your-own-investigation">Your Own Investigation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By James Irving, PhD
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

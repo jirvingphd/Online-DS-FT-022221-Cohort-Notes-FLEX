@@ -1,0 +1,1370 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Capstone Kickoff! &#8212; Data Science Curriculum</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Phase_5/Capstone_Kickoff';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Working with APIs" href="APIs/working_with_apis.html" />
+    <link rel="prev" title="Topic 43: Operationalizing Code &amp; AWS" href="../Phase_4/topic_43_AWS/topic_43_operationalizing_code_AWS_SG.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/flatironschool_banner.jpg" class="logo__image only-light" alt="Data Science Curriculum - Home"/>
+    <script>document.write(`<img src="../_static/flatironschool_banner.jpg" class="logo__image only-dark" alt="Data Science Curriculum - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Data Science Curriculum
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 1 - Python &amp; Data Fundamentals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Phase_1/topic_01_getting_started/topic_01_getting_started.html">Topic 1: Getting Started with Data Science</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../Phase_1/topic_02_bash_git/topic_02_bash_and_git.html">Topic 02:  Bash and Git</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../Phase_1/topic_03_control_flow_functions/topic_03_control_flow_and_functions.html">Topic 03: Control Flow, Functions, and Statistics</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../Phase_1/topic_04_python_libraries/topic_04_intro_to_libraries_numpy_SG.html">Topic 04-Part 1: Python Libraries &amp; NumPy</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../Phase_1/topic_04_python_libraries/topic_04_pt-2_brief_intro_to_pandas-SG.html">Topic 04-Part 2: Brief Intro to Pandas with Doctor Who</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Phase_1/topic_05_data_cleaning_in_pandas/topic_05_Data_Cleaning_in_Pandas.html">Topic 05: Data Cleaning in Pandas</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../Phase_1/topic_06_data_visualization/topic_06_visualizations_heroes_project_SG.html">Topic 06:  Data Visualizations</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../Phase_1/topic_07_SQL_and_relational_databases/topic_07_SQL_and_relational_databases_SG.html">TOPIC 07: SQL DATABASES</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../Phase_1/topic_08_noSQL_databases/topic_08_mongodb-SG.html">Topic 08: NoSQL Databases</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../Phase_1/topic_09_json_and_apis/topic_09_json-api-SG.html">Topic 09: Using APIs and JSON Data</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../Phase_1/topic_10_webscraping/topic_10_SG_HTML_CSS_web_scraping.html">Topic 10: HTML, CSS, &amp; Web Scraping</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 2 - Statistics &amp; Regression</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Phase_2/topic_11_probability_and_combinatorics/topic_11_playlist_probabilities-SG.html">Topic 11 - Intro to Combinatorics &amp; Probability</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../Phase_2/topic_12_statistical_distributions/topic-12-distributions-with-movies-sg.html">Exploring Distributions with Movies Data</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../Phase_2/topic_13_central_limit_theorem/topic_13_central_limit_theorem_SG.html">Topic 13: Central Limit Theorem</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../Phase_2/topic_14_hypothesis_testing/topic_14_hypothesis_testing-SG.html">Topic 14: Hypothesis Testing -  T-Tests</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../Phase_2/topic_15_ANOVA/topic_15_ANOVA_with_neuro_data-SG.html">Topic 15: ANOVAs &amp; Statistical Power with  Neuro Data</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../Phase_2/topic_16_AB_testing/topic_16_AB_testing_with_movies-SG.html">Topic 16: Practicing AB Testing with Movies</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../Phase_2/topic_17_bayesian_statistics/topic_17_bayesian_statistics-SG.html">Topic 17: Bayesian Statistics</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../Phase_2/topic_18_linear_regression/topic_18_intro_to_linear_regression_SG.html">Topic 18: Intro to Linear Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../Phase_2/topic_19_part1_multiple_regression/topic_19_Multiple_Regression_v2-SG.html">Topic 19: Multiple Linear Regression</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../Phase_2/topic_19_part2_model_validation/topic_19_part_2_Multiple_Regression_v2-SG.html">Topic 19 Part 2: Feature Selection &amp; Model Validation</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../Phase_2/topic_20_extensions_linear_models/topic_20_extensions_to_linear_models_SG.html">Topic 20: Extensions to Linear Models</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 3 - Machine Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Phase_3/topic_21_OOP/topic_21_OOP_playing_cards_SG.html">Topic 21: Object-Oriented Programming</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../Phase_3/topic_22_linear_algebra/topic_22_linear_algebra_SG.html">Topic 22: Linear Algebra</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../Phase_3/topic_23_calculus_gradient_descent/topic_23_gradient_descent_SG.html">Topic 23: Cost Functions and Gradient Descent</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../Phase_3/topic_24_regularization/topic_24_Regularization_Ridge_Lasso_v2_SG.html">Topic 24: Feature Selection &amp; Regularization (Ridge and Lasso Regression)</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../Phase_3/topic_25_logistic_regression/topic_25_pt1_LogisticRegression_titanic-v2-SG.html">Topic 25-Pt 1: Intro to Logistic Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../Phase_3/topic_25_logistic_regression/topic_25_pt2_LogisticRegression_titanic-v2-SG.html">Topic 25-Part 2: Evaluating Classifiers, Dealing with Class Imbalance, and <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code></a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../Phase_3/topic_27_KNN/Topic_27_KNN_with_pipelines_with_lab_v3_SG.html">Topic 27: K-Nearest Neighbors<br/> +Topic 32: Pipelines</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../Phase_3/topic_29_decision_trees/topic_29_decision_trees_v2_titanic-SG.html">Topic 29: Decision Trees</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../Phase_3/topic_30_ensemble_methods/topic_30_ensemble_methods-SG.html">Topic 30: Ensemble Methods</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../Phase_3/topic_31_support_vector_machines/topic_31_SupportVectorMachines_SG.html">Topic 31: Support Vector Machines</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 4 - Advanced ML &amp; Time Series</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Phase_4/topic_33_pca/topic_33_PCA_SG.html">Topic 33: Principal Component Analysis</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../Phase_4/topic_34_clustering/topic_34_Kmeans_clustering_v3_SG.html">Topic 34: Clustering</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../Phase_4/topic_35-36_using_databricks_for_pyspark/using_databricks_for_pyspark.html">How to Use Databricks for PySpark Canvas Material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Phase_4/topic_36_recommendation_systems/topic_36_Recommendation_Systems_with_Surprise.html">Topic 36: Recommendation Systems</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../Phase_4/topic_37_intro_to_time_series/topic_37_intro_to_time_series_crime_v3-SG.html">Topic 37: Intro to Time Series</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../Phase_4/topic_38_time_series_models/topic_38-time_series_models_v3_SG.html">Topic 38: Time Series Models</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../Phase_4/topic_39_NLP/topic_39_NLP_finding_trump_v3_SG.html">Topic 39: Natural Language Processing + Topic 28: Bayesian Classification</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../Phase_4/topic_40-41_neural_networks/topic_40-41_Artificial_Neural_Networks_v1_SG.html">Topic 40-41: Artificial Neural Networks</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../Phase_4/topic_42_tuning_neural_networks/topic_42_tuning_ANNs_with_deep_NLP_v1_SG.html">Topic 42 - Tuning Neural Networks + Deep NLP</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../Phase_4/topic_43_AWS/topic_43_operationalizing_code_AWS_SG.html">Topic 43: Operationalizing Code &amp; AWS</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 5 - Capstone &amp; Bonus Topics</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Capstone Kickoff!</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="APIs/working_with_apis.html">Working with APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developing_app_functions/developing-streamlit-app-functions_SG.html">Developing Streamlit App Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tableau/tableau_fundamentals_2021-SG.html">Tableau Fundamentals</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Bonus%20Notebooks/plotly_visuals.html">Plotly Question</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/master?urlpath=tree/Phase_5/Capstone_Kickoff.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/blob/master/Phase_5/Capstone_Kickoff.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/issues/new?title=Issue%20on%20page%20%2FPhase_5/Capstone_Kickoff.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Phase_5/Capstone_Kickoff.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Capstone Kickoff!</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Capstone Kickoff!</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#capstone-readme-canvas">CAPSTONE README (Canvas)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#capstone-project">Capstone Project</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#project-overview">Project Overview</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-a-topic">Choosing a Topic</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sourcing-your-own-data">Sourcing Your Own Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-first-or-data-first">Problem First, or Data First?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-deliverables">The Deliverables</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-points">Key Points</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-started">Getting Started</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#project-submission-and-review">Project Submission and Review</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ft-timeline-deadlines">[022221FT] Timeline/Deadlines</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#capstone-deadlines">CAPSTONE DEADLINES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#graduation-deadline">GRADUATION DEADLINE</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#all-graduation-requirements-must-be-completed-by-07-30-21"><strong>ALL GRADUATION REQUIREMENTS MUST BE COMPLETED BY 07/30/21</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#proposing-your-capstone-project">📢Proposing Your Capstone Project</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#notes-tips-from-james">Notes/Tips From James</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-capstones-dashboards">EXAMPLE CAPSTONES &amp; DASHBOARDS</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#from-capstone-readme">From Capstone README:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-capstones-presentations">Example Capstones + Presentations</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recent-graduates-041320pt">Recent Graduates (041320PT)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recent-graduates-081720ft">Recent Graduates (081720FT)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recent-graduates-070620ft">Recent Graduates (070620FT)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#repos-from-recording">Repos From Recording:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-capstone-repos">Example Capstone Repos</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-capstone-repos">Additional Capstone Repos</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#from-https-github-com-learn-co-curriculum-dsc-capstone-examples">From https://github.com/learn-co-curriculum/dsc-capstone-examples</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#my-cohort-when-i-was-a-student-online-ds-ft-021119">My Cohort (when I was a student) (online-ds-ft-021119)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-dashboards">Example Dashboards</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#code-based-dashboards">Code-Based Dashboards</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dash-dashboards">Dash Dashboards</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#streamlit-dashboards">Streamlit Dashboards</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#website-dashboards">Website-Dashboards</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#software-created-dashboards">Software-Created Dashboards</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#must-clone-repo">Must Clone Repo:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="capstone-kickoff">
+<h1>Capstone Kickoff!<a class="headerlink" href="#capstone-kickoff" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p>onl01-dtsc-ft-022221</p></li>
+<li><p>06/23/21</p></li>
+</ul>
+<section id="learning-objectives">
+<h2>Learning Objectives<a class="headerlink" href="#learning-objectives" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Review the Canvas capstone project README.</p></li>
+<li><p>Learn the deadlines for the capstone project.</p></li>
+<li><p>Discuss some strategies/goals for deciding what to do for your capstone.</p></li>
+<li><p>Example capstone projects</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="capstone-readme-canvas">
+<h1>CAPSTONE README (Canvas)<a class="headerlink" href="#capstone-readme-canvas" title="Permalink to this heading">#</a></h1>
+<section id="capstone-project">
+<h2>Capstone Project<a class="headerlink" href="#capstone-project" title="Permalink to this heading">#</a></h2>
+<p>Congratulations on making it to the Capstone project! It’s been a long journey, but we can finally see the light at the end of the tunnel!</p>
+<p><img alt="Actual Footage of you seeing the light at the end of the tunnel" src="https://raw.githubusercontent.com/learn-co-curriculum/dsc-capstone-project/main/images/end-of-tunnel.gif" /></p>
+<p>Now that you’ve learned all the material in our course, it’s time to show off and flex your data science muscles with your own <strong><em>Capstone Project</em></strong>! This project will allow you to showcase everything you’ve learned as a data scientist to by completing a professional-level data science project of your choosing. This project will be significantly larger than any project you’ve completed so far, and will be the crown jewel of your portfolio. A strong capstone project is the single most important thing you can do to get the attention of potential employers, so be prepared to put as much effort into this project as possible - the results will be <strong><em>worth it!</em></strong></p>
+<p><img alt="Your portfolio brings all the employers to your inbox" src="https://raw.githubusercontent.com/learn-co-curriculum/dsc-capstone-project/main/images/milkshake.gif" /></p>
+</section>
+<section id="project-overview">
+<h2>Project Overview<a class="headerlink" href="#project-overview" title="Permalink to this heading">#</a></h2>
+<blockquote>
+<div><p>Your Capstone project should develop a data product or analysis related to a single topic of your choice. You are free to choose any topic and use any data, so long as your project meets the requirements below.</p>
+</div></blockquote>
+<section id="choosing-a-topic">
+<h3>Choosing a Topic<a class="headerlink" href="#choosing-a-topic" title="Permalink to this heading">#</a></h3>
+<p>When choosing a topic, think through these questions:</p>
+<ul class="simple">
+<li><p>What would I be motivated to work on?</p></li>
+<li><p>What data could I use?</p></li>
+<li><p>How could an individual or organization use my product or findings?</p></li>
+<li><p>What will I be able to accomplish in the time I have available?</p></li>
+<li><p>What challenges do I foresee with this project?</p></li>
+</ul>
+</section>
+<section id="sourcing-your-own-data">
+<h3>Sourcing Your Own Data<a class="headerlink" href="#sourcing-your-own-data" title="Permalink to this heading">#</a></h3>
+<p>Sourcing new data is a valuable skill for data scientists, but it requires a great deal of care. An inappropriate dataset or an unclear business problem can lead you spend a lot of time on a project that delivers underwhelming results. The guidelines below will help you complete a project that demonstrates your ability to engage in the full data science process.</p>
+<p>Your data must be…</p>
+<ol class="arabic simple">
+<li><p><strong>Appropriate for supervised learning models.</strong> You may use unsupervised learning methods in your project (e.g. to generate cluster assignment labels), but there must be a substantial supervised learning component.</p></li>
+<li><p><strong>Usable to solve a specific business problem.</strong> This solution must rely on your model(s).</p></li>
+<li><p><strong>Somewhat complex.</strong> It should contain thousands of rows and features that require creativity to use. You <em>can</em> use a pre-existing clean dataset, but you should consider combining it with other datasets and/or engineering your own features.</p></li>
+<li><p><strong>Unfamiliar.</strong> It can’t be one we’ve already worked with during the course or that is commonly used for demonstration purposes (e.g. MNIST).</p></li>
+<li><p><strong>Manageable.</strong> Stick to data that you can model with the knowledge and computational resources you have.</p></li>
+</ol>
+<p>Once you’ve sourced your own data and identified the business problem you want to solve with it, you must to <strong>run them by your instructor for approval</strong>.</p>
+<section id="problem-first-or-data-first">
+<h4>Problem First, or Data First?<a class="headerlink" href="#problem-first-or-data-first" title="Permalink to this heading">#</a></h4>
+<p>There are two ways that you can source your own dataset: <strong><em>Problem First</em></strong> or <strong><em>Data First</em></strong>. The less time you have to complete the project, the more strongly we recommend a Data First approach to this project.</p>
+<p><strong><em>Problem First</em></strong>: Start with a problem that you are interested in that you could potentially solve using one of the four project models. Then look for data that you could use to solve that problem. This approach is high-risk, high-reward: Very rewarding if you are able to solve a problem you are invested in, but frustrating if you end up sinking lots of time in without finding appropriate data. To mitigate the risk, set a firm limit for the amount of time you will allow yourself to look for data before moving on to the Data First approach.</p>
+<p><strong><em>Data First</em></strong>: Take a look at some of the most popular internet repositories of cool data sets we’ve listed below. If you find a data set that’s particularly interesting for you, then it’s totally okay to build your problem around that data set.</p>
+<p>There are plenty of amazing places that you can get your data from. We recommend you start looking at data sets in some of these resources first:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://archive.ics.uci.edu/ml/datasets.php">UCI Machine Learning Datasets Repository</a></p></li>
+<li><p><a class="reference external" href="https://www.kaggle.com/datasets">Kaggle Datasets</a></p></li>
+<li><p><a class="reference external" href="https://github.com/awesomedata/awesome-public-datasets">Awesome Datasets Repo on Github</a></p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="the-deliverables">
+<h2>The Deliverables<a class="headerlink" href="#the-deliverables" title="Permalink to this heading">#</a></h2>
+<p>There are three deliverables for this project:</p>
+<ul class="simple">
+<li><p>A <strong>GitHub repository</strong></p></li>
+<li><p>A <strong>Jupyter Notebook</strong></p></li>
+<li><p>A <strong>non-technical presentation</strong></p></li>
+</ul>
+<p>Review the “Project Submission &amp; Review” page in the “Milestones Instructions” topic for instructions on creating and submitting your deliverables. Refer to the rubric associated with this assignment for specifications describing high-quality deliverables.</p>
+<section id="key-points">
+<h3>Key Points<a class="headerlink" href="#key-points" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Project management is key.</strong>  You have a lot of freedom in this project - this can feel liberating, but also means that you can accidentally lose a lot of time if you’re not careful. Map out a rough daily project plan with key milestones and due dates for deliverables - you can adjust this as needed as you progress. Use this to make sure you’re making timely progress towards successful completion. Ask for help if you find yourself struggling to keep up with your plan.</p></li>
+<li><p><strong>Create an MVP, then refine it.</strong> Once you’ve chosen a project, define a Minimum Viable Product (MVP) that you feel confident you can deliver, and set daily goals to get that done as soon as you can. This will reduce your anxiety about whether or when you can finish the project, and will give you the time you need to polish all of your deliverables so that they are super shiny for sharing with employers.</p></li>
+<li><p><strong>Your deliverables should explicitly address each step of the data science process.</strong> Refer to <a class="reference external" href="https://github.com/learn-co-curriculum/dsc-data-science-processes">the Data Science Process lesson</a> from Topic 19 for more information about process models you can use.</p></li>
+</ul>
+</section>
+</section>
+<section id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this heading">#</a></h2>
+<p>Create a new repository for your project to get started. We recommend structuring your project repository similar to the structure in <a class="reference external" href="https://github.com/learn-co-curriculum/dsc-project-template">the Phase 1 Project Template</a>. You can do this either by creating a new fork of that repository to work in or by building a new repository from scratch that mimics that structure.</p>
+<p>You can also check out <a class="reference external" href="https://github.com/learn-co-curriculum/dsc-capstone-examples">Capstone projects from former Flatiron DS students</a> for inspiration.</p>
+</section>
+<section id="project-submission-and-review">
+<h2>Project Submission and Review<a class="headerlink" href="#project-submission-and-review" title="Permalink to this heading">#</a></h2>
+<p>Review the “Capstone Submission &amp; Review” page in the “Milestones Instructions” topic to learn how to submit your project and how it will be reviewed. Your project must pass review for you to graduate from your program.</p>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">#</a></h2>
+<p>The Capstone Project is the most critical part of the program. It gives you a chance to bring together all the skills you’ve learned into a realistic project, including the project management, business analysis, and communication.  Most importantly, it provides employers with strong signal about your technical abilities and allows you to show the world what an amazing Data Scientist you’ve become!</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ft-timeline-deadlines">
+<h1>[022221FT] Timeline/Deadlines<a class="headerlink" href="#ft-timeline-deadlines" title="Permalink to this heading">#</a></h1>
+<section id="capstone-deadlines">
+<h2>CAPSTONE DEADLINES<a class="headerlink" href="#capstone-deadlines" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>See the <a class="reference external" href="https://learning.flatironschool.com/courses/2684/pages/capstone-project-overview-and-deadlines?module_item_id=267166">⭐️Capstone Project Overview &amp; Deadlines Page on Canvas⭐️</a></p></li>
+</ul>
+</section>
+<section id="graduation-deadline">
+<h2>GRADUATION DEADLINE<a class="headerlink" href="#graduation-deadline" title="Permalink to this heading">#</a></h2>
+<section id="all-graduation-requirements-must-be-completed-by-07-30-21">
+<h3><strong>ALL GRADUATION REQUIREMENTS MUST BE COMPLETED BY 07/30/21</strong><a class="headerlink" href="#all-graduation-requirements-must-be-completed-by-07-30-21" title="Permalink to this heading">#</a></h3>
+<ul class="contains-task-list simple">
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Passed all project reviews.</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> 4 Blog Posts completed.</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="proposing-your-capstone-project">
+<h1>📢Proposing Your Capstone Project<a class="headerlink" href="#proposing-your-capstone-project" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p><strong>Send me a Direct Message on Slack by Monday 06/28 at 12 pm EST with the following sentences filled out for your project</strong></p></li>
+</ul>
+<blockquote>
+<div><p>“For my capstone I want to do/answer  {TOPIC/QUESTION} for {STAKEHOLDER/ORGANIZATION}.
+I will be using {SOURCE(S) OF DATA OR METHOD OF DATA EXTRACTION}.
+My project will use supervised learning {NAME/TYPE SUPERVISED LEARNING MODEL HERE} to {PREDICT WHAT TARGET}.”</p>
+</div></blockquote>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="notes-tips-from-james">
+<h1>Notes/Tips From James<a class="headerlink" href="#notes-tips-from-james" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p><strong>NOTE FROM JAMES (originally part of learn lesson): Think of 2 versions of your question:</strong></p>
+<ul>
+<li><p>One that could be answered in ~3 days.</p></li>
+<li><p>One that you’re excited/motivated to tackle and would want to continue working on post-graduation.</p></li>
+</ul>
+</li>
+<li><p><strong>Think about the story your Phase 3 and Phase 4 projects tell about your skills and interests</strong></p>
+<ul>
+<li><p>Do you want to go all-in towards one domain, or do you want to be more broadly marketable?</p></li>
+<li><p>Check job listings in your area for <code class="docutils literal notranslate"><span class="pre">data</span> <span class="pre">scientist</span></code> and <code class="docutils literal notranslate"><span class="pre">data</span> <span class="pre">analyst</span></code> positions.</p></li>
+</ul>
+</li>
+<li><p><strong>Using Off-the-shelf datasets</strong>.</p>
+<ul>
+<li><p>Adding additional source of data/APIs or using unsupervised learning like autoencoders or clustering can be used to turn an off-the-shelf dataset into something appropriate for the capstone.</p></li>
+</ul>
+</li>
+<li><p><strong>If you plan to make a dashboard:</strong> <br>experiment with using Plotly/PlotlyExpress figures, which are very easy to use with Dash dashboards.</p>
+<ul>
+<li><p>Plotly Express: <a class="reference external" href="https://plot.ly/python/plotly-express/">https://plot.ly/python/plotly-express/</a></p>
+<ul>
+<li><p><a class="reference external" href="https://dash.plot.ly/?_ga=2.156178875.1650132709.1582051288-909099599.1571873348">Dash User guide</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="https://streamlit.io/">Streamlit</a> is a newer alternative to Dash.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="example-capstones-dashboards">
+<h1>EXAMPLE CAPSTONES &amp; DASHBOARDS<a class="headerlink" href="#example-capstones-dashboards" title="Permalink to this heading">#</a></h1>
+<section id="from-capstone-readme">
+<h2>From Capstone README:<a class="headerlink" href="#from-capstone-readme" title="Permalink to this heading">#</a></h2>
+<p>Take a look at this <a class="reference external" href="https://github.com/paulinaczheng/twitter_flu_tracking">technical report</a> from a Flatiron student that used tweet data to predict the weekly number of flu cases during flu season. Pay attention to how well structured the project is, and how much she relies on great visualizations to tell her story for her. Your explanations don’t have to be wordy - a visualization is worth a thousand words!</p>
+</section>
+<section id="example-capstones-presentations">
+<h2>Example Capstones + Presentations<a class="headerlink" href="#example-capstones-presentations" title="Permalink to this heading">#</a></h2>
+<section id="recent-graduates-041320pt">
+<h3>Recent Graduates (041320PT)<a class="headerlink" href="#recent-graduates-041320pt" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://youtu.be/KDTh0pHxIVI">Sharing Session - YouTube</a></p></li>
+</ul>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>#</p></th>
+<th class="head"><p>Student</p></th>
+<th class="head"><p>Capstone Title</p></th>
+<th class="head"><p>Repo Link</p></th>
+<th class="head"><p>App Link</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1.</p></td>
+<td><p>Chris Lewis</p></td>
+<td><p>COVID-19 Classification Through Various Method</p></td>
+<td><p><a class="reference external" href="https://github.com/Lewis34cs/corona_audio">Repo Link</a></p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.</p></td>
+<td><p>Claude Fried</p></td>
+<td><p>Predicting and Simulating Baseball Lineups</p></td>
+<td><p><a class="reference external" href="https://github.com/cwf231/predicting_and_simulating_baseball_outcomes">Repo Link</a></p></td>
+<td><p><a class="reference external" href="https://capstone-baseball-simulator.herokuapp.com/">App Link</a></p></td>
+</tr>
+<tr class="row-even"><td><p>3.</p></td>
+<td><p>Michael Mahoney</p></td>
+<td><p>Modeling Truth: Can Neural Networks Sniff Out Lies</p></td>
+<td><p><a class="reference external" href="https://github.com/minthammock/cap-stone">Repo Link</a></p></td>
+<td><p><a class="reference external" href="https://capstone-dash-app.herokuapp.com/">App Link</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>4.</p></td>
+<td><p>Collin Loo</p></td>
+<td><p>Sentiment Analysis with Deep NLP</p></td>
+<td><p><a class="reference external" href="https://github.com/collinloo/Sentiment-Analysis-with-Deep-NLP">Repo Link</a></p></td>
+<td><p><a class="reference external" href="http://collinloo.pythonanywhere.com/">App Link</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="recent-graduates-081720ft">
+<h3>Recent Graduates (081720FT)<a class="headerlink" href="#recent-graduates-081720ft" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://youtu.be/x4gTEa5HTRk">Sharing Session - YouTube</a></p></li>
+</ul>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>#</p></th>
+<th class="head"><p>Student</p></th>
+<th class="head"><p>Capstone Title</p></th>
+<th class="head"><p>Repo Link</p></th>
+<th class="head"><p>App Link</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1.</p></td>
+<td><p>Tia Plagata</p></td>
+<td><p>The Destination Dictionary</p></td>
+<td><p><a class="github reference external" href="https://github.com/tiaplagata/capstone-project">tiaplagata/capstone-project</a></p></td>
+<td><p><a class="reference external" href="https://github.com/tiaplagata/dash-travel-app">Repo Link</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>2.</p></td>
+<td><p>Kourosh Alizadeh</p></td>
+<td><p>Philosophy NLP &amp; Text Classification</p></td>
+<td><p><a class="github reference external" href="https://github.com/kcalizadeh/phil_nlp">kcalizadeh/phil_nlp</a></p></td>
+<td><p><a class="reference external" href="http://philosophydata.com/">App Link</a></p></td>
+</tr>
+<tr class="row-even"><td><p>3.</p></td>
+<td><p>Seth Chart</p></td>
+<td><p>Data Jobs</p></td>
+<td><p><a class="github reference external" href="https://github.com/sethchart/DataJobs">sethchart/DataJobs</a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>4.</p></td>
+<td><p>Kristen Davis</p></td>
+<td><p>Correlating NGSS and State Based Science Standards</p></td>
+<td><p><a class="github reference external" href="https://github.com/kristen770/Sceince-Standards-NLP-Analysis">kristen770/Sceince-Standards-NLP-Analysis</a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>5.</p></td>
+<td><p>Max Steele</p></td>
+<td><p>Registered Voter Participation in Union County, North Carolina</p></td>
+<td><p><a class="github reference external" href="https://github.com/zero731/NC_Elections_Capstone">zero731/NC_Elections_Capstone</a></p></td>
+<td><p><a class="reference external" href="https://share.streamlit.io/zero731/nc_elections_capstone/main/UC_elec_app.py">App Link</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>6.</p></td>
+<td><p>Jaklyn Soler</p></td>
+<td><p>San Francisco 311 Calls</p></td>
+<td><p><a class="github reference external" href="https://github.com/jaykayso/SAN_FRANCISCO_311_CALLS">jaykayso/SAN_FRANCISCO_311_CALLS</a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>7.</p></td>
+<td><p>Seth Holley</p></td>
+<td><p>Wikipedia Protection with NLP</p></td>
+<td><p><a class="github reference external" href="https://github.com/spe301/Wikipedia-Capstone">spe301/Wikipedia-Capstone</a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>8.</p></td>
+<td><p>Vivienne DiFrancesco</p></td>
+<td><p>Predicting Depression Using Health Care Data</p></td>
+<td><p><a class="github reference external" href="https://github.com/AnyOldRandomNameWillDOo/Capstone-Project">AnyOldRandomNameWillDOo/Capstone-Project</a></p></td>
+<td><p><a class="reference external" href="https://share.streamlit.io/anyoldrandomnamewilldoo/capstone-project/main/depression_app.py">App Link</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="recent-graduates-070620ft">
+<h3>Recent Graduates (070620FT)<a class="headerlink" href="#recent-graduates-070620ft" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p><a class="reference external" href="https://youtu.be/Ac2npALgCtQ">Sharing Session - YouTube</a></p>
+</div></blockquote>
+<section id="repos-from-recording">
+<h4>Repos From Recording:<a class="headerlink" href="#repos-from-recording" title="Permalink to this heading">#</a></h4>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>#</p></th>
+<th class="head"><p>Student</p></th>
+<th class="head"><p>Capstone Title</p></th>
+<th class="head"><p>Repo Link</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1.</p></td>
+<td><p>Jeff Spagnola</p></td>
+<td><p>Deep Fake Image Detection</p></td>
+<td><p><a class="github reference external" href="https://github.com/spags093/dsc-capstone-project-v2-onl01-dtsc-ft-070620">spags093/dsc-capstone-project-v2-onl01-dtsc-ft-070620</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>2.</p></td>
+<td><p>Avonlea Fisher</p></td>
+<td><p>The 411 on 311 Calls</p></td>
+<td><p><a class="github reference external" href="https://github.com/AvonleaFisher/Analyzing-NYC-311-Service-Requests">AvonleaFisher/Analyzing-NYC-311-Service-Requests</a></p></td>
+</tr>
+<tr class="row-even"><td><p>3.</p></td>
+<td><p>Miguel Santana</p></td>
+<td><p>Customer Segmentation and Customer Churn Analysis</p></td>
+<td><p><a class="github reference external" href="https://github.com/msantana269/Capstone">msantana269/Capstone</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>4.</p></td>
+<td><p>Lauren Esser</p></td>
+<td><p>Using News Headlines to Better Predict the Stock Market</p></td>
+<td><p><a class="github reference external" href="https://github.com/lauren-esser/Better-Stock-Market-Prediction">lauren-esser/Better-Stock-Market-Prediction</a></p></td>
+</tr>
+<tr class="row-even"><td><p>5.</p></td>
+<td><p>Sung Bae</p></td>
+<td><p>Product/Service Monitoring System</p></td>
+<td><p><a class="github reference external" href="https://github.com/singsang2/capstone-twitter-analysis">singsang2/capstone-twitter-analysis</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul class="simple">
+<li><p>Not Presented:</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/emperorner0/AI_Generated_Review_Detection_in_Book_Reviews">emperorner0/AI_Generated_Review_Detection_in_Book_Reviews</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="example-capstone-repos">
+<h2>Example Capstone Repos<a class="headerlink" href="#example-capstone-repos" title="Permalink to this heading">#</a></h2>
+<section id="additional-capstone-repos">
+<h3>Additional Capstone Repos<a class="headerlink" href="#additional-capstone-repos" title="Permalink to this heading">#</a></h3>
+<section id="from-https-github-com-learn-co-curriculum-dsc-capstone-examples">
+<h4>From <a class="github reference external" href="https://github.com/learn-co-curriculum/dsc-capstone-examples">learn-co-curriculum/dsc-capstone-examples</a><a class="headerlink" href="#from-https-github-com-learn-co-curriculum-dsc-capstone-examples" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p><a class="github reference external" href="https://github.com/slieb74/NBA-Shot-Analysis">slieb74/NBA-Shot-Analysis</a></p></li>
+<li><p><a class="github reference external" href="https://github.com/NaokoSuga/gentrification_yelp">NaokoSuga/gentrification_yelp</a></p></li>
+<li><p><a class="github reference external" href="https://github.com/paulinaczheng/twitter_flu_tracking">paulinaczheng/twitter_flu_tracking</a></p></li>
+<li><p><a class="github reference external" href="https://github.com/mrethana/news_bias_final">mrethana/news_bias_final</a></p></li>
+<li><p><a class="github reference external" href="https://github.com/cpease00/etf_forecasting">cpease00/etf_forecasting</a></p></li>
+<li><p><a class="github reference external" href="https://github.com/davidmasse/freelancer-rates">davidmasse/freelancer-rates</a></p></li>
+<li><p><a class="github reference external" href="https://github.com/lpilossoph/Capstone-Project">lpilossoph/Capstone-Project</a></p></li>
+<li><p><a class="github reference external" href="https://github.com/whitcrrd/puzzle-image-segmentation">whitcrrd/puzzle-image-segmentation</a></p></li>
+</ul>
+</section>
+</section>
+<section id="my-cohort-when-i-was-a-student-online-ds-ft-021119">
+<h3>My Cohort (when I was a student) (online-ds-ft-021119)<a class="headerlink" href="#my-cohort-when-i-was-a-student-online-ds-ft-021119" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Reed: <a class="github reference external" href="https://github.com/whitcrrd/puzzle-image-segmentation">whitcrrd/puzzle-image-segmentation</a></p></li>
+<li><p>Kate: <a class="github reference external" href="https://github.com/kpokrass/Global_Warming">kpokrass/Global_Warming</a></p></li>
+<li><p>Mine: <a class="github reference external" href="https://github.com/jirvingphd/predicting-the-SP500-using-trumps-tweets_capstone-project">jirvingphd/predicting-the-SP500-using-trumps-tweets_capstone-project</a></p></li>
+</ul>
+</section>
+</section>
+<section id="example-dashboards">
+<h2>Example Dashboards<a class="headerlink" href="#example-dashboards" title="Permalink to this heading">#</a></h2>
+<section id="code-based-dashboards">
+<h3>Code-Based Dashboards<a class="headerlink" href="#code-based-dashboards" title="Permalink to this heading">#</a></h3>
+<section id="dash-dashboards">
+<h4>Dash Dashboards<a class="headerlink" href="#dash-dashboards" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p><a class="reference external" href="https://capstone-baseball-simulator.herokuapp.com/">Claude Fried - Baseball Simulator</a></p>
+<ul>
+<li><p>Interactive tool that uses his model to run simulations and optimize player order.</p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="https://still-plateau-25734.herokuapp.com/">Terry Ollila - Predicting Successful Movies from Manuscripts</a></p>
+<ul>
+<li><p>More of an EDA report/summary of his capstone</p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="http://burlington-app.herokuapp.com/">Chris Remfield</a> (Dash)</p>
+<ul>
+<li><p>EDA Tool actually used by his local newspaper as research for stories.</p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="http://destination-dictionary.herokuapp.com/">Tia Plagata - The Destination Dictionary</a></p></li>
+</ul>
+</section>
+<section id="streamlit-dashboards">
+<h4>Streamlit Dashboards<a class="headerlink" href="#streamlit-dashboards" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p><a class="reference external" href="https://cigar-recommender.herokuapp.com/">Steve Newman - Cigar Recommender App</a></p></li>
+</ul>
+</section>
+</section>
+<section id="website-dashboards">
+<h3>Website-Dashboards<a class="headerlink" href="#website-dashboards" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="http://philosophydata.com/">Kourosh Alizadeh	 - The Philosophy Data Project</a></p></li>
+<li><p><a class="reference external" href="https://capstone-dash-app.herokuapp.com/">Michael Mahoney</a></p></li>
+</ul>
+</section>
+<section id="software-created-dashboards">
+<h3>Software-Created Dashboards<a class="headerlink" href="#software-created-dashboards" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://datastudio.google.com/reporting/20efa577-3f3f-448c-a11b-0ccbba069500">Miguel Santana</a> (Google Data Studio)</p></li>
+</ul>
+<section id="must-clone-repo">
+<h4>Must Clone Repo:<a class="headerlink" href="#must-clone-repo" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p><a class="github reference external" href="https://github.com/spags093/dsc-capstone-project-v2-onl01-dtsc-ft-070620/">spags093/dsc-capstone-project-v2-onl01-dtsc-ft-070620</a> (Flask)</p>
+<ul>
+<li><p>Check the <code class="docutils literal notranslate"><span class="pre">App</span> <span class="pre">instructions.txt</span></code> <a class="reference external" href="https://github.com/spags093/dsc-capstone-project-v2-onl01-dtsc-ft-070620/tree/master/Deepfake%20Detection%20App">inside this folder</a> for how to run locally</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "learn-env"
+        },
+        kernelOptions: {
+            name: "learn-env",
+            path: "./Phase_5"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'learn-env'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../Phase_4/topic_43_AWS/topic_43_operationalizing_code_AWS_SG.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Topic 43: Operationalizing Code &amp; AWS</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="APIs/working_with_apis.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Working with APIs</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Capstone Kickoff!</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#capstone-readme-canvas">CAPSTONE README (Canvas)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#capstone-project">Capstone Project</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#project-overview">Project Overview</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-a-topic">Choosing a Topic</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sourcing-your-own-data">Sourcing Your Own Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-first-or-data-first">Problem First, or Data First?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-deliverables">The Deliverables</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-points">Key Points</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-started">Getting Started</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#project-submission-and-review">Project Submission and Review</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ft-timeline-deadlines">[022221FT] Timeline/Deadlines</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#capstone-deadlines">CAPSTONE DEADLINES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#graduation-deadline">GRADUATION DEADLINE</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#all-graduation-requirements-must-be-completed-by-07-30-21"><strong>ALL GRADUATION REQUIREMENTS MUST BE COMPLETED BY 07/30/21</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#proposing-your-capstone-project">📢Proposing Your Capstone Project</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#notes-tips-from-james">Notes/Tips From James</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-capstones-dashboards">EXAMPLE CAPSTONES &amp; DASHBOARDS</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#from-capstone-readme">From Capstone README:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-capstones-presentations">Example Capstones + Presentations</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recent-graduates-041320pt">Recent Graduates (041320PT)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recent-graduates-081720ft">Recent Graduates (081720FT)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recent-graduates-070620ft">Recent Graduates (070620FT)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#repos-from-recording">Repos From Recording:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-capstone-repos">Example Capstone Repos</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-capstone-repos">Additional Capstone Repos</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#from-https-github-com-learn-co-curriculum-dsc-capstone-examples">From https://github.com/learn-co-curriculum/dsc-capstone-examples</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#my-cohort-when-i-was-a-student-online-ds-ft-021119">My Cohort (when I was a student) (online-ds-ft-021119)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-dashboards">Example Dashboards</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#code-based-dashboards">Code-Based Dashboards</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dash-dashboards">Dash Dashboards</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#streamlit-dashboards">Streamlit Dashboards</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#website-dashboards">Website-Dashboards</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#software-created-dashboards">Software-Created Dashboards</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#must-clone-repo">Must Clone Repo:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By James Irving, PhD
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

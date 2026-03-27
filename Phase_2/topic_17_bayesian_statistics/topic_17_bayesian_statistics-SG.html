@@ -1,0 +1,2784 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Topic 17: Bayesian Statistics &#8212; Data Science Curriculum</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Phase_2/topic_17_bayesian_statistics/topic_17_bayesian_statistics-SG';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Topic 18: Intro to Linear Regression" href="../topic_18_linear_regression/topic_18_intro_to_linear_regression_SG.html" />
+    <link rel="prev" title="Topic 16: Practicing AB Testing with Movies" href="../topic_16_AB_testing/topic_16_AB_testing_with_movies-SG.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/flatironschool_banner.jpg" class="logo__image only-light" alt="Data Science Curriculum - Home"/>
+    <script>document.write(`<img src="../../_static/flatironschool_banner.jpg" class="logo__image only-dark" alt="Data Science Curriculum - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Data Science Curriculum
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 1 - Python &amp; Data Fundamentals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_01_getting_started/topic_01_getting_started.html">Topic 1: Getting Started with Data Science</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_02_bash_git/topic_02_bash_and_git.html">Topic 02:  Bash and Git</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_03_control_flow_functions/topic_03_control_flow_and_functions.html">Topic 03: Control Flow, Functions, and Statistics</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_04_python_libraries/topic_04_intro_to_libraries_numpy_SG.html">Topic 04-Part 1: Python Libraries &amp; NumPy</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_04_python_libraries/topic_04_pt-2_brief_intro_to_pandas-SG.html">Topic 04-Part 2: Brief Intro to Pandas with Doctor Who</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_05_data_cleaning_in_pandas/topic_05_Data_Cleaning_in_Pandas.html">Topic 05: Data Cleaning in Pandas</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_06_data_visualization/topic_06_visualizations_heroes_project_SG.html">Topic 06:  Data Visualizations</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_07_SQL_and_relational_databases/topic_07_SQL_and_relational_databases_SG.html">TOPIC 07: SQL DATABASES</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_08_noSQL_databases/topic_08_mongodb-SG.html">Topic 08: NoSQL Databases</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_09_json_and_apis/topic_09_json-api-SG.html">Topic 09: Using APIs and JSON Data</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_10_webscraping/topic_10_SG_HTML_CSS_web_scraping.html">Topic 10: HTML, CSS, &amp; Web Scraping</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 2 - Statistics &amp; Regression</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../topic_11_probability_and_combinatorics/topic_11_playlist_probabilities-SG.html">Topic 11 - Intro to Combinatorics &amp; Probability</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_12_statistical_distributions/topic-12-distributions-with-movies-sg.html">Exploring Distributions with Movies Data</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_13_central_limit_theorem/topic_13_central_limit_theorem_SG.html">Topic 13: Central Limit Theorem</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_14_hypothesis_testing/topic_14_hypothesis_testing-SG.html">Topic 14: Hypothesis Testing -  T-Tests</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_15_ANOVA/topic_15_ANOVA_with_neuro_data-SG.html">Topic 15: ANOVAs &amp; Statistical Power with  Neuro Data</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_16_AB_testing/topic_16_AB_testing_with_movies-SG.html">Topic 16: Practicing AB Testing with Movies</a></li>
+
+
+
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Topic 17: Bayesian Statistics</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_18_linear_regression/topic_18_intro_to_linear_regression_SG.html">Topic 18: Intro to Linear Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_19_part1_multiple_regression/topic_19_Multiple_Regression_v2-SG.html">Topic 19: Multiple Linear Regression</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_19_part2_model_validation/topic_19_part_2_Multiple_Regression_v2-SG.html">Topic 19 Part 2: Feature Selection &amp; Model Validation</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_20_extensions_linear_models/topic_20_extensions_to_linear_models_SG.html">Topic 20: Extensions to Linear Models</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 3 - Machine Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_21_OOP/topic_21_OOP_playing_cards_SG.html">Topic 21: Object-Oriented Programming</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_22_linear_algebra/topic_22_linear_algebra_SG.html">Topic 22: Linear Algebra</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_23_calculus_gradient_descent/topic_23_gradient_descent_SG.html">Topic 23: Cost Functions and Gradient Descent</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_24_regularization/topic_24_Regularization_Ridge_Lasso_v2_SG.html">Topic 24: Feature Selection &amp; Regularization (Ridge and Lasso Regression)</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_25_logistic_regression/topic_25_pt1_LogisticRegression_titanic-v2-SG.html">Topic 25-Pt 1: Intro to Logistic Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_25_logistic_regression/topic_25_pt2_LogisticRegression_titanic-v2-SG.html">Topic 25-Part 2: Evaluating Classifiers, Dealing with Class Imbalance, and <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code></a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_27_KNN/Topic_27_KNN_with_pipelines_with_lab_v3_SG.html">Topic 27: K-Nearest Neighbors<br/> +Topic 32: Pipelines</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_29_decision_trees/topic_29_decision_trees_v2_titanic-SG.html">Topic 29: Decision Trees</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_30_ensemble_methods/topic_30_ensemble_methods-SG.html">Topic 30: Ensemble Methods</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_31_support_vector_machines/topic_31_SupportVectorMachines_SG.html">Topic 31: Support Vector Machines</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 4 - Advanced ML &amp; Time Series</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_33_pca/topic_33_PCA_SG.html">Topic 33: Principal Component Analysis</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_34_clustering/topic_34_Kmeans_clustering_v3_SG.html">Topic 34: Clustering</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_35-36_using_databricks_for_pyspark/using_databricks_for_pyspark.html">How to Use Databricks for PySpark Canvas Material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_36_recommendation_systems/topic_36_Recommendation_Systems_with_Surprise.html">Topic 36: Recommendation Systems</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_37_intro_to_time_series/topic_37_intro_to_time_series_crime_v3-SG.html">Topic 37: Intro to Time Series</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_38_time_series_models/topic_38-time_series_models_v3_SG.html">Topic 38: Time Series Models</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_39_NLP/topic_39_NLP_finding_trump_v3_SG.html">Topic 39: Natural Language Processing + Topic 28: Bayesian Classification</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_40-41_neural_networks/topic_40-41_Artificial_Neural_Networks_v1_SG.html">Topic 40-41: Artificial Neural Networks</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_42_tuning_neural_networks/topic_42_tuning_ANNs_with_deep_NLP_v1_SG.html">Topic 42 - Tuning Neural Networks + Deep NLP</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_4/topic_43_AWS/topic_43_operationalizing_code_AWS_SG.html">Topic 43: Operationalizing Code &amp; AWS</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 5 - Capstone &amp; Bonus Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/Capstone_Kickoff.html">Capstone Kickoff!</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/APIs/working_with_apis.html">Working with APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/developing_app_functions/developing-streamlit-app-functions_SG.html">Developing Streamlit App Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/tableau/tableau_fundamentals_2021-SG.html">Tableau Fundamentals</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/Bonus%20Notebooks/plotly_visuals.html">Plotly Question</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/master?urlpath=tree/Phase_2/topic_17_bayesian_statistics/topic_17_bayesian_statistics-SG.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/blob/master/Phase_2/topic_17_bayesian_statistics/topic_17_bayesian_statistics-SG.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/issues/new?title=Issue%20on%20page%20%2FPhase_2/topic_17_bayesian_statistics/topic_17_bayesian_statistics-SG.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/Phase_2/topic_17_bayesian_statistics/topic_17_bayesian_statistics-SG.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Topic 17: Bayesian Statistics</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Topic 17: Bayesian Statistics</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advice-on-approaching-this-section">Advice on Approaching This Section</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-references">Additional References</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#questions">Questions?</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#conditional-probability-review">Conditional Probability - Review</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#laws-theorems-based-on-conditional-probability">Laws &amp; Theorems Based on Conditional Probability</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#theorem-1-product-rule">Theorem 1: Product Rule</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#theorem-2-chain-rule-aka-general-product-rule">Theorem 2: Chain Rule AKA “General Product Rule”</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bayes-theorem">Bayes’ Theorem</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Bayes’ Theorem</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#activity-bayes-theorem-lab">Activity: Bayes’ Theorem - lab</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#skin-cancer">Skin Cancer</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#children-i">Children (I)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#children-ii">Children  (II)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-diagnostic-test">A diagnostic test</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-activity-topic-17-optional-practice-problems">Optional Activity &gt; Topic 17 Optional Practice Problems</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#maximum-likelihood-estimation">Maximum Likelihood Estimation</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parameter-inference">Parameter Inference</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mle-assumptions">MLE Assumptions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#activity-using-mle-to-find-the-mean-and-std-for-male-height">Activity: Using MLE to find the Mean and Std for Male Height</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#task-use-mle-to-determine-the-most-likely-mean-and-std-of-male-height">Task: Use MLE to Determine the Most Likely Mean and Std of Male Height</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-probability-density-function-for-the-normal-distribution">The Probability Density Function for the Normal Distribution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Parameter Inference</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="topic-17-bayesian-statistics">
+<h1>Topic 17: Bayesian Statistics<a class="headerlink" href="#topic-17-bayesian-statistics" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p>onl01-dtsc-ft-022221</p></li>
+<li><p>04/06/21 study group</p></li>
+</ul>
+<section id="learning-objectives">
+<h2>Learning Objectives<a class="headerlink" href="#learning-objectives" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Review the concept of conditional probability</p></li>
+<li><p>Learn about Bayes’ Theorem</p></li>
+<li><p>Apply Bayes Theorem - Bayes’ Theorem Lab</p></li>
+<li><p>Discuss maximum likelihood estimation (MLE)</p></li>
+<li><p>Apply Maximum Likelihood Estimation using a normal distribution</p></li>
+</ul>
+</section>
+<section id="advice-on-approaching-this-section">
+<h2>Advice on Approaching This Section<a class="headerlink" href="#advice-on-approaching-this-section" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Don’t let the Monty Hall Problem lab slow you down.</p></li>
+<li><p>Don’t fret too much about the math behind the MLE section (for now).</p>
+<ul>
+<li><p>If you understand what we do in today’s class, that is a better starting point than the lessons</p></li>
+</ul>
+</li>
+<li><p>When we get to calculus &amp; gradient descent we will come back and discuss more of the math from the lessons about MLE/MAP</p></li>
+</ul>
+</section>
+<section id="additional-references">
+<h2>Additional References<a class="headerlink" href="#additional-references" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Videos</strong></p>
+<ul>
+<li><p><a class="reference external" href="https://www.youtube.com/playlist?list=PLFknVelSJiSxKhi_xJIbBUZdIn49hDajE">Bayesian Stats &amp; MLE YouTube Playlist</a></p></li>
+</ul>
+</li>
+<li><p><strong>Blog Posts &amp; Articles</strong></p>
+<ul>
+<li><p><a class="reference external" href="https://towardsdatascience.com/probability-concepts-explained-maximum-likelihood-estimation-c7b4342fdbb1">https://towardsdatascience.com/probability-concepts-explained-maximum-likelihood-estimation-c7b4342fdbb1</a></p></li>
+<li><p><a class="reference external" href="https://www.countbayesie.com/blog/2015/2/18/hans-solo-and-bayesian-priors">Star Wars Intro To Bayesian Priors</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="questions">
+<h2>Questions?<a class="headerlink" href="#questions" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="conditional-probability-review">
+<h1>Conditional Probability - Review<a class="headerlink" href="#conditional-probability-review" title="Permalink to this heading">#</a></h1>
+<p><strong>Conditional probability emerges when the outcome a trial may influence the results of the upcoming trials.</strong></p>
+<p>The conditional probability (Probability of <span class="math notranslate nohighlight">\(A\)</span> <strong>given</strong> <span class="math notranslate nohighlight">\(B\)</span>) can be written as:
+$<span class="math notranslate nohighlight">\( P (A \mid B) = \dfrac{P(A \cap B)}{P(B)}\)</span>$</p>
+<p><span class="math notranslate nohighlight">\(P(A|B)\)</span>, is the probability A <strong>given</strong> that <span class="math notranslate nohighlight">\(B\)</span> has just happened.</p>
+<section id="laws-theorems-based-on-conditional-probability">
+<h2>Laws &amp; Theorems Based on Conditional Probability<a class="headerlink" href="#laws-theorems-based-on-conditional-probability" title="Permalink to this heading">#</a></h2>
+<section id="theorem-1-product-rule">
+<h3>Theorem 1: Product Rule<a class="headerlink" href="#theorem-1-product-rule" title="Permalink to this heading">#</a></h3>
+<p>The intersection of events <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> can be given by</p>
+<p>\begin{align}
+P(A \cap B) = P(B) P(A \mid B) = P(A) P(B \mid A)
+\end{align}</p>
+</section>
+<section id="theorem-2-chain-rule-aka-general-product-rule">
+<h3>Theorem 2: Chain Rule AKA “General Product Rule”<a class="headerlink" href="#theorem-2-chain-rule-aka-general-product-rule" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Allows calculation of any member of the join distribution of a set of random variables using <em>only</em> conditional probabilities.</p></li>
+<li><p>Built on the product rule:
+$<span class="math notranslate nohighlight">\(P(A \cap B) = P(A \mid B) P(B)\)</span>$</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="bayes-theorem">
+<h1>Bayes’ Theorem<a class="headerlink" href="#bayes-theorem" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Starts with the formula for conditional probability/likelihood:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ P(A|B) = \dfrac{P(A \cap B)}{P(B)}\]</div>
+<ul class="simple">
+<li><p>Substitute <span class="math notranslate nohighlight">\(P(B|A)P(A)\)</span> for <span class="math notranslate nohighlight">\(P(A \cap B)\)</span> using the product rule and we get:</p></li>
+</ul>
+<section id="id1">
+<h2>Bayes’ Theorem<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<div class="math notranslate nohighlight">
+\[ \large P(A|B) = \frac{P(B|A)P(A)}{P(B)} \]</div>
+<ul class="simple">
+<li><p>Note that, using Bayes theorem, you can compute conditional probabilities without explicitly needing to know <span class="math notranslate nohighlight">\(P(A \cap B)\)</span>!</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="activity-bayes-theorem-lab">
+<h1>Activity: Bayes’ Theorem - lab<a class="headerlink" href="#activity-bayes-theorem-lab" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">bayes</span><span class="p">(</span><span class="n">P_a</span><span class="p">,</span> <span class="n">P_b</span><span class="p">,</span> <span class="n">P_b_given_a</span><span class="p">):</span>
+    <span class="c1"># Your code here</span>
+    <span class="n">P_a_given_b</span> <span class="o">=</span> <span class="p">(</span><span class="n">P_b_given_a</span><span class="o">*</span><span class="n">P_a</span><span class="p">)</span><span class="o">/</span><span class="n">P_b</span>
+    <span class="k">return</span> <span class="n">P_a_given_b</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="skin-cancer">
+<h2>Skin Cancer<a class="headerlink" href="#skin-cancer" title="Permalink to this heading">#</a></h2>
+<p>After a physical exam, a doctor observes a blemish on a client’s arm. The doctor is concerned that the blemish could be cancerous, but tells the patient to be calm and that it’s probably benign. Of those with skin cancer, 100% have such blemishes. However, 20% of those without skin cancer also have such blemishes. If 15% of the population has skin cancer, <strong>what’s the probability that this patient has skin cancer?</strong></p>
+<blockquote>
+<div><p>Hint: Be sure to calculate the overall rate of blemishes across the entire population.</p>
+</div></blockquote>
+<div class="math notranslate nohighlight">
+\[ \large P(A|B) = \frac{P(B|A)P(A)}{P(B)} \]</div>
+<ul class="simple">
+<li><p>Must apply the Law of Total Probability to get P_blemish</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your code here</span>
+<span class="c1"># A = cancer. B= blemish</span>
+
+<span class="n">P_blemish_given_cancer</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># P(B|A)</span>
+<span class="n">P_blemish_given_notcancer</span> <span class="o">=</span> <span class="mf">0.2</span> <span class="c1"># P(B|A&#39;)</span>
+
+<span class="n">P_cancer</span> <span class="o">=</span> <span class="mf">.15</span> <span class="c1"># P(A)</span>
+<span class="n">P_notcancer</span> <span class="o">=</span> <span class="mi">1</span><span class="o">-</span> <span class="n">P_cancer</span> <span class="c1"># P(A&#39;)</span>
+
+<span class="n">P_blemish</span> <span class="o">=</span> <span class="n">P_blemish_given_cancer</span><span class="o">*</span><span class="n">P_cancer</span> <span class="o">+</span> <span class="n">P_blemish_given_notcancer</span><span class="o">*</span><span class="n">P_notcancer</span>
+<span class="n">P_blemish</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.32
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">P_cancer_given_blemish</span> <span class="o">=</span> <span class="n">bayes</span><span class="p">(</span><span class="n">P_cancer</span><span class="p">,</span><span class="n">P_blemish</span><span class="p">,</span><span class="n">P_blemish_given_cancer</span> <span class="p">)</span>
+<span class="n">P_cancer_given_blemish</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.46875
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="children-i">
+<h2>Children (I)<a class="headerlink" href="#children-i" title="Permalink to this heading">#</a></h2>
+<p>A couple has two children. the younger of which is a boy. What is the probability that they have two boys?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your solution P(2boys|younger child is a boy) #A =0.5</span>
+
+<span class="c1"># B = P(younger_boy)</span>
+<span class="n">P_younger_boy</span> <span class="o">=</span> <span class="mf">0.5</span>
+
+<span class="c1"># A = P(2boys)</span>
+<span class="n">P_2boys</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="mf">0.5</span>
+
+<span class="c1"># B|A = P(s)</span>
+<span class="n">P_younger_boy_given_2boys</span> <span class="o">=</span> <span class="mi">1</span>
+
+
+
+<span class="n">P_2boys_given_younger_boy</span> <span class="o">=</span> <span class="n">bayes</span><span class="p">(</span><span class="n">P_2boys</span><span class="p">,</span><span class="n">P_younger_boy</span><span class="p">,</span><span class="n">P_younger_boy_given_2boys</span><span class="p">)</span>
+<span class="n">P_2boys_given_younger_boy</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="children-ii">
+<h2>Children  (II)<a class="headerlink" href="#children-ii" title="Permalink to this heading">#</a></h2>
+<p>A couple has two children, one of which is a boy. What is the probability that they have two boys?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your solution P(2boys|1 of 2 children is a boy) #A=0.33</span>
+<span class="c1">## BB, BG, GG, GB</span>
+<span class="n">P_2boys</span> <span class="o">=</span><span class="mf">.25</span>
+<span class="n">P_1boy</span> <span class="o">=</span> <span class="mf">.75</span>
+<span class="n">P_1_boy_given_2boys</span><span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">P_2boys_given_1boy</span> <span class="o">=</span> <span class="n">bayes</span><span class="p">(</span><span class="n">P_2boys</span><span class="p">,</span> <span class="n">P_1boy</span><span class="p">,</span> <span class="n">P_1_boy_given_2boys</span><span class="p">)</span>
+<span class="n">P_2boys_given_1boy</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.3333333333333333
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="a-diagnostic-test">
+<h2>A diagnostic test<a class="headerlink" href="#a-diagnostic-test" title="Permalink to this heading">#</a></h2>
+<p>A diagnostic test is advertised as being 99% accurate</p>
+<ul class="simple">
+<li><p>If a patient has the disease, they  will test positive 99% of the time</p></li>
+<li><p>If they don’t have the disease, they will test negative 99% of the time</p></li>
+<li><p>1% of all people have this disease</p></li>
+</ul>
+<p>If a patient tests positive, what is the probability that they actually have the disease?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your solution P(Disease | positive test) # A=0.5</span>
+<span class="n">P_disease</span> <span class="o">=</span><span class="mf">.01</span>
+<span class="n">P_no_disease</span> <span class="o">=</span> <span class="mi">1</span><span class="o">-</span><span class="n">P_disease</span>
+
+
+<span class="n">P_positive_given_disease</span> <span class="o">=</span> <span class="mf">.99</span>
+<span class="n">P_postiive_given_no_disease</span> <span class="o">=</span> <span class="mf">.01</span>
+
+<span class="n">P_positive</span><span class="o">=</span> <span class="n">P_postiive_given_no_disease</span><span class="o">*</span><span class="n">P_no_disease</span><span class="o">+</span> <span class="n">P_positive_given_disease</span><span class="o">*</span><span class="n">P_disease</span>
+
+<span class="n">P_disease_given_pos</span> <span class="o">=</span> <span class="n">bayes</span><span class="p">(</span><span class="n">P_disease</span><span class="p">,</span><span class="n">P_positive</span><span class="p">,</span><span class="n">P_positive_given_disease</span><span class="p">)</span>
+<span class="n">P_disease_given_pos</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="optional-activity-topic-17-optional-practice-problems">
+<h2>Optional Activity &gt; Topic 17 Optional Practice Problems<a class="headerlink" href="#optional-activity-topic-17-optional-practice-problems" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>in <code class="docutils literal notranslate"><span class="pre">Topic17-BayesPractice.ipynb</span></code></p></li>
+<li><p>(Unverified) solution branch added right before study group</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="maximum-likelihood-estimation">
+<h1>Maximum Likelihood Estimation<a class="headerlink" href="#maximum-likelihood-estimation" title="Permalink to this heading">#</a></h1>
+<p>MLE primarily deals with <strong>determining the parameters (<span class="math notranslate nohighlight">\(\theta\)</span>’s)</strong> that <strong>maximize the probability/liklihood of observing the data</strong>.</p>
+<section id="parameter-inference">
+<h2>Parameter Inference<a class="headerlink" href="#parameter-inference" title="Permalink to this heading">#</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><p>If we have a number of observations for a phenomenon that we do not know the probability/parameters for, we can use the probability of seeing those observations (the likelihood) for different probabilities/parameters until we find the value for the parameter that maximizes our chances of seeing the observed data.’</p></li>
+</ul>
+</div></blockquote>
+<section id="mle-assumptions">
+<h3>MLE Assumptions<a class="headerlink" href="#mle-assumptions" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Observations are independent</p></li>
+<li><p>Observations are identically distributed</p></li>
+</ul>
+<blockquote>
+<div><p>These assumptions are so common they have been given an abbreviation: “the i.i.d. assumption (independent and identically distributed samples)</p>
+</div></blockquote>
+<!---<img src ="https://raw.githubusercontent.com/learn-co-students/dsc-mle-online-ds-pt-100719/master/images/der.png">---></section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="activity-using-mle-to-find-the-mean-and-std-for-male-height">
+<h1>Activity: Using MLE to find the Mean and Std for Male Height<a class="headerlink" href="#activity-using-mle-to-find-the-mean-and-std-for-male-height" title="Permalink to this heading">#</a></h1>
+<blockquote>
+<div><p>Use MLE to find find the mean height and standard deviation for males.</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ! pip install -U fsds</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">fsds.imports</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">load_height_weight</span><span class="p">()</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Gender</th>
+      <th>Height</th>
+      <th>Weight</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Male</td>
+      <td>73.847017</td>
+      <td>241.893563</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Male</td>
+      <td>68.781904</td>
+      <td>162.310473</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Male</td>
+      <td>74.110105</td>
+      <td>212.740856</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Male</td>
+      <td>71.730978</td>
+      <td>220.042470</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Male</td>
+      <td>69.881796</td>
+      <td>206.349801</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>9995</th>
+      <td>Female</td>
+      <td>66.172652</td>
+      <td>136.777454</td>
+    </tr>
+    <tr>
+      <th>9996</th>
+      <td>Female</td>
+      <td>67.067155</td>
+      <td>170.867906</td>
+    </tr>
+    <tr>
+      <th>9997</th>
+      <td>Female</td>
+      <td>63.867992</td>
+      <td>128.475319</td>
+    </tr>
+    <tr>
+      <th>9998</th>
+      <td>Female</td>
+      <td>69.034243</td>
+      <td>163.852461</td>
+    </tr>
+    <tr>
+      <th>9999</th>
+      <td>Female</td>
+      <td>61.944246</td>
+      <td>113.649103</td>
+    </tr>
+  </tbody>
+</table>
+<p>10000 rows × 3 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Separate Out Males&#39; height</span>
+<span class="n">df_male</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Gender&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="s2">&quot;Male&quot;</span><span class="p">)[</span><span class="s1">&#39;Height&#39;</span><span class="p">]</span>
+
+<span class="c1">## Take a small sample (n=100) using random_state 123</span>
+<span class="n">male_sample</span> <span class="o">=</span> <span class="n">df_male</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">123</span><span class="p">)</span>
+<span class="n">male_sample</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2648    69.569235
+2456    68.035724
+4557    65.102935
+4884    64.585263
+92      70.640530
+          ...    
+1182    74.758752
+1898    72.439501
+2736    68.929542
+1003    67.805312
+3022    68.914623
+Name: Height, Length: 100, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Rug Plot of Male Heights Sample</span>
+<span class="n">fig</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">rugplot</span><span class="p">(</span><span class="n">male_sample</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span><span class="n">height</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Observed Male Heights&#39;</span><span class="p">,</span> 
+       <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Height (inches)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Text(0.5, 1.0, &#39;Observed Male Heights&#39;), Text(0.5, 0, &#39;Height (inches)&#39;)]
+</pre></div>
+</div>
+<img alt="../../_images/f7c9a6a27332cae7e53552f5905929a05ed7e118995347ae1f987d75c19d8954.png" src="../../_images/f7c9a6a27332cae7e53552f5905929a05ed7e118995347ae1f987d75c19d8954.png" />
+</div>
+</div>
+<section id="task-use-mle-to-determine-the-most-likely-mean-and-std-of-male-height">
+<h2>Task: Use MLE to Determine the Most Likely Mean and Std of Male Height<a class="headerlink" href="#task-use-mle-to-determine-the-most-likely-mean-and-std-of-male-height" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>How can we figure out the most likely population mean and std for males?</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">stats</span>
+<span class="c1">## Make a guess of mean=70, std=4</span>
+<span class="n">mu</span><span class="o">=</span><span class="mi">70</span>
+<span class="n">std</span><span class="o">=</span><span class="mi">4</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Generate 100 data points in the range of male_height (xs)</span>
+<span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">male_sample</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span><span class="n">male_sample</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="c1">## Generate a normal distribution (ys) using the xs </span>
+<span class="n">ys</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">mu</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">std</span><span class="p">)</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">rugplot</span><span class="p">(</span><span class="n">male_sample</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span><span class="n">height</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Observed Male Heights&#39;</span><span class="p">,</span> 
+       <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Height (inches)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fb4e8698340&gt;]
+</pre></div>
+</div>
+<img alt="../../_images/7f6b2f2388d7b0734111db54b5c5ec110ad646bcbf5d535114abcbd08a7aa8e4.png" src="../../_images/7f6b2f2388d7b0734111db54b5c5ec110ad646bcbf5d535114abcbd08a7aa8e4.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## functionize the above process</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_male_height</span><span class="p">(</span><span class="n">male_sample</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">std</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot a rugplot of the male_sample </span>
+<span class="sd">    vs the normal distribution defined by mu and std.&quot;&quot;&quot;</span>
+
+    <span class="c1">## Plot Male Heights</span>
+    <span class="n">fig</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">rugplot</span><span class="p">(</span><span class="n">male_sample</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span><span class="n">height</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Observed Male Heights&#39;</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Height (inches)&#39;</span><span class="p">)</span>
+    
+    <span class="c1">## Generate a normal distribution (ys) using the xs </span>
+    <span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">male_sample</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span><span class="n">male_sample</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">pop</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">mu</span><span class="p">,</span><span class="n">scale</span><span class="o">=</span><span class="n">std</span><span class="p">)</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span>
+    
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span><span class="n">pop</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Generated Dist (mu=</span><span class="si">{</span><span class="n">mu</span><span class="si">}</span><span class="s2">, std=</span><span class="si">{</span><span class="n">std</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">ls</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Mean=</span><span class="si">{</span><span class="n">mu</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+ 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## test our function for mu=70, std=4</span>
+<span class="n">plot_male_height</span><span class="p">(</span><span class="n">male_sample</span><span class="p">,</span><span class="n">mu</span><span class="p">,</span><span class="n">std</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/00ff28d5c07fff929b5606fc3b461db14543c636fca79d5615c193771f5267bc.png" src="../../_images/00ff28d5c07fff929b5606fc3b461db14543c636fca79d5615c193771f5267bc.png" />
+</div>
+</div>
+</section>
+<section id="the-probability-density-function-for-the-normal-distribution">
+<h2>The Probability Density Function for the Normal Distribution<a class="headerlink" href="#the-probability-density-function-for-the-normal-distribution" title="Permalink to this heading">#</a></h2>
+<p><a class="reference external" href="https://towardsdatascience.com/maximum-likelihood-estimation-explained-normal-distribution-6207b322e47f">https://towardsdatascience.com/maximum-likelihood-estimation-explained-normal-distribution-6207b322e47f</a></p>
+<p>The probability density function equation for the normal distribution is given by the following expression:</p>
+<div class="math notranslate nohighlight">
+\[ \large P(x) = \dfrac{1}{\sigma \sqrt {2\pi }}e^{-\dfrac{(x-\mu)^2}{2\sigma^2}}\]</div>
+<p>Here,</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mu\)</span> is the mean</p></li>
+<li><p><span class="math notranslate nohighlight">\(\sigma\)</span> is the standard deviation</p></li>
+<li><p><span class="math notranslate nohighlight">\(\pi \approx 3.14159 \)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\( e \approx 2.71828 \)</span></p></li>
+</ul>
+<blockquote>
+<div><p><a class="reference external" href="https://nbviewer.jupyter.org/github/learn-co-curriculum/dsc-normal-distribution/blob/master/index.ipynb">https://nbviewer.jupyter.org/github/learn-co-curriculum/dsc-normal-distribution/blob/master/index.ipynb</a></p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">calc_likelihood</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">mu</span><span class="p">,</span><span class="n">std</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Write a function to calculate the expected value at </span>
+<span class="sd">    a particular point using the equation above.&quot;&quot;&quot;</span>
+   
+    <span class="n">e_num</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">e</span><span class="o">**</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">mu</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">std</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+    <span class="n">denom</span> <span class="o">=</span> <span class="n">std</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="mi">2</span> <span class="p">)</span>
+    <span class="k">return</span> <span class="mi">1</span><span class="o">/</span><span class="n">denom</span><span class="o">*</span><span class="n">e_num</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">calc_total_likelihood</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span><span class="n">mu</span><span class="p">,</span><span class="n">std</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Write a function that will get the likelihood </span>
+<span class="sd">    for each x value so we can get the product of the total probability&quot;&quot;&quot;</span>
+  
+    <span class="n">likelihoods</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">xs</span><span class="p">:</span>
+        <span class="n">likelihoods</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">calc_likelihood</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">mu</span><span class="p">,</span><span class="n">std</span><span class="p">))</span>
+    <span class="n">likelihoods</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">likelihoods</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">likelihoods</span><span class="o">.</span><span class="n">prod</span><span class="p">()</span>
+    
+    
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">likelihoods</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">male_sample</span><span class="p">:</span>
+    <span class="n">likelihoods</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">calc_likelihood</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">mu</span><span class="p">,</span><span class="n">std</span><span class="p">))</span>
+<span class="n">likelihoods</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">likelihoods</span><span class="p">)</span>
+<span class="n">likelihoods</span><span class="o">.</span><span class="n">prod</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>7.123494597622488e-114
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span> <span class="n">calc_total_likelihood</span><span class="p">(</span><span class="n">male_sample</span><span class="p">,</span><span class="mi">70</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>7.123494597622488e-114
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Reminder about our mu and std</span>
+<span class="n">mu</span><span class="p">,</span><span class="n">std</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(70, 4)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Calculate total liklihood for our </span>
+<span class="n">calc_total_likelihood</span><span class="p">(</span><span class="n">male_sample</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span><span class="n">std</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>7.123494597622488e-114
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id2">
+<h2>Parameter Inference<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<blockquote>
+<div><p>We want to infer which of these values best matches the true Mean and Std of male height.</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_male_height</span><span class="p">(</span><span class="n">male_sample</span><span class="p">,</span><span class="n">mu</span><span class="p">,</span><span class="n">std</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/00ff28d5c07fff929b5606fc3b461db14543c636fca79d5615c193771f5267bc.png" src="../../_images/00ff28d5c07fff929b5606fc3b461db14543c636fca79d5615c193771f5267bc.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">itertools</span>
+<span class="c1">## Make a list of mus and stds to try</span>
+<span class="c1"># theta_mus = [40,45,50,60,62,64,66,68,70, 72,74, 80]</span>
+<span class="n">theta_mus</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span><span class="mi">80</span><span class="p">,</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="c1"># theta_stds = [0.5,0.8, 1,1.2,1.5,2.5,3,3.5,4,4.5]</span>
+<span class="n">theta_stds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">,</span><span class="mf">0.1</span><span class="p">)</span>
+
+<span class="c1">## make all possible permutations of params</span>
+<span class="n">theta_params</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="n">theta_mus</span><span class="p">,</span> <span class="n">theta_stds</span><span class="p">))</span>
+<span class="n">theta_params</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(40.0, 0.5),
+ (40.0, 0.6),
+ (40.0, 0.7),
+ (40.0, 0.7999999999999999),
+ (40.0, 0.8999999999999999),
+ (40.0, 0.9999999999999999),
+ (40.0, 1.0999999999999999),
+ (40.0, 1.1999999999999997),
+ (40.0, 1.2999999999999998),
+ (40.0, 1.4),
+ (40.0, 1.4999999999999998),
+ (40.0, 1.5999999999999996),
+ (40.0, 1.6999999999999997),
+ (40.0, 1.7999999999999998),
+ (40.0, 1.8999999999999997),
+ (40.0, 1.9999999999999996),
+ (40.0, 2.0999999999999996),
+ (40.0, 2.1999999999999997),
+ (40.0, 2.3),
+ (40.0, 2.3999999999999995),
+ (40.0, 2.4999999999999996),
+ (40.0, 2.5999999999999996),
+ (40.0, 2.6999999999999993),
+ (40.0, 2.7999999999999994),
+ (40.0, 2.8999999999999995),
+ (40.0, 2.9999999999999996),
+ (40.0, 3.0999999999999996),
+ (40.0, 3.1999999999999993),
+ (40.0, 3.2999999999999994),
+ (40.0, 3.3999999999999995),
+ (40.0, 3.499999999999999),
+ (40.0, 3.599999999999999),
+ (40.0, 3.6999999999999993),
+ (40.0, 3.7999999999999994),
+ (40.0, 3.8999999999999995),
+ (40.0, 3.999999999999999),
+ (40.0, 4.1),
+ (40.0, 4.199999999999999),
+ (40.0, 4.299999999999999),
+ (40.0, 4.399999999999999),
+ (40.1, 0.5),
+ (40.1, 0.6),
+ (40.1, 0.7),
+ (40.1, 0.7999999999999999),
+ (40.1, 0.8999999999999999),
+ (40.1, 0.9999999999999999),
+ (40.1, 1.0999999999999999),
+ (40.1, 1.1999999999999997),
+ (40.1, 1.2999999999999998),
+ (40.1, 1.4),
+ (40.1, 1.4999999999999998),
+ (40.1, 1.5999999999999996),
+ (40.1, 1.6999999999999997),
+ (40.1, 1.7999999999999998),
+ (40.1, 1.8999999999999997),
+ (40.1, 1.9999999999999996),
+ (40.1, 2.0999999999999996),
+ (40.1, 2.1999999999999997),
+ (40.1, 2.3),
+ (40.1, 2.3999999999999995),
+ (40.1, 2.4999999999999996),
+ (40.1, 2.5999999999999996),
+ (40.1, 2.6999999999999993),
+ (40.1, 2.7999999999999994),
+ (40.1, 2.8999999999999995),
+ (40.1, 2.9999999999999996),
+ (40.1, 3.0999999999999996),
+ (40.1, 3.1999999999999993),
+ (40.1, 3.2999999999999994),
+ (40.1, 3.3999999999999995),
+ (40.1, 3.499999999999999),
+ (40.1, 3.599999999999999),
+ (40.1, 3.6999999999999993),
+ (40.1, 3.7999999999999994),
+ (40.1, 3.8999999999999995),
+ (40.1, 3.999999999999999),
+ (40.1, 4.1),
+ (40.1, 4.199999999999999),
+ (40.1, 4.299999999999999),
+ (40.1, 4.399999999999999),
+ (40.2, 0.5),
+ (40.2, 0.6),
+ (40.2, 0.7),
+ (40.2, 0.7999999999999999),
+ (40.2, 0.8999999999999999),
+ (40.2, 0.9999999999999999),
+ (40.2, 1.0999999999999999),
+ (40.2, 1.1999999999999997),
+ (40.2, 1.2999999999999998),
+ (40.2, 1.4),
+ (40.2, 1.4999999999999998),
+ (40.2, 1.5999999999999996),
+ (40.2, 1.6999999999999997),
+ (40.2, 1.7999999999999998),
+ (40.2, 1.8999999999999997),
+ (40.2, 1.9999999999999996),
+ (40.2, 2.0999999999999996),
+ (40.2, 2.1999999999999997),
+ (40.2, 2.3),
+ (40.2, 2.3999999999999995),
+ (40.2, 2.4999999999999996),
+ (40.2, 2.5999999999999996),
+ (40.2, 2.6999999999999993),
+ (40.2, 2.7999999999999994),
+ (40.2, 2.8999999999999995),
+ (40.2, 2.9999999999999996),
+ (40.2, 3.0999999999999996),
+ (40.2, 3.1999999999999993),
+ (40.2, 3.2999999999999994),
+ (40.2, 3.3999999999999995),
+ (40.2, 3.499999999999999),
+ (40.2, 3.599999999999999),
+ (40.2, 3.6999999999999993),
+ (40.2, 3.7999999999999994),
+ (40.2, 3.8999999999999995),
+ (40.2, 3.999999999999999),
+ (40.2, 4.1),
+ (40.2, 4.199999999999999),
+ (40.2, 4.299999999999999),
+ (40.2, 4.399999999999999),
+ (40.300000000000004, 0.5),
+ (40.300000000000004, 0.6),
+ (40.300000000000004, 0.7),
+ (40.300000000000004, 0.7999999999999999),
+ (40.300000000000004, 0.8999999999999999),
+ (40.300000000000004, 0.9999999999999999),
+ (40.300000000000004, 1.0999999999999999),
+ (40.300000000000004, 1.1999999999999997),
+ (40.300000000000004, 1.2999999999999998),
+ (40.300000000000004, 1.4),
+ (40.300000000000004, 1.4999999999999998),
+ (40.300000000000004, 1.5999999999999996),
+ (40.300000000000004, 1.6999999999999997),
+ (40.300000000000004, 1.7999999999999998),
+ (40.300000000000004, 1.8999999999999997),
+ (40.300000000000004, 1.9999999999999996),
+ (40.300000000000004, 2.0999999999999996),
+ (40.300000000000004, 2.1999999999999997),
+ (40.300000000000004, 2.3),
+ (40.300000000000004, 2.3999999999999995),
+ (40.300000000000004, 2.4999999999999996),
+ (40.300000000000004, 2.5999999999999996),
+ (40.300000000000004, 2.6999999999999993),
+ (40.300000000000004, 2.7999999999999994),
+ (40.300000000000004, 2.8999999999999995),
+ (40.300000000000004, 2.9999999999999996),
+ (40.300000000000004, 3.0999999999999996),
+ (40.300000000000004, 3.1999999999999993),
+ (40.300000000000004, 3.2999999999999994),
+ (40.300000000000004, 3.3999999999999995),
+ (40.300000000000004, 3.499999999999999),
+ (40.300000000000004, 3.599999999999999),
+ (40.300000000000004, 3.6999999999999993),
+ (40.300000000000004, 3.7999999999999994),
+ (40.300000000000004, 3.8999999999999995),
+ (40.300000000000004, 3.999999999999999),
+ (40.300000000000004, 4.1),
+ (40.300000000000004, 4.199999999999999),
+ (40.300000000000004, 4.299999999999999),
+ (40.300000000000004, 4.399999999999999),
+ (40.400000000000006, 0.5),
+ (40.400000000000006, 0.6),
+ (40.400000000000006, 0.7),
+ (40.400000000000006, 0.7999999999999999),
+ (40.400000000000006, 0.8999999999999999),
+ (40.400000000000006, 0.9999999999999999),
+ (40.400000000000006, 1.0999999999999999),
+ (40.400000000000006, 1.1999999999999997),
+ (40.400000000000006, 1.2999999999999998),
+ (40.400000000000006, 1.4),
+ (40.400000000000006, 1.4999999999999998),
+ (40.400000000000006, 1.5999999999999996),
+ (40.400000000000006, 1.6999999999999997),
+ (40.400000000000006, 1.7999999999999998),
+ (40.400000000000006, 1.8999999999999997),
+ (40.400000000000006, 1.9999999999999996),
+ (40.400000000000006, 2.0999999999999996),
+ (40.400000000000006, 2.1999999999999997),
+ (40.400000000000006, 2.3),
+ (40.400000000000006, 2.3999999999999995),
+ (40.400000000000006, 2.4999999999999996),
+ (40.400000000000006, 2.5999999999999996),
+ (40.400000000000006, 2.6999999999999993),
+ (40.400000000000006, 2.7999999999999994),
+ (40.400000000000006, 2.8999999999999995),
+ (40.400000000000006, 2.9999999999999996),
+ (40.400000000000006, 3.0999999999999996),
+ (40.400000000000006, 3.1999999999999993),
+ (40.400000000000006, 3.2999999999999994),
+ (40.400000000000006, 3.3999999999999995),
+ (40.400000000000006, 3.499999999999999),
+ (40.400000000000006, 3.599999999999999),
+ (40.400000000000006, 3.6999999999999993),
+ (40.400000000000006, 3.7999999999999994),
+ (40.400000000000006, 3.8999999999999995),
+ (40.400000000000006, 3.999999999999999),
+ (40.400000000000006, 4.1),
+ (40.400000000000006, 4.199999999999999),
+ (40.400000000000006, 4.299999999999999),
+ (40.400000000000006, 4.399999999999999),
+ (40.50000000000001, 0.5),
+ (40.50000000000001, 0.6),
+ (40.50000000000001, 0.7),
+ (40.50000000000001, 0.7999999999999999),
+ (40.50000000000001, 0.8999999999999999),
+ (40.50000000000001, 0.9999999999999999),
+ (40.50000000000001, 1.0999999999999999),
+ (40.50000000000001, 1.1999999999999997),
+ (40.50000000000001, 1.2999999999999998),
+ (40.50000000000001, 1.4),
+ (40.50000000000001, 1.4999999999999998),
+ (40.50000000000001, 1.5999999999999996),
+ (40.50000000000001, 1.6999999999999997),
+ (40.50000000000001, 1.7999999999999998),
+ (40.50000000000001, 1.8999999999999997),
+ (40.50000000000001, 1.9999999999999996),
+ (40.50000000000001, 2.0999999999999996),
+ (40.50000000000001, 2.1999999999999997),
+ (40.50000000000001, 2.3),
+ (40.50000000000001, 2.3999999999999995),
+ (40.50000000000001, 2.4999999999999996),
+ (40.50000000000001, 2.5999999999999996),
+ (40.50000000000001, 2.6999999999999993),
+ (40.50000000000001, 2.7999999999999994),
+ (40.50000000000001, 2.8999999999999995),
+ (40.50000000000001, 2.9999999999999996),
+ (40.50000000000001, 3.0999999999999996),
+ (40.50000000000001, 3.1999999999999993),
+ (40.50000000000001, 3.2999999999999994),
+ (40.50000000000001, 3.3999999999999995),
+ (40.50000000000001, 3.499999999999999),
+ (40.50000000000001, 3.599999999999999),
+ (40.50000000000001, 3.6999999999999993),
+ (40.50000000000001, 3.7999999999999994),
+ (40.50000000000001, 3.8999999999999995),
+ (40.50000000000001, 3.999999999999999),
+ (40.50000000000001, 4.1),
+ (40.50000000000001, 4.199999999999999),
+ (40.50000000000001, 4.299999999999999),
+ (40.50000000000001, 4.399999999999999),
+ (40.60000000000001, 0.5),
+ (40.60000000000001, 0.6),
+ (40.60000000000001, 0.7),
+ (40.60000000000001, 0.7999999999999999),
+ (40.60000000000001, 0.8999999999999999),
+ (40.60000000000001, 0.9999999999999999),
+ (40.60000000000001, 1.0999999999999999),
+ (40.60000000000001, 1.1999999999999997),
+ (40.60000000000001, 1.2999999999999998),
+ (40.60000000000001, 1.4),
+ (40.60000000000001, 1.4999999999999998),
+ (40.60000000000001, 1.5999999999999996),
+ (40.60000000000001, 1.6999999999999997),
+ (40.60000000000001, 1.7999999999999998),
+ (40.60000000000001, 1.8999999999999997),
+ (40.60000000000001, 1.9999999999999996),
+ (40.60000000000001, 2.0999999999999996),
+ (40.60000000000001, 2.1999999999999997),
+ (40.60000000000001, 2.3),
+ (40.60000000000001, 2.3999999999999995),
+ (40.60000000000001, 2.4999999999999996),
+ (40.60000000000001, 2.5999999999999996),
+ (40.60000000000001, 2.6999999999999993),
+ (40.60000000000001, 2.7999999999999994),
+ (40.60000000000001, 2.8999999999999995),
+ (40.60000000000001, 2.9999999999999996),
+ (40.60000000000001, 3.0999999999999996),
+ (40.60000000000001, 3.1999999999999993),
+ (40.60000000000001, 3.2999999999999994),
+ (40.60000000000001, 3.3999999999999995),
+ (40.60000000000001, 3.499999999999999),
+ (40.60000000000001, 3.599999999999999),
+ (40.60000000000001, 3.6999999999999993),
+ (40.60000000000001, 3.7999999999999994),
+ (40.60000000000001, 3.8999999999999995),
+ (40.60000000000001, 3.999999999999999),
+ (40.60000000000001, 4.1),
+ (40.60000000000001, 4.199999999999999),
+ (40.60000000000001, 4.299999999999999),
+ (40.60000000000001, 4.399999999999999),
+ (40.70000000000001, 0.5),
+ (40.70000000000001, 0.6),
+ (40.70000000000001, 0.7),
+ (40.70000000000001, 0.7999999999999999),
+ (40.70000000000001, 0.8999999999999999),
+ (40.70000000000001, 0.9999999999999999),
+ (40.70000000000001, 1.0999999999999999),
+ (40.70000000000001, 1.1999999999999997),
+ (40.70000000000001, 1.2999999999999998),
+ (40.70000000000001, 1.4),
+ (40.70000000000001, 1.4999999999999998),
+ (40.70000000000001, 1.5999999999999996),
+ (40.70000000000001, 1.6999999999999997),
+ (40.70000000000001, 1.7999999999999998),
+ (40.70000000000001, 1.8999999999999997),
+ (40.70000000000001, 1.9999999999999996),
+ (40.70000000000001, 2.0999999999999996),
+ (40.70000000000001, 2.1999999999999997),
+ (40.70000000000001, 2.3),
+ (40.70000000000001, 2.3999999999999995),
+ (40.70000000000001, 2.4999999999999996),
+ (40.70000000000001, 2.5999999999999996),
+ (40.70000000000001, 2.6999999999999993),
+ (40.70000000000001, 2.7999999999999994),
+ (40.70000000000001, 2.8999999999999995),
+ (40.70000000000001, 2.9999999999999996),
+ (40.70000000000001, 3.0999999999999996),
+ (40.70000000000001, 3.1999999999999993),
+ (40.70000000000001, 3.2999999999999994),
+ (40.70000000000001, 3.3999999999999995),
+ (40.70000000000001, 3.499999999999999),
+ (40.70000000000001, 3.599999999999999),
+ (40.70000000000001, 3.6999999999999993),
+ (40.70000000000001, 3.7999999999999994),
+ (40.70000000000001, 3.8999999999999995),
+ (40.70000000000001, 3.999999999999999),
+ (40.70000000000001, 4.1),
+ (40.70000000000001, 4.199999999999999),
+ (40.70000000000001, 4.299999999999999),
+ (40.70000000000001, 4.399999999999999),
+ (40.80000000000001, 0.5),
+ (40.80000000000001, 0.6),
+ (40.80000000000001, 0.7),
+ (40.80000000000001, 0.7999999999999999),
+ (40.80000000000001, 0.8999999999999999),
+ (40.80000000000001, 0.9999999999999999),
+ (40.80000000000001, 1.0999999999999999),
+ (40.80000000000001, 1.1999999999999997),
+ (40.80000000000001, 1.2999999999999998),
+ (40.80000000000001, 1.4),
+ (40.80000000000001, 1.4999999999999998),
+ (40.80000000000001, 1.5999999999999996),
+ (40.80000000000001, 1.6999999999999997),
+ (40.80000000000001, 1.7999999999999998),
+ (40.80000000000001, 1.8999999999999997),
+ (40.80000000000001, 1.9999999999999996),
+ (40.80000000000001, 2.0999999999999996),
+ (40.80000000000001, 2.1999999999999997),
+ (40.80000000000001, 2.3),
+ (40.80000000000001, 2.3999999999999995),
+ (40.80000000000001, 2.4999999999999996),
+ (40.80000000000001, 2.5999999999999996),
+ (40.80000000000001, 2.6999999999999993),
+ (40.80000000000001, 2.7999999999999994),
+ (40.80000000000001, 2.8999999999999995),
+ (40.80000000000001, 2.9999999999999996),
+ (40.80000000000001, 3.0999999999999996),
+ (40.80000000000001, 3.1999999999999993),
+ (40.80000000000001, 3.2999999999999994),
+ (40.80000000000001, 3.3999999999999995),
+ (40.80000000000001, 3.499999999999999),
+ (40.80000000000001, 3.599999999999999),
+ (40.80000000000001, 3.6999999999999993),
+ (40.80000000000001, 3.7999999999999994),
+ (40.80000000000001, 3.8999999999999995),
+ (40.80000000000001, 3.999999999999999),
+ (40.80000000000001, 4.1),
+ (40.80000000000001, 4.199999999999999),
+ (40.80000000000001, 4.299999999999999),
+ (40.80000000000001, 4.399999999999999),
+ (40.90000000000001, 0.5),
+ (40.90000000000001, 0.6),
+ (40.90000000000001, 0.7),
+ (40.90000000000001, 0.7999999999999999),
+ (40.90000000000001, 0.8999999999999999),
+ (40.90000000000001, 0.9999999999999999),
+ (40.90000000000001, 1.0999999999999999),
+ (40.90000000000001, 1.1999999999999997),
+ (40.90000000000001, 1.2999999999999998),
+ (40.90000000000001, 1.4),
+ (40.90000000000001, 1.4999999999999998),
+ (40.90000000000001, 1.5999999999999996),
+ (40.90000000000001, 1.6999999999999997),
+ (40.90000000000001, 1.7999999999999998),
+ (40.90000000000001, 1.8999999999999997),
+ (40.90000000000001, 1.9999999999999996),
+ (40.90000000000001, 2.0999999999999996),
+ (40.90000000000001, 2.1999999999999997),
+ (40.90000000000001, 2.3),
+ (40.90000000000001, 2.3999999999999995),
+ (40.90000000000001, 2.4999999999999996),
+ (40.90000000000001, 2.5999999999999996),
+ (40.90000000000001, 2.6999999999999993),
+ (40.90000000000001, 2.7999999999999994),
+ (40.90000000000001, 2.8999999999999995),
+ (40.90000000000001, 2.9999999999999996),
+ (40.90000000000001, 3.0999999999999996),
+ (40.90000000000001, 3.1999999999999993),
+ (40.90000000000001, 3.2999999999999994),
+ (40.90000000000001, 3.3999999999999995),
+ (40.90000000000001, 3.499999999999999),
+ (40.90000000000001, 3.599999999999999),
+ (40.90000000000001, 3.6999999999999993),
+ (40.90000000000001, 3.7999999999999994),
+ (40.90000000000001, 3.8999999999999995),
+ (40.90000000000001, 3.999999999999999),
+ (40.90000000000001, 4.1),
+ (40.90000000000001, 4.199999999999999),
+ (40.90000000000001, 4.299999999999999),
+ (40.90000000000001, 4.399999999999999),
+ (41.000000000000014, 0.5),
+ (41.000000000000014, 0.6),
+ (41.000000000000014, 0.7),
+ (41.000000000000014, 0.7999999999999999),
+ (41.000000000000014, 0.8999999999999999),
+ (41.000000000000014, 0.9999999999999999),
+ (41.000000000000014, 1.0999999999999999),
+ (41.000000000000014, 1.1999999999999997),
+ (41.000000000000014, 1.2999999999999998),
+ (41.000000000000014, 1.4),
+ (41.000000000000014, 1.4999999999999998),
+ (41.000000000000014, 1.5999999999999996),
+ (41.000000000000014, 1.6999999999999997),
+ (41.000000000000014, 1.7999999999999998),
+ (41.000000000000014, 1.8999999999999997),
+ (41.000000000000014, 1.9999999999999996),
+ (41.000000000000014, 2.0999999999999996),
+ (41.000000000000014, 2.1999999999999997),
+ (41.000000000000014, 2.3),
+ (41.000000000000014, 2.3999999999999995),
+ (41.000000000000014, 2.4999999999999996),
+ (41.000000000000014, 2.5999999999999996),
+ (41.000000000000014, 2.6999999999999993),
+ (41.000000000000014, 2.7999999999999994),
+ (41.000000000000014, 2.8999999999999995),
+ (41.000000000000014, 2.9999999999999996),
+ (41.000000000000014, 3.0999999999999996),
+ (41.000000000000014, 3.1999999999999993),
+ (41.000000000000014, 3.2999999999999994),
+ (41.000000000000014, 3.3999999999999995),
+ (41.000000000000014, 3.499999999999999),
+ (41.000000000000014, 3.599999999999999),
+ (41.000000000000014, 3.6999999999999993),
+ (41.000000000000014, 3.7999999999999994),
+ (41.000000000000014, 3.8999999999999995),
+ (41.000000000000014, 3.999999999999999),
+ (41.000000000000014, 4.1),
+ (41.000000000000014, 4.199999999999999),
+ (41.000000000000014, 4.299999999999999),
+ (41.000000000000014, 4.399999999999999),
+ (41.100000000000016, 0.5),
+ (41.100000000000016, 0.6),
+ (41.100000000000016, 0.7),
+ (41.100000000000016, 0.7999999999999999),
+ (41.100000000000016, 0.8999999999999999),
+ (41.100000000000016, 0.9999999999999999),
+ (41.100000000000016, 1.0999999999999999),
+ (41.100000000000016, 1.1999999999999997),
+ (41.100000000000016, 1.2999999999999998),
+ (41.100000000000016, 1.4),
+ (41.100000000000016, 1.4999999999999998),
+ (41.100000000000016, 1.5999999999999996),
+ (41.100000000000016, 1.6999999999999997),
+ (41.100000000000016, 1.7999999999999998),
+ (41.100000000000016, 1.8999999999999997),
+ (41.100000000000016, 1.9999999999999996),
+ (41.100000000000016, 2.0999999999999996),
+ (41.100000000000016, 2.1999999999999997),
+ (41.100000000000016, 2.3),
+ (41.100000000000016, 2.3999999999999995),
+ (41.100000000000016, 2.4999999999999996),
+ (41.100000000000016, 2.5999999999999996),
+ (41.100000000000016, 2.6999999999999993),
+ (41.100000000000016, 2.7999999999999994),
+ (41.100000000000016, 2.8999999999999995),
+ (41.100000000000016, 2.9999999999999996),
+ (41.100000000000016, 3.0999999999999996),
+ (41.100000000000016, 3.1999999999999993),
+ (41.100000000000016, 3.2999999999999994),
+ (41.100000000000016, 3.3999999999999995),
+ (41.100000000000016, 3.499999999999999),
+ (41.100000000000016, 3.599999999999999),
+ (41.100000000000016, 3.6999999999999993),
+ (41.100000000000016, 3.7999999999999994),
+ (41.100000000000016, 3.8999999999999995),
+ (41.100000000000016, 3.999999999999999),
+ (41.100000000000016, 4.1),
+ (41.100000000000016, 4.199999999999999),
+ (41.100000000000016, 4.299999999999999),
+ (41.100000000000016, 4.399999999999999),
+ (41.20000000000002, 0.5),
+ (41.20000000000002, 0.6),
+ (41.20000000000002, 0.7),
+ (41.20000000000002, 0.7999999999999999),
+ (41.20000000000002, 0.8999999999999999),
+ (41.20000000000002, 0.9999999999999999),
+ (41.20000000000002, 1.0999999999999999),
+ (41.20000000000002, 1.1999999999999997),
+ (41.20000000000002, 1.2999999999999998),
+ (41.20000000000002, 1.4),
+ (41.20000000000002, 1.4999999999999998),
+ (41.20000000000002, 1.5999999999999996),
+ (41.20000000000002, 1.6999999999999997),
+ (41.20000000000002, 1.7999999999999998),
+ (41.20000000000002, 1.8999999999999997),
+ (41.20000000000002, 1.9999999999999996),
+ (41.20000000000002, 2.0999999999999996),
+ (41.20000000000002, 2.1999999999999997),
+ (41.20000000000002, 2.3),
+ (41.20000000000002, 2.3999999999999995),
+ (41.20000000000002, 2.4999999999999996),
+ (41.20000000000002, 2.5999999999999996),
+ (41.20000000000002, 2.6999999999999993),
+ (41.20000000000002, 2.7999999999999994),
+ (41.20000000000002, 2.8999999999999995),
+ (41.20000000000002, 2.9999999999999996),
+ (41.20000000000002, 3.0999999999999996),
+ (41.20000000000002, 3.1999999999999993),
+ (41.20000000000002, 3.2999999999999994),
+ (41.20000000000002, 3.3999999999999995),
+ (41.20000000000002, 3.499999999999999),
+ (41.20000000000002, 3.599999999999999),
+ (41.20000000000002, 3.6999999999999993),
+ (41.20000000000002, 3.7999999999999994),
+ (41.20000000000002, 3.8999999999999995),
+ (41.20000000000002, 3.999999999999999),
+ (41.20000000000002, 4.1),
+ (41.20000000000002, 4.199999999999999),
+ (41.20000000000002, 4.299999999999999),
+ (41.20000000000002, 4.399999999999999),
+ (41.30000000000002, 0.5),
+ (41.30000000000002, 0.6),
+ (41.30000000000002, 0.7),
+ (41.30000000000002, 0.7999999999999999),
+ (41.30000000000002, 0.8999999999999999),
+ (41.30000000000002, 0.9999999999999999),
+ (41.30000000000002, 1.0999999999999999),
+ (41.30000000000002, 1.1999999999999997),
+ (41.30000000000002, 1.2999999999999998),
+ (41.30000000000002, 1.4),
+ (41.30000000000002, 1.4999999999999998),
+ (41.30000000000002, 1.5999999999999996),
+ (41.30000000000002, 1.6999999999999997),
+ (41.30000000000002, 1.7999999999999998),
+ (41.30000000000002, 1.8999999999999997),
+ (41.30000000000002, 1.9999999999999996),
+ (41.30000000000002, 2.0999999999999996),
+ (41.30000000000002, 2.1999999999999997),
+ (41.30000000000002, 2.3),
+ (41.30000000000002, 2.3999999999999995),
+ (41.30000000000002, 2.4999999999999996),
+ (41.30000000000002, 2.5999999999999996),
+ (41.30000000000002, 2.6999999999999993),
+ (41.30000000000002, 2.7999999999999994),
+ (41.30000000000002, 2.8999999999999995),
+ (41.30000000000002, 2.9999999999999996),
+ (41.30000000000002, 3.0999999999999996),
+ (41.30000000000002, 3.1999999999999993),
+ (41.30000000000002, 3.2999999999999994),
+ (41.30000000000002, 3.3999999999999995),
+ (41.30000000000002, 3.499999999999999),
+ (41.30000000000002, 3.599999999999999),
+ (41.30000000000002, 3.6999999999999993),
+ (41.30000000000002, 3.7999999999999994),
+ (41.30000000000002, 3.8999999999999995),
+ (41.30000000000002, 3.999999999999999),
+ (41.30000000000002, 4.1),
+ (41.30000000000002, 4.199999999999999),
+ (41.30000000000002, 4.299999999999999),
+ (41.30000000000002, 4.399999999999999),
+ (41.40000000000002, 0.5),
+ (41.40000000000002, 0.6),
+ (41.40000000000002, 0.7),
+ (41.40000000000002, 0.7999999999999999),
+ (41.40000000000002, 0.8999999999999999),
+ (41.40000000000002, 0.9999999999999999),
+ (41.40000000000002, 1.0999999999999999),
+ (41.40000000000002, 1.1999999999999997),
+ (41.40000000000002, 1.2999999999999998),
+ (41.40000000000002, 1.4),
+ (41.40000000000002, 1.4999999999999998),
+ (41.40000000000002, 1.5999999999999996),
+ (41.40000000000002, 1.6999999999999997),
+ (41.40000000000002, 1.7999999999999998),
+ (41.40000000000002, 1.8999999999999997),
+ (41.40000000000002, 1.9999999999999996),
+ (41.40000000000002, 2.0999999999999996),
+ (41.40000000000002, 2.1999999999999997),
+ (41.40000000000002, 2.3),
+ (41.40000000000002, 2.3999999999999995),
+ (41.40000000000002, 2.4999999999999996),
+ (41.40000000000002, 2.5999999999999996),
+ (41.40000000000002, 2.6999999999999993),
+ (41.40000000000002, 2.7999999999999994),
+ (41.40000000000002, 2.8999999999999995),
+ (41.40000000000002, 2.9999999999999996),
+ (41.40000000000002, 3.0999999999999996),
+ (41.40000000000002, 3.1999999999999993),
+ (41.40000000000002, 3.2999999999999994),
+ (41.40000000000002, 3.3999999999999995),
+ (41.40000000000002, 3.499999999999999),
+ (41.40000000000002, 3.599999999999999),
+ (41.40000000000002, 3.6999999999999993),
+ (41.40000000000002, 3.7999999999999994),
+ (41.40000000000002, 3.8999999999999995),
+ (41.40000000000002, 3.999999999999999),
+ (41.40000000000002, 4.1),
+ (41.40000000000002, 4.199999999999999),
+ (41.40000000000002, 4.299999999999999),
+ (41.40000000000002, 4.399999999999999),
+ (41.50000000000002, 0.5),
+ (41.50000000000002, 0.6),
+ (41.50000000000002, 0.7),
+ (41.50000000000002, 0.7999999999999999),
+ (41.50000000000002, 0.8999999999999999),
+ (41.50000000000002, 0.9999999999999999),
+ (41.50000000000002, 1.0999999999999999),
+ (41.50000000000002, 1.1999999999999997),
+ (41.50000000000002, 1.2999999999999998),
+ (41.50000000000002, 1.4),
+ (41.50000000000002, 1.4999999999999998),
+ (41.50000000000002, 1.5999999999999996),
+ (41.50000000000002, 1.6999999999999997),
+ (41.50000000000002, 1.7999999999999998),
+ (41.50000000000002, 1.8999999999999997),
+ (41.50000000000002, 1.9999999999999996),
+ (41.50000000000002, 2.0999999999999996),
+ (41.50000000000002, 2.1999999999999997),
+ (41.50000000000002, 2.3),
+ (41.50000000000002, 2.3999999999999995),
+ (41.50000000000002, 2.4999999999999996),
+ (41.50000000000002, 2.5999999999999996),
+ (41.50000000000002, 2.6999999999999993),
+ (41.50000000000002, 2.7999999999999994),
+ (41.50000000000002, 2.8999999999999995),
+ (41.50000000000002, 2.9999999999999996),
+ (41.50000000000002, 3.0999999999999996),
+ (41.50000000000002, 3.1999999999999993),
+ (41.50000000000002, 3.2999999999999994),
+ (41.50000000000002, 3.3999999999999995),
+ (41.50000000000002, 3.499999999999999),
+ (41.50000000000002, 3.599999999999999),
+ (41.50000000000002, 3.6999999999999993),
+ (41.50000000000002, 3.7999999999999994),
+ (41.50000000000002, 3.8999999999999995),
+ (41.50000000000002, 3.999999999999999),
+ (41.50000000000002, 4.1),
+ (41.50000000000002, 4.199999999999999),
+ (41.50000000000002, 4.299999999999999),
+ (41.50000000000002, 4.399999999999999),
+ (41.60000000000002, 0.5),
+ (41.60000000000002, 0.6),
+ (41.60000000000002, 0.7),
+ (41.60000000000002, 0.7999999999999999),
+ (41.60000000000002, 0.8999999999999999),
+ (41.60000000000002, 0.9999999999999999),
+ (41.60000000000002, 1.0999999999999999),
+ (41.60000000000002, 1.1999999999999997),
+ (41.60000000000002, 1.2999999999999998),
+ (41.60000000000002, 1.4),
+ (41.60000000000002, 1.4999999999999998),
+ (41.60000000000002, 1.5999999999999996),
+ (41.60000000000002, 1.6999999999999997),
+ (41.60000000000002, 1.7999999999999998),
+ (41.60000000000002, 1.8999999999999997),
+ (41.60000000000002, 1.9999999999999996),
+ (41.60000000000002, 2.0999999999999996),
+ (41.60000000000002, 2.1999999999999997),
+ (41.60000000000002, 2.3),
+ (41.60000000000002, 2.3999999999999995),
+ (41.60000000000002, 2.4999999999999996),
+ (41.60000000000002, 2.5999999999999996),
+ (41.60000000000002, 2.6999999999999993),
+ (41.60000000000002, 2.7999999999999994),
+ (41.60000000000002, 2.8999999999999995),
+ (41.60000000000002, 2.9999999999999996),
+ (41.60000000000002, 3.0999999999999996),
+ (41.60000000000002, 3.1999999999999993),
+ (41.60000000000002, 3.2999999999999994),
+ (41.60000000000002, 3.3999999999999995),
+ (41.60000000000002, 3.499999999999999),
+ (41.60000000000002, 3.599999999999999),
+ (41.60000000000002, 3.6999999999999993),
+ (41.60000000000002, 3.7999999999999994),
+ (41.60000000000002, 3.8999999999999995),
+ (41.60000000000002, 3.999999999999999),
+ (41.60000000000002, 4.1),
+ (41.60000000000002, 4.199999999999999),
+ (41.60000000000002, 4.299999999999999),
+ (41.60000000000002, 4.399999999999999),
+ (41.700000000000024, 0.5),
+ (41.700000000000024, 0.6),
+ (41.700000000000024, 0.7),
+ (41.700000000000024, 0.7999999999999999),
+ (41.700000000000024, 0.8999999999999999),
+ (41.700000000000024, 0.9999999999999999),
+ (41.700000000000024, 1.0999999999999999),
+ (41.700000000000024, 1.1999999999999997),
+ (41.700000000000024, 1.2999999999999998),
+ (41.700000000000024, 1.4),
+ (41.700000000000024, 1.4999999999999998),
+ (41.700000000000024, 1.5999999999999996),
+ (41.700000000000024, 1.6999999999999997),
+ (41.700000000000024, 1.7999999999999998),
+ (41.700000000000024, 1.8999999999999997),
+ (41.700000000000024, 1.9999999999999996),
+ (41.700000000000024, 2.0999999999999996),
+ (41.700000000000024, 2.1999999999999997),
+ (41.700000000000024, 2.3),
+ (41.700000000000024, 2.3999999999999995),
+ (41.700000000000024, 2.4999999999999996),
+ (41.700000000000024, 2.5999999999999996),
+ (41.700000000000024, 2.6999999999999993),
+ (41.700000000000024, 2.7999999999999994),
+ (41.700000000000024, 2.8999999999999995),
+ (41.700000000000024, 2.9999999999999996),
+ (41.700000000000024, 3.0999999999999996),
+ (41.700000000000024, 3.1999999999999993),
+ (41.700000000000024, 3.2999999999999994),
+ (41.700000000000024, 3.3999999999999995),
+ (41.700000000000024, 3.499999999999999),
+ (41.700000000000024, 3.599999999999999),
+ (41.700000000000024, 3.6999999999999993),
+ (41.700000000000024, 3.7999999999999994),
+ (41.700000000000024, 3.8999999999999995),
+ (41.700000000000024, 3.999999999999999),
+ (41.700000000000024, 4.1),
+ (41.700000000000024, 4.199999999999999),
+ (41.700000000000024, 4.299999999999999),
+ (41.700000000000024, 4.399999999999999),
+ (41.800000000000026, 0.5),
+ (41.800000000000026, 0.6),
+ (41.800000000000026, 0.7),
+ (41.800000000000026, 0.7999999999999999),
+ (41.800000000000026, 0.8999999999999999),
+ (41.800000000000026, 0.9999999999999999),
+ (41.800000000000026, 1.0999999999999999),
+ (41.800000000000026, 1.1999999999999997),
+ (41.800000000000026, 1.2999999999999998),
+ (41.800000000000026, 1.4),
+ (41.800000000000026, 1.4999999999999998),
+ (41.800000000000026, 1.5999999999999996),
+ (41.800000000000026, 1.6999999999999997),
+ (41.800000000000026, 1.7999999999999998),
+ (41.800000000000026, 1.8999999999999997),
+ (41.800000000000026, 1.9999999999999996),
+ (41.800000000000026, 2.0999999999999996),
+ (41.800000000000026, 2.1999999999999997),
+ (41.800000000000026, 2.3),
+ (41.800000000000026, 2.3999999999999995),
+ (41.800000000000026, 2.4999999999999996),
+ (41.800000000000026, 2.5999999999999996),
+ (41.800000000000026, 2.6999999999999993),
+ (41.800000000000026, 2.7999999999999994),
+ (41.800000000000026, 2.8999999999999995),
+ (41.800000000000026, 2.9999999999999996),
+ (41.800000000000026, 3.0999999999999996),
+ (41.800000000000026, 3.1999999999999993),
+ (41.800000000000026, 3.2999999999999994),
+ (41.800000000000026, 3.3999999999999995),
+ (41.800000000000026, 3.499999999999999),
+ (41.800000000000026, 3.599999999999999),
+ (41.800000000000026, 3.6999999999999993),
+ (41.800000000000026, 3.7999999999999994),
+ (41.800000000000026, 3.8999999999999995),
+ (41.800000000000026, 3.999999999999999),
+ (41.800000000000026, 4.1),
+ (41.800000000000026, 4.199999999999999),
+ (41.800000000000026, 4.299999999999999),
+ (41.800000000000026, 4.399999999999999),
+ (41.90000000000003, 0.5),
+ (41.90000000000003, 0.6),
+ (41.90000000000003, 0.7),
+ (41.90000000000003, 0.7999999999999999),
+ (41.90000000000003, 0.8999999999999999),
+ (41.90000000000003, 0.9999999999999999),
+ (41.90000000000003, 1.0999999999999999),
+ (41.90000000000003, 1.1999999999999997),
+ (41.90000000000003, 1.2999999999999998),
+ (41.90000000000003, 1.4),
+ (41.90000000000003, 1.4999999999999998),
+ (41.90000000000003, 1.5999999999999996),
+ (41.90000000000003, 1.6999999999999997),
+ (41.90000000000003, 1.7999999999999998),
+ (41.90000000000003, 1.8999999999999997),
+ (41.90000000000003, 1.9999999999999996),
+ (41.90000000000003, 2.0999999999999996),
+ (41.90000000000003, 2.1999999999999997),
+ (41.90000000000003, 2.3),
+ (41.90000000000003, 2.3999999999999995),
+ (41.90000000000003, 2.4999999999999996),
+ (41.90000000000003, 2.5999999999999996),
+ (41.90000000000003, 2.6999999999999993),
+ (41.90000000000003, 2.7999999999999994),
+ (41.90000000000003, 2.8999999999999995),
+ (41.90000000000003, 2.9999999999999996),
+ (41.90000000000003, 3.0999999999999996),
+ (41.90000000000003, 3.1999999999999993),
+ (41.90000000000003, 3.2999999999999994),
+ (41.90000000000003, 3.3999999999999995),
+ (41.90000000000003, 3.499999999999999),
+ (41.90000000000003, 3.599999999999999),
+ (41.90000000000003, 3.6999999999999993),
+ (41.90000000000003, 3.7999999999999994),
+ (41.90000000000003, 3.8999999999999995),
+ (41.90000000000003, 3.999999999999999),
+ (41.90000000000003, 4.1),
+ (41.90000000000003, 4.199999999999999),
+ (41.90000000000003, 4.299999999999999),
+ (41.90000000000003, 4.399999999999999),
+ (42.00000000000003, 0.5),
+ (42.00000000000003, 0.6),
+ (42.00000000000003, 0.7),
+ (42.00000000000003, 0.7999999999999999),
+ (42.00000000000003, 0.8999999999999999),
+ (42.00000000000003, 0.9999999999999999),
+ (42.00000000000003, 1.0999999999999999),
+ (42.00000000000003, 1.1999999999999997),
+ (42.00000000000003, 1.2999999999999998),
+ (42.00000000000003, 1.4),
+ (42.00000000000003, 1.4999999999999998),
+ (42.00000000000003, 1.5999999999999996),
+ (42.00000000000003, 1.6999999999999997),
+ (42.00000000000003, 1.7999999999999998),
+ (42.00000000000003, 1.8999999999999997),
+ (42.00000000000003, 1.9999999999999996),
+ (42.00000000000003, 2.0999999999999996),
+ (42.00000000000003, 2.1999999999999997),
+ (42.00000000000003, 2.3),
+ (42.00000000000003, 2.3999999999999995),
+ (42.00000000000003, 2.4999999999999996),
+ (42.00000000000003, 2.5999999999999996),
+ (42.00000000000003, 2.6999999999999993),
+ (42.00000000000003, 2.7999999999999994),
+ (42.00000000000003, 2.8999999999999995),
+ (42.00000000000003, 2.9999999999999996),
+ (42.00000000000003, 3.0999999999999996),
+ (42.00000000000003, 3.1999999999999993),
+ (42.00000000000003, 3.2999999999999994),
+ (42.00000000000003, 3.3999999999999995),
+ (42.00000000000003, 3.499999999999999),
+ (42.00000000000003, 3.599999999999999),
+ (42.00000000000003, 3.6999999999999993),
+ (42.00000000000003, 3.7999999999999994),
+ (42.00000000000003, 3.8999999999999995),
+ (42.00000000000003, 3.999999999999999),
+ (42.00000000000003, 4.1),
+ (42.00000000000003, 4.199999999999999),
+ (42.00000000000003, 4.299999999999999),
+ (42.00000000000003, 4.399999999999999),
+ (42.10000000000003, 0.5),
+ (42.10000000000003, 0.6),
+ (42.10000000000003, 0.7),
+ (42.10000000000003, 0.7999999999999999),
+ (42.10000000000003, 0.8999999999999999),
+ (42.10000000000003, 0.9999999999999999),
+ (42.10000000000003, 1.0999999999999999),
+ (42.10000000000003, 1.1999999999999997),
+ (42.10000000000003, 1.2999999999999998),
+ (42.10000000000003, 1.4),
+ (42.10000000000003, 1.4999999999999998),
+ (42.10000000000003, 1.5999999999999996),
+ (42.10000000000003, 1.6999999999999997),
+ (42.10000000000003, 1.7999999999999998),
+ (42.10000000000003, 1.8999999999999997),
+ (42.10000000000003, 1.9999999999999996),
+ (42.10000000000003, 2.0999999999999996),
+ (42.10000000000003, 2.1999999999999997),
+ (42.10000000000003, 2.3),
+ (42.10000000000003, 2.3999999999999995),
+ (42.10000000000003, 2.4999999999999996),
+ (42.10000000000003, 2.5999999999999996),
+ (42.10000000000003, 2.6999999999999993),
+ (42.10000000000003, 2.7999999999999994),
+ (42.10000000000003, 2.8999999999999995),
+ (42.10000000000003, 2.9999999999999996),
+ (42.10000000000003, 3.0999999999999996),
+ (42.10000000000003, 3.1999999999999993),
+ (42.10000000000003, 3.2999999999999994),
+ (42.10000000000003, 3.3999999999999995),
+ (42.10000000000003, 3.499999999999999),
+ (42.10000000000003, 3.599999999999999),
+ (42.10000000000003, 3.6999999999999993),
+ (42.10000000000003, 3.7999999999999994),
+ (42.10000000000003, 3.8999999999999995),
+ (42.10000000000003, 3.999999999999999),
+ (42.10000000000003, 4.1),
+ (42.10000000000003, 4.199999999999999),
+ (42.10000000000003, 4.299999999999999),
+ (42.10000000000003, 4.399999999999999),
+ (42.20000000000003, 0.5),
+ (42.20000000000003, 0.6),
+ (42.20000000000003, 0.7),
+ (42.20000000000003, 0.7999999999999999),
+ (42.20000000000003, 0.8999999999999999),
+ (42.20000000000003, 0.9999999999999999),
+ (42.20000000000003, 1.0999999999999999),
+ (42.20000000000003, 1.1999999999999997),
+ (42.20000000000003, 1.2999999999999998),
+ (42.20000000000003, 1.4),
+ (42.20000000000003, 1.4999999999999998),
+ (42.20000000000003, 1.5999999999999996),
+ (42.20000000000003, 1.6999999999999997),
+ (42.20000000000003, 1.7999999999999998),
+ (42.20000000000003, 1.8999999999999997),
+ (42.20000000000003, 1.9999999999999996),
+ (42.20000000000003, 2.0999999999999996),
+ (42.20000000000003, 2.1999999999999997),
+ (42.20000000000003, 2.3),
+ (42.20000000000003, 2.3999999999999995),
+ (42.20000000000003, 2.4999999999999996),
+ (42.20000000000003, 2.5999999999999996),
+ (42.20000000000003, 2.6999999999999993),
+ (42.20000000000003, 2.7999999999999994),
+ (42.20000000000003, 2.8999999999999995),
+ (42.20000000000003, 2.9999999999999996),
+ (42.20000000000003, 3.0999999999999996),
+ (42.20000000000003, 3.1999999999999993),
+ (42.20000000000003, 3.2999999999999994),
+ (42.20000000000003, 3.3999999999999995),
+ (42.20000000000003, 3.499999999999999),
+ (42.20000000000003, 3.599999999999999),
+ (42.20000000000003, 3.6999999999999993),
+ (42.20000000000003, 3.7999999999999994),
+ (42.20000000000003, 3.8999999999999995),
+ (42.20000000000003, 3.999999999999999),
+ (42.20000000000003, 4.1),
+ (42.20000000000003, 4.199999999999999),
+ (42.20000000000003, 4.299999999999999),
+ (42.20000000000003, 4.399999999999999),
+ (42.30000000000003, 0.5),
+ (42.30000000000003, 0.6),
+ (42.30000000000003, 0.7),
+ (42.30000000000003, 0.7999999999999999),
+ (42.30000000000003, 0.8999999999999999),
+ (42.30000000000003, 0.9999999999999999),
+ (42.30000000000003, 1.0999999999999999),
+ (42.30000000000003, 1.1999999999999997),
+ (42.30000000000003, 1.2999999999999998),
+ (42.30000000000003, 1.4),
+ (42.30000000000003, 1.4999999999999998),
+ (42.30000000000003, 1.5999999999999996),
+ (42.30000000000003, 1.6999999999999997),
+ (42.30000000000003, 1.7999999999999998),
+ (42.30000000000003, 1.8999999999999997),
+ (42.30000000000003, 1.9999999999999996),
+ (42.30000000000003, 2.0999999999999996),
+ (42.30000000000003, 2.1999999999999997),
+ (42.30000000000003, 2.3),
+ (42.30000000000003, 2.3999999999999995),
+ (42.30000000000003, 2.4999999999999996),
+ (42.30000000000003, 2.5999999999999996),
+ (42.30000000000003, 2.6999999999999993),
+ (42.30000000000003, 2.7999999999999994),
+ (42.30000000000003, 2.8999999999999995),
+ (42.30000000000003, 2.9999999999999996),
+ (42.30000000000003, 3.0999999999999996),
+ (42.30000000000003, 3.1999999999999993),
+ (42.30000000000003, 3.2999999999999994),
+ (42.30000000000003, 3.3999999999999995),
+ (42.30000000000003, 3.499999999999999),
+ (42.30000000000003, 3.599999999999999),
+ (42.30000000000003, 3.6999999999999993),
+ (42.30000000000003, 3.7999999999999994),
+ (42.30000000000003, 3.8999999999999995),
+ (42.30000000000003, 3.999999999999999),
+ (42.30000000000003, 4.1),
+ (42.30000000000003, 4.199999999999999),
+ (42.30000000000003, 4.299999999999999),
+ (42.30000000000003, 4.399999999999999),
+ (42.400000000000034, 0.5),
+ (42.400000000000034, 0.6),
+ (42.400000000000034, 0.7),
+ (42.400000000000034, 0.7999999999999999),
+ (42.400000000000034, 0.8999999999999999),
+ (42.400000000000034, 0.9999999999999999),
+ (42.400000000000034, 1.0999999999999999),
+ (42.400000000000034, 1.1999999999999997),
+ (42.400000000000034, 1.2999999999999998),
+ (42.400000000000034, 1.4),
+ (42.400000000000034, 1.4999999999999998),
+ (42.400000000000034, 1.5999999999999996),
+ (42.400000000000034, 1.6999999999999997),
+ (42.400000000000034, 1.7999999999999998),
+ (42.400000000000034, 1.8999999999999997),
+ (42.400000000000034, 1.9999999999999996),
+ (42.400000000000034, 2.0999999999999996),
+ (42.400000000000034, 2.1999999999999997),
+ (42.400000000000034, 2.3),
+ (42.400000000000034, 2.3999999999999995),
+ (42.400000000000034, 2.4999999999999996),
+ (42.400000000000034, 2.5999999999999996),
+ (42.400000000000034, 2.6999999999999993),
+ (42.400000000000034, 2.7999999999999994),
+ (42.400000000000034, 2.8999999999999995),
+ (42.400000000000034, 2.9999999999999996),
+ (42.400000000000034, 3.0999999999999996),
+ (42.400000000000034, 3.1999999999999993),
+ (42.400000000000034, 3.2999999999999994),
+ (42.400000000000034, 3.3999999999999995),
+ (42.400000000000034, 3.499999999999999),
+ (42.400000000000034, 3.599999999999999),
+ (42.400000000000034, 3.6999999999999993),
+ (42.400000000000034, 3.7999999999999994),
+ (42.400000000000034, 3.8999999999999995),
+ (42.400000000000034, 3.999999999999999),
+ (42.400000000000034, 4.1),
+ (42.400000000000034, 4.199999999999999),
+ (42.400000000000034, 4.299999999999999),
+ (42.400000000000034, 4.399999999999999),
+ ...]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Calculate the most likely parameters for mu, std</span>
+<span class="n">compare</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;Mu&#39;</span><span class="p">,</span><span class="s1">&#39;Std&#39;</span><span class="p">,</span><span class="s1">&#39;Likelihood&#39;</span><span class="p">]]</span>
+<span class="c1">## For each pair of mu,std, calculate total likelihood.</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">theta_mu</span><span class="p">,</span> <span class="n">theta_std</span><span class="p">)</span> <span class="ow">in</span> <span class="n">theta_params</span><span class="p">:</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">calc_total_likelihood</span><span class="p">(</span><span class="n">male_sample</span><span class="p">,</span><span class="n">theta_mu</span><span class="p">,</span> <span class="n">theta_std</span><span class="p">)</span>
+    <span class="n">compare</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">theta_mu</span><span class="p">,</span> <span class="n">theta_std</span><span class="p">,</span> <span class="n">res</span><span class="p">])</span>
+<span class="c1">## Turn it into a df for convenience</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">compare</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span><span class="n">columns</span><span class="o">=</span><span class="n">compare</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">results</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Mu</th>
+      <th>Std</th>
+      <th>Likelihood</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>40.0</td>
+      <td>0.5</td>
+      <td>0.000000e+00</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>40.0</td>
+      <td>0.6</td>
+      <td>0.000000e+00</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>40.0</td>
+      <td>0.7</td>
+      <td>0.000000e+00</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>40.0</td>
+      <td>0.8</td>
+      <td>0.000000e+00</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>40.0</td>
+      <td>0.9</td>
+      <td>0.000000e+00</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>15995</th>
+      <td>79.9</td>
+      <td>4.0</td>
+      <td>9.296228e-271</td>
+    </tr>
+    <tr>
+      <th>15996</th>
+      <td>79.9</td>
+      <td>4.1</td>
+      <td>1.211878e-263</td>
+    </tr>
+    <tr>
+      <th>15997</th>
+      <td>79.9</td>
+      <td>4.2</td>
+      <td>4.432218e-257</td>
+    </tr>
+    <tr>
+      <th>15998</th>
+      <td>79.9</td>
+      <td>4.3</td>
+      <td>5.125055e-251</td>
+    </tr>
+    <tr>
+      <th>15999</th>
+      <td>79.9</td>
+      <td>4.4</td>
+      <td>2.083117e-245</td>
+    </tr>
+  </tbody>
+</table>
+<p>16000 rows × 3 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;Likelihood&#39;</span><span class="p">,</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">results</span><span class="o">=</span><span class="n">results</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Mu</th>
+      <th>Std</th>
+      <th>Likelihood</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>69.1</td>
+      <td>3.0</td>
+      <td>1.298592e-109</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>69.2</td>
+      <td>3.0</td>
+      <td>1.244604e-109</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>69.1</td>
+      <td>2.9</td>
+      <td>1.241459e-109</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>69.0</td>
+      <td>3.0</td>
+      <td>1.212437e-109</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>69.2</td>
+      <td>2.9</td>
+      <td>1.186308e-109</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">male_sample</span><span class="p">,</span><span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;Height&#39;, ylabel=&#39;Count&#39;&gt;
+</pre></div>
+</div>
+<img alt="../../_images/e26c56702064bdf8ea935f818228495570c0bdbc2274e5cf934855fd5488662e.png" src="../../_images/e26c56702064bdf8ea935f818228495570c0bdbc2274e5cf934855fd5488662e.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## View the 5 params with the highest likelihood</span>
+<span class="n">plot_male_height</span><span class="p">(</span><span class="n">male_sample</span><span class="p">,</span><span class="n">results</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;Mu&#39;</span><span class="p">]</span> <span class="p">,</span><span class="n">results</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;Std&#39;</span><span class="p">]</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/a498f128f409e258c7f1caf4aefecf5453bcdff1587a8c6c1d621828e90b6037.png" src="../../_images/a498f128f409e258c7f1caf4aefecf5453bcdff1587a8c6c1d621828e90b6037.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">male_sample</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span><span class="s1">&#39;std&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>mean    69.111783
+std      2.983733
+Name: Height, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Get the actual mean and std from the full population</span>
+<span class="n">df_male</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span><span class="s1">&#39;std&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>mean    69.026346
+std      2.863362
+Name: Height, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_male</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(5000,)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "learn-env-new"
+        },
+        kernelOptions: {
+            name: "learn-env-new",
+            path: "./Phase_2/topic_17_bayesian_statistics"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'learn-env-new'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../topic_16_AB_testing/topic_16_AB_testing_with_movies-SG.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Topic 16: Practicing AB Testing with Movies</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../topic_18_linear_regression/topic_18_intro_to_linear_regression_SG.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Topic 18: Intro to Linear Regression</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Topic 17: Bayesian Statistics</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advice-on-approaching-this-section">Advice on Approaching This Section</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-references">Additional References</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#questions">Questions?</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#conditional-probability-review">Conditional Probability - Review</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#laws-theorems-based-on-conditional-probability">Laws &amp; Theorems Based on Conditional Probability</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#theorem-1-product-rule">Theorem 1: Product Rule</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#theorem-2-chain-rule-aka-general-product-rule">Theorem 2: Chain Rule AKA “General Product Rule”</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bayes-theorem">Bayes’ Theorem</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Bayes’ Theorem</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#activity-bayes-theorem-lab">Activity: Bayes’ Theorem - lab</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#skin-cancer">Skin Cancer</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#children-i">Children (I)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#children-ii">Children  (II)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-diagnostic-test">A diagnostic test</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-activity-topic-17-optional-practice-problems">Optional Activity &gt; Topic 17 Optional Practice Problems</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#maximum-likelihood-estimation">Maximum Likelihood Estimation</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parameter-inference">Parameter Inference</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mle-assumptions">MLE Assumptions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#activity-using-mle-to-find-the-mean-and-std-for-male-height">Activity: Using MLE to find the Mean and Std for Male Height</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#task-use-mle-to-determine-the-most-likely-mean-and-std-of-male-height">Task: Use MLE to Determine the Most Likely Mean and Std of Male Height</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-probability-density-function-for-the-normal-distribution">The Probability Density Function for the Normal Distribution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Parameter Inference</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By James Irving, PhD
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

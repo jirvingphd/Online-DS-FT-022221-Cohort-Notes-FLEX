@@ -1,0 +1,4880 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Topic 15: ANOVAs &amp; Statistical Power with Neuro Data &#8212; Data Science Curriculum</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Phase_2/topic_15_ANOVA/instructor notebooks/topic_15_ANOVA_with_neuro_data-instructor';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/flatironschool_banner.jpg" class="logo__image only-light" alt="Data Science Curriculum - Home"/>
+    <script>document.write(`<img src="../../../_static/flatironschool_banner.jpg" class="logo__image only-dark" alt="Data Science Curriculum - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../intro.html">
+                    Data Science Curriculum
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 1 - Python &amp; Data Fundamentals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_01_getting_started/topic_01_getting_started.html">Topic 1: Getting Started with Data Science</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_02_bash_git/topic_02_bash_and_git.html">Topic 02:  Bash and Git</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_03_control_flow_functions/topic_03_control_flow_and_functions.html">Topic 03: Control Flow, Functions, and Statistics</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_04_python_libraries/topic_04_intro_to_libraries_numpy_SG.html">Topic 04-Part 1: Python Libraries &amp; NumPy</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_04_python_libraries/topic_04_pt-2_brief_intro_to_pandas-SG.html">Topic 04-Part 2: Brief Intro to Pandas with Doctor Who</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_05_data_cleaning_in_pandas/topic_05_Data_Cleaning_in_Pandas.html">Topic 05: Data Cleaning in Pandas</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_06_data_visualization/topic_06_visualizations_heroes_project_SG.html">Topic 06:  Data Visualizations</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_07_SQL_and_relational_databases/topic_07_SQL_and_relational_databases_SG.html">TOPIC 07: SQL DATABASES</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_08_noSQL_databases/topic_08_mongodb-SG.html">Topic 08: NoSQL Databases</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_09_json_and_apis/topic_09_json-api-SG.html">Topic 09: Using APIs and JSON Data</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_10_webscraping/topic_10_SG_HTML_CSS_web_scraping.html">Topic 10: HTML, CSS, &amp; Web Scraping</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 2 - Statistics &amp; Regression</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../topic_11_probability_and_combinatorics/topic_11_playlist_probabilities-SG.html">Topic 11 - Intro to Combinatorics &amp; Probability</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_12_statistical_distributions/topic-12-distributions-with-movies-sg.html">Exploring Distributions with Movies Data</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_13_central_limit_theorem/topic_13_central_limit_theorem_SG.html">Topic 13: Central Limit Theorem</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_14_hypothesis_testing/topic_14_hypothesis_testing-SG.html">Topic 14: Hypothesis Testing -  T-Tests</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_15_ANOVA_with_neuro_data-SG.html">Topic 15: ANOVAs &amp; Statistical Power with  Neuro Data</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_16_AB_testing/topic_16_AB_testing_with_movies-SG.html">Topic 16: Practicing AB Testing with Movies</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_17_bayesian_statistics/topic_17_bayesian_statistics-SG.html">Topic 17: Bayesian Statistics</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_18_linear_regression/topic_18_intro_to_linear_regression_SG.html">Topic 18: Intro to Linear Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_19_part1_multiple_regression/topic_19_Multiple_Regression_v2-SG.html">Topic 19: Multiple Linear Regression</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_19_part2_model_validation/topic_19_part_2_Multiple_Regression_v2-SG.html">Topic 19 Part 2: Feature Selection &amp; Model Validation</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_20_extensions_linear_models/topic_20_extensions_to_linear_models_SG.html">Topic 20: Extensions to Linear Models</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 3 - Machine Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_21_OOP/topic_21_OOP_playing_cards_SG.html">Topic 21: Object-Oriented Programming</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_22_linear_algebra/topic_22_linear_algebra_SG.html">Topic 22: Linear Algebra</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_23_calculus_gradient_descent/topic_23_gradient_descent_SG.html">Topic 23: Cost Functions and Gradient Descent</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_24_regularization/topic_24_Regularization_Ridge_Lasso_v2_SG.html">Topic 24: Feature Selection &amp; Regularization (Ridge and Lasso Regression)</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_25_logistic_regression/topic_25_pt1_LogisticRegression_titanic-v2-SG.html">Topic 25-Pt 1: Intro to Logistic Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_25_logistic_regression/topic_25_pt2_LogisticRegression_titanic-v2-SG.html">Topic 25-Part 2: Evaluating Classifiers, Dealing with Class Imbalance, and <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code></a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_27_KNN/Topic_27_KNN_with_pipelines_with_lab_v3_SG.html">Topic 27: K-Nearest Neighbors<br/> +Topic 32: Pipelines</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_29_decision_trees/topic_29_decision_trees_v2_titanic-SG.html">Topic 29: Decision Trees</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_30_ensemble_methods/topic_30_ensemble_methods-SG.html">Topic 30: Ensemble Methods</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_3/topic_31_support_vector_machines/topic_31_SupportVectorMachines_SG.html">Topic 31: Support Vector Machines</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 4 - Advanced ML &amp; Time Series</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_33_pca/topic_33_PCA_SG.html">Topic 33: Principal Component Analysis</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_34_clustering/topic_34_Kmeans_clustering_v3_SG.html">Topic 34: Clustering</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_35-36_using_databricks_for_pyspark/using_databricks_for_pyspark.html">How to Use Databricks for PySpark Canvas Material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_36_recommendation_systems/topic_36_Recommendation_Systems_with_Surprise.html">Topic 36: Recommendation Systems</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_37_intro_to_time_series/topic_37_intro_to_time_series_crime_v3-SG.html">Topic 37: Intro to Time Series</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_38_time_series_models/topic_38-time_series_models_v3_SG.html">Topic 38: Time Series Models</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_39_NLP/topic_39_NLP_finding_trump_v3_SG.html">Topic 39: Natural Language Processing + Topic 28: Bayesian Classification</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_40-41_neural_networks/topic_40-41_Artificial_Neural_Networks_v1_SG.html">Topic 40-41: Artificial Neural Networks</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_42_tuning_neural_networks/topic_42_tuning_ANNs_with_deep_NLP_v1_SG.html">Topic 42 - Tuning Neural Networks + Deep NLP</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_43_AWS/topic_43_operationalizing_code_AWS_SG.html">Topic 43: Operationalizing Code &amp; AWS</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 5 - Capstone &amp; Bonus Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/Capstone_Kickoff.html">Capstone Kickoff!</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/APIs/working_with_apis.html">Working with APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/developing_app_functions/developing-streamlit-app-functions_SG.html">Developing Streamlit App Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/tableau/tableau_fundamentals_2021-SG.html">Tableau Fundamentals</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/Bonus%20Notebooks/plotly_visuals.html">Plotly Question</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/master?urlpath=tree/Phase_2/topic_15_ANOVA/instructor notebooks/topic_15_ANOVA_with_neuro_data-instructor.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/blob/master/Phase_2/topic_15_ANOVA/instructor notebooks/topic_15_ANOVA_with_neuro_data-instructor.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/issues/new?title=Issue%20on%20page%20%2FPhase_2/topic_15_ANOVA/instructor notebooks/topic_15_ANOVA_with_neuro_data-instructor.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/Phase_2/topic_15_ANOVA/instructor notebooks/topic_15_ANOVA_with_neuro_data-instructor.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Topic 15: ANOVAs & Statistical Power with  Neuro Data</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Topic 15: ANOVAs &amp; Statistical Power with  Neuro Data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notes">NOTES</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">REFERENCES</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hypothesis-testing-steps">HYPOTHESIS TESTING STEPS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-tests-summary-table">Statistical Tests Summary Table</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#real-world-science-experimental-design">Real-World Science / Experimental Design</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-role-of-stress-neurons-in-the-amygdala-in-addiction-binge-drinking">The Role of Stress Neurons in the Amygdala in Addiction/Binge Drinking</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-opponent-process-theory-of-addiction">The Opponent-Process Theory of Addiction</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hypothesis">Hypothesis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#experimental-design">Experimental Design</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hypothesis-testing-mouse-data">Hypothesis Testing: Mouse Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Hypothesis</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-which-type-of-test">Step 1: which type of test?</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#let-s-first-try-to-treat-this-as-2-sample-t-tests-one-for-each-phase">Let’s First Try to Treat this as 2-sample T-Tests (one for each phase)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#obtaining-preprocessing-data">Obtaining/Preprocessing Data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#laying-out-our-approach">Laying Out Our Approach</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calculating-individual-mouse-means-by-phase">Calculating individual mouse means by phase</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-group-data-for-eda-testing">Getting Group Data For EDA &amp; Testing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-group-means-standard-error-of-the-mean">Plotting Group Means + Standard Error of the Mean</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run-2-sample-t-test-on-baseline-days">Run 2-sample T-Test on Baseline Days</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-levene-s-test">Adding Levene’s Test</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run-correct-test">Run Correct Test</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#make-a-final-function-to-use-both-of-the-above">Make a final function to use both of the above</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-our-functions-evaluate-each-phase-s-assumption-tests-and-select-the-correct-hypothesis-test">Using our functions, evaluate each phase’s assumption tests and select the correct hypothesis test</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#anova">ANOVA</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#run-one-way-anovas-with-scipy">Run One-Way ANOVAs with Scipy</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#two-way-anova-with-statsmodels">Two-Way  ANOVA with Statsmodels</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#melting-a-dataframe">Melting a dataframe</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-an-ols-model-to-run-an-anova">Create an OLS Model to Run an ANOVA</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-correct-test-repeated-measures-anova">The CORRECT Test: Repeated Measures ANOVA</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">CONCLUSION</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#effect-size-visual">Effect Size Visual</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ephys-figure">Ephys Figure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-analysis-pipeline">Statistical Analysis Pipeline</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="topic-15-anovas-statistical-power-with-neuro-data">
+<h1>Topic 15: ANOVAs &amp; Statistical Power with  Neuro Data<a class="headerlink" href="#topic-15-anovas-statistical-power-with-neuro-data" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p>04/01/21</p></li>
+<li><p>online-ds-ft-022221</p></li>
+</ul>
+<section id="learning-objectives">
+<h2>Learning Objectives<a class="headerlink" href="#learning-objectives" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Revisit hypothesis testing using my neuroscience research data.</p></li>
+<li><p>Learn about ANOVAs</p></li>
+<li><p>Discuss the multiple comparison problem.</p></li>
+<li><p>Discuss the multiple comparison problem and Tukey’s test</p></li>
+</ul>
+<section id="notes">
+<h3>NOTES<a class="headerlink" href="#notes" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>This notebook is intended to walk through preparing my binge drinking data for Hypothesis Testing</p></li>
+<li><p>Specifically, in this notebook I will attempt to use the most appropriate stat tests, which are not taught in the Learn curriculum</p>
+<ul>
+<li><p><strong>Two way RM ANOVA</strong></p></li>
+<li><p><strong>Repeated Measures ANOVA in Python</strong></p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="references">
+<h1>REFERENCES<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Hypothesis Testing Workflow:</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/jirvingphd/hypothesis_testing_workflow_python">jirvingphd/hypothesis_testing_workflow_python</a></p></li>
+</ul>
+</li>
+</ul>
+<ul class="simple">
+<li><p><strong>Two-Way and RM ANOVA Resources</strong></p>
+<ul>
+<li><p><a class="reference external" href="https://www.marsja.se/repeated-measures-anova-in-python-using-statsmodels/">RM ANOVA IN Python with Statsmodels</a></p></li>
+<li><p>One-way RM ANOVA (other packages): <a class="reference external" href="https://www.marsja.se/repeated-measures-anova-using-python/">https://www.marsja.se/repeated-measures-anova-using-python/</a></p></li>
+<li><p>Two-Way: <a class="reference external" href="https://marsja.se/two-way-anova-repeated-measures-using-python/">https://marsja.se/two-way-anova-repeated-measures-using-python/</a></p></li>
+</ul>
+</li>
+</ul>
+<section id="hypothesis-testing-steps">
+<h2>HYPOTHESIS TESTING STEPS<a class="headerlink" href="#hypothesis-testing-steps" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Separate data in group vars.</p></li>
+<li><p>Visualize data and calculate group n (size)</p></li>
+</ul>
+<ul class="simple">
+<li><p>Select the appropriate test based on type of comparison being made, the number of groups, the type of data.</p></li>
+</ul>
+<ul class="simple">
+<li><p>For t-tests: test for the assumptions of normality and homogeneity of variance.</p>
+<ol class="arabic simple">
+<li><p>Check if sample sizes allow us to ignore assumptions, and if not:</p></li>
+<li><p><strong>Test Assumption Normality</strong></p></li>
+<li><p><strong>Test for Homogeneity of Variance</strong></p></li>
+<li><p><strong>Choose appropriate test based upon the above</strong></p></li>
+</ol>
+</li>
+</ul>
+<ul class="simple">
+<li><p><strong>Perform chosen statistical test, calculate effect size, and any post-hoc tests.</strong></p>
+<ul>
+<li><p>To perform post-hoc pairwise comparison testing</p></li>
+<li><p>Effect size calculation</p>
+<ul>
+<li><p>Cohen’s d</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="statistical-tests-summary-table">
+<h2>Statistical Tests Summary Table<a class="headerlink" href="#statistical-tests-summary-table" title="Permalink to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parametric tests (means)</p></th>
+<th class="head"><p>Function</p></th>
+<th class="head"><p>Nonparametric tests (medians)</p></th>
+<th class="head"><p>Function</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1-sample t test</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">scipy.stats.ttest_1samp()</span></code></p></td>
+<td><p>1-sample Wilcoxon</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">scipy.stats.wilcoxon</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>2-sample t test</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">scipy.stats.ttest_ind()</span></code></p></td>
+<td><p>Mann-Whitney U test</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">scipy.stats.mannwhitneyu()</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>One-Way ANOVA</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">scipy.stats.f_oneway()</span></code></p></td>
+<td><p>Kruskal-Wallis</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">scipy.stats.kruskal</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>| Factorial DOE with one factor and one blocking variable |Friedman test  |</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="real-world-science-experimental-design">
+<h1>Real-World Science / Experimental Design<a class="headerlink" href="#real-world-science-experimental-design" title="Permalink to this heading">#</a></h1>
+<section id="the-role-of-stress-neurons-in-the-amygdala-in-addiction-binge-drinking">
+<h2>The Role of Stress Neurons in the Amygdala in Addiction/Binge Drinking<a class="headerlink" href="#the-role-of-stress-neurons-in-the-amygdala-in-addiction-binge-drinking" title="Permalink to this heading">#</a></h2>
+<section id="the-opponent-process-theory-of-addiction">
+<h3>The Opponent-Process Theory of Addiction<a class="headerlink" href="#the-opponent-process-theory-of-addiction" title="Permalink to this heading">#</a></h3>
+<img src="https://raw.githubusercontent.com/jirvingphd/fsds_pt_100719_cohort_notes/master/Images/robinson-berridge-fig1.jpg"></section>
+</section>
+<ul class="simple">
+<li><p>We will be talking through some of the experiments from my Postdoctoral research on the roll of stress neurons in the escalation of binge drinking.</p></li>
+<li><p><a class="reference external" href="https://drive.google.com/open?id=14z2dUdPB_8ei3HA7R1j3ylwEP0kVZhJq">James’ Neuroscience Research Poster: Society for Neuroscience 2016</a></p></li>
+</ul>
+<img src="https://raw.githubusercontent.com/jirvingphd/fsds_100719_cohort_notes/master/images/sect_20_neuro_data.png">
+<section id="hypothesis">
+<h2>Hypothesis<a class="headerlink" href="#hypothesis" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Based on prior evidence in the field, stress neurons in the amygdala are believed to be responsible for the negative emotions that promote binge consumption to relieve negative symptoms</p></li>
+</ul>
+<p><span class="math notranslate nohighlight">\( H_1\)</span>: Increasing the activity of stress neurons (CRF neurons) in the amygdala will increase the amount of alcohol consumed by binge-drinking mice.</p>
+<p><span class="math notranslate nohighlight">\(H_0\)</span>: Stimulation of CRF neurons has no effect on the amount of alcohol consumed.</p>
+<img src="https://raw.githubusercontent.com/jirvingphd/fsds_pt_100719_cohort_notes/master/Images/jmi_poster_preds1.png" width=60%></section>
+<section id="experimental-design">
+<h2>Experimental Design<a class="headerlink" href="#experimental-design" title="Permalink to this heading">#</a></h2>
+<img src="https://raw.githubusercontent.com/jirvingphd/fsds_pt_100719_cohort_notes/master/Images/opto_6steps.jpg"><img src="https://raw.githubusercontent.com/jirvingphd/hypothesis_testing_lessons/master/images/jmi_poster_fig1_no_mouse.png">
+<!---
+<img src="https://raw.githubusercontent.com/jirvingphd/hypothesis_testing_lessons/master/images/jmi_poster_fig1.png">---><img src="https://raw.githubusercontent.com/jirvingphd/fsds_pt_100719_cohort_notes/master/Images/jmi_poster_fig2.png">
+<!---
+<img src="https://raw.githubusercontent.com/jirvingphd/fsds_100719_cohort_notes/master/images/sect_20_neuro_data.png">')
+---></section>
+<section id="hypothesis-testing-mouse-data">
+<h2>Hypothesis Testing: Mouse Data<a class="headerlink" href="#hypothesis-testing-mouse-data" title="Permalink to this heading">#</a></h2>
+<section id="id1">
+<h3>Hypothesis<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>Question: does stimulation of CRF Neurons in the central amygdala increase alcohol consumption?</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>Metric:</p></li>
+<li><p>Groups:</p></li>
+<li><p><span class="math notranslate nohighlight">\(H_1\)</span>:</p></li>
+<li><p><span class="math notranslate nohighlight">\(H_0\)</span>:</p></li>
+</ul>
+<p><span class="math notranslate nohighlight">\(\alpha\)</span>=0.05</p>
+</section>
+<section id="step-1-which-type-of-test">
+<h3>Step 1: which type of test?<a class="headerlink" href="#step-1-which-type-of-test" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>What type of data?</p>
+<ul>
+<li><p>Numerical (# of licks)</p></li>
+</ul>
+</li>
+<li><p>How many groups?</p>
+<ul>
+<li><p>Control vs Experimental</p></li>
+<li><p>Training Phases (BL,S,PS,R)</p></li>
+</ul>
+</li>
+</ul>
+<section id="let-s-first-try-to-treat-this-as-2-sample-t-tests-one-for-each-phase">
+<h4>Let’s First Try to Treat this as 2-sample T-Tests (one for each phase)<a class="headerlink" href="#let-s-first-try-to-treat-this-as-2-sample-t-tests-one-for-each-phase" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">stats</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;seaborn-notebook&#39;</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.max_columns&#39;</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.precision&#39;</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="obtaining-preprocessing-data">
+<h1>Obtaining/Preprocessing Data<a class="headerlink" href="#obtaining-preprocessing-data" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Load in the mouse drinking data cleaned csv</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;mouse_drinking_data_cleaned.csv&#39;</span><span class="p">,</span>
+                 <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Sex&#39;</span><span class="p">,</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">df</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Group</th>
+      <th>BL1</th>
+      <th>BL2</th>
+      <th>BL3</th>
+      <th>BL4</th>
+      <th>S1</th>
+      <th>S2</th>
+      <th>S3</th>
+      <th>S4</th>
+      <th>PS1</th>
+      <th>PS2</th>
+      <th>PS3</th>
+      <th>PS4</th>
+      <th>R1_1</th>
+      <th>R1_2</th>
+      <th>R1_3</th>
+      <th>R1_4</th>
+      <th>R2_1</th>
+      <th>R2_2</th>
+      <th>R2_3</th>
+      <th>R2_4</th>
+    </tr>
+    <tr>
+      <th>Mouse_ID</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>Control</td>
+      <td>665</td>
+      <td>863</td>
+      <td>631</td>
+      <td>629</td>
+      <td>583</td>
+      <td>801</td>
+      <td>723</td>
+      <td>707</td>
+      <td>732</td>
+      <td>680</td>
+      <td>684</td>
+      <td>485</td>
+      <td>65</td>
+      <td>301</td>
+      <td>351</td>
+      <td>441</td>
+      <td>675</td>
+      <td>554</td>
+      <td>541</td>
+      <td>545</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Control</td>
+      <td>859</td>
+      <td>849</td>
+      <td>685</td>
+      <td>731</td>
+      <td>854</td>
+      <td>1103</td>
+      <td>645</td>
+      <td>633</td>
+      <td>733</td>
+      <td>662</td>
+      <td>605</td>
+      <td>623</td>
+      <td>128</td>
+      <td>268</td>
+      <td>462</td>
+      <td>569</td>
+      <td>988</td>
+      <td>728</td>
+      <td>933</td>
+      <td>564</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Control</td>
+      <td>589</td>
+      <td>507</td>
+      <td>635</td>
+      <td>902</td>
+      <td>699</td>
+      <td>743</td>
+      <td>761</td>
+      <td>949</td>
+      <td>872</td>
+      <td>952</td>
+      <td>828</td>
+      <td>806</td>
+      <td>129</td>
+      <td>311</td>
+      <td>669</td>
+      <td>666</td>
+      <td>516</td>
+      <td>579</td>
+      <td>913</td>
+      <td>736</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Control</td>
+      <td>939</td>
+      <td>909</td>
+      <td>850</td>
+      <td>756</td>
+      <td>807</td>
+      <td>617</td>
+      <td>526</td>
+      <td>736</td>
+      <td>743</td>
+      <td>625</td>
+      <td>690</td>
+      <td>759</td>
+      <td>281</td>
+      <td>357</td>
+      <td>386</td>
+      <td>585</td>
+      <td>565</td>
+      <td>550</td>
+      <td>806</td>
+      <td>732</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Experimental</td>
+      <td>710</td>
+      <td>505</td>
+      <td>494</td>
+      <td>596</td>
+      <td>620</td>
+      <td>589</td>
+      <td>676</td>
+      <td>537</td>
+      <td>779</td>
+      <td>537</td>
+      <td>581</td>
+      <td>515</td>
+      <td>477</td>
+      <td>659</td>
+      <td>737</td>
+      <td>606</td>
+      <td>713</td>
+      <td>682</td>
+      <td>709</td>
+      <td>759</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Experimental</td>
+      <td>564</td>
+      <td>808</td>
+      <td>589</td>
+      <td>596</td>
+      <td>591</td>
+      <td>580</td>
+      <td>419</td>
+      <td>463</td>
+      <td>707</td>
+      <td>625</td>
+      <td>547</td>
+      <td>595</td>
+      <td>532</td>
+      <td>951</td>
+      <td>901</td>
+      <td>851</td>
+      <td>807</td>
+      <td>858</td>
+      <td>802</td>
+      <td>803</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Experimental</td>
+      <td>722</td>
+      <td>732</td>
+      <td>783</td>
+      <td>946</td>
+      <td>882</td>
+      <td>723</td>
+      <td>764</td>
+      <td>892</td>
+      <td>621</td>
+      <td>764</td>
+      <td>720</td>
+      <td>478</td>
+      <td>297</td>
+      <td>558</td>
+      <td>803</td>
+      <td>694</td>
+      <td>855</td>
+      <td>797</td>
+      <td>938</td>
+      <td>878</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Experimental</td>
+      <td>497</td>
+      <td>649</td>
+      <td>586</td>
+      <td>506</td>
+      <td>546</td>
+      <td>493</td>
+      <td>456</td>
+      <td>601</td>
+      <td>437</td>
+      <td>462</td>
+      <td>704</td>
+      <td>498</td>
+      <td>10</td>
+      <td>44</td>
+      <td>86</td>
+      <td>284</td>
+      <td>212</td>
+      <td>133</td>
+      <td>141</td>
+      <td>274</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Experimental</td>
+      <td>741</td>
+      <td>668</td>
+      <td>778</td>
+      <td>638</td>
+      <td>759</td>
+      <td>791</td>
+      <td>568</td>
+      <td>664</td>
+      <td>390</td>
+      <td>346</td>
+      <td>773</td>
+      <td>682</td>
+      <td>3</td>
+      <td>212</td>
+      <td>417</td>
+      <td>443</td>
+      <td>486</td>
+      <td>444</td>
+      <td>533</td>
+      <td>578</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Experimental</td>
+      <td>953</td>
+      <td>988</td>
+      <td>579</td>
+      <td>706</td>
+      <td>1106</td>
+      <td>812</td>
+      <td>902</td>
+      <td>835</td>
+      <td>829</td>
+      <td>801</td>
+      <td>1011</td>
+      <td>919</td>
+      <td>274</td>
+      <td>559</td>
+      <td>840</td>
+      <td>890</td>
+      <td>724</td>
+      <td>793</td>
+      <td>559</td>
+      <td>700</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Experimental</td>
+      <td>753</td>
+      <td>613</td>
+      <td>573</td>
+      <td>642</td>
+      <td>820</td>
+      <td>752</td>
+      <td>759</td>
+      <td>564</td>
+      <td>635</td>
+      <td>641</td>
+      <td>706</td>
+      <td>763</td>
+      <td>287</td>
+      <td>526</td>
+      <td>841</td>
+      <td>838</td>
+      <td>691</td>
+      <td>657</td>
+      <td>680</td>
+      <td>781</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Control</td>
+      <td>494</td>
+      <td>602</td>
+      <td>570</td>
+      <td>530</td>
+      <td>570</td>
+      <td>396</td>
+      <td>403</td>
+      <td>380</td>
+      <td>362</td>
+      <td>467</td>
+      <td>491</td>
+      <td>557</td>
+      <td>98</td>
+      <td>262</td>
+      <td>344</td>
+      <td>388</td>
+      <td>435</td>
+      <td>551</td>
+      <td>552</td>
+      <td>537</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>Control</td>
+      <td>587</td>
+      <td>630</td>
+      <td>564</td>
+      <td>627</td>
+      <td>572</td>
+      <td>419</td>
+      <td>369</td>
+      <td>416</td>
+      <td>403</td>
+      <td>552</td>
+      <td>575</td>
+      <td>589</td>
+      <td>172</td>
+      <td>298</td>
+      <td>422</td>
+      <td>596</td>
+      <td>447</td>
+      <td>589</td>
+      <td>463</td>
+      <td>364</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>Control</td>
+      <td>917</td>
+      <td>680</td>
+      <td>737</td>
+      <td>596</td>
+      <td>699</td>
+      <td>484</td>
+      <td>452</td>
+      <td>438</td>
+      <td>547</td>
+      <td>729</td>
+      <td>830</td>
+      <td>411</td>
+      <td>71</td>
+      <td>386</td>
+      <td>581</td>
+      <td>832</td>
+      <td>586</td>
+      <td>610</td>
+      <td>634</td>
+      <td>716</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>Control</td>
+      <td>440</td>
+      <td>767</td>
+      <td>642</td>
+      <td>623</td>
+      <td>532</td>
+      <td>663</td>
+      <td>601</td>
+      <td>553</td>
+      <td>315</td>
+      <td>434</td>
+      <td>543</td>
+      <td>619</td>
+      <td>115</td>
+      <td>101</td>
+      <td>356</td>
+      <td>457</td>
+      <td>412</td>
+      <td>582</td>
+      <td>549</td>
+      <td>696</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>Experimental</td>
+      <td>715</td>
+      <td>469</td>
+      <td>392</td>
+      <td>333</td>
+      <td>492</td>
+      <td>594</td>
+      <td>695</td>
+      <td>568</td>
+      <td>916</td>
+      <td>675</td>
+      <td>669</td>
+      <td>895</td>
+      <td>98</td>
+      <td>558</td>
+      <td>977</td>
+      <td>956</td>
+      <td>974</td>
+      <td>1049</td>
+      <td>1366</td>
+      <td>942</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>Experimental</td>
+      <td>184</td>
+      <td>250</td>
+      <td>373</td>
+      <td>457</td>
+      <td>505</td>
+      <td>475</td>
+      <td>519</td>
+      <td>578</td>
+      <td>542</td>
+      <td>477</td>
+      <td>601</td>
+      <td>390</td>
+      <td>131</td>
+      <td>656</td>
+      <td>845</td>
+      <td>699</td>
+      <td>494</td>
+      <td>920</td>
+      <td>431</td>
+      <td>521</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>Experimental</td>
+      <td>934</td>
+      <td>1237</td>
+      <td>354</td>
+      <td>705</td>
+      <td>646</td>
+      <td>619</td>
+      <td>885</td>
+      <td>626</td>
+      <td>496</td>
+      <td>954</td>
+      <td>718</td>
+      <td>821</td>
+      <td>170</td>
+      <td>909</td>
+      <td>1049</td>
+      <td>994</td>
+      <td>675</td>
+      <td>803</td>
+      <td>866</td>
+      <td>880</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>Experimental</td>
+      <td>578</td>
+      <td>548</td>
+      <td>556</td>
+      <td>479</td>
+      <td>533</td>
+      <td>721</td>
+      <td>651</td>
+      <td>546</td>
+      <td>537</td>
+      <td>564</td>
+      <td>519</td>
+      <td>446</td>
+      <td>601</td>
+      <td>565</td>
+      <td>450</td>
+      <td>684</td>
+      <td>1675</td>
+      <td>976</td>
+      <td>1249</td>
+      <td>1047</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>Experimental</td>
+      <td>400</td>
+      <td>193</td>
+      <td>188</td>
+      <td>350</td>
+      <td>232</td>
+      <td>34</td>
+      <td>65</td>
+      <td>158</td>
+      <td>89</td>
+      <td>175</td>
+      <td>186</td>
+      <td>319</td>
+      <td>14</td>
+      <td>60</td>
+      <td>118</td>
+      <td>149</td>
+      <td>133</td>
+      <td>270</td>
+      <td>472</td>
+      <td>293</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>Experimental</td>
+      <td>448</td>
+      <td>221</td>
+      <td>505</td>
+      <td>459</td>
+      <td>483</td>
+      <td>491</td>
+      <td>394</td>
+      <td>673</td>
+      <td>593</td>
+      <td>444</td>
+      <td>430</td>
+      <td>630</td>
+      <td>176</td>
+      <td>611</td>
+      <td>680</td>
+      <td>552</td>
+      <td>652</td>
+      <td>879</td>
+      <td>990</td>
+      <td>900</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>Control</td>
+      <td>270</td>
+      <td>132</td>
+      <td>250</td>
+      <td>192</td>
+      <td>364</td>
+      <td>229</td>
+      <td>219</td>
+      <td>329</td>
+      <td>120</td>
+      <td>147</td>
+      <td>186</td>
+      <td>337</td>
+      <td>8</td>
+      <td>70</td>
+      <td>18</td>
+      <td>175</td>
+      <td>232</td>
+      <td>238</td>
+      <td>209</td>
+      <td>200</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<section id="laying-out-our-approach">
+<h2>Laying Out Our Approach<a class="headerlink" href="#laying-out-our-approach" title="Permalink to this heading">#</a></h2>
+<p>We need to average all 4 session of the same phase (BL,S,R1,R2) for each mouse…</p>
+<ol class="arabic simple">
+<li><p>Make a <strong>dict/lists of the column names</strong> that should be <strong>averaged together</strong> (<code class="docutils literal notranslate"><span class="pre">col_dict</span></code>)</p></li>
+<li><p>Make a new df of means using <code class="docutils literal notranslate"><span class="pre">col_dict</span></code></p></li>
+<li><p>Make a grp dict using  <code class="docutils literal notranslate"><span class="pre">df_means.groupby('Group').groups</span></code></p></li>
+</ol>
+<ul class="simple">
+<li><p>Visualize the two populations</p></li>
+<li><p>Prepare for hypothesis tests</p>
+<ul>
+<li><p>Either use <code class="docutils literal notranslate"><span class="pre">grps</span></code> dict to reference the correct columsn to pass into tests</p></li>
+</ul>
+</li>
+</ul>
+<!---
+**Variables:**
+
+- `col_dict` (dict): dict of column names to be grouped together for means
+- `df_means` (df): df of col_dict column means.
+- `grps` (dict): groupby dict where keys = 'Group' column and values = row indices
+
+- `data` (dict): Dictionary of...
+    - Series of each phase by group? ---><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Loop through the differnet phases of the experiment</span>
+<span class="n">phases</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;BL&#39;</span><span class="p">,</span><span class="s1">&#39;S&#39;</span><span class="p">,</span><span class="s1">&#39;PS&#39;</span><span class="p">,</span><span class="s1">&#39;R1&#39;</span><span class="p">,</span><span class="s1">&#39;R2&#39;</span><span class="p">]</span>
+
+<span class="c1">## save corresponding column names as values </span>
+<span class="n">col_dict</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">phase</span> <span class="ow">in</span> <span class="n">phases</span><span class="p">:</span>
+    <span class="n">col_dict</span><span class="p">[</span><span class="n">phase</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">col</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">phase</span><span class="p">)</span> <span class="p">]</span>
+<span class="n">col_dict</span>    
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;BL&#39;: [&#39;BL1&#39;, &#39;BL2&#39;, &#39;BL3&#39;, &#39;BL4&#39;],
+ &#39;S&#39;: [&#39;S1&#39;, &#39;S2&#39;, &#39;S3&#39;, &#39;S4&#39;],
+ &#39;PS&#39;: [&#39;PS1&#39;, &#39;PS2&#39;, &#39;PS3&#39;, &#39;PS4&#39;],
+ &#39;R1&#39;: [&#39;R1_1&#39;, &#39;R1_2&#39;, &#39;R1_3&#39;, &#39;R1_4&#39;],
+ &#39;R2&#39;: [&#39;R2_1&#39;, &#39;R2_2&#39;, &#39;R2_3&#39;, &#39;R2_4&#39;]}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Get then opposite of col_dict</span>
+<span class="n">phase_dict</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">phase</span><span class="p">,</span><span class="n">colnames</span> <span class="ow">in</span> <span class="n">col_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">colnames</span><span class="p">:</span>
+        <span class="n">phase_dict</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">phase</span>
+<span class="n">phase_dict</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;BL1&#39;: &#39;BL&#39;,
+ &#39;BL2&#39;: &#39;BL&#39;,
+ &#39;BL3&#39;: &#39;BL&#39;,
+ &#39;BL4&#39;: &#39;BL&#39;,
+ &#39;S1&#39;: &#39;S&#39;,
+ &#39;S2&#39;: &#39;S&#39;,
+ &#39;S3&#39;: &#39;S&#39;,
+ &#39;S4&#39;: &#39;S&#39;,
+ &#39;PS1&#39;: &#39;PS&#39;,
+ &#39;PS2&#39;: &#39;PS&#39;,
+ &#39;PS3&#39;: &#39;PS&#39;,
+ &#39;PS4&#39;: &#39;PS&#39;,
+ &#39;R1_1&#39;: &#39;R1&#39;,
+ &#39;R1_2&#39;: &#39;R1&#39;,
+ &#39;R1_3&#39;: &#39;R1&#39;,
+ &#39;R1_4&#39;: &#39;R1&#39;,
+ &#39;R2_1&#39;: &#39;R2&#39;,
+ &#39;R2_2&#39;: &#39;R2&#39;,
+ &#39;R2_3&#39;: &#39;R2&#39;,
+ &#39;R2_4&#39;: &#39;R2&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="calculating-individual-mouse-means-by-phase">
+<h2>Calculating individual mouse means by phase<a class="headerlink" href="#calculating-individual-mouse-means-by-phase" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## calculate the mean for all BL columns for each mouse</span>
+<span class="n">cols</span> <span class="o">=</span> <span class="n">col_dict</span><span class="p">[</span><span class="s1">&#39;BL&#39;</span><span class="p">]</span>
+<span class="n">df</span><span class="p">[</span><span class="n">cols</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mouse_ID
+1     697.00
+2     781.00
+3     658.25
+4     863.50
+5     576.25
+6     639.25
+7     795.75
+8     559.50
+9     706.25
+10    806.50
+11    645.25
+12    549.00
+13    602.00
+14    732.50
+15    618.00
+16    477.25
+17    316.00
+18    807.50
+19    540.25
+20    282.75
+21    408.25
+22    211.00
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Make a new df_means with just the mouse id and group first</span>
+<span class="n">df_means</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Group&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df_means</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Group</th>
+    </tr>
+    <tr>
+      <th>Mouse_ID</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>Control</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Control</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Control</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Control</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Experimental</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Experimental</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Experimental</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Experimental</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Experimental</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Experimental</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Experimental</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Control</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>Control</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>Control</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>Control</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>Experimental</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>Experimental</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>Experimental</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>Experimental</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>Experimental</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>Experimental</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>Control</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">col_dict</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;BL&#39;: [&#39;BL1&#39;, &#39;BL2&#39;, &#39;BL3&#39;, &#39;BL4&#39;],
+ &#39;S&#39;: [&#39;S1&#39;, &#39;S2&#39;, &#39;S3&#39;, &#39;S4&#39;],
+ &#39;PS&#39;: [&#39;PS1&#39;, &#39;PS2&#39;, &#39;PS3&#39;, &#39;PS4&#39;],
+ &#39;R1&#39;: [&#39;R1_1&#39;, &#39;R1_2&#39;, &#39;R1_3&#39;, &#39;R1_4&#39;],
+ &#39;R2&#39;: [&#39;R2_1&#39;, &#39;R2_2&#39;, &#39;R2_3&#39;, &#39;R2_4&#39;]}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Look through col_dict and calcualte the means for each phase for each mouse</span>
+<span class="k">for</span> <span class="n">phase</span><span class="p">,</span> <span class="n">cols</span> <span class="ow">in</span> <span class="n">col_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">df_means</span><span class="p">[</span><span class="n">phase</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">cols</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">df_means</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Group</th>
+      <th>BL</th>
+      <th>S</th>
+      <th>PS</th>
+      <th>R1</th>
+      <th>R2</th>
+    </tr>
+    <tr>
+      <th>Mouse_ID</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>Control</td>
+      <td>697.00</td>
+      <td>703.50</td>
+      <td>645.25</td>
+      <td>289.50</td>
+      <td>578.75</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Control</td>
+      <td>781.00</td>
+      <td>808.75</td>
+      <td>655.75</td>
+      <td>356.75</td>
+      <td>803.25</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Control</td>
+      <td>658.25</td>
+      <td>788.00</td>
+      <td>864.50</td>
+      <td>443.75</td>
+      <td>686.00</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Control</td>
+      <td>863.50</td>
+      <td>671.50</td>
+      <td>704.25</td>
+      <td>402.25</td>
+      <td>663.25</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Experimental</td>
+      <td>576.25</td>
+      <td>605.50</td>
+      <td>603.00</td>
+      <td>619.75</td>
+      <td>715.75</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Experimental</td>
+      <td>639.25</td>
+      <td>513.25</td>
+      <td>618.50</td>
+      <td>808.75</td>
+      <td>817.50</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Experimental</td>
+      <td>795.75</td>
+      <td>815.25</td>
+      <td>645.75</td>
+      <td>588.00</td>
+      <td>867.00</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Experimental</td>
+      <td>559.50</td>
+      <td>524.00</td>
+      <td>525.25</td>
+      <td>106.00</td>
+      <td>190.00</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Experimental</td>
+      <td>706.25</td>
+      <td>695.50</td>
+      <td>547.75</td>
+      <td>268.75</td>
+      <td>510.25</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Experimental</td>
+      <td>806.50</td>
+      <td>913.75</td>
+      <td>890.00</td>
+      <td>640.75</td>
+      <td>694.00</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Experimental</td>
+      <td>645.25</td>
+      <td>723.75</td>
+      <td>686.25</td>
+      <td>623.00</td>
+      <td>702.25</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Control</td>
+      <td>549.00</td>
+      <td>437.25</td>
+      <td>469.25</td>
+      <td>273.00</td>
+      <td>518.75</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>Control</td>
+      <td>602.00</td>
+      <td>444.00</td>
+      <td>529.75</td>
+      <td>372.00</td>
+      <td>465.75</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>Control</td>
+      <td>732.50</td>
+      <td>518.25</td>
+      <td>629.25</td>
+      <td>467.50</td>
+      <td>636.50</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>Control</td>
+      <td>618.00</td>
+      <td>587.25</td>
+      <td>477.75</td>
+      <td>257.25</td>
+      <td>559.75</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>Experimental</td>
+      <td>477.25</td>
+      <td>587.25</td>
+      <td>788.75</td>
+      <td>647.25</td>
+      <td>1082.75</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>Experimental</td>
+      <td>316.00</td>
+      <td>519.25</td>
+      <td>502.50</td>
+      <td>582.75</td>
+      <td>591.50</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>Experimental</td>
+      <td>807.50</td>
+      <td>694.00</td>
+      <td>747.25</td>
+      <td>780.50</td>
+      <td>806.00</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>Experimental</td>
+      <td>540.25</td>
+      <td>612.75</td>
+      <td>516.50</td>
+      <td>575.00</td>
+      <td>1236.75</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>Experimental</td>
+      <td>282.75</td>
+      <td>122.25</td>
+      <td>192.25</td>
+      <td>85.25</td>
+      <td>292.00</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>Experimental</td>
+      <td>408.25</td>
+      <td>510.25</td>
+      <td>524.25</td>
+      <td>504.75</td>
+      <td>855.25</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>Control</td>
+      <td>211.00</td>
+      <td>285.25</td>
+      <td>197.50</td>
+      <td>67.75</td>
+      <td>219.75</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="getting-group-data-for-eda-testing">
+<h2>Getting Group Data For EDA &amp; Testing<a class="headerlink" href="#getting-group-data-for-eda-testing" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Get grps </span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="c1">## Two different ways of using groupby</span>
+<span class="n">grps</span> <span class="o">=</span> <span class="n">df_means</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Group&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span>
+<span class="n">grps</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Control&#39;: [1, 2, 3, 4, 12, 13, 14, 15, 22], &#39;Experimental&#39;: [5, 6, 7, 8, 9, 10, 11, 16, 17, 18, 19, 20, 21]}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## For each group</span>
+<span class="k">for</span> <span class="n">grp</span><span class="p">,</span><span class="n">row_nums</span> <span class="ow">in</span> <span class="n">grps</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    
+    <span class="c1">## Save the group df as grp name </span>
+    <span class="n">data</span><span class="p">[</span><span class="n">grp</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_means</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">row_nums</span><span class="p">]</span>
+    
+    <span class="c1"># Display data</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">grp</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">set_caption</span><span class="p">(</span><span class="n">grp</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style  type="text/css" >
+</style><table id="T_c072052a_9309_11eb_a0e6_acde48001122" ><caption>Control</caption><thead>    <tr>        <th class="blank level0" ></th>        <th class="col_heading level0 col0" >Group</th>        <th class="col_heading level0 col1" >BL</th>        <th class="col_heading level0 col2" >S</th>        <th class="col_heading level0 col3" >PS</th>        <th class="col_heading level0 col4" >R1</th>        <th class="col_heading level0 col5" >R2</th>    </tr>    <tr>        <th class="index_name level0" >Mouse_ID</th>        <th class="blank" ></th>        <th class="blank" ></th>        <th class="blank" ></th>        <th class="blank" ></th>        <th class="blank" ></th>        <th class="blank" ></th>    </tr></thead><tbody>
+                <tr>
+                        <th id="T_c072052a_9309_11eb_a0e6_acde48001122level0_row0" class="row_heading level0 row0" >1</th>
+                        <td id="T_c072052a_9309_11eb_a0e6_acde48001122row0_col0" class="data row0 col0" >Control</td>
+                        <td id="T_c072052a_9309_11eb_a0e6_acde48001122row0_col1" class="data row0 col1" >697.000</td>
+                        <td id="T_c072052a_9309_11eb_a0e6_acde48001122row0_col2" class="data row0 col2" >703.500</td>
+                        <td id="T_c072052a_9309_11eb_a0e6_acde48001122row0_col3" class="data row0 col3" >645.250</td>
+                        <td id="T_c072052a_9309_11eb_a0e6_acde48001122row0_col4" class="data row0 col4" >289.500</td>
+                        <td id="T_c072052a_9309_11eb_a0e6_acde48001122row0_col5" class="data row0 col5" >578.750</td>
+            </tr>
+            <tr>
+                        <th id="T_c072052a_9309_11eb_a0e6_acde48001122level0_row1" class="row_heading level0 row1" >2</th>
+                        <td id="T_c072052a_9309_11eb_a0e6_acde48001122row1_col0" class="data row1 col0" >Control</td>
+                        <td id="T_c072052a_9309_11eb_a0e6_acde48001122row1_col1" class="data row1 col1" >781.000</td>
+                        <td id="T_c072052a_9309_11eb_a0e6_acde48001122row1_col2" class="data row1 col2" >808.750</td>
+                        <td id="T_c072052a_9309_11eb_a0e6_acde48001122row1_col3" class="data row1 col3" >655.750</td>
+                        <td id="T_c072052a_9309_11eb_a0e6_acde48001122row1_col4" class="data row1 col4" >356.750</td>
+                        <td id="T_c072052a_9309_11eb_a0e6_acde48001122row1_col5" class="data row1 col5" >803.250</td>
+            </tr>
+            <tr>
+                        <th id="T_c072052a_9309_11eb_a0e6_acde48001122level0_row2" class="row_heading level0 row2" >3</th>
+                        <td id="T_c072052a_9309_11eb_a0e6_acde48001122row2_col0" class="data row2 col0" >Control</td>
+                        <td id="T_c072052a_9309_11eb_a0e6_acde48001122row2_col1" class="data row2 col1" >658.250</td>
+                        <td id="T_c072052a_9309_11eb_a0e6_acde48001122row2_col2" class="data row2 col2" >788.000</td>
+                        <td id="T_c072052a_9309_11eb_a0e6_acde48001122row2_col3" class="data row2 col3" >864.500</td>
+                        <td id="T_c072052a_9309_11eb_a0e6_acde48001122row2_col4" class="data row2 col4" >443.750</td>
+                        <td id="T_c072052a_9309_11eb_a0e6_acde48001122row2_col5" class="data row2 col5" >686.000</td>
+            </tr>
+            <tr>
+                        <th id="T_c072052a_9309_11eb_a0e6_acde48001122level0_row3" class="row_heading level0 row3" >4</th>
+                        <td id="T_c072052a_9309_11eb_a0e6_acde48001122row3_col0" class="data row3 col0" >Control</td>
+                        <td id="T_c072052a_9309_11eb_a0e6_acde48001122row3_col1" class="data row3 col1" >863.500</td>
+                        <td id="T_c072052a_9309_11eb_a0e6_acde48001122row3_col2" class="data row3 col2" >671.500</td>
+                        <td id="T_c072052a_9309_11eb_a0e6_acde48001122row3_col3" class="data row3 col3" >704.250</td>
+                        <td id="T_c072052a_9309_11eb_a0e6_acde48001122row3_col4" class="data row3 col4" >402.250</td>
+                        <td id="T_c072052a_9309_11eb_a0e6_acde48001122row3_col5" class="data row3 col5" >663.250</td>
+            </tr>
+            <tr>
+                        <th id="T_c072052a_9309_11eb_a0e6_acde48001122level0_row4" class="row_heading level0 row4" >12</th>
+                        <td id="T_c072052a_9309_11eb_a0e6_acde48001122row4_col0" class="data row4 col0" >Control</td>
+                        <td id="T_c072052a_9309_11eb_a0e6_acde48001122row4_col1" class="data row4 col1" >549.000</td>
+                        <td id="T_c072052a_9309_11eb_a0e6_acde48001122row4_col2" class="data row4 col2" >437.250</td>
+                        <td id="T_c072052a_9309_11eb_a0e6_acde48001122row4_col3" class="data row4 col3" >469.250</td>
+                        <td id="T_c072052a_9309_11eb_a0e6_acde48001122row4_col4" class="data row4 col4" >273.000</td>
+                        <td id="T_c072052a_9309_11eb_a0e6_acde48001122row4_col5" class="data row4 col5" >518.750</td>
+            </tr>
+    </tbody></table></div><div class="output text_html"><style  type="text/css" >
+</style><table id="T_c07298e6_9309_11eb_a0e6_acde48001122" ><caption>Experimental</caption><thead>    <tr>        <th class="blank level0" ></th>        <th class="col_heading level0 col0" >Group</th>        <th class="col_heading level0 col1" >BL</th>        <th class="col_heading level0 col2" >S</th>        <th class="col_heading level0 col3" >PS</th>        <th class="col_heading level0 col4" >R1</th>        <th class="col_heading level0 col5" >R2</th>    </tr>    <tr>        <th class="index_name level0" >Mouse_ID</th>        <th class="blank" ></th>        <th class="blank" ></th>        <th class="blank" ></th>        <th class="blank" ></th>        <th class="blank" ></th>        <th class="blank" ></th>    </tr></thead><tbody>
+                <tr>
+                        <th id="T_c07298e6_9309_11eb_a0e6_acde48001122level0_row0" class="row_heading level0 row0" >5</th>
+                        <td id="T_c07298e6_9309_11eb_a0e6_acde48001122row0_col0" class="data row0 col0" >Experimental</td>
+                        <td id="T_c07298e6_9309_11eb_a0e6_acde48001122row0_col1" class="data row0 col1" >576.250</td>
+                        <td id="T_c07298e6_9309_11eb_a0e6_acde48001122row0_col2" class="data row0 col2" >605.500</td>
+                        <td id="T_c07298e6_9309_11eb_a0e6_acde48001122row0_col3" class="data row0 col3" >603.000</td>
+                        <td id="T_c07298e6_9309_11eb_a0e6_acde48001122row0_col4" class="data row0 col4" >619.750</td>
+                        <td id="T_c07298e6_9309_11eb_a0e6_acde48001122row0_col5" class="data row0 col5" >715.750</td>
+            </tr>
+            <tr>
+                        <th id="T_c07298e6_9309_11eb_a0e6_acde48001122level0_row1" class="row_heading level0 row1" >6</th>
+                        <td id="T_c07298e6_9309_11eb_a0e6_acde48001122row1_col0" class="data row1 col0" >Experimental</td>
+                        <td id="T_c07298e6_9309_11eb_a0e6_acde48001122row1_col1" class="data row1 col1" >639.250</td>
+                        <td id="T_c07298e6_9309_11eb_a0e6_acde48001122row1_col2" class="data row1 col2" >513.250</td>
+                        <td id="T_c07298e6_9309_11eb_a0e6_acde48001122row1_col3" class="data row1 col3" >618.500</td>
+                        <td id="T_c07298e6_9309_11eb_a0e6_acde48001122row1_col4" class="data row1 col4" >808.750</td>
+                        <td id="T_c07298e6_9309_11eb_a0e6_acde48001122row1_col5" class="data row1 col5" >817.500</td>
+            </tr>
+            <tr>
+                        <th id="T_c07298e6_9309_11eb_a0e6_acde48001122level0_row2" class="row_heading level0 row2" >7</th>
+                        <td id="T_c07298e6_9309_11eb_a0e6_acde48001122row2_col0" class="data row2 col0" >Experimental</td>
+                        <td id="T_c07298e6_9309_11eb_a0e6_acde48001122row2_col1" class="data row2 col1" >795.750</td>
+                        <td id="T_c07298e6_9309_11eb_a0e6_acde48001122row2_col2" class="data row2 col2" >815.250</td>
+                        <td id="T_c07298e6_9309_11eb_a0e6_acde48001122row2_col3" class="data row2 col3" >645.750</td>
+                        <td id="T_c07298e6_9309_11eb_a0e6_acde48001122row2_col4" class="data row2 col4" >588.000</td>
+                        <td id="T_c07298e6_9309_11eb_a0e6_acde48001122row2_col5" class="data row2 col5" >867.000</td>
+            </tr>
+            <tr>
+                        <th id="T_c07298e6_9309_11eb_a0e6_acde48001122level0_row3" class="row_heading level0 row3" >8</th>
+                        <td id="T_c07298e6_9309_11eb_a0e6_acde48001122row3_col0" class="data row3 col0" >Experimental</td>
+                        <td id="T_c07298e6_9309_11eb_a0e6_acde48001122row3_col1" class="data row3 col1" >559.500</td>
+                        <td id="T_c07298e6_9309_11eb_a0e6_acde48001122row3_col2" class="data row3 col2" >524.000</td>
+                        <td id="T_c07298e6_9309_11eb_a0e6_acde48001122row3_col3" class="data row3 col3" >525.250</td>
+                        <td id="T_c07298e6_9309_11eb_a0e6_acde48001122row3_col4" class="data row3 col4" >106.000</td>
+                        <td id="T_c07298e6_9309_11eb_a0e6_acde48001122row3_col5" class="data row3 col5" >190.000</td>
+            </tr>
+            <tr>
+                        <th id="T_c07298e6_9309_11eb_a0e6_acde48001122level0_row4" class="row_heading level0 row4" >9</th>
+                        <td id="T_c07298e6_9309_11eb_a0e6_acde48001122row4_col0" class="data row4 col0" >Experimental</td>
+                        <td id="T_c07298e6_9309_11eb_a0e6_acde48001122row4_col1" class="data row4 col1" >706.250</td>
+                        <td id="T_c07298e6_9309_11eb_a0e6_acde48001122row4_col2" class="data row4 col2" >695.500</td>
+                        <td id="T_c07298e6_9309_11eb_a0e6_acde48001122row4_col3" class="data row4 col3" >547.750</td>
+                        <td id="T_c07298e6_9309_11eb_a0e6_acde48001122row4_col4" class="data row4 col4" >268.750</td>
+                        <td id="T_c07298e6_9309_11eb_a0e6_acde48001122row4_col5" class="data row4 col5" >510.250</td>
+            </tr>
+    </tbody></table></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dict_keys([&#39;Control&#39;, &#39;Experimental&#39;])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Control&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Group</th>
+      <th>BL</th>
+      <th>S</th>
+      <th>PS</th>
+      <th>R1</th>
+      <th>R2</th>
+    </tr>
+    <tr>
+      <th>Mouse_ID</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>Control</td>
+      <td>697.00</td>
+      <td>703.50</td>
+      <td>645.25</td>
+      <td>289.50</td>
+      <td>578.75</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Control</td>
+      <td>781.00</td>
+      <td>808.75</td>
+      <td>655.75</td>
+      <td>356.75</td>
+      <td>803.25</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Control</td>
+      <td>658.25</td>
+      <td>788.00</td>
+      <td>864.50</td>
+      <td>443.75</td>
+      <td>686.00</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Control</td>
+      <td>863.50</td>
+      <td>671.50</td>
+      <td>704.25</td>
+      <td>402.25</td>
+      <td>663.25</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Control</td>
+      <td>549.00</td>
+      <td>437.25</td>
+      <td>469.25</td>
+      <td>273.00</td>
+      <td>518.75</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>Control</td>
+      <td>602.00</td>
+      <td>444.00</td>
+      <td>529.75</td>
+      <td>372.00</td>
+      <td>465.75</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>Control</td>
+      <td>732.50</td>
+      <td>518.25</td>
+      <td>629.25</td>
+      <td>467.50</td>
+      <td>636.50</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>Control</td>
+      <td>618.00</td>
+      <td>587.25</td>
+      <td>477.75</td>
+      <td>257.25</td>
+      <td>559.75</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>Control</td>
+      <td>211.00</td>
+      <td>285.25</td>
+      <td>197.50</td>
+      <td>67.75</td>
+      <td>219.75</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="plotting-group-means-standard-error-of-the-mean">
+<h2>Plotting Group Means + Standard Error of the Mean<a class="headerlink" href="#plotting-group-means-standard-error-of-the-mean" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">sem</span>
+
+<span class="c1">## Select a phase to visualize</span>
+<span class="n">phase</span> <span class="o">=</span> <span class="s2">&quot;BL&quot;</span>
+
+<span class="c1">## Create lists for saving x,y, and yerr</span>
+<span class="n">x</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">y_err</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># For each group</span>
+<span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+    
+    <span class="c1">## grab the correct phasen col from group data</span>
+    <span class="n">grp_data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">group</span><span class="p">][</span><span class="n">phase</span><span class="p">]</span>
+    
+    <span class="c1">## Save x,y </span>
+    <span class="n">x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+    <span class="n">y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">grp_data</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+    
+    <span class="c1">## Calc and save error</span>
+    <span class="n">y_err</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sem</span><span class="p">(</span><span class="n">grp_data</span><span class="p">))</span>
+    
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_err</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[61.91035434649556, 48.92460135102792]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">yerr</span><span class="o">=</span><span class="n">y_err</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;g&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;BarContainer object of 2 artists&gt;
+</pre></div>
+</div>
+<img alt="../../../_images/d1bac55584d0f17dbbef8dd8d2f9f25178f36f5dec52891f5e2a2800205fecbc.png" src="../../../_images/d1bac55584d0f17dbbef8dd8d2f9f25178f36f5dec52891f5e2a2800205fecbc.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">sem</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_bars_yerr</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">phase</span> <span class="o">=</span> <span class="s2">&quot;BL&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plots the group means +/- standard error of the mean.&quot;&quot;&quot;</span>
+
+    <span class="c1">## Save x,y, and yerr</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">y_err</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="n">grp_data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">group</span><span class="p">][</span><span class="n">phase</span><span class="p">]</span>
+        <span class="n">x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">group</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">grp_data</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+        <span class="n">y_err</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sem</span><span class="p">(</span><span class="n">grp_data</span><span class="p">))</span>
+        
+    <span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">yerr</span><span class="o">=</span><span class="n">y_err</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Phase = </span><span class="si">{</span><span class="n">phase</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;# of Licks&#39;</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">fig</span><span class="p">,</span><span class="n">ax</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="run-2-sample-t-test-on-baseline-days">
+<h2>Run 2-sample T-Test on Baseline Days<a class="headerlink" href="#run-2-sample-t-test-on-baseline-days" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span><span class="n">a</span> <span class="o">=</span> <span class="n">plot_bars_yerr</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">phase</span> <span class="o">=</span> <span class="s2">&quot;BL&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/1c1f9104d1ee5f3bec28bde93d3133b612d296bba5703e940a758ef651177386.png" src="../../../_images/1c1f9104d1ee5f3bec28bde93d3133b612d296bba5703e940a758ef651177386.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_phase</span> <span class="o">=</span> <span class="s2">&quot;BL&quot;</span>
+<span class="n">f</span><span class="p">,</span><span class="n">a</span> <span class="o">=</span> <span class="n">plot_bars_yerr</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">phase</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/1c1f9104d1ee5f3bec28bde93d3133b612d296bba5703e940a758ef651177386.png" src="../../../_images/1c1f9104d1ee5f3bec28bde93d3133b612d296bba5703e940a758ef651177386.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">stats</span>
+
+<span class="n">test_phase</span> <span class="o">=</span> <span class="s1">&#39;BL&#39;</span>
+
+<span class="c1">## Make list of list of headers</span>
+<span class="n">results</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;Phase&#39;</span><span class="p">,</span><span class="s1">&#39;Group&#39;</span><span class="p">,</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="s1">&#39;Normaltest Stat&#39;</span><span class="p">,</span><span class="s1">&#39;p&#39;</span><span class="p">,</span><span class="s1">&#39;sig?&#39;</span><span class="p">]]</span>
+
+<span class="c1">## Make an empty list for our group data</span>
+<span class="n">test_equal_var</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1">## Loop through the data dictionary </span>
+<span class="k">for</span> <span class="n">grp</span><span class="p">,</span><span class="n">grp_df</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+   
+    <span class="c1">## Grab the correct phase column from the group df</span>
+    <span class="n">grp_data</span> <span class="o">=</span> <span class="n">grp_df</span><span class="p">[</span><span class="n">test_phase</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    
+    <span class="c1">## Append group data to list of group data</span>
+    <span class="n">test_equal_var</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">grp_data</span><span class="p">)</span>
+    
+    <span class="c1">## Test for nomrality and save result </span>
+    <span class="n">stat</span><span class="p">,</span><span class="n">p</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">normaltest</span><span class="p">(</span><span class="n">grp_data</span><span class="p">)</span>
+    
+    <span class="c1">## save results </span>
+    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">test_phase</span><span class="p">,</span><span class="n">grp</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">grp_data</span><span class="p">),</span><span class="n">stat</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="n">p</span><span class="o">&lt;</span><span class="mf">.05</span><span class="p">])</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span><span class="n">columns</span><span class="o">=</span><span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/anaconda3/envs/learn-env-new/lib/python3.8/site-packages/scipy/stats/stats.py:1603: UserWarning: kurtosistest only valid for n&gt;=20 ... continuing anyway, n=9
+  warnings.warn(&quot;kurtosistest only valid for n&gt;=20 ... continuing &quot;
+/opt/anaconda3/envs/learn-env-new/lib/python3.8/site-packages/scipy/stats/stats.py:1603: UserWarning: kurtosistest only valid for n&gt;=20 ... continuing anyway, n=13
+  warnings.warn(&quot;kurtosistest only valid for n&gt;=20 ... continuing &quot;
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Phase</th>
+      <th>Group</th>
+      <th>n</th>
+      <th>Normaltest Stat</th>
+      <th>p</th>
+      <th>sig?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>BL</td>
+      <td>Control</td>
+      <td>9</td>
+      <td>8.255</td>
+      <td>0.016</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>BL</td>
+      <td>Experimental</td>
+      <td>13</td>
+      <td>0.790</td>
+      <td>0.674</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="adding-levene-s-test">
+<h2>Adding Levene’s Test<a class="headerlink" href="#adding-levene-s-test" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Make list of list of headers</span>
+<span class="n">results</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;Phase&#39;</span><span class="p">,</span><span class="s1">&#39;Group&#39;</span><span class="p">,</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="s1">&#39;Test Name&#39;</span><span class="p">,</span><span class="s1">&#39;Test Stat&#39;</span><span class="p">,</span><span class="s1">&#39;p&#39;</span><span class="p">,</span><span class="s1">&#39;sig?&#39;</span><span class="p">]]</span>
+
+<span class="c1">## Make an empty list for our group data</span>
+<span class="n">test_equal_var</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1">## Loop through the data dictionary </span>
+<span class="k">for</span> <span class="n">grp</span><span class="p">,</span> <span class="n">grp_df</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+   
+    <span class="c1">## Grab the correct phase column from the group df</span>
+    <span class="n">grp_data</span> <span class="o">=</span> <span class="n">grp_df</span><span class="p">[</span><span class="n">test_phase</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    
+    <span class="c1">## Append group data to list of group data</span>
+    <span class="n">test_equal_var</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">grp_data</span><span class="p">)</span>
+    
+    <span class="c1">## Test for nomrality and save result </span>
+    <span class="n">stat</span><span class="p">,</span><span class="n">p</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">normaltest</span><span class="p">(</span><span class="n">grp_data</span><span class="p">)</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">test_phase</span><span class="p">,</span> <span class="n">grp</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">grp_data</span><span class="p">),</span><span class="s1">&#39;normality&#39;</span><span class="p">,</span><span class="n">stat</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="n">p</span><span class="o">&lt;</span><span class="mf">.05</span><span class="p">])</span>
+
+
+<span class="c1">## Test for equal variance</span>
+<span class="n">stat</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">levene</span><span class="p">(</span><span class="o">*</span><span class="n">test_equal_var</span><span class="p">)</span>
+<span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">test_phase</span><span class="p">,</span><span class="s1">&#39;all&#39;</span><span class="p">,</span><span class="s1">&#39;-&#39;</span><span class="p">,</span><span class="s1">&#39;Equal Variance&#39;</span><span class="p">,</span><span class="n">stat</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="n">p</span><span class="o">&lt;</span><span class="mf">.05</span><span class="p">])</span>
+    
+<span class="n">results_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span><span class="n">columns</span><span class="o">=</span><span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">results_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/anaconda3/envs/learn-env-new/lib/python3.8/site-packages/scipy/stats/stats.py:1603: UserWarning: kurtosistest only valid for n&gt;=20 ... continuing anyway, n=9
+  warnings.warn(&quot;kurtosistest only valid for n&gt;=20 ... continuing &quot;
+/opt/anaconda3/envs/learn-env-new/lib/python3.8/site-packages/scipy/stats/stats.py:1603: UserWarning: kurtosistest only valid for n&gt;=20 ... continuing anyway, n=13
+  warnings.warn(&quot;kurtosistest only valid for n&gt;=20 ... continuing &quot;
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Phase</th>
+      <th>Group</th>
+      <th>n</th>
+      <th>Test Name</th>
+      <th>Test Stat</th>
+      <th>p</th>
+      <th>sig?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>BL</td>
+      <td>Control</td>
+      <td>9</td>
+      <td>normality</td>
+      <td>8.255</td>
+      <td>0.016</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>BL</td>
+      <td>Experimental</td>
+      <td>13</td>
+      <td>normality</td>
+      <td>0.790</td>
+      <td>0.674</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>BL</td>
+      <td>all</td>
+      <td>-</td>
+      <td>Equal Variance</td>
+      <td>0.131</td>
+      <td>0.721</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="run-correct-test">
+<h2>Run Correct Test<a class="headerlink" href="#run-correct-test" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Since we failed assumption of normality, we will perform the Mann Whitney U test instead of the 2-sample t-test</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span><span class="n">a</span> <span class="o">=</span> <span class="n">plot_bars_yerr</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="s1">&#39;BL&#39;</span><span class="p">)</span>
+<span class="n">stats</span><span class="o">.</span><span class="n">mannwhitneyu</span><span class="p">(</span><span class="o">*</span><span class="n">test_equal_var</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MannwhitneyuResult(statistic=47.0, pvalue=0.23130417364131195)
+</pre></div>
+</div>
+<img alt="../../../_images/1c1f9104d1ee5f3bec28bde93d3133b612d296bba5703e940a758ef651177386.png" src="../../../_images/1c1f9104d1ee5f3bec28bde93d3133b612d296bba5703e940a758ef651177386.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Functionize code for testing other phases</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_assumptions</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">test_phase</span><span class="p">):</span><span class="c1">#,plot=True):</span>
+
+    <span class="c1">## Make list of list of headers</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;Phase&#39;</span><span class="p">,</span><span class="s1">&#39;Group&#39;</span><span class="p">,</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="s1">&#39;Test Name&#39;</span><span class="p">,</span><span class="s1">&#39;Test Stat&#39;</span><span class="p">,</span><span class="s1">&#39;p&#39;</span><span class="p">,</span><span class="s1">&#39;sig?&#39;</span><span class="p">]]</span>
+
+    <span class="c1">## Make an empty list for our group data</span>
+    <span class="n">test_equal_var</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1">## Loop through the data dictionary </span>
+    <span class="k">for</span> <span class="n">grp</span><span class="p">,</span><span class="n">grp_df</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+
+        <span class="c1">## Grab the correct phase column from the group df</span>
+        <span class="n">grp_data</span> <span class="o">=</span> <span class="n">grp_df</span><span class="p">[</span><span class="n">test_phase</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="c1">## Append group data to list of group data</span>
+        <span class="n">test_equal_var</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">grp_data</span><span class="p">)</span>
+
+        <span class="c1">## Test for nomrality and save result </span>
+        <span class="n">stat</span><span class="p">,</span><span class="n">p</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">normaltest</span><span class="p">(</span><span class="n">grp_data</span><span class="p">)</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">test_phase</span><span class="p">,</span> <span class="n">grp</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">grp_data</span><span class="p">),</span><span class="s1">&#39;normality&#39;</span><span class="p">,</span><span class="n">stat</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="n">p</span><span class="o">&lt;</span><span class="mf">.05</span><span class="p">])</span>
+
+
+    <span class="c1">## Test for equal variance</span>
+    <span class="n">stat</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">levene</span><span class="p">(</span><span class="o">*</span><span class="n">test_equal_var</span><span class="p">)</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">test_phase</span><span class="p">,</span><span class="s1">&#39;-&#39;</span><span class="p">,</span><span class="s1">&#39;-&#39;</span><span class="p">,</span><span class="s1">&#39;Equal Variance&#39;</span><span class="p">,</span><span class="n">stat</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="n">p</span><span class="o">&lt;</span><span class="mf">.05</span><span class="p">])</span>
+
+    <span class="n">results_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span><span class="n">columns</span><span class="o">=</span><span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">results_df</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">current_phase</span> <span class="o">=</span> <span class="s1">&#39;S&#39;</span>
+<span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plot_bars_yerr</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">current_phase</span><span class="p">)</span>
+<span class="n">res_df</span><span class="o">=</span>  <span class="n">test_assumptions</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">current_phase</span><span class="p">)</span>
+<span class="n">res_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/anaconda3/envs/learn-env-new/lib/python3.8/site-packages/scipy/stats/stats.py:1603: UserWarning: kurtosistest only valid for n&gt;=20 ... continuing anyway, n=9
+  warnings.warn(&quot;kurtosistest only valid for n&gt;=20 ... continuing &quot;
+/opt/anaconda3/envs/learn-env-new/lib/python3.8/site-packages/scipy/stats/stats.py:1603: UserWarning: kurtosistest only valid for n&gt;=20 ... continuing anyway, n=13
+  warnings.warn(&quot;kurtosistest only valid for n&gt;=20 ... continuing &quot;
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Phase</th>
+      <th>Group</th>
+      <th>n</th>
+      <th>Test Name</th>
+      <th>Test Stat</th>
+      <th>p</th>
+      <th>sig?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>S</td>
+      <td>Control</td>
+      <td>9</td>
+      <td>normality</td>
+      <td>0.490</td>
+      <td>0.783</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>S</td>
+      <td>Experimental</td>
+      <td>13</td>
+      <td>normality</td>
+      <td>6.533</td>
+      <td>0.038</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>S</td>
+      <td>-</td>
+      <td>-</td>
+      <td>Equal Variance</td>
+      <td>0.072</td>
+      <td>0.791</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><img alt="../../../_images/f48988eda16385921e5b9ed86979c88d82f5b81c67bcfa5855d7f25eb5650ddc.png" src="../../../_images/f48988eda16385921e5b9ed86979c88d82f5b81c67bcfa5855d7f25eb5650ddc.png" />
+</div>
+</div>
+<section id="make-a-final-function-to-use-both-of-the-above">
+<h3>Make a final function to use both of the above<a class="headerlink" href="#make-a-final-function-to-use-both-of-the-above" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">test_and_plot_phase</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">phase</span><span class="p">):</span>
+    <span class="n">res_df</span> <span class="o">=</span> <span class="n">test_assumptions</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">phase</span><span class="p">)</span>
+    <span class="n">f</span><span class="p">,</span><span class="n">a</span> <span class="o">=</span> <span class="n">plot_bars_yerr</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">phase</span><span class="p">)</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">res_df</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="using-our-functions-evaluate-each-phase-s-assumption-tests-and-select-the-correct-hypothesis-test">
+<h2>Using our functions, evaluate each phase’s assumption tests and select the correct hypothesis test<a class="headerlink" href="#using-our-functions-evaluate-each-phase-s-assumption-tests-and-select-the-correct-hypothesis-test" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_and_plot_phase</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="s1">&#39;BL&#39;</span><span class="p">)</span>
+<span class="n">stats</span><span class="o">.</span><span class="n">mannwhitneyu</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Control&#39;</span><span class="p">][</span><span class="s1">&#39;BL&#39;</span><span class="p">],</span>
+                   <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Experimental&#39;</span><span class="p">][</span><span class="s1">&#39;BL&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/anaconda3/envs/learn-env-new/lib/python3.8/site-packages/scipy/stats/stats.py:1603: UserWarning: kurtosistest only valid for n&gt;=20 ... continuing anyway, n=9
+  warnings.warn(&quot;kurtosistest only valid for n&gt;=20 ... continuing &quot;
+/opt/anaconda3/envs/learn-env-new/lib/python3.8/site-packages/scipy/stats/stats.py:1603: UserWarning: kurtosistest only valid for n&gt;=20 ... continuing anyway, n=13
+  warnings.warn(&quot;kurtosistest only valid for n&gt;=20 ... continuing &quot;
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Phase</th>
+      <th>Group</th>
+      <th>n</th>
+      <th>Test Name</th>
+      <th>Test Stat</th>
+      <th>p</th>
+      <th>sig?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>BL</td>
+      <td>Control</td>
+      <td>9</td>
+      <td>normality</td>
+      <td>8.255</td>
+      <td>0.016</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>BL</td>
+      <td>Experimental</td>
+      <td>13</td>
+      <td>normality</td>
+      <td>0.790</td>
+      <td>0.674</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>BL</td>
+      <td>-</td>
+      <td>-</td>
+      <td>Equal Variance</td>
+      <td>0.131</td>
+      <td>0.721</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><img alt="../../../_images/1c1f9104d1ee5f3bec28bde93d3133b612d296bba5703e940a758ef651177386.png" src="../../../_images/1c1f9104d1ee5f3bec28bde93d3133b612d296bba5703e940a758ef651177386.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MannwhitneyuResult(statistic=47.0, pvalue=0.23130417364131195)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_and_plot_phase</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="s1">&#39;S&#39;</span><span class="p">)</span>
+<span class="n">stats</span><span class="o">.</span><span class="n">mannwhitneyu</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Control&#39;</span><span class="p">][</span><span class="s1">&#39;S&#39;</span><span class="p">],</span>
+                   <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Experimental&#39;</span><span class="p">][</span><span class="s1">&#39;S&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/anaconda3/envs/learn-env-new/lib/python3.8/site-packages/scipy/stats/stats.py:1603: UserWarning: kurtosistest only valid for n&gt;=20 ... continuing anyway, n=9
+  warnings.warn(&quot;kurtosistest only valid for n&gt;=20 ... continuing &quot;
+/opt/anaconda3/envs/learn-env-new/lib/python3.8/site-packages/scipy/stats/stats.py:1603: UserWarning: kurtosistest only valid for n&gt;=20 ... continuing anyway, n=13
+  warnings.warn(&quot;kurtosistest only valid for n&gt;=20 ... continuing &quot;
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Phase</th>
+      <th>Group</th>
+      <th>n</th>
+      <th>Test Name</th>
+      <th>Test Stat</th>
+      <th>p</th>
+      <th>sig?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>S</td>
+      <td>Control</td>
+      <td>9</td>
+      <td>normality</td>
+      <td>0.490</td>
+      <td>0.783</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>S</td>
+      <td>Experimental</td>
+      <td>13</td>
+      <td>normality</td>
+      <td>6.533</td>
+      <td>0.038</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>S</td>
+      <td>-</td>
+      <td>-</td>
+      <td>Equal Variance</td>
+      <td>0.072</td>
+      <td>0.791</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><img alt="../../../_images/f48988eda16385921e5b9ed86979c88d82f5b81c67bcfa5855d7f25eb5650ddc.png" src="../../../_images/f48988eda16385921e5b9ed86979c88d82f5b81c67bcfa5855d7f25eb5650ddc.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MannwhitneyuResult(statistic=51.5, pvalue=0.3320788807684706)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_and_plot_phase</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="s1">&#39;R1&#39;</span><span class="p">)</span>
+<span class="c1"># stats.mannwhitneyu(data[&#39;Control&#39;][&#39;R1&#39;],</span>
+<span class="c1">#                    data[&#39;Experimental&#39;][&#39;R1&#39;])</span>
+<span class="n">stats</span><span class="o">.</span><span class="n">ttest_ind</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Control&#39;</span><span class="p">][</span><span class="s1">&#39;R1&#39;</span><span class="p">],</span>
+                   <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Experimental&#39;</span><span class="p">][</span><span class="s1">&#39;R1&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/anaconda3/envs/learn-env-new/lib/python3.8/site-packages/scipy/stats/stats.py:1603: UserWarning: kurtosistest only valid for n&gt;=20 ... continuing anyway, n=9
+  warnings.warn(&quot;kurtosistest only valid for n&gt;=20 ... continuing &quot;
+/opt/anaconda3/envs/learn-env-new/lib/python3.8/site-packages/scipy/stats/stats.py:1603: UserWarning: kurtosistest only valid for n&gt;=20 ... continuing anyway, n=13
+  warnings.warn(&quot;kurtosistest only valid for n&gt;=20 ... continuing &quot;
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Phase</th>
+      <th>Group</th>
+      <th>n</th>
+      <th>Test Name</th>
+      <th>Test Stat</th>
+      <th>p</th>
+      <th>sig?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>R1</td>
+      <td>Control</td>
+      <td>9</td>
+      <td>normality</td>
+      <td>3.932</td>
+      <td>0.140</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>R1</td>
+      <td>Experimental</td>
+      <td>13</td>
+      <td>normality</td>
+      <td>3.078</td>
+      <td>0.215</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>R1</td>
+      <td>-</td>
+      <td>-</td>
+      <td>Equal Variance</td>
+      <td>1.026</td>
+      <td>0.323</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><img alt="../../../_images/c73154a677ebad94b5e57b1c058e2868417449b09df5de888be8700197964f35.png" src="../../../_images/c73154a677ebad94b5e57b1c058e2868417449b09df5de888be8700197964f35.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Ttest_indResult(statistic=-2.3712598087477406, pvalue=0.02788240296608544)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_and_plot_phase</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="s1">&#39;R2&#39;</span><span class="p">)</span>
+<span class="n">stats</span><span class="o">.</span><span class="n">ttest_ind</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Control&#39;</span><span class="p">][</span><span class="s1">&#39;R1&#39;</span><span class="p">],</span>
+                   <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Experimental&#39;</span><span class="p">][</span><span class="s1">&#39;R1&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/anaconda3/envs/learn-env-new/lib/python3.8/site-packages/scipy/stats/stats.py:1603: UserWarning: kurtosistest only valid for n&gt;=20 ... continuing anyway, n=9
+  warnings.warn(&quot;kurtosistest only valid for n&gt;=20 ... continuing &quot;
+/opt/anaconda3/envs/learn-env-new/lib/python3.8/site-packages/scipy/stats/stats.py:1603: UserWarning: kurtosistest only valid for n&gt;=20 ... continuing anyway, n=13
+  warnings.warn(&quot;kurtosistest only valid for n&gt;=20 ... continuing &quot;
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Phase</th>
+      <th>Group</th>
+      <th>n</th>
+      <th>Test Name</th>
+      <th>Test Stat</th>
+      <th>p</th>
+      <th>sig?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>R2</td>
+      <td>Control</td>
+      <td>9</td>
+      <td>normality</td>
+      <td>4.193</td>
+      <td>0.123</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>R2</td>
+      <td>Experimental</td>
+      <td>13</td>
+      <td>normality</td>
+      <td>0.325</td>
+      <td>0.850</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>R2</td>
+      <td>-</td>
+      <td>-</td>
+      <td>Equal Variance</td>
+      <td>1.730</td>
+      <td>0.203</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><img alt="../../../_images/23f3ea35d2024757399812b895868680869127c9fcd3369986b72ae9cd74fb99.png" src="../../../_images/23f3ea35d2024757399812b895868680869127c9fcd3369986b72ae9cd74fb99.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Ttest_indResult(statistic=-2.3712598087477406, pvalue=0.02788240296608544)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="anova">
+<h2>ANOVA<a class="headerlink" href="#anova" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Let’s analyze the difference between phases for an ANOVA</p></li>
+</ul>
+<section id="run-one-way-anovas-with-scipy">
+<h3>Run One-Way ANOVAs with Scipy<a class="headerlink" href="#run-one-way-anovas-with-scipy" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>One for Control Mice</p></li>
+<li><p>One for Experimental Mice</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Control&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Group</th>
+      <th>BL</th>
+      <th>S</th>
+      <th>PS</th>
+      <th>R1</th>
+      <th>R2</th>
+    </tr>
+    <tr>
+      <th>Mouse_ID</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>Control</td>
+      <td>697.00</td>
+      <td>703.50</td>
+      <td>645.25</td>
+      <td>289.50</td>
+      <td>578.75</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Control</td>
+      <td>781.00</td>
+      <td>808.75</td>
+      <td>655.75</td>
+      <td>356.75</td>
+      <td>803.25</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Control</td>
+      <td>658.25</td>
+      <td>788.00</td>
+      <td>864.50</td>
+      <td>443.75</td>
+      <td>686.00</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Control</td>
+      <td>863.50</td>
+      <td>671.50</td>
+      <td>704.25</td>
+      <td>402.25</td>
+      <td>663.25</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Control</td>
+      <td>549.00</td>
+      <td>437.25</td>
+      <td>469.25</td>
+      <td>273.00</td>
+      <td>518.75</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>Control</td>
+      <td>602.00</td>
+      <td>444.00</td>
+      <td>529.75</td>
+      <td>372.00</td>
+      <td>465.75</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>Control</td>
+      <td>732.50</td>
+      <td>518.25</td>
+      <td>629.25</td>
+      <td>467.50</td>
+      <td>636.50</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>Control</td>
+      <td>618.00</td>
+      <td>587.25</td>
+      <td>477.75</td>
+      <td>257.25</td>
+      <td>559.75</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>Control</td>
+      <td>211.00</td>
+      <td>285.25</td>
+      <td>197.50</td>
+      <td>67.75</td>
+      <td>219.75</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Run f_oneway </span>
+<span class="n">stats</span><span class="o">.</span><span class="n">f_oneway</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Control&#39;</span><span class="p">][</span><span class="s1">&#39;BL&#39;</span><span class="p">],</span> 
+               <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Control&#39;</span><span class="p">][</span><span class="s1">&#39;S&#39;</span><span class="p">],</span> 
+               <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Control&#39;</span><span class="p">][</span><span class="s1">&#39;R1&#39;</span><span class="p">],</span>
+              <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Control&#39;</span><span class="p">][</span><span class="s1">&#39;R2&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>F_onewayResult(statistic=6.376000275714917, pvalue=0.0016400902609930025)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Run f_twoway</span>
+<span class="n">stats</span><span class="o">.</span><span class="n">f_oneway</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Experimental&#39;</span><span class="p">][</span><span class="s1">&#39;BL&#39;</span><span class="p">],</span> 
+               <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Experimental&#39;</span><span class="p">][</span><span class="s1">&#39;S&#39;</span><span class="p">],</span> 
+               <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Experimental&#39;</span><span class="p">][</span><span class="s1">&#39;R1&#39;</span><span class="p">],</span>
+              <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Experimental&#39;</span><span class="p">][</span><span class="s1">&#39;R2&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>F_onewayResult(statistic=1.7233218231284195, pvalue=0.17472593698289063)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="two-way-anova-with-statsmodels">
+<h2>Two-Way  ANOVA with Statsmodels<a class="headerlink" href="#two-way-anova-with-statsmodels" title="Permalink to this heading">#</a></h2>
+<!-- ### RM ANOVA Melting DF -->
+<section id="melting-a-dataframe">
+<h3>Melting a dataframe<a class="headerlink" href="#melting-a-dataframe" title="Permalink to this heading">#</a></h3>
+<p><a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.melt.html">https://pandas.pydata.org/docs/reference/api/pandas.melt.html</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.formula.api</span><span class="w"> </span><span class="kn">import</span> <span class="n">ols</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">to_melt</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">to_melt</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Mouse_ID</th>
+      <th>Group</th>
+      <th>BL1</th>
+      <th>BL2</th>
+      <th>BL3</th>
+      <th>BL4</th>
+      <th>S1</th>
+      <th>S2</th>
+      <th>S3</th>
+      <th>S4</th>
+      <th>PS1</th>
+      <th>PS2</th>
+      <th>PS3</th>
+      <th>PS4</th>
+      <th>R1_1</th>
+      <th>R1_2</th>
+      <th>R1_3</th>
+      <th>R1_4</th>
+      <th>R2_1</th>
+      <th>R2_2</th>
+      <th>R2_3</th>
+      <th>R2_4</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>Control</td>
+      <td>665</td>
+      <td>863</td>
+      <td>631</td>
+      <td>629</td>
+      <td>583</td>
+      <td>801</td>
+      <td>723</td>
+      <td>707</td>
+      <td>732</td>
+      <td>680</td>
+      <td>684</td>
+      <td>485</td>
+      <td>65</td>
+      <td>301</td>
+      <td>351</td>
+      <td>441</td>
+      <td>675</td>
+      <td>554</td>
+      <td>541</td>
+      <td>545</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>Control</td>
+      <td>859</td>
+      <td>849</td>
+      <td>685</td>
+      <td>731</td>
+      <td>854</td>
+      <td>1103</td>
+      <td>645</td>
+      <td>633</td>
+      <td>733</td>
+      <td>662</td>
+      <td>605</td>
+      <td>623</td>
+      <td>128</td>
+      <td>268</td>
+      <td>462</td>
+      <td>569</td>
+      <td>988</td>
+      <td>728</td>
+      <td>933</td>
+      <td>564</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>Control</td>
+      <td>589</td>
+      <td>507</td>
+      <td>635</td>
+      <td>902</td>
+      <td>699</td>
+      <td>743</td>
+      <td>761</td>
+      <td>949</td>
+      <td>872</td>
+      <td>952</td>
+      <td>828</td>
+      <td>806</td>
+      <td>129</td>
+      <td>311</td>
+      <td>669</td>
+      <td>666</td>
+      <td>516</td>
+      <td>579</td>
+      <td>913</td>
+      <td>736</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>Control</td>
+      <td>939</td>
+      <td>909</td>
+      <td>850</td>
+      <td>756</td>
+      <td>807</td>
+      <td>617</td>
+      <td>526</td>
+      <td>736</td>
+      <td>743</td>
+      <td>625</td>
+      <td>690</td>
+      <td>759</td>
+      <td>281</td>
+      <td>357</td>
+      <td>386</td>
+      <td>585</td>
+      <td>565</td>
+      <td>550</td>
+      <td>806</td>
+      <td>732</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>Experimental</td>
+      <td>710</td>
+      <td>505</td>
+      <td>494</td>
+      <td>596</td>
+      <td>620</td>
+      <td>589</td>
+      <td>676</td>
+      <td>537</td>
+      <td>779</td>
+      <td>537</td>
+      <td>581</td>
+      <td>515</td>
+      <td>477</td>
+      <td>659</td>
+      <td>737</td>
+      <td>606</td>
+      <td>713</td>
+      <td>682</td>
+      <td>709</td>
+      <td>759</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>6</td>
+      <td>Experimental</td>
+      <td>564</td>
+      <td>808</td>
+      <td>589</td>
+      <td>596</td>
+      <td>591</td>
+      <td>580</td>
+      <td>419</td>
+      <td>463</td>
+      <td>707</td>
+      <td>625</td>
+      <td>547</td>
+      <td>595</td>
+      <td>532</td>
+      <td>951</td>
+      <td>901</td>
+      <td>851</td>
+      <td>807</td>
+      <td>858</td>
+      <td>802</td>
+      <td>803</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>7</td>
+      <td>Experimental</td>
+      <td>722</td>
+      <td>732</td>
+      <td>783</td>
+      <td>946</td>
+      <td>882</td>
+      <td>723</td>
+      <td>764</td>
+      <td>892</td>
+      <td>621</td>
+      <td>764</td>
+      <td>720</td>
+      <td>478</td>
+      <td>297</td>
+      <td>558</td>
+      <td>803</td>
+      <td>694</td>
+      <td>855</td>
+      <td>797</td>
+      <td>938</td>
+      <td>878</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>8</td>
+      <td>Experimental</td>
+      <td>497</td>
+      <td>649</td>
+      <td>586</td>
+      <td>506</td>
+      <td>546</td>
+      <td>493</td>
+      <td>456</td>
+      <td>601</td>
+      <td>437</td>
+      <td>462</td>
+      <td>704</td>
+      <td>498</td>
+      <td>10</td>
+      <td>44</td>
+      <td>86</td>
+      <td>284</td>
+      <td>212</td>
+      <td>133</td>
+      <td>141</td>
+      <td>274</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>9</td>
+      <td>Experimental</td>
+      <td>741</td>
+      <td>668</td>
+      <td>778</td>
+      <td>638</td>
+      <td>759</td>
+      <td>791</td>
+      <td>568</td>
+      <td>664</td>
+      <td>390</td>
+      <td>346</td>
+      <td>773</td>
+      <td>682</td>
+      <td>3</td>
+      <td>212</td>
+      <td>417</td>
+      <td>443</td>
+      <td>486</td>
+      <td>444</td>
+      <td>533</td>
+      <td>578</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>10</td>
+      <td>Experimental</td>
+      <td>953</td>
+      <td>988</td>
+      <td>579</td>
+      <td>706</td>
+      <td>1106</td>
+      <td>812</td>
+      <td>902</td>
+      <td>835</td>
+      <td>829</td>
+      <td>801</td>
+      <td>1011</td>
+      <td>919</td>
+      <td>274</td>
+      <td>559</td>
+      <td>840</td>
+      <td>890</td>
+      <td>724</td>
+      <td>793</td>
+      <td>559</td>
+      <td>700</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>11</td>
+      <td>Experimental</td>
+      <td>753</td>
+      <td>613</td>
+      <td>573</td>
+      <td>642</td>
+      <td>820</td>
+      <td>752</td>
+      <td>759</td>
+      <td>564</td>
+      <td>635</td>
+      <td>641</td>
+      <td>706</td>
+      <td>763</td>
+      <td>287</td>
+      <td>526</td>
+      <td>841</td>
+      <td>838</td>
+      <td>691</td>
+      <td>657</td>
+      <td>680</td>
+      <td>781</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>12</td>
+      <td>Control</td>
+      <td>494</td>
+      <td>602</td>
+      <td>570</td>
+      <td>530</td>
+      <td>570</td>
+      <td>396</td>
+      <td>403</td>
+      <td>380</td>
+      <td>362</td>
+      <td>467</td>
+      <td>491</td>
+      <td>557</td>
+      <td>98</td>
+      <td>262</td>
+      <td>344</td>
+      <td>388</td>
+      <td>435</td>
+      <td>551</td>
+      <td>552</td>
+      <td>537</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>13</td>
+      <td>Control</td>
+      <td>587</td>
+      <td>630</td>
+      <td>564</td>
+      <td>627</td>
+      <td>572</td>
+      <td>419</td>
+      <td>369</td>
+      <td>416</td>
+      <td>403</td>
+      <td>552</td>
+      <td>575</td>
+      <td>589</td>
+      <td>172</td>
+      <td>298</td>
+      <td>422</td>
+      <td>596</td>
+      <td>447</td>
+      <td>589</td>
+      <td>463</td>
+      <td>364</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>14</td>
+      <td>Control</td>
+      <td>917</td>
+      <td>680</td>
+      <td>737</td>
+      <td>596</td>
+      <td>699</td>
+      <td>484</td>
+      <td>452</td>
+      <td>438</td>
+      <td>547</td>
+      <td>729</td>
+      <td>830</td>
+      <td>411</td>
+      <td>71</td>
+      <td>386</td>
+      <td>581</td>
+      <td>832</td>
+      <td>586</td>
+      <td>610</td>
+      <td>634</td>
+      <td>716</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>15</td>
+      <td>Control</td>
+      <td>440</td>
+      <td>767</td>
+      <td>642</td>
+      <td>623</td>
+      <td>532</td>
+      <td>663</td>
+      <td>601</td>
+      <td>553</td>
+      <td>315</td>
+      <td>434</td>
+      <td>543</td>
+      <td>619</td>
+      <td>115</td>
+      <td>101</td>
+      <td>356</td>
+      <td>457</td>
+      <td>412</td>
+      <td>582</td>
+      <td>549</td>
+      <td>696</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>16</td>
+      <td>Experimental</td>
+      <td>715</td>
+      <td>469</td>
+      <td>392</td>
+      <td>333</td>
+      <td>492</td>
+      <td>594</td>
+      <td>695</td>
+      <td>568</td>
+      <td>916</td>
+      <td>675</td>
+      <td>669</td>
+      <td>895</td>
+      <td>98</td>
+      <td>558</td>
+      <td>977</td>
+      <td>956</td>
+      <td>974</td>
+      <td>1049</td>
+      <td>1366</td>
+      <td>942</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>17</td>
+      <td>Experimental</td>
+      <td>184</td>
+      <td>250</td>
+      <td>373</td>
+      <td>457</td>
+      <td>505</td>
+      <td>475</td>
+      <td>519</td>
+      <td>578</td>
+      <td>542</td>
+      <td>477</td>
+      <td>601</td>
+      <td>390</td>
+      <td>131</td>
+      <td>656</td>
+      <td>845</td>
+      <td>699</td>
+      <td>494</td>
+      <td>920</td>
+      <td>431</td>
+      <td>521</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>18</td>
+      <td>Experimental</td>
+      <td>934</td>
+      <td>1237</td>
+      <td>354</td>
+      <td>705</td>
+      <td>646</td>
+      <td>619</td>
+      <td>885</td>
+      <td>626</td>
+      <td>496</td>
+      <td>954</td>
+      <td>718</td>
+      <td>821</td>
+      <td>170</td>
+      <td>909</td>
+      <td>1049</td>
+      <td>994</td>
+      <td>675</td>
+      <td>803</td>
+      <td>866</td>
+      <td>880</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>19</td>
+      <td>Experimental</td>
+      <td>578</td>
+      <td>548</td>
+      <td>556</td>
+      <td>479</td>
+      <td>533</td>
+      <td>721</td>
+      <td>651</td>
+      <td>546</td>
+      <td>537</td>
+      <td>564</td>
+      <td>519</td>
+      <td>446</td>
+      <td>601</td>
+      <td>565</td>
+      <td>450</td>
+      <td>684</td>
+      <td>1675</td>
+      <td>976</td>
+      <td>1249</td>
+      <td>1047</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>20</td>
+      <td>Experimental</td>
+      <td>400</td>
+      <td>193</td>
+      <td>188</td>
+      <td>350</td>
+      <td>232</td>
+      <td>34</td>
+      <td>65</td>
+      <td>158</td>
+      <td>89</td>
+      <td>175</td>
+      <td>186</td>
+      <td>319</td>
+      <td>14</td>
+      <td>60</td>
+      <td>118</td>
+      <td>149</td>
+      <td>133</td>
+      <td>270</td>
+      <td>472</td>
+      <td>293</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>21</td>
+      <td>Experimental</td>
+      <td>448</td>
+      <td>221</td>
+      <td>505</td>
+      <td>459</td>
+      <td>483</td>
+      <td>491</td>
+      <td>394</td>
+      <td>673</td>
+      <td>593</td>
+      <td>444</td>
+      <td>430</td>
+      <td>630</td>
+      <td>176</td>
+      <td>611</td>
+      <td>680</td>
+      <td>552</td>
+      <td>652</td>
+      <td>879</td>
+      <td>990</td>
+      <td>900</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>22</td>
+      <td>Control</td>
+      <td>270</td>
+      <td>132</td>
+      <td>250</td>
+      <td>192</td>
+      <td>364</td>
+      <td>229</td>
+      <td>219</td>
+      <td>329</td>
+      <td>120</td>
+      <td>147</td>
+      <td>186</td>
+      <td>337</td>
+      <td>8</td>
+      <td>70</td>
+      <td>18</td>
+      <td>175</td>
+      <td>232</td>
+      <td>238</td>
+      <td>209</td>
+      <td>200</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df2</span> <span class="o">=</span> <span class="n">to_melt</span><span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="n">id_vars</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Mouse_ID&#39;</span><span class="p">,</span><span class="s1">&#39;Group&#39;</span><span class="p">],</span>
+                      <span class="n">var_name</span><span class="o">=</span><span class="s1">&#39;Day&#39;</span><span class="p">,</span><span class="n">value_name</span><span class="o">=</span><span class="s1">&#39;Licks&#39;</span><span class="p">)</span>
+<span class="n">df2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Mouse_ID</th>
+      <th>Group</th>
+      <th>Day</th>
+      <th>Licks</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>Control</td>
+      <td>BL1</td>
+      <td>665</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>Control</td>
+      <td>BL1</td>
+      <td>859</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>Control</td>
+      <td>BL1</td>
+      <td>589</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>Control</td>
+      <td>BL1</td>
+      <td>939</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>Experimental</td>
+      <td>BL1</td>
+      <td>710</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>435</th>
+      <td>18</td>
+      <td>Experimental</td>
+      <td>R2_4</td>
+      <td>880</td>
+    </tr>
+    <tr>
+      <th>436</th>
+      <td>19</td>
+      <td>Experimental</td>
+      <td>R2_4</td>
+      <td>1047</td>
+    </tr>
+    <tr>
+      <th>437</th>
+      <td>20</td>
+      <td>Experimental</td>
+      <td>R2_4</td>
+      <td>293</td>
+    </tr>
+    <tr>
+      <th>438</th>
+      <td>21</td>
+      <td>Experimental</td>
+      <td>R2_4</td>
+      <td>900</td>
+    </tr>
+    <tr>
+      <th>439</th>
+      <td>22</td>
+      <td>Control</td>
+      <td>R2_4</td>
+      <td>200</td>
+    </tr>
+  </tbody>
+</table>
+<p>440 rows × 4 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Mapping Phase from Phase Dict</span>
+<span class="n">df2</span><span class="p">[</span><span class="s1">&#39;Phase&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df2</span><span class="p">[</span><span class="s1">&#39;Day&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">phase_dict</span><span class="p">)</span>
+
+<span class="c1">## Getting Day of Phase</span>
+<span class="n">df2</span><span class="p">[</span><span class="s1">&#39;Day_of_Phase&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df2</span><span class="p">[</span><span class="s1">&#39;Day&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">df2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Mouse_ID</th>
+      <th>Group</th>
+      <th>Day</th>
+      <th>Licks</th>
+      <th>Phase</th>
+      <th>Day_of_Phase</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>Control</td>
+      <td>BL1</td>
+      <td>665</td>
+      <td>BL</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>Control</td>
+      <td>BL1</td>
+      <td>859</td>
+      <td>BL</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>Control</td>
+      <td>BL1</td>
+      <td>589</td>
+      <td>BL</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>Control</td>
+      <td>BL1</td>
+      <td>939</td>
+      <td>BL</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>Experimental</td>
+      <td>BL1</td>
+      <td>710</td>
+      <td>BL</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>435</th>
+      <td>18</td>
+      <td>Experimental</td>
+      <td>R2_4</td>
+      <td>880</td>
+      <td>R2</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>436</th>
+      <td>19</td>
+      <td>Experimental</td>
+      <td>R2_4</td>
+      <td>1047</td>
+      <td>R2</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>437</th>
+      <td>20</td>
+      <td>Experimental</td>
+      <td>R2_4</td>
+      <td>293</td>
+      <td>R2</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>438</th>
+      <td>21</td>
+      <td>Experimental</td>
+      <td>R2_4</td>
+      <td>900</td>
+      <td>R2</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>439</th>
+      <td>22</td>
+      <td>Control</td>
+      <td>R2_4</td>
+      <td>200</td>
+      <td>R2</td>
+      <td>4</td>
+    </tr>
+  </tbody>
+</table>
+<p>440 rows × 6 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;Phase&#39;</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="s1">&#39;Licks&#39;</span><span class="p">,</span><span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Group&#39;</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">df2</span><span class="p">,</span><span class="n">ci</span><span class="o">=</span><span class="mi">68</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;Phase&#39;, ylabel=&#39;Licks&#39;&gt;
+</pre></div>
+</div>
+<img alt="../../../_images/da189d861b0675a6a90764f9b14b0355f28388fad22165839156496a3f580c6f.png" src="../../../_images/da189d861b0675a6a90764f9b14b0355f28388fad22165839156496a3f580c6f.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df2</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;Mouse_ID&#39;, &#39;Group&#39;, &#39;Day&#39;, &#39;Licks&#39;, &#39;Phase&#39;, &#39;Day_of_Phase&#39;], dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="create-an-ols-model-to-run-an-anova">
+<h3>Create an OLS Model to Run an ANOVA<a class="headerlink" href="#create-an-ols-model-to-run-an-anova" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula</span> <span class="o">=</span> <span class="s2">&quot;Licks~C(Group)*C(Phase)&quot;</span><span class="c1">#&#39;S ~ C(E) + C(M) + X&#39;</span>
+<span class="n">lm</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">df2</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Two way anova</span>
+<span class="n">table</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">anova_lm</span><span class="p">(</span><span class="n">lm</span><span class="p">,</span> <span class="n">typ</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sum_sq</th>
+      <th>df</th>
+      <th>F</th>
+      <th>PR(&gt;F)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>C(Group)</th>
+      <td>4.951e+05</td>
+      <td>1.0</td>
+      <td>9.240</td>
+      <td>2.512e-03</td>
+    </tr>
+    <tr>
+      <th>C(Phase)</th>
+      <td>2.254e+06</td>
+      <td>4.0</td>
+      <td>10.516</td>
+      <td>3.892e-08</td>
+    </tr>
+    <tr>
+      <th>C(Group):C(Phase)</th>
+      <td>9.140e+05</td>
+      <td>4.0</td>
+      <td>4.264</td>
+      <td>2.147e-03</td>
+    </tr>
+    <tr>
+      <th>Residual</th>
+      <td>2.304e+07</td>
+      <td>430.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.stats.multicomp</span><span class="w"> </span><span class="kn">import</span> <span class="n">pairwise_tukeyhsd</span>
+<span class="n">pairwise_tukeyhsd</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function statsmodels.stats.multicomp.pairwise_tukeyhsd(endog, groups, alpha=0.05)&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df2</span><span class="p">[</span><span class="s1">&#39;Group-Phase&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df2</span><span class="p">[</span><span class="s1">&#39;Group&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;-&#39;</span> <span class="o">+</span> <span class="n">df2</span><span class="p">[</span><span class="s1">&#39;Phase&#39;</span><span class="p">]</span>
+<span class="n">df2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Mouse_ID</th>
+      <th>Group</th>
+      <th>Day</th>
+      <th>Licks</th>
+      <th>Phase</th>
+      <th>Day_of_Phase</th>
+      <th>Group-Phase</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>Control</td>
+      <td>BL1</td>
+      <td>665</td>
+      <td>BL</td>
+      <td>1</td>
+      <td>Control-BL</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>Control</td>
+      <td>BL1</td>
+      <td>859</td>
+      <td>BL</td>
+      <td>1</td>
+      <td>Control-BL</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>Control</td>
+      <td>BL1</td>
+      <td>589</td>
+      <td>BL</td>
+      <td>1</td>
+      <td>Control-BL</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>Control</td>
+      <td>BL1</td>
+      <td>939</td>
+      <td>BL</td>
+      <td>1</td>
+      <td>Control-BL</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>Experimental</td>
+      <td>BL1</td>
+      <td>710</td>
+      <td>BL</td>
+      <td>1</td>
+      <td>Experimental-BL</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>435</th>
+      <td>18</td>
+      <td>Experimental</td>
+      <td>R2_4</td>
+      <td>880</td>
+      <td>R2</td>
+      <td>4</td>
+      <td>Experimental-R2</td>
+    </tr>
+    <tr>
+      <th>436</th>
+      <td>19</td>
+      <td>Experimental</td>
+      <td>R2_4</td>
+      <td>1047</td>
+      <td>R2</td>
+      <td>4</td>
+      <td>Experimental-R2</td>
+    </tr>
+    <tr>
+      <th>437</th>
+      <td>20</td>
+      <td>Experimental</td>
+      <td>R2_4</td>
+      <td>293</td>
+      <td>R2</td>
+      <td>4</td>
+      <td>Experimental-R2</td>
+    </tr>
+    <tr>
+      <th>438</th>
+      <td>21</td>
+      <td>Experimental</td>
+      <td>R2_4</td>
+      <td>900</td>
+      <td>R2</td>
+      <td>4</td>
+      <td>Experimental-R2</td>
+    </tr>
+    <tr>
+      <th>439</th>
+      <td>22</td>
+      <td>Control</td>
+      <td>R2_4</td>
+      <td>200</td>
+      <td>R2</td>
+      <td>4</td>
+      <td>Control-R2</td>
+    </tr>
+  </tbody>
+</table>
+<p>440 rows × 7 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">pairwise_tukeyhsd</span><span class="p">(</span><span class="n">df2</span><span class="p">[</span><span class="s1">&#39;Licks&#39;</span><span class="p">],</span><span class="n">df2</span><span class="p">[</span><span class="s1">&#39;Group-Phase&#39;</span><span class="p">])</span>
+<span class="n">res</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>Multiple Comparison of Means - Tukey HSD, FWER=0.05</caption>
+<tr>
+      <th>group1</th>          <th>group2</th>      <th>meandiff</th>   <th>p-adj</th>   <th>lower</th>     <th>upper</th>  <th>reject</th>
+</tr>
+<tr>
+    <td>Control-BL</td>      <td>Control-PS</td>    <td>-59.8889</td>    <td>0.9</td>  <td>-233.4175</td> <td>113.6397</td>  <td>False</td>
+</tr>
+<tr>
+    <td>Control-BL</td>      <td>Control-R1</td>    <td>-309.1667</td>  <td>0.001</td> <td>-482.6953</td> <td>-135.638</td>  <td>True</td> 
+</tr>
+<tr>
+    <td>Control-BL</td>      <td>Control-R2</td>      <td>-64.5</td>     <td>0.9</td>  <td>-238.0286</td> <td>109.0286</td>  <td>False</td>
+</tr>
+<tr>
+    <td>Control-BL</td>       <td>Control-S</td>    <td>-52.0556</td>    <td>0.9</td>  <td>-225.5842</td> <td>121.4731</td>  <td>False</td>
+</tr>
+<tr>
+    <td>Control-BL</td>    <td>Experimental-BL</td> <td>-53.0983</td>    <td>0.9</td>  <td>-212.7214</td> <td>106.5248</td>  <td>False</td>
+</tr>
+<tr>
+    <td>Control-BL</td>    <td>Experimental-PS</td> <td>-35.6175</td>    <td>0.9</td>  <td>-195.2406</td> <td>124.0056</td>  <td>False</td>
+</tr>
+<tr>
+    <td>Control-BL</td>    <td>Experimental-R1</td> <td>-109.2714</td> <td>0.4762</td> <td>-268.8945</td>  <td>50.3518</td>  <td>False</td>
+</tr>
+<tr>
+    <td>Control-BL</td>    <td>Experimental-R2</td>  <td>85.3825</td>  <td>0.7679</td> <td>-74.2406</td>  <td>245.0056</td>  <td>False</td>
+</tr>
+<tr>
+    <td>Control-BL</td>    <td>Experimental-S</td>  <td>-31.8675</td>    <td>0.9</td>  <td>-191.4906</td> <td>127.7556</td>  <td>False</td>
+</tr>
+<tr>
+    <td>Control-PS</td>      <td>Control-R1</td>    <td>-249.2778</td>  <td>0.001</td> <td>-422.8064</td> <td>-75.7491</td>  <td>True</td> 
+</tr>
+<tr>
+    <td>Control-PS</td>      <td>Control-R2</td>     <td>-4.6111</td>    <td>0.9</td>  <td>-178.1397</td> <td>168.9175</td>  <td>False</td>
+</tr>
+<tr>
+    <td>Control-PS</td>       <td>Control-S</td>     <td>7.8333</td>     <td>0.9</td>  <td>-165.6953</td>  <td>181.362</td>  <td>False</td>
+</tr>
+<tr>
+    <td>Control-PS</td>    <td>Experimental-BL</td>  <td>6.7906</td>     <td>0.9</td>  <td>-152.8325</td> <td>166.4137</td>  <td>False</td>
+</tr>
+<tr>
+    <td>Control-PS</td>    <td>Experimental-PS</td>  <td>24.2714</td>    <td>0.9</td>  <td>-135.3518</td> <td>183.8945</td>  <td>False</td>
+</tr>
+<tr>
+    <td>Control-PS</td>    <td>Experimental-R1</td> <td>-49.3825</td>    <td>0.9</td>  <td>-209.0056</td> <td>110.2406</td>  <td>False</td>
+</tr>
+<tr>
+    <td>Control-PS</td>    <td>Experimental-R2</td> <td>145.2714</td>  <td>0.1105</td> <td>-14.3518</td>  <td>304.8945</td>  <td>False</td>
+</tr>
+<tr>
+    <td>Control-PS</td>    <td>Experimental-S</td>   <td>28.0214</td>    <td>0.9</td>  <td>-131.6018</td> <td>187.6445</td>  <td>False</td>
+</tr>
+<tr>
+    <td>Control-R1</td>      <td>Control-R2</td>    <td>244.6667</td>   <td>0.001</td>  <td>71.138</td>   <td>418.1953</td>  <td>True</td> 
+</tr>
+<tr>
+    <td>Control-R1</td>       <td>Control-S</td>    <td>257.1111</td>   <td>0.001</td>  <td>83.5825</td>  <td>430.6397</td>  <td>True</td> 
+</tr>
+<tr>
+    <td>Control-R1</td>    <td>Experimental-BL</td> <td>256.0684</td>   <td>0.001</td>  <td>96.4453</td>  <td>415.6915</td>  <td>True</td> 
+</tr>
+<tr>
+    <td>Control-R1</td>    <td>Experimental-PS</td> <td>273.5491</td>   <td>0.001</td>  <td>113.926</td>  <td>433.1723</td>  <td>True</td> 
+</tr>
+<tr>
+    <td>Control-R1</td>    <td>Experimental-R1</td> <td>199.8953</td>  <td>0.0032</td>  <td>40.2722</td>  <td>359.5184</td>  <td>True</td> 
+</tr>
+<tr>
+    <td>Control-R1</td>    <td>Experimental-R2</td> <td>394.5491</td>   <td>0.001</td>  <td>234.926</td>  <td>554.1723</td>  <td>True</td> 
+</tr>
+<tr>
+    <td>Control-R1</td>    <td>Experimental-S</td>  <td>277.2991</td>   <td>0.001</td>  <td>117.676</td>  <td>436.9223</td>  <td>True</td> 
+</tr>
+<tr>
+    <td>Control-R2</td>       <td>Control-S</td>     <td>12.4444</td>    <td>0.9</td>  <td>-161.0842</td> <td>185.9731</td>  <td>False</td>
+</tr>
+<tr>
+    <td>Control-R2</td>    <td>Experimental-BL</td>  <td>11.4017</td>    <td>0.9</td>  <td>-148.2214</td> <td>171.0248</td>  <td>False</td>
+</tr>
+<tr>
+    <td>Control-R2</td>    <td>Experimental-PS</td>  <td>28.8825</td>    <td>0.9</td>  <td>-130.7406</td> <td>188.5056</td>  <td>False</td>
+</tr>
+<tr>
+    <td>Control-R2</td>    <td>Experimental-R1</td> <td>-44.7714</td>    <td>0.9</td>  <td>-204.3945</td> <td>114.8518</td>  <td>False</td>
+</tr>
+<tr>
+    <td>Control-R2</td>    <td>Experimental-R2</td> <td>149.8825</td>  <td>0.0869</td>  <td>-9.7406</td>  <td>309.5056</td>  <td>False</td>
+</tr>
+<tr>
+    <td>Control-R2</td>    <td>Experimental-S</td>   <td>32.6325</td>    <td>0.9</td>  <td>-126.9906</td> <td>192.2556</td>  <td>False</td>
+</tr>
+<tr>
+     <td>Control-S</td>    <td>Experimental-BL</td>  <td>-1.0427</td>    <td>0.9</td>  <td>-160.6659</td> <td>158.5804</td>  <td>False</td>
+</tr>
+<tr>
+     <td>Control-S</td>    <td>Experimental-PS</td>  <td>16.438</td>     <td>0.9</td>  <td>-143.1851</td> <td>176.0612</td>  <td>False</td>
+</tr>
+<tr>
+     <td>Control-S</td>    <td>Experimental-R1</td> <td>-57.2158</td>    <td>0.9</td>  <td>-216.8389</td> <td>102.4073</td>  <td>False</td>
+</tr>
+<tr>
+     <td>Control-S</td>    <td>Experimental-R2</td>  <td>137.438</td>   <td>0.162</td> <td>-22.1851</td>  <td>297.0612</td>  <td>False</td>
+</tr>
+<tr>
+     <td>Control-S</td>    <td>Experimental-S</td>   <td>20.188</td>     <td>0.9</td>  <td>-139.4351</td> <td>179.8112</td>  <td>False</td>
+</tr>
+<tr>
+  <td>Experimental-BL</td> <td>Experimental-PS</td>  <td>17.4808</td>    <td>0.9</td>  <td>-126.9038</td> <td>161.8653</td>  <td>False</td>
+</tr>
+<tr>
+  <td>Experimental-BL</td> <td>Experimental-R1</td> <td>-56.1731</td>    <td>0.9</td>  <td>-200.5576</td>  <td>88.2115</td>  <td>False</td>
+</tr>
+<tr>
+  <td>Experimental-BL</td> <td>Experimental-R2</td> <td>138.4808</td>   <td>0.073</td>  <td>-5.9038</td>  <td>282.8653</td>  <td>False</td>
+</tr>
+<tr>
+  <td>Experimental-BL</td> <td>Experimental-S</td>   <td>21.2308</td>    <td>0.9</td>  <td>-123.1538</td> <td>165.6153</td>  <td>False</td>
+</tr>
+<tr>
+  <td>Experimental-PS</td> <td>Experimental-R1</td> <td>-73.6538</td>   <td>0.816</td> <td>-218.0384</td>  <td>70.7307</td>  <td>False</td>
+</tr>
+<tr>
+  <td>Experimental-PS</td> <td>Experimental-R2</td>   <td>121.0</td>   <td>0.1912</td> <td>-23.3845</td>  <td>265.3845</td>  <td>False</td>
+</tr>
+<tr>
+  <td>Experimental-PS</td> <td>Experimental-S</td>    <td>3.75</td>      <td>0.9</td>  <td>-140.6345</td> <td>148.1345</td>  <td>False</td>
+</tr>
+<tr>
+  <td>Experimental-R1</td> <td>Experimental-R2</td> <td>194.6538</td>   <td>0.001</td>  <td>50.2693</td>  <td>339.0384</td>  <td>True</td> 
+</tr>
+<tr>
+  <td>Experimental-R1</td> <td>Experimental-S</td>   <td>77.4038</td>  <td>0.7656</td> <td>-66.9807</td>  <td>221.7884</td>  <td>False</td>
+</tr>
+<tr>
+  <td>Experimental-R2</td> <td>Experimental-S</td>   <td>-117.25</td>  <td>0.2292</td> <td>-261.6345</td>  <td>27.1345</td>  <td>False</td>
+</tr>
+</table></div></div>
+</div>
+</section>
+</section>
+<section id="the-correct-test-repeated-measures-anova">
+<h2>The CORRECT Test: Repeated Measures ANOVA<a class="headerlink" href="#the-correct-test-repeated-measures-anova" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.stats.anova</span><span class="w"> </span><span class="kn">import</span> <span class="n">AnovaRM</span>
+
+<span class="n">aovrm</span> <span class="o">=</span> <span class="n">AnovaRM</span><span class="p">(</span><span class="n">df2</span><span class="p">,</span> <span class="n">depvar</span><span class="o">=</span><span class="s1">&#39;Licks&#39;</span><span class="p">,</span> <span class="n">subject</span><span class="o">=</span><span class="s1">&#39;Mouse_ID&#39;</span><span class="p">,</span> 
+                <span class="n">within</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Phase&#39;</span><span class="p">],</span>
+                <span class="n">between</span><span class="o">=</span><span class="s1">&#39;Groups&#39;</span><span class="p">)</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">aovrm</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NotImplementedError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">116</span><span class="o">-</span><span class="mi">7</span><span class="n">a381625a8ab</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.stats.anova</span><span class="w"> </span><span class="kn">import</span> <span class="n">AnovaRM</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> 
+<span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">aovrm</span> <span class="o">=</span> <span class="n">AnovaRM</span><span class="p">(</span><span class="n">df2</span><span class="p">,</span> <span class="n">depvar</span><span class="o">=</span><span class="s1">&#39;Licks&#39;</span><span class="p">,</span> <span class="n">subject</span><span class="o">=</span><span class="s1">&#39;Mouse_ID&#39;</span><span class="p">,</span> 
+<span class="g g-Whitespace">      </span><span class="mi">4</span>                 <span class="n">within</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Phase&#39;</span><span class="p">],</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span>                 <span class="n">between</span><span class="o">=</span><span class="s1">&#39;Groups&#39;</span><span class="p">)</span>
+
+<span class="nn">/opt/anaconda3/envs/learn-env-new/lib/python3.8/site-packages/statsmodels/stats/anova.py</span> in <span class="ni">__init__</span><span class="nt">(self, data, depvar, subject, within, between, aggregate_func)</span>
+<span class="g g-Whitespace">    </span><span class="mi">485</span>         <span class="bp">self</span><span class="o">.</span><span class="n">between</span> <span class="o">=</span> <span class="n">between</span>
+<span class="g g-Whitespace">    </span><span class="mi">486</span>         <span class="k">if</span> <span class="n">between</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">487</span>             <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Between subject effect not &#39;</span>
+<span class="g g-Whitespace">    </span><span class="mi">488</span>                                       <span class="s1">&#39;yet supported!&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">489</span>         <span class="bp">self</span><span class="o">.</span><span class="n">subject</span> <span class="o">=</span> <span class="n">subject</span>
+
+<span class="ne">NotImplementedError</span>: Between subject effect not yet supported!
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="conclusion">
+<h2>CONCLUSION<a class="headerlink" href="#conclusion" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Running the correct test according to the assumptions of normality and equal variance will ensure you can get the correct test result.</p></li>
+<li><p>Notice how the last phase (R) did NOT come back as significant when we ran the t-test, but DID come back significant when we performed the Mann Whitney U instead.</p></li>
+</ul>
+<p>(<a class="reference external" href="https://www.statsmodels.org/stable/generated/statsmodels.stats.multicomp.pairwise_tukeyhsd.html">https://www.statsmodels.org/stable/generated/statsmodels.stats.multicomp.pairwise_tukeyhsd.html</a>)</p>
+</section>
+<section id="effect-size-visual">
+<h2>Effect Size Visual<a class="headerlink" href="#effect-size-visual" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://rpsychologist.com/d3/NHST/">https://rpsychologist.com/d3/NHST/</a></p></li>
+</ul>
+</section>
+<section id="ephys-figure">
+<h2>Ephys Figure<a class="headerlink" href="#ephys-figure" title="Permalink to this heading">#</a></h2>
+<img src="https://raw.githubusercontent.com/jirvingphd/fsds_pt_100719_cohort_notes/master/Images/jmi_fig1.png"></section>
+<section id="statistical-analysis-pipeline">
+<h2>Statistical Analysis Pipeline<a class="headerlink" href="#statistical-analysis-pipeline" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Test for Normality</strong></p>
+<ul class="simple">
+<li><p>D’Agostino-Pearson’s normality test<br>
+<code class="docutils literal notranslate"><span class="pre">scipy.stats.normaltest</span></code></p></li>
+<li><p>Shapiro-Wilik Test<br>
+<code class="docutils literal notranslate"><span class="pre">scipy.stats.shapiro</span></code><br></p></li>
+</ul>
+</li>
+<li><p><strong>Test for Homogeneity of Variance</strong></p>
+<ul class="simple">
+<li><p>Levene’s Test<br>
+<code class="docutils literal notranslate"><span class="pre">scipy.stats.levene</span></code></p></li>
+</ul>
+</li>
+<li><p><strong>Choose appropriate test based upon 1. and 2.</strong> <br></p>
+<ul class="simple">
+<li><p>T Test (1-sample)</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">stats.ttest_1samp()</span></code></p></li>
+</ul>
+</li>
+<li><p>T Test (2-sample)</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">stats.ttest_ind()</span></code></p></li>
+<li><p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ttest_ind.html">docs</a></p></li>
+</ul>
+</li>
+<li><p>Welch’s T-Test (2-sample)</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">stats.ttest_ind(equal_var=False)</span></code></p></li>
+<li><p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ttest_ind.html">docs</a></p></li>
+</ul>
+</li>
+<li><p>Mann Whitney U</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">stats.mannwhitneyu()</span></code></p></li>
+<li><p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.mannwhitneyu.html">docs</a></p></li>
+</ul>
+</li>
+<li><p>ANOVA</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">stats.f_oneway()</span></code></p></li>
+<li><p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.f_oneway.html">docs</a></p></li>
+</ul>
+</li>
+<li><p>Tukey’s</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">statsmodels.stats.multicomp.pairwise_tukeyhsd</span></code>
+-<a class="reference external" href="https://www.statsmodels.org/stable/generated/statsmodels.stats.multicomp.pairwise_tukeyhsd.html">docs</a></p></li>
+</ul>
+</li>
+<li><p><strong>Calculate effect size for significant results.</strong></p>
+<ul class="simple">
+<li><p>Effect size: <a class="reference external" href="https://stackoverflow.com/questions/21532471/how-to-calculate-cohens-d-in-python">cohen’s d</a></p></li>
+<li><p>Interpretation:</p>
+<ul>
+<li><p>Small effect = 0.2 ( cannot be seen by naked eye)</p></li>
+<li><p>Medium effect  = 0.5</p></li>
+<li><p>Large Effect = 0.8 (can be seen by naked eye)</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>If significant, follow up with post-hoc tests (if have more than 2 groups)</strong></p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.statsmodels.org/stable/generated/statsmodels.stats.multicomp.pairwise_tukeyhsd.html">Tukey’s</a></p></li>
+</ul>
+</li>
+</ol>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "learn-env-new"
+        },
+        kernelOptions: {
+            name: "learn-env-new",
+            path: "./Phase_2/topic_15_ANOVA/instructor notebooks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'learn-env-new'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Topic 15: ANOVAs &amp; Statistical Power with  Neuro Data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notes">NOTES</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">REFERENCES</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hypothesis-testing-steps">HYPOTHESIS TESTING STEPS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-tests-summary-table">Statistical Tests Summary Table</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#real-world-science-experimental-design">Real-World Science / Experimental Design</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-role-of-stress-neurons-in-the-amygdala-in-addiction-binge-drinking">The Role of Stress Neurons in the Amygdala in Addiction/Binge Drinking</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-opponent-process-theory-of-addiction">The Opponent-Process Theory of Addiction</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hypothesis">Hypothesis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#experimental-design">Experimental Design</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hypothesis-testing-mouse-data">Hypothesis Testing: Mouse Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Hypothesis</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-which-type-of-test">Step 1: which type of test?</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#let-s-first-try-to-treat-this-as-2-sample-t-tests-one-for-each-phase">Let’s First Try to Treat this as 2-sample T-Tests (one for each phase)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#obtaining-preprocessing-data">Obtaining/Preprocessing Data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#laying-out-our-approach">Laying Out Our Approach</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calculating-individual-mouse-means-by-phase">Calculating individual mouse means by phase</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-group-data-for-eda-testing">Getting Group Data For EDA &amp; Testing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-group-means-standard-error-of-the-mean">Plotting Group Means + Standard Error of the Mean</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run-2-sample-t-test-on-baseline-days">Run 2-sample T-Test on Baseline Days</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-levene-s-test">Adding Levene’s Test</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run-correct-test">Run Correct Test</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#make-a-final-function-to-use-both-of-the-above">Make a final function to use both of the above</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-our-functions-evaluate-each-phase-s-assumption-tests-and-select-the-correct-hypothesis-test">Using our functions, evaluate each phase’s assumption tests and select the correct hypothesis test</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#anova">ANOVA</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#run-one-way-anovas-with-scipy">Run One-Way ANOVAs with Scipy</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#two-way-anova-with-statsmodels">Two-Way  ANOVA with Statsmodels</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#melting-a-dataframe">Melting a dataframe</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-an-ols-model-to-run-an-anova">Create an OLS Model to Run an ANOVA</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-correct-test-repeated-measures-anova">The CORRECT Test: Repeated Measures ANOVA</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">CONCLUSION</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#effect-size-visual">Effect Size Visual</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ephys-figure">Ephys Figure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-analysis-pipeline">Statistical Analysis Pipeline</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By James Irving, PhD
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

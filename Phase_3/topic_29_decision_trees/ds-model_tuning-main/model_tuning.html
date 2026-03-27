@@ -1,0 +1,2676 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Objectives &#8212; Data Science Curriculum</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Phase_3/topic_29_decision_trees/ds-model_tuning-main/model_tuning';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/flatironschool_banner.jpg" class="logo__image only-light" alt="Data Science Curriculum - Home"/>
+    <script>document.write(`<img src="../../../_static/flatironschool_banner.jpg" class="logo__image only-dark" alt="Data Science Curriculum - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../intro.html">
+                    Data Science Curriculum
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 1 - Python &amp; Data Fundamentals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_01_getting_started/topic_01_getting_started.html">Topic 1: Getting Started with Data Science</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_02_bash_git/topic_02_bash_and_git.html">Topic 02:  Bash and Git</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_03_control_flow_functions/topic_03_control_flow_and_functions.html">Topic 03: Control Flow, Functions, and Statistics</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_04_python_libraries/topic_04_intro_to_libraries_numpy_SG.html">Topic 04-Part 1: Python Libraries &amp; NumPy</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_04_python_libraries/topic_04_pt-2_brief_intro_to_pandas-SG.html">Topic 04-Part 2: Brief Intro to Pandas with Doctor Who</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_05_data_cleaning_in_pandas/topic_05_Data_Cleaning_in_Pandas.html">Topic 05: Data Cleaning in Pandas</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_06_data_visualization/topic_06_visualizations_heroes_project_SG.html">Topic 06:  Data Visualizations</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_07_SQL_and_relational_databases/topic_07_SQL_and_relational_databases_SG.html">TOPIC 07: SQL DATABASES</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_08_noSQL_databases/topic_08_mongodb-SG.html">Topic 08: NoSQL Databases</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_09_json_and_apis/topic_09_json-api-SG.html">Topic 09: Using APIs and JSON Data</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_1/topic_10_webscraping/topic_10_SG_HTML_CSS_web_scraping.html">Topic 10: HTML, CSS, &amp; Web Scraping</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 2 - Statistics &amp; Regression</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_11_probability_and_combinatorics/topic_11_playlist_probabilities-SG.html">Topic 11 - Intro to Combinatorics &amp; Probability</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_12_statistical_distributions/topic-12-distributions-with-movies-sg.html">Exploring Distributions with Movies Data</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_13_central_limit_theorem/topic_13_central_limit_theorem_SG.html">Topic 13: Central Limit Theorem</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_14_hypothesis_testing/topic_14_hypothesis_testing-SG.html">Topic 14: Hypothesis Testing -  T-Tests</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_15_ANOVA/topic_15_ANOVA_with_neuro_data-SG.html">Topic 15: ANOVAs &amp; Statistical Power with  Neuro Data</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_16_AB_testing/topic_16_AB_testing_with_movies-SG.html">Topic 16: Practicing AB Testing with Movies</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_17_bayesian_statistics/topic_17_bayesian_statistics-SG.html">Topic 17: Bayesian Statistics</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_18_linear_regression/topic_18_intro_to_linear_regression_SG.html">Topic 18: Intro to Linear Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_19_part1_multiple_regression/topic_19_Multiple_Regression_v2-SG.html">Topic 19: Multiple Linear Regression</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_19_part2_model_validation/topic_19_part_2_Multiple_Regression_v2-SG.html">Topic 19 Part 2: Feature Selection &amp; Model Validation</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_2/topic_20_extensions_linear_models/topic_20_extensions_to_linear_models_SG.html">Topic 20: Extensions to Linear Models</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 3 - Machine Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../topic_21_OOP/topic_21_OOP_playing_cards_SG.html">Topic 21: Object-Oriented Programming</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_22_linear_algebra/topic_22_linear_algebra_SG.html">Topic 22: Linear Algebra</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_23_calculus_gradient_descent/topic_23_gradient_descent_SG.html">Topic 23: Cost Functions and Gradient Descent</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_24_regularization/topic_24_Regularization_Ridge_Lasso_v2_SG.html">Topic 24: Feature Selection &amp; Regularization (Ridge and Lasso Regression)</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_25_logistic_regression/topic_25_pt1_LogisticRegression_titanic-v2-SG.html">Topic 25-Pt 1: Intro to Logistic Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_25_logistic_regression/topic_25_pt2_LogisticRegression_titanic-v2-SG.html">Topic 25-Part 2: Evaluating Classifiers, Dealing with Class Imbalance, and <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code></a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_27_KNN/Topic_27_KNN_with_pipelines_with_lab_v3_SG.html">Topic 27: K-Nearest Neighbors<br/> +Topic 32: Pipelines</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_29_decision_trees_v2_titanic-SG.html">Topic 29: Decision Trees</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_30_ensemble_methods/topic_30_ensemble_methods-SG.html">Topic 30: Ensemble Methods</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../topic_31_support_vector_machines/topic_31_SupportVectorMachines_SG.html">Topic 31: Support Vector Machines</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 4 - Advanced ML &amp; Time Series</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_33_pca/topic_33_PCA_SG.html">Topic 33: Principal Component Analysis</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_34_clustering/topic_34_Kmeans_clustering_v3_SG.html">Topic 34: Clustering</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_35-36_using_databricks_for_pyspark/using_databricks_for_pyspark.html">How to Use Databricks for PySpark Canvas Material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_36_recommendation_systems/topic_36_Recommendation_Systems_with_Surprise.html">Topic 36: Recommendation Systems</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_37_intro_to_time_series/topic_37_intro_to_time_series_crime_v3-SG.html">Topic 37: Intro to Time Series</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_38_time_series_models/topic_38-time_series_models_v3_SG.html">Topic 38: Time Series Models</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_39_NLP/topic_39_NLP_finding_trump_v3_SG.html">Topic 39: Natural Language Processing + Topic 28: Bayesian Classification</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_40-41_neural_networks/topic_40-41_Artificial_Neural_Networks_v1_SG.html">Topic 40-41: Artificial Neural Networks</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_42_tuning_neural_networks/topic_42_tuning_ANNs_with_deep_NLP_v1_SG.html">Topic 42 - Tuning Neural Networks + Deep NLP</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_4/topic_43_AWS/topic_43_operationalizing_code_AWS_SG.html">Topic 43: Operationalizing Code &amp; AWS</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 5 - Capstone &amp; Bonus Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/Capstone_Kickoff.html">Capstone Kickoff!</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/APIs/working_with_apis.html">Working with APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/developing_app_functions/developing-streamlit-app-functions_SG.html">Developing Streamlit App Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/tableau/tableau_fundamentals_2021-SG.html">Tableau Fundamentals</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../Phase_5/Bonus%20Notebooks/plotly_visuals.html">Plotly Question</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/master?urlpath=tree/Phase_3/topic_29_decision_trees/ds-model_tuning-main/model_tuning.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/blob/master/Phase_3/topic_29_decision_trees/ds-model_tuning-main/model_tuning.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/issues/new?title=Issue%20on%20page%20%2FPhase_3/topic_29_decision_trees/ds-model_tuning-main/model_tuning.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/Phase_3/topic_29_decision_trees/ds-model_tuning-main/model_tuning.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Objectives</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Objectives</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#model-tuning">Model Tuning</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hyperparameters">Hyperparameters</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#difference-from-parametric-non-parametric-models">Difference from Parametric / Non-Parametric Models</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-example">Data Example</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-prep">Data Prep</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#preparing-the-test-set">Preparing the Test Set</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#trying-different-models-values">Trying Different Models &amp; Values</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#k-nearest-neighbors-model"><span class="math notranslate nohighlight">\(k\)</span>-Nearest Neighbors Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#decreasing-k">Decreasing <span class="math notranslate nohighlight">\(k\)</span></a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#decision-tree">Decision Tree</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#changing-the-branching-criterion">Changing the branching criterion</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#automatically-searching-with-grid-search">Automatically Searching with Grid Search</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gridsearchcv"><code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#choice-of-grid-values">Choice of Grid Values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise">Exercise</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#better-process-pipelines">Better Process: Pipelines</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advantages-of-pipeline">Advantages of <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reduces-complexity">Reduces Complexity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#convenient">Convenient</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#flexible">Flexible</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prevent-mistakes">Prevent Mistakes</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-of-using-pipeline">Example of Using <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#without-the-pipeline-class">Without the Pipeline class</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#with-pipeline-class">With <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> Class</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grid-searching-a-pipeline">Grid Searching a Pipeline</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-note-on-data-leakage">A Note on Data Leakage</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-of-leaking-information">Example of leaking information</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-of-grid-search-with-no-leakage">Example of Grid Search with no leakage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#grid-search-exercise">Grid Search Exercise</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#level-up-random-searching">Level Up: Random Searching</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#randomizedsearchcv-with-logisticregression"><code class="docutils literal notranslate"><span class="pre">RandomizedSearchCV</span></code> with <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Table of Contents<span class="tocSkip"></span></h1>
+<div class="toc"><ul class="toc-item"><li><span><a href="#Objectives" data-toc-modified-id="Objectives-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>Objectives</a></span></li><li><span><a href="#Model-Tuning" data-toc-modified-id="Model-Tuning-2"><span class="toc-item-num">2&nbsp;&nbsp;</span>Model Tuning</a></span><ul class="toc-item"><li><span><a href="#Hyperparameters" data-toc-modified-id="Hyperparameters-2.1"><span class="toc-item-num">2.1&nbsp;&nbsp;</span>Hyperparameters</a></span><ul class="toc-item"><li><span><a href="#Difference-from-Parametric-/-Non-Parametric-Models" data-toc-modified-id="Difference-from-Parametric-/-Non-Parametric-Models-2.1.1"><span class="toc-item-num">2.1.1&nbsp;&nbsp;</span>Difference from Parametric / Non-Parametric Models</a></span></li></ul></li><li><span><a href="#Data-Example" data-toc-modified-id="Data-Example-2.2"><span class="toc-item-num">2.2&nbsp;&nbsp;</span>Data Example</a></span><ul class="toc-item"><li><span><a href="#Data-Prep" data-toc-modified-id="Data-Prep-2.2.1"><span class="toc-item-num">2.2.1&nbsp;&nbsp;</span>Data Prep</a></span></li><li><span><a href="#Trying-Different-Models-&amp;-Values" data-toc-modified-id="Trying-Different-Models-&amp;-Values-2.2.2"><span class="toc-item-num">2.2.2&nbsp;&nbsp;</span>Trying Different Models &amp; Values</a></span></li></ul></li></ul></li><li><span><a href="#Automatically-Searching-with-Grid-Search" data-toc-modified-id="Automatically-Searching-with-Grid-Search-3"><span class="toc-item-num">3&nbsp;&nbsp;</span>Automatically Searching with Grid Search</a></span><ul class="toc-item"><li><ul class="toc-item"><li><span><a href="#GridSearchCV" data-toc-modified-id="GridSearchCV-3.0.1"><span class="toc-item-num">3.0.1&nbsp;&nbsp;</span><code>GridSearchCV</code></a></span></li><li><span><a href="#Choice-of-Grid-Values" data-toc-modified-id="Choice-of-Grid-Values-3.0.2"><span class="toc-item-num">3.0.2&nbsp;&nbsp;</span>Choice of Grid Values</a></span></li><li><span><a href="#Exercise" data-toc-modified-id="Exercise-3.0.3"><span class="toc-item-num">3.0.3&nbsp;&nbsp;</span>Exercise</a></span></li></ul></li></ul></li><li><span><a href="#Better-Process:-Pipelines" data-toc-modified-id="Better-Process:-Pipelines-4"><span class="toc-item-num">4&nbsp;&nbsp;</span>Better Process: Pipelines</a></span><ul class="toc-item"><li><span><a href="#Advantages-of-Pipeline" data-toc-modified-id="Advantages-of-Pipeline-4.1"><span class="toc-item-num">4.1&nbsp;&nbsp;</span>Advantages of <code>Pipeline</code></a></span><ul class="toc-item"><li><span><a href="#Reduces-Complexity" data-toc-modified-id="Reduces-Complexity-4.1.1"><span class="toc-item-num">4.1.1&nbsp;&nbsp;</span>Reduces Complexity</a></span></li><li><span><a href="#Convenient" data-toc-modified-id="Convenient-4.1.2"><span class="toc-item-num">4.1.2&nbsp;&nbsp;</span>Convenient</a></span></li><li><span><a href="#Flexible" data-toc-modified-id="Flexible-4.1.3"><span class="toc-item-num">4.1.3&nbsp;&nbsp;</span>Flexible</a></span></li><li><span><a href="#Prevent-Mistakes" data-toc-modified-id="Prevent-Mistakes-4.1.4"><span class="toc-item-num">4.1.4&nbsp;&nbsp;</span>Prevent Mistakes</a></span></li></ul></li><li><span><a href="#Example-of-Using-Pipeline" data-toc-modified-id="Example-of-Using-Pipeline-4.2"><span class="toc-item-num">4.2&nbsp;&nbsp;</span>Example of Using <code>Pipeline</code></a></span><ul class="toc-item"><li><span><a href="#Without-the-Pipeline-class" data-toc-modified-id="Without-the-Pipeline-class-4.2.1"><span class="toc-item-num">4.2.1&nbsp;&nbsp;</span>Without the Pipeline class</a></span></li><li><span><a href="#With-Pipeline-Class" data-toc-modified-id="With-Pipeline-Class-4.2.2"><span class="toc-item-num">4.2.2&nbsp;&nbsp;</span>With <code>Pipeline</code> Class</a></span></li></ul></li><li><span><a href="#Grid-Searching-a-Pipeline" data-toc-modified-id="Grid-Searching-a-Pipeline-4.3"><span class="toc-item-num">4.3&nbsp;&nbsp;</span>Grid Searching a Pipeline</a></span></li><li><span><a href="#A-Note-on-Data-Leakage" data-toc-modified-id="A-Note-on-Data-Leakage-4.4"><span class="toc-item-num">4.4&nbsp;&nbsp;</span>A Note on Data Leakage</a></span><ul class="toc-item"><li><span><a href="#Example-of-leaking-information" data-toc-modified-id="Example-of-leaking-information-4.4.1"><span class="toc-item-num">4.4.1&nbsp;&nbsp;</span>Example of leaking information</a></span></li><li><span><a href="#Example-of-Grid-Search-with-no-leakage" data-toc-modified-id="Example-of-Grid-Search-with-no-leakage-4.4.2"><span class="toc-item-num">4.4.2&nbsp;&nbsp;</span>Example of Grid Search with no leakage</a></span></li></ul></li></ul></li><li><span><a href="#Grid-Search-Exercise" data-toc-modified-id="Grid-Search-Exercise-5"><span class="toc-item-num">5&nbsp;&nbsp;</span>Grid Search Exercise</a></span></li><li><span><a href="#Level-Up:-Random-Searching" data-toc-modified-id="Level-Up:-Random-Searching-6"><span class="toc-item-num">6&nbsp;&nbsp;</span>Level Up: Random Searching</a></span><ul class="toc-item"><li><ul class="toc-item"><li><span><a href="#RandomizedSearchCV-with-LogisticRegression" data-toc-modified-id="RandomizedSearchCV-with-LogisticRegression-6.0.1"><span class="toc-item-num">6.0.1&nbsp;&nbsp;</span><code>RandomizedSearchCV</code> with <code>LogisticRegression</code></a></span></li></ul></li></ul></li></ul></div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">stats</span> <span class="k">as</span> <span class="n">stats</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.neighbors</span><span class="w"> </span><span class="kn">import</span> <span class="n">KNeighborsClassifier</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.tree</span><span class="w"> </span><span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">precision_score</span><span class="p">,</span> <span class="n">recall_score</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span><span class="p">,</span> <span class="n">GridSearchCV</span><span class="p">,</span>\
+<span class="n">cross_val_score</span><span class="p">,</span> <span class="n">RandomizedSearchCV</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">OneHotEncoder</span><span class="p">,</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.impute</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimpleImputer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.compose</span><span class="w"> </span><span class="kn">import</span> <span class="n">ColumnTransformer</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section class="tex2jax_ignore mathjax_ignore" id="objectives">
+<h1>Objectives<a class="headerlink" href="#objectives" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Explain what hyperparameters are</p></li>
+<li><p>Describe the purpose of grid searching</p></li>
+<li><p>Implement grid searching for the purposes of model optimization.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="model-tuning">
+<h1>Model Tuning<a class="headerlink" href="#model-tuning" title="Permalink to this heading">#</a></h1>
+<p><img alt="" src="https://imgs.xkcd.com/comics/machine_learning.png" /></p>
+<section id="hyperparameters">
+<h2>Hyperparameters<a class="headerlink" href="#hyperparameters" title="Permalink to this heading">#</a></h2>
+<p>Many of the models we have looked at are really <em>families</em> of models in the sense that they make use of <strong>hyperparameters</strong>.</p>
+<p>Thus for example the <span class="math notranslate nohighlight">\(k\)</span>-nearest-neighbors algorithm allows us to make:</p>
+<ul class="simple">
+<li><p>a 1-nearest-neighbor model</p></li>
+<li><p>a 2-nearest-neighbors model</p></li>
+<li><p>a 3-nearest-neighbors model</p></li>
+<li><p>etc.</p></li>
+</ul>
+<p>Or, for another example, the decision tree algorithm allows us to make:</p>
+<ul class="simple">
+<li><p>a classifier that branches according to information gain</p></li>
+<li><p>a classifier that branches according to Gini impurity</p></li>
+<li><p>a regressor that branches according to mean squared error</p></li>
+<li><p>etc.</p></li>
+</ul>
+<p>Depending on the sort of problem and data at hand, it is natural to experiment with different values of these hyperparameters to try to improve model performance.</p>
+<blockquote>
+<div><p>We can think of these <strong>hyperparamters</strong> as <em>dials</em> of the base model</p>
+</div></blockquote>
+<img width=60% src='images/dials.png'/><section id="difference-from-parametric-non-parametric-models">
+<h3>Difference from Parametric / Non-Parametric Models<a class="headerlink" href="#difference-from-parametric-non-parametric-models" title="Permalink to this heading">#</a></h3>
+<p>Contrast the notion of hyperparameters with the distinction between parametric and non-parametric models.</p>
+<p>A linear regression model is parametric in the sense that we start with a given model <em>form</em> and we then search for the optimal parameters to fill in that form. But <em>those</em> parameters are not the sort we might tweak for the purposes of improving model performance. On the contrary, there is one best set of parameters, and the training of the model is a matter of finding those optimal values.</p>
+</section>
+</section>
+<section id="data-example">
+<h2>Data Example<a class="headerlink" href="#data-example" title="Permalink to this heading">#</a></h2>
+<p><img alt="Penguins" src="https://raw.githubusercontent.com/allisonhorst/palmerpenguins/69530276d74b99df81cc385f4e95c644da69ebfa/man/figures/lter_penguins.png" /></p>
+<blockquote>
+<div><p>Images source: &#64;allison_horst <span class="xref myst">github.com/allisonhorst/penguins</span></p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">penguins</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;penguins&#39;</span><span class="p">)</span>
+
+<span class="n">penguins</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 344 entries, 0 to 343
+Data columns (total 7 columns):
+ #   Column             Non-Null Count  Dtype  
+---  ------             --------------  -----  
+ 0   species            344 non-null    object 
+ 1   island             344 non-null    object 
+ 2   bill_length_mm     342 non-null    float64
+ 3   bill_depth_mm      342 non-null    float64
+ 4   flipper_length_mm  342 non-null    float64
+ 5   body_mass_g        342 non-null    float64
+ 6   sex                333 non-null    object 
+dtypes: float64(4), object(3)
+memory usage: 18.9+ KB
+</pre></div>
+</div>
+</div>
+</div>
+<p><img alt="Bill length &amp; depth" src="https://raw.githubusercontent.com/allisonhorst/palmerpenguins/69530276d74b99df81cc385f4e95c644da69ebfa/man/figures/culmen_depth.png" /></p>
+<blockquote>
+<div><p>Images source: &#64;allison_horst <span class="xref myst">github.com/allisonhorst/penguins</span></p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">penguins</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>species</th>
+      <th>island</th>
+      <th>bill_length_mm</th>
+      <th>bill_depth_mm</th>
+      <th>flipper_length_mm</th>
+      <th>body_mass_g</th>
+      <th>sex</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Adelie</td>
+      <td>Torgersen</td>
+      <td>39.1</td>
+      <td>18.7</td>
+      <td>181.0</td>
+      <td>3750.0</td>
+      <td>Male</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Adelie</td>
+      <td>Torgersen</td>
+      <td>39.5</td>
+      <td>17.4</td>
+      <td>186.0</td>
+      <td>3800.0</td>
+      <td>Female</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Adelie</td>
+      <td>Torgersen</td>
+      <td>40.3</td>
+      <td>18.0</td>
+      <td>195.0</td>
+      <td>3250.0</td>
+      <td>Female</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Adelie</td>
+      <td>Torgersen</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Adelie</td>
+      <td>Torgersen</td>
+      <td>36.7</td>
+      <td>19.3</td>
+      <td>193.0</td>
+      <td>3450.0</td>
+      <td>Female</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">penguins</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 344 entries, 0 to 343
+Data columns (total 7 columns):
+ #   Column             Non-Null Count  Dtype  
+---  ------             --------------  -----  
+ 0   species            344 non-null    object 
+ 1   island             344 non-null    object 
+ 2   bill_length_mm     342 non-null    float64
+ 3   bill_depth_mm      342 non-null    float64
+ 4   flipper_length_mm  342 non-null    float64
+ 5   body_mass_g        342 non-null    float64
+ 6   sex                333 non-null    object 
+dtypes: float64(4), object(3)
+memory usage: 18.9+ KB
+</pre></div>
+</div>
+</div>
+</div>
+<section id="data-prep">
+<h3>Data Prep<a class="headerlink" href="#data-prep" title="Permalink to this heading">#</a></h3>
+<p>We’ll try to predict species given the other columns’ values. Let’s dummy-out <code class="docutils literal notranslate"><span class="pre">island</span></code> and <code class="docutils literal notranslate"><span class="pre">sex</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">penguins</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>19
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">penguins</span> <span class="o">=</span> <span class="n">penguins</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="n">penguins</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;species&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Note we&#39;re dedicating a lot of data to the testing set just for demonstrative purposed</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">penguins</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_train_cat</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="s1">&#39;object&#39;</span><span class="p">)</span>
+
+<span class="n">ohe</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">(</span>
+    <span class="n">drop</span><span class="o">=</span><span class="s1">&#39;first&#39;</span><span class="p">,</span>
+    <span class="n">sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">dums</span> <span class="o">=</span> <span class="n">ohe</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train_cat</span><span class="p">)</span>
+<span class="n">dums_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dums</span><span class="p">,</span>
+                       <span class="n">columns</span><span class="o">=</span><span class="n">ohe</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">(),</span>
+                       <span class="n">index</span><span class="o">=</span><span class="n">X_train_cat</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_train_nums</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="s1">&#39;float64&#39;</span><span class="p">)</span>
+
+<span class="n">ss</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+
+<span class="n">ss</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_nums</span><span class="p">)</span>
+<span class="n">nums_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">ss</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_train_nums</span><span class="p">),</span>
+                      <span class="n">index</span><span class="o">=</span><span class="n">X_train_nums</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_train_clean</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">nums_df</span><span class="p">,</span> <span class="n">dums_df</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_train_clean</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>x0_Dream</th>
+      <th>x0_Torgersen</th>
+      <th>x1_Male</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>160</th>
+      <td>0.362748</td>
+      <td>0.903276</td>
+      <td>-0.472344</td>
+      <td>-0.094599</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>237</th>
+      <td>0.973499</td>
+      <td>-0.977375</td>
+      <td>1.408317</td>
+      <td>2.512546</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-0.725152</td>
+      <td>0.445820</td>
+      <td>-0.472344</td>
+      <td>-1.185963</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>121</th>
+      <td>-1.221387</td>
+      <td>1.360731</td>
+      <td>-0.255345</td>
+      <td>-0.882806</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>179</th>
+      <td>1.030757</td>
+      <td>0.954104</td>
+      <td>-0.110678</td>
+      <td>-0.519018</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">knn_model</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">()</span>
+
+<span class="n">knn_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_clean</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>KNeighborsClassifier()
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">estimator</span><span class="o">=</span><span class="n">knn_model</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="n">X_train_clean</span><span class="p">,</span>
+               <span class="n">y</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">scores</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1.        , 1.        , 1.        , 1.        , 1.        ,
+       0.94117647, 1.        , 1.        , 1.        , 1.        ])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.0
+</pre></div>
+</div>
+</div>
+</div>
+<section id="preparing-the-test-set">
+<h4>Preparing the Test Set<a class="headerlink" href="#preparing-the-test-set" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_test_cat</span> <span class="o">=</span> <span class="n">X_test</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="s1">&#39;object&#39;</span><span class="p">)</span>
+
+<span class="n">test_dums</span> <span class="o">=</span> <span class="n">ohe</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test_cat</span><span class="p">)</span>
+<span class="n">test_dums_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">test_dums</span><span class="p">,</span>
+                       <span class="n">columns</span><span class="o">=</span><span class="n">ohe</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">(),</span>
+                      <span class="n">index</span><span class="o">=</span><span class="n">X_test_cat</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_test_nums</span> <span class="o">=</span> <span class="n">X_test</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="s1">&#39;float64&#39;</span><span class="p">)</span>
+
+<span class="n">test_nums</span> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test_nums</span><span class="p">)</span>
+<span class="n">test_nums_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">test_nums</span><span class="p">,</span>
+                           <span class="n">index</span><span class="o">=</span><span class="n">X_test_nums</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_test_clean</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">test_nums_df</span><span class="p">,</span>
+                 <span class="n">test_dums_df</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_test_clean</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>x0_Dream</th>
+      <th>x0_Torgersen</th>
+      <th>x1_Male</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>30</th>
+      <td>-0.877839</td>
+      <td>-0.214949</td>
+      <td>-1.702007</td>
+      <td>-1.185963</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>317</th>
+      <td>0.534522</td>
+      <td>-1.282345</td>
+      <td>1.480650</td>
+      <td>0.784554</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>79</th>
+      <td>-0.381604</td>
+      <td>1.004932</td>
+      <td>-0.472344</td>
+      <td>-0.276493</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>201</th>
+      <td>1.088015</td>
+      <td>0.090021</td>
+      <td>-0.255345</td>
+      <td>-0.670597</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>63</th>
+      <td>-0.572464</td>
+      <td>0.547477</td>
+      <td>-0.689343</td>
+      <td>-0.215862</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>330</th>
+      <td>1.221617</td>
+      <td>-0.977375</td>
+      <td>1.046651</td>
+      <td>0.936132</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>310</th>
+      <td>0.649038</td>
+      <td>-1.079032</td>
+      <td>1.191318</td>
+      <td>0.875501</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>170</th>
+      <td>0.439092</td>
+      <td>0.750790</td>
+      <td>-0.834009</td>
+      <td>-0.943437</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>229</th>
+      <td>0.515436</td>
+      <td>-0.875718</td>
+      <td>0.974318</td>
+      <td>1.118026</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>232</th>
+      <td>0.267318</td>
+      <td>-1.739801</td>
+      <td>0.901985</td>
+      <td>0.511713</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>167 rows × 7 columns</p>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="trying-different-models-values">
+<h3>Trying Different Models &amp; Values<a class="headerlink" href="#trying-different-models-values" title="Permalink to this heading">#</a></h3>
+<section id="k-nearest-neighbors-model">
+<h4><span class="math notranslate nohighlight">\(k\)</span>-Nearest Neighbors Model<a class="headerlink" href="#k-nearest-neighbors-model" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">knn_model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test_clean</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9880239520958084
+</pre></div>
+</div>
+</div>
+</div>
+<section id="decreasing-k">
+<h5>Decreasing <span class="math notranslate nohighlight">\(k\)</span><a class="headerlink" href="#decreasing-k" title="Permalink to this heading">#</a></h5>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">knn5</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">knn5</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_clean</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>KNeighborsClassifier(n_neighbors=3)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">knn5</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test_clean</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9940119760479041
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="decision-tree">
+<h4>Decision Tree<a class="headerlink" href="#decision-tree" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">ct</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_clean</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>DecisionTreeClassifier(random_state=10)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test_clean</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9760479041916168
+</pre></div>
+</div>
+</div>
+</div>
+<section id="changing-the-branching-criterion">
+<h5>Changing the branching criterion<a class="headerlink" href="#changing-the-branching-criterion" title="Permalink to this heading">#</a></h5>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;entropy&#39;</span><span class="p">,</span>
+                          <span class="n">random_state</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">ct</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_clean</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>DecisionTreeClassifier(criterion=&#39;entropy&#39;, random_state=10)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test_clean</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9760479041916168
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="automatically-searching-with-grid-search">
+<h1>Automatically Searching with Grid Search<a class="headerlink" href="#automatically-searching-with-grid-search" title="Permalink to this heading">#</a></h1>
+<p>It’s not a bad idea to experiment with the values of your models’ hyperparameters a bit as you’re getting a feel for your models’ performance. But there are more systematic ways of going about the search for optimal hyperparameters. One method of hyperparameter tuning is <strong>grid searching</strong>.</p>
+<p>The idea is to build multiple models with different hyperparameter values and then see which one performs the best. The hyperparameters and the values to try form a sort of <em>grid</em> along which we are looking for the best performance. For example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>1           | &#39;minkowski&#39; | &#39;uniform&#39;
+3           | &#39;manhattan&#39; | &#39;distance&#39;
+5           |
+______________________________________
+n_neighbors | metric      | weights
+</pre></div>
+</div>
+<p>Scikit-Learn has a <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html"><code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code></a> class whose <code class="docutils literal notranslate"><span class="pre">fit()</span></code> method runs this procedure. Note that this can be quite computationally expensive since:</p>
+<ul class="simple">
+<li><p>A model is constructed for each combination of hyperparameter values that we input; and</p></li>
+<li><p>Each model is cross-validated.</p></li>
+</ul>
+<section id="gridsearchcv">
+<h2><code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code><a class="headerlink" href="#gridsearchcv" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define the parameter grid</span>
+
+<span class="n">grid</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;n_neighbors&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
+    <span class="s1">&#39;metric&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;minkowski&#39;</span><span class="p">,</span> <span class="s1">&#39;manhattan&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;weights&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;uniform&#39;</span><span class="p">,</span> <span class="s1">&#39;distance&#39;</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Question: How many models will we be constructing with this grid?</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize the grid search object with five-fold cross-validation</span>
+
+<span class="n">gs</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">estimator</span><span class="o">=</span><span class="n">knn_model</span><span class="p">,</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">grid</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gs</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_clean</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GridSearchCV(cv=5, estimator=KNeighborsClassifier(),
+             param_grid={&#39;metric&#39;: [&#39;minkowski&#39;, &#39;manhattan&#39;],
+                         &#39;n_neighbors&#39;: [1, 3, 5],
+                         &#39;weights&#39;: [&#39;uniform&#39;, &#39;distance&#39;]})
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gs</span><span class="o">.</span><span class="n">best_params_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;metric&#39;: &#39;minkowski&#39;, &#39;n_neighbors&#39;: 1, &#39;weights&#39;: &#39;uniform&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gs</span><span class="o">.</span><span class="n">best_score_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9939393939393939
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gs</span><span class="o">.</span><span class="n">best_estimator_</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test_clean</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9940119760479041
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gs</span><span class="o">.</span><span class="n">cv_results_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;mean_fit_time&#39;: array([0.00244117, 0.00212178, 0.00202856, 0.00245056, 0.00253558,
+        0.00240946, 0.00230131, 0.0021944 , 0.00227132, 0.00212655,
+        0.0020484 , 0.00200114]),
+ &#39;std_fit_time&#39;: array([2.09762070e-04, 9.57964071e-05, 1.17219590e-04, 5.24170555e-04,
+        3.10398099e-04, 1.42498459e-04, 1.08462647e-04, 1.06260997e-04,
+        1.33742206e-04, 1.01941785e-04, 6.86421292e-05, 5.82863164e-05]),
+ &#39;mean_score_time&#39;: array([0.00375957, 0.00213599, 0.00283766, 0.0023613 , 0.00333204,
+        0.00248194, 0.00334511, 0.00224781, 0.00334239, 0.00219116,
+        0.00286441, 0.0020874 ]),
+ &#39;std_score_time&#39;: array([4.46144792e-04, 1.30340016e-04, 1.40893318e-04, 2.22660642e-04,
+        2.75016987e-04, 2.10311730e-04, 2.86011030e-04, 1.13753000e-04,
+        2.40547167e-04, 1.69184189e-04, 1.22973927e-04, 7.92197744e-05]),
+ &#39;param_metric&#39;: masked_array(data=[&#39;minkowski&#39;, &#39;minkowski&#39;, &#39;minkowski&#39;, &#39;minkowski&#39;,
+                    &#39;minkowski&#39;, &#39;minkowski&#39;, &#39;manhattan&#39;, &#39;manhattan&#39;,
+                    &#39;manhattan&#39;, &#39;manhattan&#39;, &#39;manhattan&#39;, &#39;manhattan&#39;],
+              mask=[False, False, False, False, False, False, False, False,
+                    False, False, False, False],
+        fill_value=&#39;?&#39;,
+             dtype=object),
+ &#39;param_n_neighbors&#39;: masked_array(data=[1, 1, 3, 3, 5, 5, 1, 1, 3, 3, 5, 5],
+              mask=[False, False, False, False, False, False, False, False,
+                    False, False, False, False],
+        fill_value=&#39;?&#39;,
+             dtype=object),
+ &#39;param_weights&#39;: masked_array(data=[&#39;uniform&#39;, &#39;distance&#39;, &#39;uniform&#39;, &#39;distance&#39;,
+                    &#39;uniform&#39;, &#39;distance&#39;, &#39;uniform&#39;, &#39;distance&#39;,
+                    &#39;uniform&#39;, &#39;distance&#39;, &#39;uniform&#39;, &#39;distance&#39;],
+              mask=[False, False, False, False, False, False, False, False,
+                    False, False, False, False],
+        fill_value=&#39;?&#39;,
+             dtype=object),
+ &#39;params&#39;: [{&#39;metric&#39;: &#39;minkowski&#39;, &#39;n_neighbors&#39;: 1, &#39;weights&#39;: &#39;uniform&#39;},
+  {&#39;metric&#39;: &#39;minkowski&#39;, &#39;n_neighbors&#39;: 1, &#39;weights&#39;: &#39;distance&#39;},
+  {&#39;metric&#39;: &#39;minkowski&#39;, &#39;n_neighbors&#39;: 3, &#39;weights&#39;: &#39;uniform&#39;},
+  {&#39;metric&#39;: &#39;minkowski&#39;, &#39;n_neighbors&#39;: 3, &#39;weights&#39;: &#39;distance&#39;},
+  {&#39;metric&#39;: &#39;minkowski&#39;, &#39;n_neighbors&#39;: 5, &#39;weights&#39;: &#39;uniform&#39;},
+  {&#39;metric&#39;: &#39;minkowski&#39;, &#39;n_neighbors&#39;: 5, &#39;weights&#39;: &#39;distance&#39;},
+  {&#39;metric&#39;: &#39;manhattan&#39;, &#39;n_neighbors&#39;: 1, &#39;weights&#39;: &#39;uniform&#39;},
+  {&#39;metric&#39;: &#39;manhattan&#39;, &#39;n_neighbors&#39;: 1, &#39;weights&#39;: &#39;distance&#39;},
+  {&#39;metric&#39;: &#39;manhattan&#39;, &#39;n_neighbors&#39;: 3, &#39;weights&#39;: &#39;uniform&#39;},
+  {&#39;metric&#39;: &#39;manhattan&#39;, &#39;n_neighbors&#39;: 3, &#39;weights&#39;: &#39;distance&#39;},
+  {&#39;metric&#39;: &#39;manhattan&#39;, &#39;n_neighbors&#39;: 5, &#39;weights&#39;: &#39;uniform&#39;},
+  {&#39;metric&#39;: &#39;manhattan&#39;, &#39;n_neighbors&#39;: 5, &#39;weights&#39;: &#39;distance&#39;}],
+ &#39;split0_test_score&#39;: array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.]),
+ &#39;split1_test_score&#39;: array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.]),
+ &#39;split2_test_score&#39;: array([0.96969697, 0.96969697, 0.96969697, 0.96969697, 0.96969697,
+        0.96969697, 0.96969697, 0.96969697, 0.96969697, 0.96969697,
+        0.96969697, 0.96969697]),
+ &#39;split3_test_score&#39;: array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.]),
+ &#39;split4_test_score&#39;: array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.]),
+ &#39;mean_test_score&#39;: array([0.99393939, 0.99393939, 0.99393939, 0.99393939, 0.99393939,
+        0.99393939, 0.99393939, 0.99393939, 0.99393939, 0.99393939,
+        0.99393939, 0.99393939]),
+ &#39;std_test_score&#39;: array([0.01212121, 0.01212121, 0.01212121, 0.01212121, 0.01212121,
+        0.01212121, 0.01212121, 0.01212121, 0.01212121, 0.01212121,
+        0.01212121, 0.01212121]),
+ &#39;rank_test_score&#39;: array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], dtype=int32)}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">gs</span><span class="o">.</span><span class="n">cv_results_</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>mean_fit_time</th>
+      <th>std_fit_time</th>
+      <th>mean_score_time</th>
+      <th>std_score_time</th>
+      <th>param_metric</th>
+      <th>param_n_neighbors</th>
+      <th>param_weights</th>
+      <th>params</th>
+      <th>split0_test_score</th>
+      <th>split1_test_score</th>
+      <th>split2_test_score</th>
+      <th>split3_test_score</th>
+      <th>split4_test_score</th>
+      <th>mean_test_score</th>
+      <th>std_test_score</th>
+      <th>rank_test_score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.002441</td>
+      <td>0.000210</td>
+      <td>0.003760</td>
+      <td>0.000446</td>
+      <td>minkowski</td>
+      <td>1</td>
+      <td>uniform</td>
+      <td>{'metric': 'minkowski', 'n_neighbors': 1, 'wei...</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.969697</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.993939</td>
+      <td>0.012121</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.002122</td>
+      <td>0.000096</td>
+      <td>0.002136</td>
+      <td>0.000130</td>
+      <td>minkowski</td>
+      <td>1</td>
+      <td>distance</td>
+      <td>{'metric': 'minkowski', 'n_neighbors': 1, 'wei...</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.969697</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.993939</td>
+      <td>0.012121</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.002029</td>
+      <td>0.000117</td>
+      <td>0.002838</td>
+      <td>0.000141</td>
+      <td>minkowski</td>
+      <td>3</td>
+      <td>uniform</td>
+      <td>{'metric': 'minkowski', 'n_neighbors': 3, 'wei...</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.969697</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.993939</td>
+      <td>0.012121</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.002451</td>
+      <td>0.000524</td>
+      <td>0.002361</td>
+      <td>0.000223</td>
+      <td>minkowski</td>
+      <td>3</td>
+      <td>distance</td>
+      <td>{'metric': 'minkowski', 'n_neighbors': 3, 'wei...</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.969697</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.993939</td>
+      <td>0.012121</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.002536</td>
+      <td>0.000310</td>
+      <td>0.003332</td>
+      <td>0.000275</td>
+      <td>minkowski</td>
+      <td>5</td>
+      <td>uniform</td>
+      <td>{'metric': 'minkowski', 'n_neighbors': 5, 'wei...</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.969697</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.993939</td>
+      <td>0.012121</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.002409</td>
+      <td>0.000142</td>
+      <td>0.002482</td>
+      <td>0.000210</td>
+      <td>minkowski</td>
+      <td>5</td>
+      <td>distance</td>
+      <td>{'metric': 'minkowski', 'n_neighbors': 5, 'wei...</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.969697</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.993939</td>
+      <td>0.012121</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.002301</td>
+      <td>0.000108</td>
+      <td>0.003345</td>
+      <td>0.000286</td>
+      <td>manhattan</td>
+      <td>1</td>
+      <td>uniform</td>
+      <td>{'metric': 'manhattan', 'n_neighbors': 1, 'wei...</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.969697</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.993939</td>
+      <td>0.012121</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0.002194</td>
+      <td>0.000106</td>
+      <td>0.002248</td>
+      <td>0.000114</td>
+      <td>manhattan</td>
+      <td>1</td>
+      <td>distance</td>
+      <td>{'metric': 'manhattan', 'n_neighbors': 1, 'wei...</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.969697</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.993939</td>
+      <td>0.012121</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0.002271</td>
+      <td>0.000134</td>
+      <td>0.003342</td>
+      <td>0.000241</td>
+      <td>manhattan</td>
+      <td>3</td>
+      <td>uniform</td>
+      <td>{'metric': 'manhattan', 'n_neighbors': 3, 'wei...</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.969697</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.993939</td>
+      <td>0.012121</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0.002127</td>
+      <td>0.000102</td>
+      <td>0.002191</td>
+      <td>0.000169</td>
+      <td>manhattan</td>
+      <td>3</td>
+      <td>distance</td>
+      <td>{'metric': 'manhattan', 'n_neighbors': 3, 'wei...</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.969697</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.993939</td>
+      <td>0.012121</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>0.002048</td>
+      <td>0.000069</td>
+      <td>0.002864</td>
+      <td>0.000123</td>
+      <td>manhattan</td>
+      <td>5</td>
+      <td>uniform</td>
+      <td>{'metric': 'manhattan', 'n_neighbors': 5, 'wei...</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.969697</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.993939</td>
+      <td>0.012121</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>0.002001</td>
+      <td>0.000058</td>
+      <td>0.002087</td>
+      <td>0.000079</td>
+      <td>manhattan</td>
+      <td>5</td>
+      <td>distance</td>
+      <td>{'metric': 'manhattan', 'n_neighbors': 5, 'wei...</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.969697</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.993939</td>
+      <td>0.012121</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="choice-of-grid-values">
+<h2>Choice of Grid Values<a class="headerlink" href="#choice-of-grid-values" title="Permalink to this heading">#</a></h2>
+<p>Which values should you pick for your grid? Intuitively, you should try both “large” and “small” values, but of course what counts as large and small will really depend on the type of hyperparameter.</p>
+<ul class="simple">
+<li><p>For a k-nearest neighbors model, 1 or 3 would be a small value for the number of neighbors and 15 or 17 would be a large value.</p></li>
+<li><p>For a decision tree model, what counts as a small <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> will really depend on the size of your training data. A <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> of 5 would likely have little effect on a very small dataset but, at the same time, it would probably significantly decrease the variance of a model where the dataset is large.</p></li>
+<li><p>For a logistic regression’s regularization constant, you may want to try a set of values that are exponentially separated, like [1, 10, 100, 1000].</p></li>
+<li><p><strong>If a grid search finds optimal values at the ends of your hyperparameter ranges, you might try another grid search with more extreme values.</strong></p></li>
+</ul>
+</section>
+<section id="exercise">
+<h2>Exercise<a class="headerlink" href="#exercise" title="Permalink to this heading">#</a></h2>
+<p>Do a grid search on a <strong>decision tree model</strong> of penguin species. What are the optimal values for the hyperparameters you’ve chosen?</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="better-process-pipelines">
+<h1>Better Process: Pipelines<a class="headerlink" href="#better-process-pipelines" title="Permalink to this heading">#</a></h1>
+<blockquote>
+<div><p><strong>Pipelines</strong> can keep our code neat and clean all the way from gathering &amp; cleaning our data, to creating models &amp; fine-tuning them!</p>
+</div></blockquote>
+<p><img alt="" src="https://imgs.xkcd.com/comics/data_pipeline.png" /></p>
+<p>The <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> class from <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html">Scikit-Learn’s API</a> is especially convenient since it allows to use our other Estimators that we know and love!</p>
+<section id="advantages-of-pipeline">
+<h2>Advantages of <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code><a class="headerlink" href="#advantages-of-pipeline" title="Permalink to this heading">#</a></h2>
+<section id="reduces-complexity">
+<h3>Reduces Complexity<a class="headerlink" href="#reduces-complexity" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>You can focus on parts of the pipeline at a time and debug or adjust parts as needed.</p>
+</div></blockquote>
+</section>
+<section id="convenient">
+<h3>Convenient<a class="headerlink" href="#convenient" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>You can summarize your fine-detail steps into the pipeline. That way you can focus on the big-picture aspects.</p>
+</div></blockquote>
+</section>
+<section id="flexible">
+<h3>Flexible<a class="headerlink" href="#flexible" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>You can also use pipelines to be applied to different models and can perform optimization techniques like grid search and random search on hyperparameters!</p>
+</div></blockquote>
+</section>
+<section id="prevent-mistakes">
+<h3>Prevent Mistakes<a class="headerlink" href="#prevent-mistakes" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>We can focus on one section at a time.</p>
+<p>We also can ensure data leakage between our training and doesn’t occur between our training dataset and validation/testing datasets!</p>
+</div></blockquote>
+</section>
+</section>
+<section id="example-of-using-pipeline">
+<h2>Example of Using <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code><a class="headerlink" href="#example-of-using-pipeline" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Getting some data</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn</span><span class="w"> </span><span class="kn">import</span> <span class="n">datasets</span>
+
+<span class="n">iris</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_iris</span><span class="p">()</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">data</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">target</span>
+
+<span class="c1"># Split</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> 
+                                                    <span class="n">random_state</span><span class="o">=</span><span class="mi">27</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="without-the-pipeline-class">
+<h3>Without the Pipeline class<a class="headerlink" href="#without-the-pipeline-class" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define transformers (will adjust/massage the data)</span>
+<span class="n">imputer</span> <span class="o">=</span> <span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;median&quot;</span><span class="p">)</span> <span class="c1"># replaces missing values</span>
+<span class="n">std_scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span> <span class="c1"># scales the data</span>
+
+<span class="c1"># Define the classifier (predictor) to train</span>
+<span class="n">rf_clf</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">()</span>
+
+<span class="c1"># Have the classifer (and full pipeline) learn/train/fit from the data</span>
+<span class="n">X_train_filled</span> <span class="o">=</span> <span class="n">imputer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">X_train_scaled</span> <span class="o">=</span> <span class="n">std_scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train_filled</span><span class="p">)</span>
+<span class="n">rf_clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_scaled</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># Predict using the trained classifier (still need to do the transformations)</span>
+<span class="n">X_test_filled</span> <span class="o">=</span> <span class="n">imputer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">X_test_scaled</span> <span class="o">=</span> <span class="n">std_scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test_filled</span><span class="p">)</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">rf_clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p>Note that if we were to add more steps in this process, we’d have to change both the <em>training</em> and <em>testing</em> processes.</p>
+</div></blockquote>
+</section>
+<section id="with-pipeline-class">
+<h3>With <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> Class<a class="headerlink" href="#with-pipeline-class" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+        <span class="p">(</span><span class="s1">&#39;imputer&#39;</span><span class="p">,</span> <span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;median&quot;</span><span class="p">)),</span> 
+        <span class="p">(</span><span class="s1">&#39;std_scaler&#39;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">()),</span>
+        <span class="p">(</span><span class="s1">&#39;rf_clf&#39;</span><span class="p">,</span> <span class="n">DecisionTreeClassifier</span><span class="p">()),</span>
+<span class="p">])</span>
+
+
+<span class="c1"># Train the pipeline (tranformations &amp; predictor)</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># Predict using the pipeline (includes the transfomers &amp; trained predictor)</span>
+<span class="n">predicted</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p>If we need to change our process, we change it <em>just once</em> in the Pipeline</p>
+</div></blockquote>
+</section>
+</section>
+<section id="grid-searching-a-pipeline">
+<h2>Grid Searching a Pipeline<a class="headerlink" href="#grid-searching-a-pipeline" title="Permalink to this heading">#</a></h2>
+<blockquote>
+<div><p>Let’s first get our data prepared like we did before</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">penguins</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;penguins&#39;</span><span class="p">)</span>
+<span class="n">penguins</span> <span class="o">=</span> <span class="n">penguins</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="n">penguins</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;species&#39;</span><span class="p">)</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">penguins</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_train_nums</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="s1">&#39;float64&#39;</span><span class="p">)</span>
+
+<span class="n">ss</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+
+<span class="n">ss</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_nums</span><span class="p">)</span>
+<span class="n">nums_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">ss</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_train_nums</span><span class="p">),</span>
+                      <span class="n">index</span><span class="o">=</span><span class="n">X_train_nums</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_train_cat</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="s1">&#39;object&#39;</span><span class="p">)</span>
+
+<span class="n">ohe</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">(</span>
+    <span class="n">drop</span><span class="o">=</span><span class="s1">&#39;first&#39;</span><span class="p">,</span>
+    <span class="n">sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">dums</span> <span class="o">=</span> <span class="n">ohe</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train_cat</span><span class="p">)</span>
+<span class="n">dums_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dums</span><span class="p">,</span>
+                       <span class="n">columns</span><span class="o">=</span><span class="n">ohe</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">(),</span>
+                       <span class="n">index</span><span class="o">=</span><span class="n">X_train_cat</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p>Intermediary step to treat categorical and numerical data differently</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">numerical_pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span><span class="p">[</span>
+    <span class="p">(</span><span class="s1">&#39;ss&#39;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">())</span>
+<span class="p">])</span>
+                
+<span class="n">categorical_pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span><span class="p">[</span>
+    <span class="p">(</span><span class="s1">&#39;ohe&#39;</span><span class="p">,</span> <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="s1">&#39;first&#39;</span><span class="p">,</span>
+                         <span class="n">sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+<span class="p">])</span>
+
+<span class="n">trans</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">(</span><span class="n">transformers</span><span class="o">=</span><span class="p">[</span>
+    <span class="p">(</span><span class="s1">&#39;numerical&#39;</span><span class="p">,</span> <span class="n">numerical_pipeline</span><span class="p">,</span> <span class="n">X_train_nums</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;categorical&#39;</span><span class="p">,</span> <span class="n">categorical_pipeline</span><span class="p">,</span> <span class="n">X_train_cat</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_pipe</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span><span class="p">[</span>
+    <span class="p">(</span><span class="s1">&#39;trans&#39;</span><span class="p">,</span> <span class="n">trans</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;knn&#39;</span><span class="p">,</span> <span class="n">KNeighborsClassifier</span><span class="p">())</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p>Finally showing we can fit the full pipeline</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_pipe</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Pipeline(steps=[(&#39;trans&#39;,
+                 ColumnTransformer(transformers=[(&#39;numerical&#39;,
+                                                  Pipeline(steps=[(&#39;ss&#39;,
+                                                                   StandardScaler())]),
+                                                  Index([&#39;bill_length_mm&#39;, &#39;bill_depth_mm&#39;, &#39;flipper_length_mm&#39;, &#39;body_mass_g&#39;], dtype=&#39;object&#39;)),
+                                                 (&#39;categorical&#39;,
+                                                  Pipeline(steps=[(&#39;ohe&#39;,
+                                                                   OneHotEncoder(drop=&#39;first&#39;,
+                                                                                 sparse=False))]),
+                                                  Index([&#39;island&#39;, &#39;sex&#39;], dtype=&#39;object&#39;))])),
+                (&#39;knn&#39;, KNeighborsClassifier())])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_pipe</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9939759036144579
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p>Performing grid search on the full pipeline</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pipe_grid</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;knn__n_neighbors&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span> <span class="s1">&#39;knn__p&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]}</span>
+
+<span class="n">gs_pipe</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">estimator</span><span class="o">=</span><span class="n">model_pipe</span><span class="p">,</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">pipe_grid</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gs_pipe</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GridSearchCV(estimator=Pipeline(steps=[(&#39;trans&#39;,
+                                        ColumnTransformer(transformers=[(&#39;numerical&#39;,
+                                                                         Pipeline(steps=[(&#39;ss&#39;,
+                                                                                          StandardScaler())]),
+                                                                         Index([&#39;bill_length_mm&#39;, &#39;bill_depth_mm&#39;, &#39;flipper_length_mm&#39;, &#39;body_mass_g&#39;], dtype=&#39;object&#39;)),
+                                                                        (&#39;categorical&#39;,
+                                                                         Pipeline(steps=[(&#39;ohe&#39;,
+                                                                                          OneHotEncoder(drop=&#39;first&#39;,
+                                                                                                        sparse=False))]),
+                                                                         Index([&#39;island&#39;, &#39;sex&#39;], dtype=&#39;object&#39;))])),
+                                       (&#39;knn&#39;, KNeighborsClassifier())]),
+             param_grid={&#39;knn__n_neighbors&#39;: [3, 5, 7], &#39;knn__p&#39;: [1, 2, 3]})
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">gs_pipe</span><span class="o">.</span><span class="n">cv_results_</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>mean_fit_time</th>
+      <th>std_fit_time</th>
+      <th>mean_score_time</th>
+      <th>std_score_time</th>
+      <th>param_knn__n_neighbors</th>
+      <th>param_knn__p</th>
+      <th>params</th>
+      <th>split0_test_score</th>
+      <th>split1_test_score</th>
+      <th>split2_test_score</th>
+      <th>split3_test_score</th>
+      <th>split4_test_score</th>
+      <th>mean_test_score</th>
+      <th>std_test_score</th>
+      <th>rank_test_score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.008279</td>
+      <td>0.000223</td>
+      <td>0.006525</td>
+      <td>0.000660</td>
+      <td>3</td>
+      <td>1</td>
+      <td>{'knn__n_neighbors': 3, 'knn__p': 1}</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.969697</td>
+      <td>1.000000</td>
+      <td>1.0</td>
+      <td>0.993939</td>
+      <td>0.012121</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.007158</td>
+      <td>0.000901</td>
+      <td>0.004936</td>
+      <td>0.000310</td>
+      <td>3</td>
+      <td>2</td>
+      <td>{'knn__n_neighbors': 3, 'knn__p': 2}</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.969697</td>
+      <td>1.000000</td>
+      <td>1.0</td>
+      <td>0.993939</td>
+      <td>0.012121</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.007324</td>
+      <td>0.000396</td>
+      <td>0.005601</td>
+      <td>0.000468</td>
+      <td>3</td>
+      <td>3</td>
+      <td>{'knn__n_neighbors': 3, 'knn__p': 3}</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.969697</td>
+      <td>1.000000</td>
+      <td>1.0</td>
+      <td>0.993939</td>
+      <td>0.012121</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.006846</td>
+      <td>0.000383</td>
+      <td>0.005115</td>
+      <td>0.000516</td>
+      <td>5</td>
+      <td>1</td>
+      <td>{'knn__n_neighbors': 5, 'knn__p': 1}</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.969697</td>
+      <td>1.000000</td>
+      <td>1.0</td>
+      <td>0.993939</td>
+      <td>0.012121</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.007567</td>
+      <td>0.000290</td>
+      <td>0.005662</td>
+      <td>0.000411</td>
+      <td>5</td>
+      <td>2</td>
+      <td>{'knn__n_neighbors': 5, 'knn__p': 2}</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.969697</td>
+      <td>1.000000</td>
+      <td>1.0</td>
+      <td>0.993939</td>
+      <td>0.012121</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.009647</td>
+      <td>0.000668</td>
+      <td>0.006936</td>
+      <td>0.000328</td>
+      <td>5</td>
+      <td>3</td>
+      <td>{'knn__n_neighbors': 5, 'knn__p': 3}</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.969697</td>
+      <td>1.000000</td>
+      <td>1.0</td>
+      <td>0.993939</td>
+      <td>0.012121</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.008513</td>
+      <td>0.000357</td>
+      <td>0.006187</td>
+      <td>0.000092</td>
+      <td>7</td>
+      <td>1</td>
+      <td>{'knn__n_neighbors': 7, 'knn__p': 1}</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.969697</td>
+      <td>0.969697</td>
+      <td>1.0</td>
+      <td>0.987879</td>
+      <td>0.014845</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0.008476</td>
+      <td>0.000613</td>
+      <td>0.006346</td>
+      <td>0.000376</td>
+      <td>7</td>
+      <td>2</td>
+      <td>{'knn__n_neighbors': 7, 'knn__p': 2}</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.969697</td>
+      <td>0.969697</td>
+      <td>1.0</td>
+      <td>0.987879</td>
+      <td>0.014845</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0.007670</td>
+      <td>0.000364</td>
+      <td>0.005797</td>
+      <td>0.000374</td>
+      <td>7</td>
+      <td>3</td>
+      <td>{'knn__n_neighbors': 7, 'knn__p': 3}</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.969697</td>
+      <td>0.969697</td>
+      <td>1.0</td>
+      <td>0.987879</td>
+      <td>0.014845</td>
+      <td>7</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gs_pipe</span><span class="o">.</span><span class="n">best_params_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;knn__n_neighbors&#39;: 3, &#39;knn__p&#39;: 1}
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="a-note-on-data-leakage">
+<h2>A Note on Data Leakage<a class="headerlink" href="#a-note-on-data-leakage" title="Permalink to this heading">#</a></h2>
+<p>Note we still have to be careful in performing a grid search!</p>
+<p>We can accidentally “leak” information by doing transformations with the <strong>whole data set</strong>, instead of just the <strong>training set</strong>!</p>
+<section id="example-of-leaking-information">
+<h3>Example of leaking information<a class="headerlink" href="#example-of-leaking-information" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="c1"># Scales over all of the X-train data! (validation set will be considered in scaling)</span>
+<span class="n">scaled_data</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="s1">&#39;float64&#39;</span><span class="p">))</span>
+
+<span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;n_neighbors&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
+    <span class="s1">&#39;metric&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;minkowski&#39;</span><span class="p">,</span> <span class="s1">&#39;manhattan&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;weights&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;uniform&#39;</span><span class="p">,</span> <span class="s1">&#39;distance&#39;</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="n">clf_dt</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">()</span>
+<span class="n">clf</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">clf_dt</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="s1">&#39;float64&#39;</span><span class="p">),</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GridSearchCV(estimator=KNeighborsClassifier(),
+             param_grid={&#39;metric&#39;: [&#39;minkowski&#39;, &#39;manhattan&#39;],
+                         &#39;n_neighbors&#39;: [1, 3, 5],
+                         &#39;weights&#39;: [&#39;uniform&#39;, &#39;distance&#39;]})
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="example-of-grid-search-with-no-leakage">
+<h3>Example of Grid Search with no leakage<a class="headerlink" href="#example-of-grid-search-with-no-leakage" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+    <span class="p">(</span><span class="s1">&#39;scaler&#39;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">()),</span>
+    <span class="p">(</span><span class="s1">&#39;clf&#39;</span><span class="p">,</span> <span class="n">KNeighborsClassifier</span><span class="p">())</span>
+<span class="p">])</span>
+
+<span class="c1"># Note you use the part of the pipeline&#39;s name `NAME__{parameter}`</span>
+<span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;scaler__with_mean&#39;</span><span class="p">:</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">],</span>
+    <span class="s1">&#39;clf__n_neighbors&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
+    <span class="s1">&#39;clf__metric&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;minkowski&#39;</span><span class="p">,</span> <span class="s1">&#39;manhattan&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;clf__weights&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;uniform&#39;</span><span class="p">,</span> <span class="s1">&#39;distance&#39;</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="n">cv</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">parameters</span><span class="p">)</span>
+
+<span class="n">cv</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="s1">&#39;float64&#39;</span><span class="p">),</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="s1">&#39;float64&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="grid-search-exercise">
+<h1>Grid Search Exercise<a class="headerlink" href="#grid-search-exercise" title="Permalink to this heading">#</a></h1>
+<p>Use a Random Forest Classifier to predict the category of price range for the phones in this dataset. Try tuning some hyperparameters using a grid search, and then write up a short paragraph about your findings.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">phones_train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/train.csv&#39;</span><span class="p">)</span>
+
+<span class="n">phones_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/test.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="level-up-random-searching">
+<h1>Level Up: Random Searching<a class="headerlink" href="#level-up-random-searching" title="Permalink to this heading">#</a></h1>
+<p>It is also possible to search for good hyperparameter values randomly. This is a nice choice if computation time is an issue or if you are tuning over continuous hyperparameters.</p>
+<section id="randomizedsearchcv-with-logisticregression">
+<h2><code class="docutils literal notranslate"><span class="pre">RandomizedSearchCV</span></code> with <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code><a class="headerlink" href="#randomizedsearchcv-with-logisticregression" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">log_reg_grid</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="n">stats</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">10</span><span class="p">),</span>
+               <span class="s1">&#39;l1_ratio&#39;</span><span class="p">:</span> <span class="n">stats</span><span class="o">.</span><span class="n">expon</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rs</span> <span class="o">=</span> <span class="n">RandomizedSearchCV</span><span class="p">(</span><span class="n">estimator</span><span class="o">=</span><span class="n">LogisticRegression</span><span class="p">(</span><span class="n">penalty</span><span class="o">=</span><span class="s1">&#39;elasticnet&#39;</span><span class="p">,</span>
+                                                    <span class="n">solver</span><span class="o">=</span><span class="s1">&#39;saga&#39;</span><span class="p">,</span>
+                                                    <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+                                                    <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">),</span>
+                        <span class="n">param_distributions</span><span class="o">=</span><span class="n">log_reg_grid</span><span class="p">,</span>
+                       <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">rs</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_clean</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="n">rs</span><span class="o">.</span><span class="n">best_params_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;C&#39;: 3.745401188473625, &#39;l1_ratio&#39;: 0.6020242861835042}
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "learn-env-new"
+        },
+        kernelOptions: {
+            name: "learn-env-new",
+            path: "./Phase_3/topic_29_decision_trees/ds-model_tuning-main"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'learn-env-new'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Objectives</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#model-tuning">Model Tuning</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hyperparameters">Hyperparameters</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#difference-from-parametric-non-parametric-models">Difference from Parametric / Non-Parametric Models</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-example">Data Example</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-prep">Data Prep</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#preparing-the-test-set">Preparing the Test Set</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#trying-different-models-values">Trying Different Models &amp; Values</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#k-nearest-neighbors-model"><span class="math notranslate nohighlight">\(k\)</span>-Nearest Neighbors Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#decreasing-k">Decreasing <span class="math notranslate nohighlight">\(k\)</span></a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#decision-tree">Decision Tree</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#changing-the-branching-criterion">Changing the branching criterion</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#automatically-searching-with-grid-search">Automatically Searching with Grid Search</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gridsearchcv"><code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#choice-of-grid-values">Choice of Grid Values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise">Exercise</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#better-process-pipelines">Better Process: Pipelines</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advantages-of-pipeline">Advantages of <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reduces-complexity">Reduces Complexity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#convenient">Convenient</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#flexible">Flexible</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prevent-mistakes">Prevent Mistakes</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-of-using-pipeline">Example of Using <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#without-the-pipeline-class">Without the Pipeline class</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#with-pipeline-class">With <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> Class</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grid-searching-a-pipeline">Grid Searching a Pipeline</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-note-on-data-leakage">A Note on Data Leakage</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-of-leaking-information">Example of leaking information</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-of-grid-search-with-no-leakage">Example of Grid Search with no leakage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#grid-search-exercise">Grid Search Exercise</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#level-up-random-searching">Level Up: Random Searching</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#randomizedsearchcv-with-logisticregression"><code class="docutils literal notranslate"><span class="pre">RandomizedSearchCV</span></code> with <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By James Irving, PhD
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

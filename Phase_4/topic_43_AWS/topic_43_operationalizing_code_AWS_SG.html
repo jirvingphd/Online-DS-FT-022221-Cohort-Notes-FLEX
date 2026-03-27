@@ -1,0 +1,1565 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Topic 43: Operationalizing Code &amp; AWS &#8212; Data Science Curriculum</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Phase_4/topic_43_AWS/topic_43_operationalizing_code_AWS_SG';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Capstone Kickoff!" href="../../Phase_5/Capstone_Kickoff.html" />
+    <link rel="prev" title="Topic 42 - Tuning Neural Networks + Deep NLP" href="../topic_42_tuning_neural_networks/topic_42_tuning_ANNs_with_deep_NLP_v1_SG.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/flatironschool_banner.jpg" class="logo__image only-light" alt="Data Science Curriculum - Home"/>
+    <script>document.write(`<img src="../../_static/flatironschool_banner.jpg" class="logo__image only-dark" alt="Data Science Curriculum - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Data Science Curriculum
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 1 - Python &amp; Data Fundamentals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_01_getting_started/topic_01_getting_started.html">Topic 1: Getting Started with Data Science</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_02_bash_git/topic_02_bash_and_git.html">Topic 02:  Bash and Git</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_03_control_flow_functions/topic_03_control_flow_and_functions.html">Topic 03: Control Flow, Functions, and Statistics</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_04_python_libraries/topic_04_intro_to_libraries_numpy_SG.html">Topic 04-Part 1: Python Libraries &amp; NumPy</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_04_python_libraries/topic_04_pt-2_brief_intro_to_pandas-SG.html">Topic 04-Part 2: Brief Intro to Pandas with Doctor Who</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_05_data_cleaning_in_pandas/topic_05_Data_Cleaning_in_Pandas.html">Topic 05: Data Cleaning in Pandas</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_06_data_visualization/topic_06_visualizations_heroes_project_SG.html">Topic 06:  Data Visualizations</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_07_SQL_and_relational_databases/topic_07_SQL_and_relational_databases_SG.html">TOPIC 07: SQL DATABASES</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_08_noSQL_databases/topic_08_mongodb-SG.html">Topic 08: NoSQL Databases</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_09_json_and_apis/topic_09_json-api-SG.html">Topic 09: Using APIs and JSON Data</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_1/topic_10_webscraping/topic_10_SG_HTML_CSS_web_scraping.html">Topic 10: HTML, CSS, &amp; Web Scraping</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 2 - Statistics &amp; Regression</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_11_probability_and_combinatorics/topic_11_playlist_probabilities-SG.html">Topic 11 - Intro to Combinatorics &amp; Probability</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_12_statistical_distributions/topic-12-distributions-with-movies-sg.html">Exploring Distributions with Movies Data</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_13_central_limit_theorem/topic_13_central_limit_theorem_SG.html">Topic 13: Central Limit Theorem</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_14_hypothesis_testing/topic_14_hypothesis_testing-SG.html">Topic 14: Hypothesis Testing -  T-Tests</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_15_ANOVA/topic_15_ANOVA_with_neuro_data-SG.html">Topic 15: ANOVAs &amp; Statistical Power with  Neuro Data</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_16_AB_testing/topic_16_AB_testing_with_movies-SG.html">Topic 16: Practicing AB Testing with Movies</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_17_bayesian_statistics/topic_17_bayesian_statistics-SG.html">Topic 17: Bayesian Statistics</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_18_linear_regression/topic_18_intro_to_linear_regression_SG.html">Topic 18: Intro to Linear Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_19_part1_multiple_regression/topic_19_Multiple_Regression_v2-SG.html">Topic 19: Multiple Linear Regression</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_19_part2_model_validation/topic_19_part_2_Multiple_Regression_v2-SG.html">Topic 19 Part 2: Feature Selection &amp; Model Validation</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_2/topic_20_extensions_linear_models/topic_20_extensions_to_linear_models_SG.html">Topic 20: Extensions to Linear Models</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 3 - Machine Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_21_OOP/topic_21_OOP_playing_cards_SG.html">Topic 21: Object-Oriented Programming</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_22_linear_algebra/topic_22_linear_algebra_SG.html">Topic 22: Linear Algebra</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_23_calculus_gradient_descent/topic_23_gradient_descent_SG.html">Topic 23: Cost Functions and Gradient Descent</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_24_regularization/topic_24_Regularization_Ridge_Lasso_v2_SG.html">Topic 24: Feature Selection &amp; Regularization (Ridge and Lasso Regression)</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_25_logistic_regression/topic_25_pt1_LogisticRegression_titanic-v2-SG.html">Topic 25-Pt 1: Intro to Logistic Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_25_logistic_regression/topic_25_pt2_LogisticRegression_titanic-v2-SG.html">Topic 25-Part 2: Evaluating Classifiers, Dealing with Class Imbalance, and <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code></a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_27_KNN/Topic_27_KNN_with_pipelines_with_lab_v3_SG.html">Topic 27: K-Nearest Neighbors<br/> +Topic 32: Pipelines</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_29_decision_trees/topic_29_decision_trees_v2_titanic-SG.html">Topic 29: Decision Trees</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_30_ensemble_methods/topic_30_ensemble_methods-SG.html">Topic 30: Ensemble Methods</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_3/topic_31_support_vector_machines/topic_31_SupportVectorMachines_SG.html">Topic 31: Support Vector Machines</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 4 - Advanced ML &amp; Time Series</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../topic_33_pca/topic_33_PCA_SG.html">Topic 33: Principal Component Analysis</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_34_clustering/topic_34_Kmeans_clustering_v3_SG.html">Topic 34: Clustering</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_35-36_using_databricks_for_pyspark/using_databricks_for_pyspark.html">How to Use Databricks for PySpark Canvas Material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topic_36_recommendation_systems/topic_36_Recommendation_Systems_with_Surprise.html">Topic 36: Recommendation Systems</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_37_intro_to_time_series/topic_37_intro_to_time_series_crime_v3-SG.html">Topic 37: Intro to Time Series</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_38_time_series_models/topic_38-time_series_models_v3_SG.html">Topic 38: Time Series Models</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_39_NLP/topic_39_NLP_finding_trump_v3_SG.html">Topic 39: Natural Language Processing + Topic 28: Bayesian Classification</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_40-41_neural_networks/topic_40-41_Artificial_Neural_Networks_v1_SG.html">Topic 40-41: Artificial Neural Networks</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../topic_42_tuning_neural_networks/topic_42_tuning_ANNs_with_deep_NLP_v1_SG.html">Topic 42 - Tuning Neural Networks + Deep NLP</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Topic 43: Operationalizing Code &amp; AWS</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Phase 5 - Capstone &amp; Bonus Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/Capstone_Kickoff.html">Capstone Kickoff!</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/APIs/working_with_apis.html">Working with APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/developing_app_functions/developing-streamlit-app-functions_SG.html">Developing Streamlit App Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/tableau/tableau_fundamentals_2021-SG.html">Tableau Fundamentals</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../Phase_5/Bonus%20Notebooks/plotly_visuals.html">Plotly Question</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/master?urlpath=tree/Phase_4/topic_43_AWS/topic_43_operationalizing_code_AWS_SG.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/blob/master/Phase_4/topic_43_AWS/topic_43_operationalizing_code_AWS_SG.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jirvingphd/Online-DS-FT-022221-Cohort-Notes-FLEX/issues/new?title=Issue%20on%20page%20%2FPhase_4/topic_43_AWS/topic_43_operationalizing_code_AWS_SG.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/Phase_4/topic_43_AWS/topic_43_operationalizing_code_AWS_SG.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Topic 43: Operationalizing Code & AWS</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Topic 43: Operationalizing Code &amp; AWS</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#questions">Questions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#notebooks-tutorials-for-today">Notebooks/Tutorials for Today:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#new-official-aws-for-data-scientists-intro-tutorials">⭐️New Official AWS for Data Scientists intro/tutorials</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-notebooks-to-cover">Additional Notebooks to cover:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resources">Resources:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#productionizing-models-as-a-career-skill">Productionizing Models as a Career Skill</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#cloud-computing">Cloud Computing</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objectives">Objectives:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prework">Prework:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cloud-computing-is-an-umbrella-term-for-many-solutions"><strong>Cloud</strong> computing is an <strong>umbrella</strong> term for many solutions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-common-theme-in-cloud-computing">The common theme in cloud computing:</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#part-of-the-solution-is-not-located-on-premesis-but-instead-provided-by-an-external-vendor"><em>Part</em> of the solution is not located on premesis, but instead provided by an external <em>vendor</em>.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#top-three-cloud-services-vendors">Top three cloud services vendors:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#provides-any-of-the-following-as-a-service">Provides any of the following as a <em>service</em>:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solves-many-problems">Solves many problems:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aws-can-be-intimidating">AWS can be intimidating</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#focus-on-the-last-two-questions">Focus on the last two questions:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assumptions">Assumptions:</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#storage">Storage</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#get-your-data-to-the-cloud">Get your data to the cloud!</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#new-vocab-bucket">New vocab: Bucket</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#buckets-defined">Buckets defined</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#s3-stands-for-amazon-simple-storage-service">S3 stands for <em>Amazon Simple Storage Service</em></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#new-vocab-credential">New vocab: Credential</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#credentials-defined">Credentials Defined:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#our-approach-to-credentials">Our approach to credentials:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#new-vocab-region">New vocab: Region</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#regions-defined">Regions Defined:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#amazon-sagemaker">Amazon Sagemaker</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#walkthrough-getting-started-with-aws-sagemaker">💡Walkthrough: Getting Started with AWS &amp; SageMaker</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sign-up-for-aws">Sign up for AWS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Amazon SageMaker</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sagemaker-components">SageMaker Components</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-productionizing-models-with-sagemaker">HOW TO: Productionizing Models with SageMaker</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#save-these-2-resources"><strong>SAVE THESE 2 RESOURCES:</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview-of-process">Overview of Process</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#steps-for-deploying-a-model-from-lesson">Steps for Deploying A Model (from lesson)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#complete-aws-training-notebooks-required">0. Complete AWS training notebooks [REQUIRED]</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#build-and-register-the-container">1. Build and Register the container</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#code-for-building-registering-containers-reference">Code for Building/Registering containers (reference)</a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up-the-environment">2. Setting up the environment</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-the-session">3. Creating the Session</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#upload-the-data-for-training">4. Upload the Data for Training</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-the-model">5. Fitting the Model</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#deploying-the-model">6. Deploying the Model</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cleanup-important">7. Cleanup (IMPORTANT!!)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#deactivate-everything-in-aws">8. Deactivate Everything in AWS</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deactivate-the-notebook-in-sagemaker">8.1: Deactivate the notebook in Sagemaker</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#keep-an-eye-on-cost-explorer">8.2: Keep an Eye on Cost Explorer</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#appendix">APPENDIX</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-files-into-s3-via-the-aws-console">Getting  files into S3 via the AWS console</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#steps">Steps:</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tasks"><strong>Tasks</strong>:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up-a-jupyter-notebook-in-sagemaker">Setting up a Jupyter Notebook in Sagemaker</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2"><strong>Tasks</strong>:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="topic-43-operationalizing-code-aws">
+<h1>Topic 43: Operationalizing Code &amp; AWS<a class="headerlink" href="#topic-43-operationalizing-code-aws" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p>onl01-dtsc-ft-022221</p></li>
+<li><p>07/16/21</p></li>
+</ul>
+<img src="https://raw.githubusercontent.com/jirvingphd/fsds_100719_cohort_notes/master/images/awscloud.png" width=50%>
+<section id="learning-objectives">
+<h2>Learning Objectives<a class="headerlink" href="#learning-objectives" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>To become familiar with the various components of the Amazon Web Services ecosystem</p></li>
+<li><p><strong>To walk through the ~~official AWS tutorial labs 1-3, to get starting with AWS.~~ new and improved tutorial for AWS/Sagemaker</strong></p></li>
+<li><p>To discuss how we can create APIs to get predictions from our deployed model</p></li>
+</ul>
+</section>
+<section id="questions">
+<h2>Questions<a class="headerlink" href="#questions" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li></li>
+</ul>
+</section>
+<section id="notebooks-tutorials-for-today">
+<h2>Notebooks/Tutorials for Today:<a class="headerlink" href="#notebooks-tutorials-for-today" title="Permalink to this heading">#</a></h2>
+<section id="new-official-aws-for-data-scientists-intro-tutorials">
+<h3>⭐️New Official <a class="reference external" href="https://aws.amazon.com/getting-started/learning-path-data-scientist/?e=gs2020&amp;p=gsrc">AWS for Data Scientists intro/tutorials</a><a class="headerlink" href="#new-official-aws-for-data-scientists-intro-tutorials" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>⭐️<a class="reference external" href="https://aws.amazon.com/getting-started/hands-on/build-train-deploy-machine-learning-model-sagemaker/?trk=el_a134p000003yWILAA2&amp;trkCampaign=DS_SageMaker_Tutorial&amp;sc_channel=el&amp;sc_campaign=Data_Scientist_Hands-on_Tutorial&amp;sc_outcome=Product_Marketing&amp;sc_geo=mult&amp;p=gsrc&amp;c=lp_ds">Tutorial:Build, train, and deploy a machine learning model
+with Amazon SageMaker</a></strong></p></li>
+</ul>
+<section id="additional-notebooks-to-cover">
+<h4>Additional Notebooks to cover:<a class="headerlink" href="#additional-notebooks-to-cover" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p>In the Cohort Notes Repo: <br><code class="docutils literal notranslate"><span class="pre">./Phase_4/topic_43_aws/building_an_api_for_your_model_vishal/building-and-deploying-api-aws.ipynb</span></code></p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="resources">
+<h2>Resources:<a class="headerlink" href="#resources" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Reference Info and Courses:</strong></p>
+<ul>
+<li><p><strong><a class="reference external" href="https://www.udemy.com/share/101Y5KAEYbdVdWRXQ=/">Udemy Course: Deployment of Machine Learning Models</a></strong></p></li>
+<li><p><a class="reference external" href="https://aws.amazon.com/">Amazon Web Services</a></p>
+<ul>
+<li><p><a class="reference external" href="https://aws.amazon.com/getting-started/">Getting Started Resource Center</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>To Manage your account use the AWS Console</strong></p>
+<ul>
+<li><p><a class="reference external" href="http://console.aws.amazon.com/">http://console.aws.amazon.com/</a></p></li>
+<li><p>Sign into console using Root User</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="productionizing-models-as-a-career-skill">
+<h2>Productionizing Models as a Career Skill<a class="headerlink" href="#productionizing-models-as-a-career-skill" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Many data scientists don’t know how to put machine learning models into production.</p></li>
+<li><p>Being able to productionize models will make you a much more attractive candidate to employers, and give you a competitive advantage!</p></li>
+</ol>
+<img src="https://raw.githubusercontent.com/learn-co-students/dsc-data-science-and-machine-learning-engineering-online-ds-ft-100719/master/images/new-venn-diagram.png" width=60%><blockquote>
+<div><ul class="simple">
+<li><p>A decade ago, productionizing a machine learning model would have meant building your own web server with something like <a class="reference external" href="http://flask.pocoo.org/">Flask</a> or <a class="reference external" href="https://www.djangoproject.com/">Django</a> and hosting somewhere, just like you would with any web app.</p></li>
+<li><p>This is still a valid approach (see the secondary notebook <code class="docutils literal notranslate"><span class="pre">building-and-deploying-api-aws.ipynb</span></code>)</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Nowadays, we don’t even need to worry about things like server code – instead, we can use preexisting services from AWS that were created specifically to simplify the process of productionizing machine learning solutions!</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="cloud-computing">
+<h1>Cloud Computing<a class="headerlink" href="#cloud-computing" title="Permalink to this heading">#</a></h1>
+<img src="https://raw.githubusercontent.com/jirvingphd/fsds_pt_100719_cohort_notes/master/Instructor%20Notebooks/sect_43/image/cloud_PNG27.png" alt="image3" style = "width:400px"><section id="objectives">
+<h2>Objectives:<a class="headerlink" href="#objectives" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>define buckets, credentials, and regions in relation to AWS cloud computing services</p></li>
+<li><p>create a Jupyter Notebook Instance through Sagemaker</p></li>
+<li><p>clone a git repository into your Sagemaker Jupyter Lab environment</p></li>
+</ul>
+<section id="prework">
+<h3>Prework:<a class="headerlink" href="#prework" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>sign up for an AWS account</p></li>
+<li><p>check your email for a confirmation email</p></li>
+<li><p>click that email</p></li>
+</ul>
+<p>If you don’t do that, you <strong><em>will not be able</em></strong> to do this material</p>
+</section>
+</section>
+<section id="cloud-computing-is-an-umbrella-term-for-many-solutions">
+<h2><strong>Cloud</strong> computing is an <strong>umbrella</strong> term for many solutions<a class="headerlink" href="#cloud-computing-is-an-umbrella-term-for-many-solutions" title="Permalink to this heading">#</a></h2>
+<img src="https://raw.githubusercontent.com/jirvingphd/fsds_pt_100719_cohort_notes/master/Instructor%20Notebooks/sect_43/image/umbrella_PNG69231.png" alt="brelli" style = "width:200px">
+<section id="the-common-theme-in-cloud-computing">
+<h3>The common theme in cloud computing:<a class="headerlink" href="#the-common-theme-in-cloud-computing" title="Permalink to this heading">#</a></h3>
+<section id="part-of-the-solution-is-not-located-on-premesis-but-instead-provided-by-an-external-vendor">
+<h4><em>Part</em> of the solution is not located on premesis, but instead provided by an external <em>vendor</em>.<a class="headerlink" href="#part-of-the-solution-is-not-located-on-premesis-but-instead-provided-by-an-external-vendor" title="Permalink to this heading">#</a></h4>
+<img src="https://images.pexels.com/photos/1181354/pexels-photo-1181354.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="server" style = "width:400px"></section>
+</section>
+</section>
+<section id="top-three-cloud-services-vendors">
+<h2>Top three cloud services vendors:<a class="headerlink" href="#top-three-cloud-services-vendors" title="Permalink to this heading">#</a></h2>
+<img src="https://raw.githubusercontent.com/jirvingphd/fsds_pt_100719_cohort_notes/master/Instructor%20Notebooks/sect_43//image/cloud_providers.png" alt="provider" style = "width:400px"><section id="provides-any-of-the-following-as-a-service">
+<h3>Provides any of the following as a <em>service</em>:<a class="headerlink" href="#provides-any-of-the-following-as-a-service" title="Permalink to this heading">#</a></h3>
+<p>Can you think of examples of each?</p>
+<ul class="simple">
+<li><p>Infrastructure (IaaS)</p></li>
+<li><p>Software (SaaS)</p></li>
+<li><p>Platforms (PaaS)</p></li>
+</ul>
+<p><img alt="microsoft example" src="https://miro.medium.com/max/624/1*QmV2VDvgIquNx-Daxcdddw.png" /></p>
+<p><a class="reference external" href="https://medium.com/&#64;kumarshivam_66534/a-walk-through-on-iaas-paas-and-saas-7e8a4e4793fb">image sourced from here</a></p>
+</section>
+<section id="solves-many-problems">
+<h3>Solves many problems:<a class="headerlink" href="#solves-many-problems" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>How can I keep my data secure yet accessible remotely?</p></li>
+<li><p>How can I pay less for software licenses?</p></li>
+<li><p>What if I need more server space in the future?</p></li>
+<li><p>I have more data to analyze than can fit on my computer. What can I do?</p></li>
+<li><p>My model has taken three days to run. Is there a faster way?</p></li>
+</ul>
+</section>
+</section>
+<section id="aws-can-be-intimidating">
+<h2>AWS can be intimidating<a class="headerlink" href="#aws-can-be-intimidating" title="Permalink to this heading">#</a></h2>
+<img src="https://raw.githubusercontent.com/jirvingphd/fsds_pt_100719_cohort_notes/master/Instructor%20Notebooks/sect_43//image/aws_offerings.png" alt="offerings" style = "width:400px">
+<section id="focus-on-the-last-two-questions">
+<h3>Focus on the last two questions:<a class="headerlink" href="#focus-on-the-last-two-questions" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>How can I keep my data secure yet accessible remotely?</p></li>
+<li><p>How can I pay less for software licenses?</p></li>
+<li><p>What if I need more server space in the future?</p></li>
+<li><p><strong>I have more data to analyze than can fit on my computer. What can I do?</strong></p></li>
+<li><p><strong>My model has taken three days to run. Is there a faster way?</strong></p></li>
+</ul>
+<p>So we will only be using <strong>S3</strong>, <strong>Sagemaker</strong>, and <strong>IAM</strong>.</p>
+<img src="https://raw.githubusercontent.com/jirvingphd/fsds_pt_100719_cohort_notes/master/Instructor%20Notebooks/sect_43//image/aws_focus.png" alt="foci" style = "width:90%"></section>
+</section>
+<section id="assumptions">
+<h2>Assumptions:<a class="headerlink" href="#assumptions" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Working from a Jupyter notebook locally</p></li>
+<li><p>Want to keep your analysis in a Jupyter notebook</p></li>
+<li><p>Store your work on git as well</p></li>
+<li><p>Not concerned about access or keeping data private</p></li>
+<li><p>Want the easiest and fastest solution to getting our notebook in the cloud</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="storage">
+<h1>Storage<a class="headerlink" href="#storage" title="Permalink to this heading">#</a></h1>
+<section id="get-your-data-to-the-cloud">
+<h2>Get your data to the cloud!<a class="headerlink" href="#get-your-data-to-the-cloud" title="Permalink to this heading">#</a></h2>
+<section id="new-vocab-bucket">
+<h3>New vocab: Bucket<a class="headerlink" href="#new-vocab-bucket" title="Permalink to this heading">#</a></h3>
+<img src="https://pngimg.com/uploads/bucket/bucket_PNG7777.png" alt="bucket" style = "text-align:left;width:200px;float:none">
+<section id="buckets-defined">
+<h4>Buckets defined<a class="headerlink" href="#buckets-defined" title="Permalink to this heading">#</a></h4>
+<p><a class="reference external" href="https://www.pcmag.com/encyclopedia/term/bucket">by PC Mag</a></p>
+<blockquote>
+<div><p>A customer-defined storage area in a cloud-based storage system such as Amazon’s S3 or Google Storage. Each bucket can be divided into folders. Customers are not charged for the buckets themselves, only when data reside within them. See S3 cloud storage and Google Storage.</p>
+</div></blockquote>
+</section>
+<section id="s3-stands-for-amazon-simple-storage-service">
+<h4>S3 stands for <em>Amazon Simple Storage Service</em><a class="headerlink" href="#s3-stands-for-amazon-simple-storage-service" title="Permalink to this heading">#</a></h4>
+<p>Amazon uses <a class="reference external" href="https://aws.amazon.com/s3/">S3 buckets</a> for the most general form of object storage.</p>
+<!---
+<img src="https://cdn.worldvectorlogo.com/logos/aws-s3.svg"></br>---></section>
+</section>
+<section id="new-vocab-credential">
+<h3>New vocab: Credential<a class="headerlink" href="#new-vocab-credential" title="Permalink to this heading">#</a></h3>
+<p><img alt="credentials" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvaB5OvGWguYHBlVyagwofOP9kX0h5HqtbcIa02MyAVs_XS90McA&amp;s" /></p>
+<section id="credentials-defined">
+<h4>Credentials Defined:<a class="headerlink" href="#credentials-defined" title="Permalink to this heading">#</a></h4>
+<p><a class="reference external" href="https://docs.aws.amazon.com/general/latest/gr/aws-security-credentials.html">From AWS</a></p>
+<blockquote>
+<div><p>When you interact with AWS, you specify your AWS security credentials to verify who you are and whether you have permission to access the resources that you are requesting. AWS uses the security credentials to authenticate and authorize your requests.</p>
+</div></blockquote>
+<blockquote>
+<div><p>For example, if you want to download a specific file from an Amazon Simple Storage Service (Amazon S3) bucket, your credentials must allow that access. If your credentials aren’t authorized to download the file, AWS denies your request.</p>
+</div></blockquote>
+</section>
+<section id="our-approach-to-credentials">
+<h4>Our approach to credentials:<a class="headerlink" href="#our-approach-to-credentials" title="Permalink to this heading">#</a></h4>
+<p>Make everything public. </br>
+But we will still have to work with <strong>IAM</strong> a bit to make things talk to each other.</p>
+<p><img src="https://a0.awsstatic.com/libra-css/images/logos/aws_logo_smile_1200x630.png" alt="aws" style ="text-align:center;width:250px;float:none" ></br></p>
+</section>
+</section>
+<section id="new-vocab-region">
+<h3>New vocab: Region<a class="headerlink" href="#new-vocab-region" title="Permalink to this heading">#</a></h3>
+<p><img src="https://www.concurrencylabs.com/img/posts/9-choose-region-wisely/choose-your-aws-region.png" wiodth=30%></br></p>
+<section id="regions-defined">
+<h4>Regions Defined:<a class="headerlink" href="#regions-defined" title="Permalink to this heading">#</a></h4>
+<p><a class="reference external" href="https://aws.amazon.com/about-aws/global-infrastructure/regions_az/">from AWS documentation</a>:</p>
+<blockquote>
+<div><p>AWS has the concept of a Region, which is a physical location around the world where we cluster data centers. We call each group of logical data centers an Availability Zone. Each AWS Region consists of multiple, isolated, and physically separate AZ’s within a geographic area…</p>
+</div></blockquote>
+<blockquote>
+<div><p>Each AZ has independent power, cooling, and physical security and is connected via redundant, ultra-low-latency networks. AWS customers focused on high availability can design their applications to run in multiple AZ’s to achieve even greater fault-tolerance. AWS infrastructure Regions meet the highest levels of security, compliance, and data protection.</p>
+</div></blockquote>
+<p><img src="https://raw.githubusercontent.com/jirvingphd/fsds_pt_100719_cohort_notes/master/Instructor%20Notebooks/sect_43//image/aws_regions_facts.png" alt="aws_regions" style ="text-align:center;width:500px;float:none" ></br></p>
+<!---#### Task:
+- go to the website where I sourced the regions map [https://aws.amazon.com/about-aws/global-infrastructure/](https://aws.amazon.com/about-aws/global-infrastructure/)
+- find the two newest AWS regions --->
+<p><strong>Why do we care?</strong></p>
+<ul class="simple">
+<li><p>Each time you create a new “service” in AWS, you need to define its region.</p></li>
+<li><p>Each region is a separate geographic area and is completely independent</p></li>
+<li><p>Each Amazon region is designed to be completely isolated from the other regions &amp; helps achieve the greatest possible fault tolerance and stability</p></li>
+<li><p>Communication between regions is across the public Internet and appropriate measures should be taken to protect the data using encryption</p></li>
+<li><p>Data transfer between regions is charged at the Internet data transfer rate for both the sending and the receiving instance</p></li>
+<li><p>Resources aren’t replicated across regions unless done explicitly</p></li>
+</ul>
+<p>Here are some real factors impacted by your choice of region:</p>
+<ul class="simple">
+<li><p>Latency</p></li>
+<li><p>Cost</p></li>
+<li><p>Legal Compliance</p></li>
+<li><p>Features</p></li>
+</ul>
+<p><strong>For these exercises:</strong> </br>
+We are going to use the Northern Virgina region, identified as <code class="docutils literal notranslate"><span class="pre">us-east-1</span></code>
+(if in a different region than Virginia, please use your relevant region!)</p>
+</section>
+</section>
+</section>
+<section id="amazon-sagemaker">
+<h2>Amazon Sagemaker<a class="headerlink" href="#amazon-sagemaker" title="Permalink to this heading">#</a></h2>
+<p><img src="https://d2908q01vomqb2.cloudfront.net/77de68daecd823babbb58edb1c8e14d7106e83bb/2018/04/24/SageMaker.jpg" alt="sagemaker" style ="text-align:center;width:250px;float:none" ></br></p>
+<p>Amazon Sagemaker includes many services, but we will only be using the <a class="reference external" href="https://docs.aws.amazon.com/sagemaker/latest/dg/nbi.html">Amazon Sagemaker Notebook Instances</a></p>
+<blockquote>
+<div><p>An Amazon SageMaker notebook instance is a fully managed ML compute instance running the Jupyter Notebook App. Amazon SageMaker manages creating the instance and related resources. Use Jupyter notebooks in your notebook instance to prepare and process data, write code to train models, deploy models to Amazon SageMaker hosting, and test or validate your models.</p>
+</div></blockquote>
+<p>This means AWS creates <em>containerized</em> environments on <a class="reference external" href="https://aws.amazon.com/ec2/"><em>ec2</em></a> instances from which you can launch higher powered Jupyter Notebooks.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="walkthrough-getting-started-with-aws-sagemaker">
+<h1>💡Walkthrough: Getting Started with AWS &amp; SageMaker<a class="headerlink" href="#walkthrough-getting-started-with-aws-sagemaker" title="Permalink to this heading">#</a></h1>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>SAVE THESE RESOURCES:</strong>
+- <strong><a class="reference external" href="https://learn.co/tracks/module-4-data-science-career-2-1/big-data-deep-learning-and-natural-language-processing/section-43-operationalizing-code-and-aws/the-aws-ecosystem">Learn Lesson for Setting Up AWS: The AWS Ecosystem</a></strong>
+- <a class="reference external" href="https://learn.co/tracks/module-4-data-science-career-2-1/big-data-deep-learning-and-natural-language-processing/section-43-operationalizing-code-and-aws/productionizing-a-model-with-docker-and-sagemaker">Learn Lesson: Productionizing Models with SageMaker</a>
+- <strong><a class="reference external" href="https://github.com/aws-samples/amazon-sagemaker-keras-text-classification">Official SageMaker Tutorial</a></strong></p></li>
+</ul>
+</div></blockquote>
+<img src="https://raw.githubusercontent.com/jirvingphd/fsds_100719_cohort_notes/master/images/awscloud.png">
+<blockquote>
+<div><ul class="simple">
+<li><p>AWS is a <strong><em>Cloud-Computing Platform</em></strong> which we can use for a variety of use cases in data science.</p></li>
+</ul>
+</div></blockquote>
+<section id="sign-up-for-aws">
+<h2>Sign up for AWS<a class="headerlink" href="#sign-up-for-aws" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong><a class="reference external" href="https://github.com/learn-co-curriculum/dsc-the-aws-ecosystem">Follow Canvas lesson steps to set up account</a></strong></p></li>
+<li><p><a class="reference external" href="https://aws.amazon.com/">Amazon Web Services</a></p></li>
+</ul>
+<p>AWS has data centers all over the world, and they are <strong>not</strong> interchangeable when it comes to your projects. Click on the “Region” tab in the top right corner of the navigation bar, and you should see a dropdown of all the different data centers you can choose from. It is <strong><em>very important</em></strong> that you always choose the same region to connect to with your projects.</p>
+<ul class="simple">
+<li><p>Create an AWS account</p></li>
+<li><p>Sign into console using Root User</p></li>
+</ul>
+</section>
+<section id="id1">
+<h2>Amazon SageMaker<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<blockquote>
+<div><p><em><strong>SageMaker is a platform created by Amazon to centralize all the various services related to Data Science and Machine Learning. If you’re a data scientist working on AWS, chances are that you’ll be spending most (if not all) of your time in SageMaker getting things done.</strong></em></p>
+</div></blockquote>
+<blockquote>
+<div><ul class="simple">
+<li><p>Amazon has centralized all of the major data science services inside <strong><em>Amazon SageMaker</em></strong>. SageMaker provides numerous services for things such as:
+* Data Labeling
+* Cloud-based Notebooks
+* Training and Model Tuning
+* Inference</p></li>
+</ul>
+</div></blockquote>
+<section id="sagemaker-components">
+<h3>SageMaker Components<a class="headerlink" href="#sagemaker-components" title="Permalink to this heading">#</a></h3>
+<img src="https://raw.githubusercontent.com/learn-co-students/dsc-introduction-to-aws-sagemaker-online-ds-ft-100719/master/images/use_cases.png">
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="how-to-productionizing-models-with-sagemaker">
+<h1>HOW TO: Productionizing Models with SageMaker<a class="headerlink" href="#how-to-productionizing-models-with-sagemaker" title="Permalink to this heading">#</a></h1>
+<section id="save-these-2-resources">
+<h2><strong>SAVE THESE 2 RESOURCES:</strong><a class="headerlink" href="#save-these-2-resources" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://learn.co/tracks/module-4-data-science-career-2-1/big-data-deep-learning-and-natural-language-processing/section-43-operationalizing-code-and-aws/productionizing-a-model-with-docker-and-sagemaker">Learn Lesson: Productionizing Models with SageMaker</a></p></li>
+<li><p>~~<a class="reference external" href="https://github.com/aws-samples/amazon-sagemaker-keras-text-classification">Official SageMaker Tutorial Repo</a>~~</p></li>
+<li><p><strong>⭐️<a class="reference external" href="https://aws.amazon.com/getting-started/hands-on/build-train-deploy-machine-learning-model-sagemaker/?trk=el_a134p000003yWILAA2&amp;trkCampaign=DS_SageMaker_Tutorial&amp;sc_channel=el&amp;sc_campaign=Data_Scientist_Hands-on_Tutorial&amp;sc_outcome=Product_Marketing&amp;sc_geo=mult&amp;p=gsrc&amp;c=lp_ds">Tutorial:Build, train, and deploy a machine learning model
+with Amazon SageMaker</a></strong></p></li>
+</ul>
+</section>
+<section id="overview-of-process">
+<h2>Overview of Process<a class="headerlink" href="#overview-of-process" title="Permalink to this heading">#</a></h2>
+<p>When productionizing a machine learning model using AWS, you’ll typically use the following workflow:</p>
+<ol class="arabic simple">
+<li><p>Explore and preprocess data</p></li>
+<li><p>Build SageMaker container (Docker)</p></li>
+<li><p>Test training and inference code on your local machine</p></li>
+<li><p>Train and deploy model with SageMaker</p></li>
+</ol>
+<section id="steps-for-deploying-a-model-from-lesson">
+<h3>Steps for Deploying A Model (from lesson)<a class="headerlink" href="#steps-for-deploying-a-model-from-lesson" title="Permalink to this heading">#</a></h3>
+<section id="complete-aws-training-notebooks-required">
+<h4>0. Complete AWS training notebooks [REQUIRED]<a class="headerlink" href="#complete-aws-training-notebooks-required" title="Permalink to this heading">#</a></h4>
+</section>
+<ul class="simple">
+<li><p><a class="github reference external" href="https://github.com/aws-samples/amazon-sagemaker-keras-text-classification">aws-samples/amazon-sagemaker-keras-text-classification</a></p></li>
+<li><p><strong>Do labs 1,2,&amp; 3</strong></p>
+<ul>
+<li><p>These cover all of the set up required</p></li>
+</ul>
+</li>
+</ul>
+<section id="build-and-register-the-container">
+<h4>1. Build and Register the container<a class="headerlink" href="#build-and-register-the-container" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p>In Learn lesson repo, there is a <code class="docutils literal notranslate"><span class="pre">container</span></code> folder that has Docker images</p></li>
+<li><p>The Code Below uses the container folder contens to create and register the docker image needed on AWS.</p></li>
+<li><p>It is best to “upload this notebook into your notebook to your AWS Jupyter environment</p></li>
+</ul>
+<p>“After you have successfully uploaded this notebook, if you are asked to choose a kernel, use the same kernel which runs the <code class="docutils literal notranslate"><span class="pre">sagemaker_keras_text_classification.ipynb</span></code> notebook.</p>
+<blockquote>
+<div><p>NOTE: If you deactivated this process (stopped your Jupyter instance, like <em>Step 8</em> below) and then came back to continue, you’ll need to go back and start from <a class="reference external" href="https://github.com/aws-samples/amazon-sagemaker-keras-text-classification#lab-2-building-the-sagemaker-tensorflow-container">Lab 2</a>, because you need the Docker instance running in order to run the following cells. “</p>
+</div></blockquote>
+<section id="code-for-building-registering-containers-reference">
+<h5>Code for Building/Registering containers (reference)<a class="headerlink" href="#code-for-building-registering-containers-reference" title="Permalink to this heading">#</a></h5>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>%%sh
+
+<span class="c1"># The name of our algorithm</span>
+<span class="nv">algorithm_name</span><span class="o">=</span>sagemaker-keras-text-classification
+
+<span class="nb">cd</span><span class="w"> </span>container
+
+chmod<span class="w"> </span>+x<span class="w"> </span>sagemaker_keras_text_classification/train
+chmod<span class="w"> </span>+x<span class="w"> </span>sagemaker_keras_text_classification/serve
+
+<span class="nv">account</span><span class="o">=</span><span class="k">$(</span>aws<span class="w"> </span>sts<span class="w"> </span>get-caller-identity<span class="w"> </span>--query<span class="w"> </span>Account<span class="w"> </span>--output<span class="w"> </span>text<span class="k">)</span>
+
+<span class="c1"># Get the region defined in the current configuration (default to us-west-2 if none defined)</span>
+<span class="nv">region</span><span class="o">=</span><span class="k">$(</span>aws<span class="w"> </span>configure<span class="w"> </span>get<span class="w"> </span>region<span class="k">)</span>
+<span class="nv">region</span><span class="o">=</span><span class="si">${</span><span class="nv">region</span><span class="k">:-</span><span class="nv">us</span><span class="p">-west-2</span><span class="si">}</span>
+
+<span class="nv">fullname</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">account</span><span class="si">}</span><span class="s2">.dkr.ecr.</span><span class="si">${</span><span class="nv">region</span><span class="si">}</span><span class="s2">.amazonaws.com/</span><span class="si">${</span><span class="nv">algorithm_name</span><span class="si">}</span><span class="s2">:latest&quot;</span>
+
+<span class="c1"># If the repository doesn&#39;t exist in ECR, create it.</span>
+
+aws<span class="w"> </span>ecr<span class="w"> </span>describe-repositories<span class="w"> </span>--repository-names<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">algorithm_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span>
+
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="nv">$?</span><span class="w"> </span>-ne<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">]</span>
+<span class="k">then</span>
+<span class="w">    </span>aws<span class="w"> </span>ecr<span class="w"> </span>create-repository<span class="w"> </span>--repository-name<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">algorithm_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>/dev/null
+<span class="k">fi</span>
+
+<span class="c1"># Get the login command from ECR and execute it directly</span>
+<span class="k">$(</span>aws<span class="w"> </span>ecr<span class="w"> </span>get-login<span class="w"> </span>--region<span class="w"> </span><span class="si">${</span><span class="nv">region</span><span class="si">}</span><span class="w"> </span>--no-include-email<span class="k">)</span>
+
+<span class="c1"># Build the docker image locally with the image name and then push it to ECR</span>
+<span class="c1"># with the full name.</span>
+
+<span class="c1"># On a SageMaker Notebook Instance, the docker daemon may need to be restarted in order</span>
+<span class="c1"># to detect your network configuration correctly.  (This is a known issue.)</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;/home/ec2-user/SageMaker&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span>sudo<span class="w"> </span>service<span class="w"> </span>docker<span class="w"> </span>restart
+<span class="k">fi</span>
+
+docker<span class="w"> </span>build<span class="w">  </span>-t<span class="w"> </span><span class="si">${</span><span class="nv">algorithm_name</span><span class="si">}</span><span class="w"> </span>.
+docker<span class="w"> </span>tag<span class="w"> </span><span class="si">${</span><span class="nv">algorithm_name</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">fullname</span><span class="si">}</span>
+
+docker<span class="w"> </span>push<span class="w"> </span><span class="si">${</span><span class="nv">fullname</span><span class="si">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="setting-up-the-environment">
+<h4>2. Setting up the environment<a class="headerlink" href="#setting-up-the-environment" title="Permalink to this heading">#</a></h4>
+<p>Once we’ve created the container, we’ll need to set up the environment. The cell below contains more boilerplate code, which is used to handle a couple sticking points in order to set up the environment.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># S3 prefix</span>
+<span class="n">prefix</span> <span class="o">=</span> <span class="s1">&#39;sagemaker-keras-text-classification&#39;</span>
+
+<span class="c1"># Define IAM role</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">boto3</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sagemaker</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_execution_role</span>
+
+<span class="n">role</span> <span class="o">=</span> <span class="n">get_execution_role</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="creating-the-session">
+<h4>3. Creating the Session<a class="headerlink" href="#creating-the-session" title="Permalink to this heading">#</a></h4>
+<p>Now that we’ve created the container and set up our environment, the next step is to create a SageMaker session.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sagemaker</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sage</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">time</span><span class="w"> </span><span class="kn">import</span> <span class="n">gmtime</span><span class="p">,</span> <span class="n">strftime</span>
+
+<span class="n">sess</span> <span class="o">=</span> <span class="n">sage</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="upload-the-data-for-training">
+<h4>4. Upload the Data for Training<a class="headerlink" href="#upload-the-data-for-training" title="Permalink to this heading">#</a></h4>
+<p>Steps 4 and 5 are where you’ll add the code unique to your <a class="reference external" href="http://project.In">project.In</a> this step, make sure have a folder called <code class="docutils literal notranslate"><span class="pre">'data'</span></code> that contains the data you’ll be working with. The actual structure of the data is up to you, as you’ll be the one consuming it to train your model in step 5.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">WORK_DIRECTORY</span> <span class="o">=</span> <span class="s1">&#39;data&#39;</span>
+
+<span class="n">data_location</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">upload_data</span><span class="p">(</span><span class="n">WORK_DIRECTORY</span><span class="p">,</span> <span class="n">key_prefix</span><span class="o">=</span><span class="n">prefix</span><span class="p">)</span>
+
+</pre></div>
+</div>
+</section>
+<section id="fitting-the-model">
+<h4>5. Fitting the Model<a class="headerlink" href="#fitting-the-model" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p>This is the part where you’ll do the brunt of the work.</p></li>
+<li><p>You’ll train your own model on the data you uploaded in the previous step.</p></li>
+<li><p>Note that in the sample code below, the first 3 lines are boilerplate code.</p></li>
+<li><p>The actual creation and training of the model happen on the last two lines of code, where <code class="docutils literal notranslate"><span class="pre">tree</span></code> is instantiated and used.</p></li>
+</ul>
+<blockquote>
+<div><p><strong><em>NOTE</em></strong>: You may have noticed that the code in the cell below uses an <code class="docutils literal notranslate"><span class="pre">Estimator</span></code> from <code class="docutils literal notranslate"><span class="pre">sage</span></code> (which is just an alias we set for <code class="docutils literal notranslate"><span class="pre">sagemaker</span></code> up above), the SageMaker library for python, rather than a model from scikit-learn. The <code class="docutils literal notranslate"><span class="pre">sagemaker</span></code> library contains a massive amount of useful models that we can use directly. Under the hood, the <code class="docutils literal notranslate"><span class="pre">sagemaker</span></code> library wraps in the same open-source frameworks such as scikit-learn, Keras, and TensorFlow that you’re used to using. The code below is an example from AWS of how to use one of their <code class="docutils literal notranslate"><span class="pre">Estimator</span></code> objects for training. If you read the output of the cell when you run everything, you’ll notice that much of it is warning messages or other printouts from sklearn and keras!</p>
+</div></blockquote>
+<p>For more information on the models and other tools included in the aws sagemaker library, check out <a class="reference external" href="https://sagemaker.readthedocs.io/en/stable/">Amazon SageMaker Python SDK Documentation</a>!</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">account</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">boto_session</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;sts&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get_caller_identity</span><span class="p">()[</span><span class="s1">&#39;Account&#39;</span><span class="p">]</span>
+<span class="n">region</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">boto_session</span><span class="o">.</span><span class="n">region_name</span>
+<span class="n">image</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">.dkr.ecr.</span><span class="si">{}</span><span class="s1">.amazonaws.com/sagemaker-keras-text-classification&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">account</span><span class="p">,</span> <span class="n">region</span><span class="p">)</span>
+
+<span class="n">tree</span> <span class="o">=</span> <span class="n">sage</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">Estimator</span><span class="p">(</span><span class="n">image</span><span class="p">,</span>
+                       <span class="n">role</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;ml.c5.2xlarge&#39;</span><span class="p">,</span>
+                       <span class="n">output_path</span><span class="o">=</span><span class="s2">&quot;s3://</span><span class="si">{}</span><span class="s2">/output&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sess</span><span class="o">.</span><span class="n">default_bucket</span><span class="p">()),</span>
+                       <span class="n">sagemaker_session</span><span class="o">=</span><span class="n">sess</span><span class="p">)</span>
+
+<span class="n">tree</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_location</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="deploying-the-model">
+<h4>6. Deploying the Model<a class="headerlink" href="#deploying-the-model" title="Permalink to this heading">#</a></h4>
+<p>This is where the magic happens – we have a trained model, and now we need to actually <strong><em>deploy</em></strong> it to the AWS cloud! Notice how during this step, we include a <code class="docutils literal notranslate"><span class="pre">json_serializer</span></code> – this is so that the model can serialize and deserialize data as needed when taking data in as input.</p>
+<p>Running the cell below will create an endpoint for your trained model.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sagemaker.predictor</span><span class="w"> </span><span class="kn">import</span> <span class="n">json_serializer</span>
+<span class="n">predictor</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">deploy</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;ml.t2.medium&#39;</span><span class="p">,</span> <span class="n">serializer</span><span class="o">=</span><span class="n">json_serializer</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="cleanup-important">
+<h4>7. Cleanup (IMPORTANT!!)<a class="headerlink" href="#cleanup-important" title="Permalink to this heading">#</a></h4>
+<p>As a final step for this exercise, <strong>be sure to run the following line of code to delete your endpoint!</strong> Although you are running this lab on the free tier, you don’t want to leave it running, because that is how costs can accrue. Run the cell below to delete your endpoint.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sess</span><span class="o">.</span><span class="n">delete_endpoint</span><span class="p">(</span><span class="n">predictor</span><span class="o">.</span><span class="n">endpoint</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="deactivate-everything-in-aws">
+<h4>8. Deactivate Everything in AWS<a class="headerlink" href="#deactivate-everything-in-aws" title="Permalink to this heading">#</a></h4>
+<p>In AWS, you pay for usage. <strong>This means that anything left running is being used.  While the AWS Free Tier we’ve signed up for allows us to do small things for free for prototyping or learning, leaving some things running may take us past the usage limits for the AWS Free Tier.</strong> In order to avoid getting charged, you’ll need to do the following steps:</p>
+</section>
+</section>
+<section id="deactivate-the-notebook-in-sagemaker">
+<h3>8.1: Deactivate the notebook in Sagemaker<a class="headerlink" href="#deactivate-the-notebook-in-sagemaker" title="Permalink to this heading">#</a></h3>
+<p>First, you’ll need to deactivate your notebook in SageMaker. When you enter the SageMaker platform, you’ll always see the number of open notebooks you have up and running highlighted in green under the ‘Recent Activity’ section.</p>
+<img src='https://raw.githubusercontent.com/jirvingphd/dsc-productionizing-models-with-sagemaker-online-ds-ft-100719/master/images/create-notebook-7.png'>
+<p>To deactivate a running notebook, select it and then go to the ‘Actions’ tab and select stop. Stopping the notebook instance will take a minute or two. You’ll know it’s done when you see the ‘Status’ column for the highlighted notebook change from ‘InService’ to ‘Stopped’.</p>
+<img src='https://raw.githubusercontent.com/jirvingphd/dsc-productionizing-models-with-sagemaker-online-ds-ft-100719/master/images/create-notebook-8.png'>
+</section>
+<section id="keep-an-eye-on-cost-explorer">
+<h3>8.2: Keep an Eye on Cost Explorer<a class="headerlink" href="#keep-an-eye-on-cost-explorer" title="Permalink to this heading">#</a></h3>
+<p>As you’ve seen from this lab, getting a handle on all the different services in AWS and how they interact with one another can be a bit daunting until you have some experience. It’s very important that you don’t leave services running when you aren’t using them, because you will be charged for that. If you want to make sure that you haven’t left anything running, the easiest thing to do is to check the ‘Costs Explorer’ page inside AWS. You can find this by searching for ‘AWS Cost Explorer’ in the search bar on the main page for the AWS Console. This service will show you what your usage is for everything that you can be charged for. It’s quite intuitive and easy to use, and should make it easy to see if you are accruing charges because you left something running that you didn’t realize. If you left something running that you aren’t aware of, you’ll see it here – once you’ve noticed it, just navigate to the service in question and deactivate it.</p>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="appendix">
+<h1>APPENDIX<a class="headerlink" href="#appendix" title="Permalink to this heading">#</a></h1>
+<section id="getting-files-into-s3-via-the-aws-console">
+<h2>Getting  files into S3 via the AWS console<a class="headerlink" href="#getting-files-into-s3-via-the-aws-console" title="Permalink to this heading">#</a></h2>
+<p>(Will start here, will do it through code later)</p>
+<section id="steps">
+<h3>Steps:<a class="headerlink" href="#steps" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>have an amazon account</p></li>
+<li><p>open s3</p></li>
+<li><p>make buckets</p></li>
+<li><p>upload files</p></li>
+<li><p>set all permissions to open to the public</p></li>
+</ul>
+<section id="tasks">
+<h4><strong>Tasks</strong>:<a class="headerlink" href="#tasks" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Create bucket named something unique (eg <code class="docutils literal notranslate"><span class="pre">ae-fis1118-demo</span></code> or <code class="docutils literal notranslate"><span class="pre">flatiron-apm-example</span></code>)</p></li>
+<li><p>Upload the <code class="docutils literal notranslate"><span class="pre">wine.csv</span></code> and the <code class="docutils literal notranslate"><span class="pre">carseats.csv</span></code> to that bucket</p></li>
+<li><p>Make all things public (AWS will ask you if YOU ARE SURE a million times, you are sure)</p></li>
+<li><p>Send your url for <code class="docutils literal notranslate"><span class="pre">wine.csv</span></code> to a friend and have them import it using <code class="docutils literal notranslate"><span class="pre">pandas.read_csv()</span></code></p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="setting-up-a-jupyter-notebook-in-sagemaker">
+<h2>Setting up a Jupyter Notebook in Sagemaker<a class="headerlink" href="#setting-up-a-jupyter-notebook-in-sagemaker" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Have an amazon account</p></li>
+<li><p>Ideally, have s3 buckets created first</p></li>
+<li><p>Find sagemaker in the offerings</p></li>
+<li><p>Create a notebook instance (you can only <strong>have two</strong> on this tier)</p></li>
+<li><p>When setting it up, set up user profille permissions to have full access to Sagemaker AND S3 (ignore most other settings)</p>
+<ul>
+<li><p>this might mean setting up a new admin “Group” in IAM, we will go through that together</p></li>
+</ul>
+</li>
+<li><p>Wait for it to be created, will take a few minutes, should say “pending”</p></li>
+<li><p>Open Jupyter Lab</p></li>
+<li><p>Use git symbol above file directory to git clone a file into the environment</p></li>
+<li><p>Commit your work the same way you would with any other project</p></li>
+<li><p><strong>TURN OFF THE RESOURCE WHEN DONE</strong></p></li>
+</ul>
+<section id="id2">
+<h3><strong>Tasks</strong>:<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>go to Sagemaker within AWS</p></li>
+<li><p>create a notebook instance</p></li>
+<li><p>set user permissions to have access to Sagemaker &amp; S3, wait for it to be created</p></li>
+<li><p>go to github and create your own fork of this directory: <a class="github reference external" href="https://github.com/learn-co-students/dsc-accessing-data-in-aws/">learn-co-students/dsc-accessing-data-in-aws</a></p></li>
+<li><p>go back to your jupyterlab, use the git symbol to clone in your forked version of the the directory</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "learn-env"
+        },
+        kernelOptions: {
+            name: "learn-env",
+            path: "./Phase_4/topic_43_AWS"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'learn-env'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../topic_42_tuning_neural_networks/topic_42_tuning_ANNs_with_deep_NLP_v1_SG.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Topic 42 - Tuning Neural Networks + Deep NLP</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../../Phase_5/Capstone_Kickoff.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Capstone Kickoff!</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Topic 43: Operationalizing Code &amp; AWS</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#questions">Questions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#notebooks-tutorials-for-today">Notebooks/Tutorials for Today:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#new-official-aws-for-data-scientists-intro-tutorials">⭐️New Official AWS for Data Scientists intro/tutorials</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-notebooks-to-cover">Additional Notebooks to cover:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resources">Resources:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#productionizing-models-as-a-career-skill">Productionizing Models as a Career Skill</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#cloud-computing">Cloud Computing</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objectives">Objectives:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prework">Prework:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cloud-computing-is-an-umbrella-term-for-many-solutions"><strong>Cloud</strong> computing is an <strong>umbrella</strong> term for many solutions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-common-theme-in-cloud-computing">The common theme in cloud computing:</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#part-of-the-solution-is-not-located-on-premesis-but-instead-provided-by-an-external-vendor"><em>Part</em> of the solution is not located on premesis, but instead provided by an external <em>vendor</em>.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#top-three-cloud-services-vendors">Top three cloud services vendors:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#provides-any-of-the-following-as-a-service">Provides any of the following as a <em>service</em>:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solves-many-problems">Solves many problems:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aws-can-be-intimidating">AWS can be intimidating</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#focus-on-the-last-two-questions">Focus on the last two questions:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assumptions">Assumptions:</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#storage">Storage</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#get-your-data-to-the-cloud">Get your data to the cloud!</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#new-vocab-bucket">New vocab: Bucket</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#buckets-defined">Buckets defined</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#s3-stands-for-amazon-simple-storage-service">S3 stands for <em>Amazon Simple Storage Service</em></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#new-vocab-credential">New vocab: Credential</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#credentials-defined">Credentials Defined:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#our-approach-to-credentials">Our approach to credentials:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#new-vocab-region">New vocab: Region</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#regions-defined">Regions Defined:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#amazon-sagemaker">Amazon Sagemaker</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#walkthrough-getting-started-with-aws-sagemaker">💡Walkthrough: Getting Started with AWS &amp; SageMaker</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sign-up-for-aws">Sign up for AWS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Amazon SageMaker</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sagemaker-components">SageMaker Components</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-productionizing-models-with-sagemaker">HOW TO: Productionizing Models with SageMaker</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#save-these-2-resources"><strong>SAVE THESE 2 RESOURCES:</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview-of-process">Overview of Process</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#steps-for-deploying-a-model-from-lesson">Steps for Deploying A Model (from lesson)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#complete-aws-training-notebooks-required">0. Complete AWS training notebooks [REQUIRED]</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#build-and-register-the-container">1. Build and Register the container</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#code-for-building-registering-containers-reference">Code for Building/Registering containers (reference)</a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up-the-environment">2. Setting up the environment</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-the-session">3. Creating the Session</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#upload-the-data-for-training">4. Upload the Data for Training</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-the-model">5. Fitting the Model</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#deploying-the-model">6. Deploying the Model</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cleanup-important">7. Cleanup (IMPORTANT!!)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#deactivate-everything-in-aws">8. Deactivate Everything in AWS</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deactivate-the-notebook-in-sagemaker">8.1: Deactivate the notebook in Sagemaker</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#keep-an-eye-on-cost-explorer">8.2: Keep an Eye on Cost Explorer</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#appendix">APPENDIX</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-files-into-s3-via-the-aws-console">Getting  files into S3 via the AWS console</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#steps">Steps:</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tasks"><strong>Tasks</strong>:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up-a-jupyter-notebook-in-sagemaker">Setting up a Jupyter Notebook in Sagemaker</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2"><strong>Tasks</strong>:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By James Irving, PhD
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
